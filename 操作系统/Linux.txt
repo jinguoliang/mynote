@@ -13,7 +13,7 @@ Created 星期六 12 十月 2013
 [[+ubuntu 环境]]
 [[+cmd|cmd]]
 [[+语言|语言]]
-[[+必须工具|工具]]
+工具
 [[+HTTP|HTTP]]
 [[+Linux OS structur]][[+Linux OS structure|e]]
 [[+桌面环境|桌面环境]]
