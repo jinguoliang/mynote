@@ -5,7 +5,7 @@ Creation-Date: 2013-10-12T22:17:45+08:00
 ====== Linux ======
 Created 星期六 12 十月 2013
 
-[[+Kernel]]
+[[Kernel]]
 [[+Unix环境高级编程]]
 [[+深入理解linux内核|深入理解linux内核]]
 [[+Linux启动过程分析]]  准确的说应该是ubuntu   
@@ -14,7 +14,7 @@ Created 星期六 12 十月 2013
 cmd
 [[+语言|语言]]
 工具
-[[+HTTP|HTTP]]
+[[基础:HTTP|HTTP]]
 [[+Linux OS structur]][[+Linux OS structure|e]]
 [[+桌面环境|桌面环境]]
 [[工具:github|github]]
