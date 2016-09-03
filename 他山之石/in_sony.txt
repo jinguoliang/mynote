@@ -1,9 +1,0 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2013-12-26T11:19:19+08:00
-
-====== in sony ======
-Created Thursday 26 December 2013
-
-ubuntu custom key shotcut
-system settings > keyboard > shortcut
