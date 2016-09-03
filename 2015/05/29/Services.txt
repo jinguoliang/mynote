@@ -13,7 +13,7 @@ Services可以做这些事：网络传输，播放音乐，读写文件，与Con
 	1. started	startService（） 一般不返回结果，独自运行，即使启动它的组件destroed
 		a. 其他组件调用stopSevice（）
 		b. stopSelf（）
-		c. [[IntentService]]	onHandleIntent()  有一个worker theed 来顺序处理所有请求。 仅需覆写一个方法轻松搞定
+		c. [[Journal:2015:05:29:IntentService]]	onHandleIntent()  有一个worker theed 来顺序处理所有请求。 仅需覆写一个方法轻松搞定
 		d. 实际在这种模式下要想让服务传回结果也是可以的。就是把一个PendingIntnet.getBroadcast()通过Intent传给Service，然后Service通过Broadcast传递结果
 	2. bound	bindService（） 可以交互，进行IPC。可以多个组件同时bind一个服务，当所有的都unbind的时候，服务才被destroyed
 		a. bindService会返回一个IBinder，是这个服务的接口
