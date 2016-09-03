@@ -22,7 +22,7 @@ Created 星期六 12 十月 2013
 
 
 
-[[备忘:thinking:寻找理想的工作]]
+[[+thinking:寻找理想的工作]]
 
 
 ====== tomato alarm ======
