@@ -26,7 +26,7 @@ Created 星期四 30 十月 2014
 		6. __评论实现__
  
 	m. 导航条不应该被收缩 ok 
-m. addToShelf and [[FreeReading]]   async operation!!!    ----> __书籍阅读页做同步处理__
+m. addToShelf and FreeReading   async operation!!!    ----> __书籍阅读页做同步处理__
 n. 登录注册
 
 	a. 首次登录，手机登录

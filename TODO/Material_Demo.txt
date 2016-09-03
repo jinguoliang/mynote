@@ -6,6 +6,6 @@ Creation-Date: 2015-07-02T11:19:19+08:00
 Created Thursday 02 July 2015
 
 [ ] [[MainActivity @Source]]
-	[ ] [[ActitionBarActivity]][[MainActivity @Source| @Source]]
-	[*] [[DrawerLayout]][[MainActivity @Source| @Source]]
+	[ ] ActitionBarActivity[[MainActivity @Source| @Source]]
+	[*] DrawerLayout[[MainActivity @Source| @Source]]
 	[ ] [[TabPageIndicator]][[MainActivity @Source| @Source]]

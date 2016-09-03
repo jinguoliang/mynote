@@ -15,7 +15,7 @@ TODO:
 	[ ] [[ScaleDrawable @Blog]]
 	[ ] [[+完全了解Android Touch Mode和Focus|完全了解Android Touch Mode和Focus @Blog]]
 
-	[ ] [[ApplicationInfo]]
+	[ ] ApplicationInfo
 	[ ] 显示go项目的依赖 →  go list → gotools
 	[ ] vimgo学习
 	[ ] Git Hook @Blog
