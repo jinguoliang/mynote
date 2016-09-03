@@ -223,7 +223,7 @@ calling “abstraction.”
 
 自低向上的编程，容易保证功能的正确性，因为容易做单元测试，但不容易掌握架构
 
-[[10.Example]][[10.Example:Tic-Tac-Toe|:]]Tic-Tac-Toe
+[[Linux:lisp:我学scheme:10.Example]][[Linux:lisp:我学scheme:10.Example:Tic-Tac-Toe|:]]Tic-Tac-Toe
 
 数据的不同表现形式，转换数据的形式以便是数据共容易处理。
 

@@ -20,9 +20,9 @@ http://beta.quicklisp.org/quicklisp.lisp
 (ql:quickload "cl-who")
 
 5.编辑一个测试文件
-    (defun myserver ()        
-      (define-easy-handler (greet :uri "/hello") ()  
-                    (format nil "<html><body><h1>Hello world!</h1></body></html>"))
+	(defun myserver ()        
+	  (define-easy-handler (greet :uri "/hello") ()  
+					(format nil "<html><body><h1>Hello world!</h1></body></html>"))
 		(start (make-instance 'easy-acceptor :port 8080))  ) 
 6.启动服务
 重新进入sbcl

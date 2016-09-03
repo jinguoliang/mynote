@@ -25,10 +25,10 @@ foo
 (+ (* 2 3) 5)
  
 (defun factorial (N)
-    (if (= N 1)
-        1
-        (* N (factorial (- N 1)))
-    )
+	(if (= N 1)
+		1
+		(* N (factorial (- N 1)))
+	)
 )
 
 据说，这个古怪的S表达式是McCarthy在发明Lisp时候所采用的一种临时语法，他实际上是准备为Lisp加上一种被称为M表达式(M-expression)的语法，然后再把M表达式编译为S表达式。用一个通俗的类比，S表达式相当于是JVM的字节码，而M表达式相当于Java语言，但是后来Lisp的使用者都熟悉并喜欢上了直接用S表达式编写程序，并且他们发现S表达式有许多独特的优点，所以M表达式的引入也就被无限期延迟了。
@@ -50,99 +50,99 @@ Lisp之道
 
 	
 <func name='gcd' return_type='int'>
-    <params>
-        <a type='int'/>
-        <b type='int'/>
-    </params>
-    <body>
-        <if>
-           <equals>
-               <a/>
-               <int>0</int>
-           </equals>
-        </if>
-        <then>
-            <return><b/></return>
-        </then>
-        <else>
-            <return>
-                <gcd>
-                    <modulo><b/><a/></modulo>
-                    <a/>
-                </gcd>
-            </return>
-        </else>
-    </body>
+	<params>
+		<a type='int'/>
+		<b type='int'/>
+	</params>
+	<body>
+		<if>
+		   <equals>
+			   <a/>
+			   <int>0</int>
+		   </equals>
+		</if>
+		<then>
+			<return><b/></return>
+		</then>
+		<else>
+			<return>
+				<gcd>
+					<modulo><b/><a/></modulo>
+					<a/>
+				</gcd>
+			</return>
+		</else>
+	</body>
 </func>
 
 其次，我们可以用它来定义类：
 	
 <class name="Computer">
-    <field access="private" type="MainBoard" name="main-board" />
-    <field access="private" type="CPU" name="cpu" />
-    <field access="private" type="Memory" name="memory" />
+	<field access="private" type="MainBoard" name="main-board" />
+	<field access="private" type="CPU" name="cpu" />
+	<field access="private" type="Memory" name="memory" />
  
-    <method access="public" return_type="boolean" name="powerOn" />
-        <params>...</params>
-        <body>...</body>
-    </method>
+	<method access="public" return_type="boolean" name="powerOn" />
+		<params>...</params>
+		<body>...</body>
+	</method>
  
-    <method access="public" return_type="boolean" name="powerOff" />
-        <params>...</params>
-        <body>...</body>
-    </method>
+	<method access="public" return_type="boolean" name="powerOff" />
+		<params>...</params>
+		<body>...</body>
+	</method>
 </class>
 
 还可以轻易地用它来编写关系查询：
 
 <sql>
-    <select>
-        <column name="employees.id" />
-        <column name="bonus.amount" />
-    </select>
-    <from>
-        <table name="employees" />
-        <table name="bonus" />
-    </from>
-    <where>
-        <equals>
-            <column name="employees.id" />
-            <column name="bonus.employee_id" />
-        </equals>
-    </where>
+	<select>
+		<column name="employees.id" />
+		<column name="bonus.amount" />
+	</select>
+	<from>
+		<table name="employees" />
+		<table name="bonus" />
+	</from>
+	<where>
+		<equals>
+			<column name="employees.id" />
+			<column name="bonus.employee_id" />
+		</equals>
+	</where>
 </sql>
 
 还可以用它来实现类似make file的自动化构建(语法取自ant)：
 
 <project name="MyProject" default="dist" basedir=".">
-    <property name="src" location="src"/>
-    <property name="build" location="build"/>
-    <property name="dist"  location="dist"/>
+	<property name="src" location="src"/>
+	<property name="build" location="build"/>
+	<property name="dist"  location="dist"/>
  
-    <target name="init">
-        <mkdir dir="${build}"/>
-    </target>
+	<target name="init">
+		<mkdir dir="${build}"/>
+	</target>
  
-    <target name="compile" depends="init" description="compile the source " >
-        <javac srcdir="${src}" destdir="${build}"/>
-    </target>
+	<target name="compile" depends="init" description="compile the source " >
+		<javac srcdir="${src}" destdir="${build}"/>
+	</target>
  
-    <target name="dist" depends="compile" description="generate the distribution" >
-        <mkdir dir="${dist}/lib"/>
-        <jar jarfile="${dist}/lib/MyProject-${DSTAMP}.jar" basedir="${build}"/>
-    </target>
+	<target name="dist" depends="compile" description="generate the distribution" >
+		<mkdir dir="${dist}/lib"/>
+		<jar jarfile="${dist}/lib/MyProject-${DSTAMP}.jar" basedir="${build}"/>
+	</target>
  
-    <target name="clean" description="clean up" >
-        <delete dir="${build}"/>
-        <delete dir="${dist}"/>
-    </target>
+	<target name="clean" description="clean up" >
+		<delete dir="${build}"/>
+		<delete dir="${dist}"/>
+	</target>
 </project>
 
 一口气举了这么多个例子，目的在于用XML这种树形结构来说明Lisp的S表达式所能够描述的语义。不知道你是否发现了S表达式和XML这种树形语法在语义构造方面有着特别的“柔性”？我们可以轻易地用它构造出函数、变量、条件判断语义；类、属性、方法语义；可以轻易地构造出关系模型的select、where语义；可以轻易地构造出make的target、depends语义，等等数不清的语义。在普通语言里，你可以定义一个函数、一个类，但你无法为C语言增加匿名函数特性，也没法给Java语言加上RAII语义，甚至连自己创造一个foreach循环都不行，而自定义语义意味着在Lisp之上你创造了一门语言！不管是面向过程，面向对象，函数式，还是关系模型，在Lisp里统统都变成了一种DSL，而Lisp本身也就成了一种定义语言的语言，即元语言(Meta Language)。
 
 Lisp的柔性与S表达式有着密切的关系。Lisp并不限制你用S表达式来表达什么语义，同样的S表达式语法可以表达各种不同领域的语义，这就是语法和语义解耦。如果说普通语言的刚性源于“语法和语义紧耦合”，那么Lisp的柔性正是源于“语法和语义解耦”！“语法和语义解耦”使得Lisp可以随意地构造各种领域的DSL，而不强制用某一种范式或是领域视角去分析和解决问题。本质上，Lisp编程是一种超越了普通编程范式的范式，这就是Lisp之道：面向语言编程(LOP, Language Oriented Programming)。Wikipedia上是这样描述LOP的：
 
-    Language oriented programming (LOP) is a style of computer programming in which, rather than solving problems in general-purpose programming languages, the programmer creates one or more domain-specific languages for the problem first, and solves the problem in those languages … The concept of Language Oriented Programming takes the approach to capture requirements in the user’s terms, and then to try to create an implementation language as isomorphic as possible to the user’s descriptions, so that the mapping between requirements and implementation is as direct as possible.
+	Language oriented programming (LOP) is a style of computer programming in which, rather than solving problems in general-purpose programming languages, the programmer creates one or more domain-specific languages for the problem first, and solves the problem in those languages … The concept of Language Oriented Programming takes the approach to capture requirements in the user’s terms, and then to try to create an implementation language as isomorphic as possible to the user’s descriptions, so that the mapping between requirements and implementation is as direct as possible.
 
 LOP范式的基本思想是从问题出发，先创建一门描述领域模型的DSL，再用DSL去解决问题，它具有高度的声明性和抽象性。SQL、make file、CSS等DSL都可以被认为是LOP的具体实例，下面我们再通过两个常见的例子来理解LOP的优势。
 
