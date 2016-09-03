@@ -2,7 +2,7 @@ Content-Type: text/x-zim-wiki
 Wiki-Format: zim 0.4
 Creation-Date: 2014-06-09T15:31:54+08:00
 
-====== Contact ======
+====== 通讯录 ======
 Created Monday 09 June 2014
 
 Chen Xiaoguang         Sony
