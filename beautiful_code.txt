@@ -1,8 +1,0 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2014-05-09T14:50:30+08:00
-
-====== beautiful code ======
-Created Friday 09 May 2014
-
-[[语言:C:方法指针的使用|方法指针的使用]]
