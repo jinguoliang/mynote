@@ -13,4 +13,3 @@ int dup2（oldfd，newfd) //关掉newfd，赋值oldfd到newfd
 
 tools
 ar 打包.o文件 成.a
-[[~/Downloads/html/C语言面向对象编程 - C语言编程 - ITeye知识库频道.html|C语言实现面向对象]]

@@ -6,3 +6,12 @@ Creation-Date: 2016-09-03T22:24:03+08:00
 Created 星期六 03 九月 2016
 
 [[+方法指针的使用|方法指针的使用]]
+
+赋值一个文件描述符
+int dup(oldfd)	//选一个最小未用的描述符
+int dup2（oldfd，newfd) //关掉newfd，赋值oldfd到newfd
+返回新的文件描述符	
+
+
+tools
+ar 打包.o文件 成.a
