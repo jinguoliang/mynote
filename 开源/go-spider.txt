@@ -81,10 +81,10 @@ github.com/hu17889/go_spider/core/spider
 在main就一行代码,不过这一行够长的.
 就是调用了spider.NewSpider()创建了一个spider然后对他配置并运行它,这配置的过程应该叫构建者模式,链式编程
    spider.NewSpider(NewMyPageProcesser(), "TaskName").
-        AddUrl("https://github.com/hu17889?tab=repositories", "html"). // Start url, html is the responce type ("html" or "json" or "jsonp" or "text")
-        AddPipeline(pipeline.NewPipelineConsole()).                    // Print result on screen
-        SetThreadnum(3).                                               // Crawl request by three Coroutines
-        Run()
+		AddUrl("https://github.com/hu17889?tab=repositories", "html"). // Start url, html is the responce type ("html" or "json" or "jsonp" or "text")
+		AddPipeline(pipeline.NewPipelineConsole()).                    // Print result on screen
+		SetThreadnum(3).                                               // Crawl request by three Coroutines
+		Run()
 详细点儿:它创建一个Spider,然后设置要抓取的url,添加一个管道用于输出结果,设置线程数,最后运行.
 下面我们看看Spider的构建:
 NewSpider:
@@ -120,7 +120,7 @@ run()里做了什么呢? 它从schedule里拿出一个请求准备提交,然后�
 
 1. scheduler
 2. resourceManager
-3. [[PageProcesser]]
+3. [[openning source:PageProcesser]]
 4. downloader
 5. pipline
 6. page

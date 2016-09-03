@@ -36,7 +36,7 @@ Created Tuesday 14 July 2015
 	d. 设置recover处理器，开启goroutine打印log，并将错误信息输出到client，如果又模板使用模板
 	e. 设置NotFount处理器，如果有模板，使用模板
 	f. 最后使用了一个牛逼闪闪的功能，捕获退出，当应用接受到终止信号时，做相应的保存数据处理
-		1. 	syscall.Signal 信号，一个数字
+		1. syscall.Signal 信号，一个数字
 		2. signal.Notify（）设置一个chan，和对应的信号...
 		3. 循环，通过switch，如果来到一个信号做相应处理
 5. Run()

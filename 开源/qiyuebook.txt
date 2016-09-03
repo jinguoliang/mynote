@@ -12,7 +12,7 @@ Created Saturday 01 August 2015
 来几个核心问题：
 1. 翻页效果如何实现的？
 	a. PageWidgetFactory.createPageWidget() 创建一个翻页效果
-	b. [[RealPageWidget]]
+	b. [[openning source:RealPageWidget]]
 		1. 先画
 2. 订阅逻辑
 	a. ReadBook.loadChapter(textid, preload,callback)
@@ -38,8 +38,8 @@ Created Saturday 01 August 2015
 		3. 交由gestureDetector处理
 			a. PageWidgetListener构造时会new PageWidgetListener（）并设置一个simpleOnGestureListener
 			b. 
-	e. readbook.onresume 里 new Bookpagefactory
-	f. basereadbook.oncreate里init → createPagewidget()
-	g. readbook里在加载章节时，或pagefactory.openBook, getNextPage会返回page对象
-	h. readbook里在加载章节时， pagewidget.setbitmap设置翻页
+	d. readbook.onresume 里 new Bookpagefactory
+	e. basereadbook.oncreate里init → createPagewidget()
+	f. readbook里在加载章节时，或pagefactory.openBook, getNextPage会返回page对象
+	g. readbook里在加载章节时， pagewidget.setbitmap设置翻页
 

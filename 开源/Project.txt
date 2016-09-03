@@ -22,7 +22,7 @@ Created Wednesday 22 July 2015
 ├── tests				测试
 │   └── default_test.go
 └── views			视图
-    └── index.tpl
+	└── index.tpl
 
 添加模板使用的函数：
 	beego.AddFuncMap("Setting", func(key string) string {
