@@ -7,7 +7,7 @@ Created Thursday 16 July 2015
 
 [[/home/jinux/Project/zim]]
 
-[[:Linux:python:learn|边学python]] 变看zim
+边学python 变看zim
 
 [[+HACKING|HACKING]]
 

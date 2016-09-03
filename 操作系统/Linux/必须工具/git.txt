@@ -15,7 +15,7 @@ Created 星期四 16 十月 2014
 		4. Format
 		5. Clean
 		6. Refactor
-		7. [[:Linux:必须工具:BuildConfig]]
+		7. :Linux:必须工具:BuildConfig
 		8. Git
 	b. 博客：
 		1. Post
