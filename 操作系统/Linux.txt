@@ -6,7 +6,7 @@ Creation-Date: 2013-10-12T22:17:45+08:00
 Created 星期六 12 十月 2013
 
 [[Kernel]]
-[[+Unix环境高级编程]]
+[[Unix:Unix环境高级编程]]
 [[Kernel:深入理解linux内核|深入理解linux内核]]
 [[+Linux启动过程分析]]  准确的说应该是ubuntu   
 Ubuntu:ubuntu 探索
@@ -15,7 +15,7 @@ cmd
 [[+语言|语言]]
 工具
 [[基础:HTTP|HTTP]]
-[[+Linux OS structur]][[+Linux OS structure|e]]
++Linux OS structur[[+Linux OS structure|e]]
 [[+桌面环境|桌面环境]]
 [[工具:github|github]]
 
