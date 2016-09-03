@@ -5,7 +5,6 @@ Creation-Date: 2013-11-06T21:08:07+08:00
 ====== 一些问题 ======
 Created Wednesday 06 November 2013
 
-foo 什么意思
 
 [[+java|java]]
 
