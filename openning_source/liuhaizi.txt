@@ -12,7 +12,7 @@ Created Thursday 16 July 2015
 2. 有没有对应用进行内存的优化，性能优化？
 	a. 刚开始使用自定义的MyList来实现首页类似的界面，MyList会根据item展开，这样就失去了List的特性，重复利用itemview占内存肯定多
 3. 如何使用xutils，都用到了什么功能，在哪里使用的
-	a. [[HttpUtils]]
+	a. HttpUtils
 		1. 在LiuhaiziApp做一个全局的初始化， 设置userAgent，设置默认缓存时间
 		2. 各个请求服务器的地方，都要new一个，然后send（method,url,callback）
 		3. 特别的post方法时， send（method,url,param，callback），param是new RequestParams（） 然后通过addBodyParameter（）添加参数

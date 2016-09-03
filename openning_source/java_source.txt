@@ -5,12 +5,12 @@ Creation-Date: 2013-11-04T21:58:58+08:00
 ====== java source ======
 Created Monday 04 November 2013
 
-[[AbsListView]] 	boolean trackMotionScroll(int deltaY, int incrementalDeltaY) ：
+AbsListView 	boolean trackMotionScroll(int deltaY, int incrementalDeltaY) ：
 deltaY 是竖直方向从手指按下开始算的滑动距离
 height 为ListView的显示出的高度
-        if (deltaY < 0) {
-            deltaY = Math.max(-(height - 1), deltaY);
-        } else {
-            deltaY = Math.min(height - 1, deltaY);
-        }
+		if (deltaY < 0) {
+			deltaY = Math.max(-(height - 1), deltaY);
+		} else {
+			deltaY = Math.min(height - 1, deltaY);
+		}
 这样可以实现在手指滑动超出ListView边界时View不会在滑动
