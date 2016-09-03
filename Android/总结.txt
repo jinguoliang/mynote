@@ -5,7 +5,7 @@ Creation-Date: 2015-06-01T21:47:43+08:00
 ====== 总结 ======
 Created Monday 01 June 2015
 
-1. [[BaseActivity]]  
+1. BaseActivity  
 	a. 埋点
 2. __统一的未登录，网页报错,加载,空数据提示!!__
 3. [[ListView]] 充分利用header and footer, 由于item的重用,每次getview(),view的改变的属性都要初始化,改变的状态都要保存在model中
