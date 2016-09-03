@@ -8,4 +8,4 @@ Created Saturday 23 November 2013
 
 最危险的开源项目——[[~/Downloads/html/最危险的开源项目——比特币-CSDN.NET.html|比特币]]
 
-[[:thinking:寻找理想的工作:soho 一族]]
+[[寻找理想的工作:soho 一族]]

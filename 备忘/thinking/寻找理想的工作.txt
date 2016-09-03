@@ -7,4 +7,4 @@ Created Saturday 23 November 2013
 
 [[~/Downloads/html/国外程序员是如何准备面试的_知识库_博客园.html|国外程序员是如何准备面试的]]
 
-[[:thinking:寻找理想的工作:soho 一族]]
+[[+soho 一族]]
