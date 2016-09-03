@@ -5,9 +5,9 @@ Creation-Date: 2014-04-06T20:50:54+08:00
 ====== Problems ======
 Created 星期日 06 四月 2014
 
-[[+Ubuntu 13.10中安装eclipse后菜单栏下拉失效|Ubuntu 13.10中安装eclipse后菜单栏下拉失效]]
+[[操作系统:发行版:Ubuntu:Ubuntu 13.10中安装eclipse后菜单栏下拉失效|Ubuntu 13.10中安装eclipse后菜单栏下拉失效]]
 
-[[+Ubuntu 64bit with Android ADT...|Ubuntu 64bit with Android ADT...]]  
+[[操作系统:发行版:Ubuntu:Ubuntu 64bit with Android ADT...|Ubuntu 64bit with Android ADT...]]  
 
 无线不能上网，发现是/etc/resolv.conf 但是又改不了（是改了又被改回去），应该是修改 [[/etc/resolvconf/resolv.conf.d/tail]]
 在里边添加自己想要的
