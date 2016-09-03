@@ -26,7 +26,7 @@ SteamOS
 [[+怎样将zip文件保存在图片中|怎样将zip文件保存在图片中]]
 
 编辑：
-[[+markdown|markdown]]
+[[工具:markdown|markdown]]
 
 yaml
 json
