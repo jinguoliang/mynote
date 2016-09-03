@@ -1,0 +1,78 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-09-03T22:09:05+08:00
+
+====== 问题 ======
+Created 星期六 03 九月 2016
+
+====== android ======
+Created Thursday 19 June 2014
+
+=== -bash: /usr/bin/aapt: No such file or directory ===
+ 64bit Ubuntu, Android AAPT, R.java
+Ubuntu 13.10 aapt: error while loading shared libraries: libstdc++.so.6: cannot open shared object file: No such file or directory
+
+sudo apt-get update
+sudo apt-get install ia32-libs
+
+###################################
+
+sudo apt-getinstall lib32stdc++6
+sudo apt-getinstall lib32z1
+
+
+=== 这种和用context.getService()有什么区别？ ===
+KeyguardViewBase.java：
+210         IAudioService audioService = IAudioService.Stub.asInterface(
+211                 ServiceManager.checkService(Context.AUDIO_SERVICE));
+
+
+=== error: insufficient permissions for device ===
+sudo chown root:root adb
+sudo chmod u+s adb
+ls -l adb
+__-rwsr-xr-x__ 1 root root   341694 2010-05-11 05:46 adb
+这样无论哪个用户启动adb 使用的都是root权限，就不会提示权限不足的错误了
+
+TODO:
+1. ContentValues contentValues = new ContentValues(2);
+				contentValues.put(MediaStore.Images.Media.DISPLAY_NAME,titleEditText.getText().toString());
+				contentValues.put(MediaStore.Images.Media.DESCRIPTION,descriptionEditText.getText().toString());
+				try {
+					getContentResolver().update(imageFileUri, contentValues, null, null);
+				}catch (Throwable e){
+					System.out.print(e.toString());
+				}
+2. ei = new ExifInterface(filePath);
+						loge("description =" + ei.getAttribute("ImageDescription")); 写图片信息也不行
+
+
+=== 当从全屏页面跳到非全屏页面时，布局会有下降的问题？ ===
+可以设置状态栏覆盖activity
+private void hideStatusBar() {
+WindowManager.LayoutParams attrs = getWindow().getAttributes();
+attrs.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+getWindow().setAttributes(attrs);
+}
+
+private void showStatusBar() {
+WindowManager.LayoutParams attrs = getWindow().getAttributes();
+attrs.flags &= ~WindowManager.LayoutParams.FLAG_FULLSCREEN;
+getWindow().setAttributes(attrs);
+}
+关键是，在做了该Activity的全屏设置的前提下，还要在onCreate()方法中加入如下语句：
+getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
+getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+此方案我已经试过了，可行，且不会导致Activity重排
+
+RadioButton设置drawabletop的图片大小
+getCompoundDrawables() 获取四个drawable, 没有设置的为null,通过setBounds()设置图片大小,最后通过setCompoundDrawables()重新设置图片
+
+ListView 当设置divider为@null 同时设置dividerHeight很大时会导致计算整个list的高度出错
+给divider设成图片或者颜色,猜测:设为null时没计算
+
+AdapterView 设置adapter, item设置确定高度不起作用
+item是layout包含一个textView,直接限制外面layout的高度不起作用,设置内部的textView高度起作用
+
+==== 总结 ====
+1. checkbox,点击事件和change事件不同,一些行为只能发生在点击事件中
