@@ -6,8 +6,6 @@ Creation-Date: 2013-11-10T23:16:47+08:00
 Created Sunday 10 November 2013
 
 翻墙工具：
-https://code.google.com/p/goagent/
-http://www.gfsoso.net/
 
 conky 桌面显示cpu内存等信息，很漂亮
 [[~/shared_with_windows/我的坚果云/resource/jude.tar.gz|jude]] 		 uml class diagram

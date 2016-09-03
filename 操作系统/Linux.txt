@@ -17,7 +17,7 @@ Created 星期六 12 十月 2013
 [[+HTTP|HTTP]]
 [[+Linux OS structur]][[+Linux OS structure|e]]
 [[+桌面环境|桌面环境]]
-[[+github|github]]
+[[工具:github|github]]
 
 Linux OS    :
 SteamOS
