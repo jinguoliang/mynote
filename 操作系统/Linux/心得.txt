@@ -19,7 +19,7 @@ sudo service gdm start
 xinput list 列出输入设备
 xinput list-props 输入设备 列出某个设备的属性
 xinput set-prop "设备名" "属性名" 值
-[[+stop touchpad|stop touchpad]]
+[[桌面环境:stop touchpad|stop touchpad]]
 
 evdev 是一个驱动它统一了输入设备
 从而在xorg.conf内把驱动都用它就行了
