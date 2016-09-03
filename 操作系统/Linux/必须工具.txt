@@ -13,7 +13,7 @@ zim		 desktop wiki
 freemind 
 virtual box
 :Linux:vi
-[[+git|git]]
+[[工具:git|git]]
 zsh
 
 [[+make]]
