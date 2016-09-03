@@ -9,8 +9,8 @@ Created 星期六 12 十月 2013
 [[+Unix环境高级编程]]
 [[+深入理解linux内核|深入理解linux内核]]
 [[+Linux启动过程分析]]  准确的说应该是ubuntu   
-[[+ubuntu 探索]]
-[[+ubuntu 环境]]
+[[Ubuntu:ubuntu 探索]]
+[[Ubuntu:ubuntu 环境]]
 [[+cmd|cmd]]
 [[+语言|语言]]
 工具
