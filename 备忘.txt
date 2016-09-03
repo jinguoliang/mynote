@@ -2,7 +2,7 @@ Content-Type: text/x-zim-wiki
 Wiki-Format: zim 0.4
 Creation-Date: 2013-12-02T12:41:55+08:00
 
-====== recording ======
+====== 备忘 ======
 Created Monday 02 December 2013
 
 那人客户端
