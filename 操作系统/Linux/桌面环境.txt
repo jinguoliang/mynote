@@ -10,7 +10,7 @@ http://docs.huihoo.com/homepage/shredderyin/fvwm_frame.html
 Sawfish  使用lisp和scheme配置
 http://docs.huihoo.com/homepage/shredderyin/wiki/SawfishWindowManager.html
 gnome 2.0
-[[+gnome 3.0]]
+[[操作系统:发行版:Ubuntu:gnome 3.0]]
 kde
 unity
 mate --gnome2-like

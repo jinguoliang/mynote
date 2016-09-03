@@ -39,7 +39,7 @@ Problems some problems in linux system.
 Raspberry
 [[+心得|心得]]
 
-[[+程序开机自启动|程序开机自启动]]
+[[发行版:Ubuntu:程序开机自启动|程序开机自启动]]
 
 [[发行版:LinuxMint17 init]]
 
