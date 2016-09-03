@@ -12,15 +12,6 @@ Created Wednesday 06 November 2013
 [[+gtk|gtk]]
 [[+linux|linux]]
 
-=== ubuntu vim 安装失败 ===
-先卸载vim-common
-再装vim
-
-当在RadioGroup动态添加RadioButton时，要设置它的LayoutParams，是它的（RadioGroup.LayoutParams)
-设LinearLayout的应该也可以，但是却不可以，？？？？？？
-
-wifi 
-
 __eclipse too many opened files__
 这是linux打开的文件有限制。
 [[/etc/security/limits.conf]]   nofile → max number of opened filehhh
