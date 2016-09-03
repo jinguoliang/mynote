@@ -47,6 +47,8 @@ Raspberry
 
 
 ====== 奇技淫巧 ======
+
+将zip文件保存在图片中
 linux下执行：
 cat aaa.png  bbb.zip >> zzz.png
 windows下执行：
