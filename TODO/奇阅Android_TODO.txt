@@ -1,0 +1,199 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-10-30T09:54:14+08:00
+
+====== 奇阅Android TODO ======
+Created 星期四 30 十月 2014
+1. 目录页
+2. 书籍详情：
+	a. 界面完成 ok
+	b. 分类 ok 
+	c. 收藏 __字段没有__
+	d. 免费试读功能 ok --> 存在同步问题，文章还没下来，就去读了，报错
+	e. 加入书架功能 ok
+	f. 查看目录 ok  ---> 另一个目录页 ok
+	g. 总章数  ok
+	h. 查看所有 ok
+	i. 去书架功能  ok
+	j. 推荐阅读  --> __wait remote  interface__
+		a. ui ok
+	k. 评论
+		1. item ui  ok
+		2. ui ok and wait interface
+		3. remote interface： hotReviewForBook(aid)      replyReview(aid, reviewId)      reviewForBook(aid,uid)  replayReview(uid,aid)
+		4. 头像显示圆形 ok
+		5. 热门有了，还有最新评论 ok
+		6. __评论实现__
+ 
+	m. 导航条不应该被收缩 ok 
+m. addToShelf and [[FreeReading]]   async operation!!!    ----> __书籍阅读页做同步处理__
+n. 登录注册
+
+	a. 首次登录，手机登录
+		1. UI ok
+		2. 发送验证码功能 ok
+	b. 奇阅登录 ok
+	c. sina
+		a. 获取数据
+	d. qq
+a. 修改目录页UI
+	a. ui changed ok
+	b. __item context menu__ 
+
+
+ w46.1 :
+1. sina login ok ---> qq ok
+2. 统一处理登录信息 ok  ------->  register result should has the info of login result or user
+w46.2:
+1. 优化登录界面 ok
+2. 修改目录页
+	a. UI
+	b. 换用viewpager 
+3. Activity Task， 处理activity关闭的策略
+w46.3:
+1. item context menu ok
+2. __评论实现__
+	a. 书籍详情页 ok
+	b. __目录页--> 进入回复__
+	c. __回复页互赞__
+w46.4
+1. 重构user to userbean
+w46.5
+1. 登录去繁
+	a.new SendLogRegInfo(LoginActivity1.this, BookApp.getUserBean()
+							.getUid(), BookApp.getUserBean().getToken(), 1).start();
+	b. HttpImpl.sendHardInfo(context); 
+b. 支付相关
+	a. 支付宝
+	b. 神州
+
+w47.2
+1. book review implementation
+	a. 赞 ok
+	b. 请求书评 ok
+	c. 请求书评回复 ok
+	d. 提交书评 ok
+w47.3
+1. 提交书评的回复 ok
+2. 上拉刷新 ok
+3. 目录页书评
+
+w48.5 
+1. 阅读页
+	a. 加入片选类，使用  ok
+	b. 片选游标大小 ok
+	c. 加载下一章的问题 ok
+	d. 片选线与行不一致 ok
+	e. 配置选项 
+	f. 标点符号添加到行尾 ok
+	g. 触点位置有的没反应，不知为什么(放了个view, 获取了焦点) ok
+	h. 事件处理
+		a. 长按事件进入选择模式 ok
+	i. 模式切换
+	j. 拖动游标 ok
+	k. 书签 
+2. 目录校验更新
+3. 详细页动画
+4. 程序退出时崩溃
+5. 书籍详情页添加书籍不同步 ok
+w50.1
+1. 添加选择文本浮动框 ok
+2. 添加浮动框的显示隐藏  ok
+3. 修改bookmenu显示note ok
+w50.2
+1. 书本模拟翻页在一加小米不行 ok  "硬件加速不兼容“
+2. 显示note为划线的文本 ok 
+	a. 在PageFactory里添加读取note的机制，添加给Pager ok
+	b. 绘制Note， 有个向量存放，开始点，结束点，内容， ok
+w50.6
+1. 清理Readbook ok 
+2. 替换下载逻辑 ok
+3. 实现章节之间无缝翻页 ok 
+4. 预下载 ok
+5. 订阅 	
+6. 缓存接口 ok
+7. 笔记添加编辑 
+8. 在拖动光标到顶部或底部时显示在首行和模行
+ 
+已知bug：
+1. 往反方向翻页时，当前页面会有闪变 ok
+2. 刚进入，翻页时下一页为空 ok
+3. __关闭程序时crash__
+4. 不保存当前页 ok
+5. 目录返回问题 ok
+6. 进入目录时检查更新 ok
+7. 目录下载接口 ok
+8. 修改字体大小问题 ok
+9. 跳到下一章没显示内容 ok
+10. 跳到下一章初始位置错误 ok
+11. 行头标点ok
+12. 行尾不齐
+13. 翻页后，长按进入选择模式时，内容变为前一页 ok
+14. 进入选择模式，初始选择位置问题 ok
+15. 翻页取消时，再翻页会闪变页 ok
+16. __快速充值 没登录crash__
+17. 书本评论没有显示 ok
+18. 目录页加载框不消失 ok 
+19. __两页之间的笔记文本会引发程序崩__
+20. 登录用户信息保存加密
+21. url混淆
+22. 章节文本混淆  
+23. 章节订阅问题  ok
+24. 笔记编辑 ok
+25. 同步的书籍，第一次加载目录时有时报错 ok
+26. 没有章节，实际有, ok  
+27. 笔记跳到阅读页时出错，cause 是查询以写的方式打开数据苦了 ok
+28. 评论赞问题  ok
+29. 评论获取问题 ok
+30. 笔记handle触点位置 ok
+
+w52.1
+1. 订阅
+	a. 自动订阅 ok
+	b. 下定单
+		a. js接口	closeWindow	
+		b. 调用 ok			
+	c. 未登录处理 
+2. 添加笔记
+	a. 编辑笔记界面 ok
+w52.3
+1. 笔记问题
+	a. 首尾位置
+	b. 修改字体时
+w53.1
+1. 笔记crash
+2. 评论 ok
+3. 订阅，手动订阅单章 ok
+4. 自动阅读
+
+
+Pager:
+1. 坐标（行，列） 
+	a. 行从1开始
+	b. 列从1开始 
+5.修改目录页UI
+5. 书城界面
+
+w02.7
+已知问题：
+	1. 订单逻辑，同时弹多个订单框 
+	2. 新浪登录授权 delay
+	3. 书架自动打开侧滑栏
+	4. 有时退出不了 ok
+	5. 文章加密 delay
+	6. 阅读页上下部分显示颜色
+	7. 详情的收藏
+
+w09.3
+1. 支付流程
+2. 充值会跳到和阅读首页
+
+
+w11.1
+1. 新版更新功能：
+	a. 接入移动基地书籍
+	b. 添加移动基地独立的登录，注册和订阅   
+	c. 修复部分代码错误
+	d. 优化阅读体验
+	e. 书籍扩充，让你的搜索只有想不到，没有搜不到
+

@@ -1,0 +1,28 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-05-01T18:24:36+08:00
+
+====== sougou ======
+Created Friday 01 May 2015
+
+jinux@jinux-B85M-D2V ~ $ dpkg --get-selections |grep fcitx
+fcitx						install
+fcitx-bin					install
+fcitx-config-common				install
+fcitx-config-gtk				install
+fcitx-data					install
+fcitx-frontend-all				install
+fcitx-frontend-gtk2:amd64			install
+fcitx-frontend-gtk3:amd64			install
+fcitx-frontend-qt4:amd64			install
+fcitx-libs:amd64				install
+fcitx-libs-gclient:amd64			install
+fcitx-libs-qt:amd64				install
+fcitx-module-cloudpinyin			install
+fcitx-module-dbus				install
+fcitx-module-kimpanel				install
+fcitx-module-x11				install
+fcitx-modules					install
+fcitx-table					install
+fcitx-table-wubi-large				install
+fcitx-ui-classic				install

@@ -1,0 +1,33 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-04-06T20:51:17+08:00
+
+====== Ubuntu 13.10中安装eclipse后菜单栏下拉失效 ======
+Created 星期日 06 四月 2014
+
+最近安装了Ubuntu 13.10，想着安装eclipse玩玩吧，于是到eclipse官网下载页面下载所需要的安装版本。根据网上  最近安装了Ubuntu 13.10，想着安装eclipse玩玩吧，于是到eclipse官网下载页面下载所需要的安装版本。根据网上的教程安装好之后，到eclipse安装目录打开eclipse，根据习惯，对eclipse进行一些偏好设置，这时候发现菜单栏失效，不能实现下拉，通过查找发现这是Ubuntu Unity的一个bug，官方暂时还没提供解决办法，国外的论坛提供了暂时的解决办法，不直接启动eclipse而是创建eclipse桌面快捷方式。
+
+方法是在桌面新建一个空白文档，输入一下内容：
+
+01	[Desktop Entry]
+02	Categories=Development;
+03	Comment[zh_CN]=
+04	Comment=
+05	Exec=/usr/local/java/eclipse/eclipse
+06	GenericName[zh_CN]=IDE
+07	GenericName=IDE
+08	Icon=/usr/local/java/eclipse/icon.xpm
+09	MimeType=
+10	Name[zh_CN]=eclipse
+11	Name=eclipse
+12	Path=
+13	StartupNotify=true
+14	Terminal=false
+15	Type=Application
+16	X-DBUS-ServiceName=
+17	X-DBUS-StartupType=
+18	X-KDE-SubstituteUID=false
+19	X-KDE-Username=owen
+20	Exec=env UBUNTU_MENUPROXY= /usr/local/java/eclipse/eclipse
+
+然后对文件重命名：eclipse.desktop，再右键该文件增加权限

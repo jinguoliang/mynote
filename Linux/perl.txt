@@ -1,0 +1,92 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-07-28T15:19:08+08:00
+
+====== perl ======
+Created Monday 28 July 2014
+
+=== 导包 ===
+__use File::Copy;__
+
+=== 声明变量： ===
+my $size_cur = 0
+my @message = `$ccache_bin -s`;        列表
+@mOpts = ();
+
+$project = lc($ARGV[0]);  __？？__
+
+=== 映射： ===
+ 88 my $products = 
+ 89 {
+ 90   "phone"   => "phone",
+ 91   "ph"      => "phone",
+ 92   "tablet"  => "tablet",
+ 93   "tb"      => "tablet",
+ 94   "tv"      => "tv",
+ 95   "default" => "phone"
+ 96 };
+
+=== 分支: ===
+	setCacheEnvVars() if (uc($ENV{"MTK_INTERNAL"}) eq "TRUE");
+
+750     if ($ENV{"LSB_SUB_HOST"} ne "")
+751     {
+752         $host_server = $ENV{"LSB_SUB_HOST"};
+753     }
+754     else
+755     {
+756         $host_server = hostname;
+757     }
+
+759     if (($host_server =~ /m\w\wswgbm/i) || ($ENV{"USER"} =~ /wcxbm/i) || ($ENV{"USER"} =~ /arsbm/i))
+760     {
+761         # ignore for special server/user
+762     }
+
+72     (-e $crc32) or die("Error: crc32 not found, run 'sudo apt-get install libarchive-zip-perl' to install it");
+
+
+=== 循环： ===
+730   __map__
+731     {
+732       chomp;
+733       $ENV{$1}=$2 if (/(.*)=(.*)/);
+734     } split(/\n/, $envVarList);
+
+ 71 foreach $m (@chkDirs)
+ 72 {
+ 73   die "Folder \"$m\" does NOT exist!\nPlease help confirm Mediatek release package.\n" if (!-d $m);
+ 74 }       
+
+121 while ($#ARGV != -1)
+122 {
+         }
+next == continue
+
+=== 函数： ===
+$#ARGV < 0    参数数量
+$ARGV[0]  第一个参数
+&Usage 函数调用    __？？？__
+setBuildEnvVars("./mbldenv.sh");
+
+510 sub Usage          函数定义                                                                                                                                                                                      
+511 { }
+
+&p_system("perl mediatek/build/tools/listP.pl");   执行系统命令=====system
+
+=== 正则： ===
+$ARGV[0] __=~__ /^-(t|te|tee)/
+
+=== 文件操作： ===
+173         open (FILE_HANDLE, "<$ini") or die "cannot open $ini\n";
+174         while (<FILE_HANDLE>)
+175         {
+176           if (/^(\S+)\s*=\s*(\S+)/)
+177           {
+178             $keyname = $1;
+179             $${keyname} = $2;                                                                                                                                         
+180           }
+181         }
+182         close FILE_HANDLE;
+
+print FILE_HANDLE "$m = eng\n

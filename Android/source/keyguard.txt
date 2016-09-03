@@ -1,0 +1,115 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-05-19T14:37:22+08:00
+
+====== keyguard ======
+Created Monday 19 May 2014
+
+src/
+└── com
+    ├── android
+    │   └── keyguard
+    │       ├── BiometricSensorUnlock.java			生物传感解锁interface
+    │       ├── CameraWidgetFrame.java				widget
+    │       ├── CarrierText.java							SIM card display info	
+    │       ├── ChallengeLayout.java					Interface implemented by ViewGroup-derived layouts that implement special logic for presenting security challenges to the user
+    │       ├── CheckLongPressHelper.java			
+    │       ├── EmergencyButton.java
+    │       ├── EmergencyCarrierArea.java
+    │       ├── ExternalLockScreen.java				Class used to instantiate External Keyguard component factories (Lock screens）
+    │       ├── FaceUnlock.java
+    │       ├── KeyguardAbsKeyInputView.java
+    │       ├── KeyguardAccountView.java
+    │       ├── KeyguardActivityLauncher.java
+    │       ├── KeyguardCircleFramedDrawable.java
+    │       ├── KeyguardDisplayManager.java
+    │       ├── KeyguardFaceUnlockView.java
+    │       ├── KeyguardGlowStripView.java
+    │       ├── KeyguardHostView.java
+    │       ├── KeyguardLinearLayout.java
+    │       ├── KeyguardMessageArea.java
+    │       ├── KeyguardMultiUserAvatar.java
+    │       ├── KeyguardMultiUserSelectorView.java
+    │       ├── KeyguardPasswordView.java
+    │       ├── KeyguardPatternView.java
+    │       ├── KeyguardPINView.java
+    │       ├── KeyguardSecurityContainer.java
+    │       ├── KeyguardSecurityModel.java
+    │       ├── KeyguardSecurityViewFlipper.java
+    │       ├── KeyguardSecurityViewHelper.java
+    │       ├── KeyguardSelectorView.java
+    │       ├── KeyguardService.java
+    │       ├── KeyguardSimPinView.java
+    │       ├── KeyguardSimPukView.java
+    │       ├── KeyguardStatusView.java
+    │       ├── KeyguardStatusViewManager.java
+    │       ├── KeyguardTransportControlView.java
+    │       ├── KeyguardUpdateMonitorCallback.java
+    │       ├── KeyguardUpdateMonitor.java
+    │       ├── KeyguardViewBase.java
+    │       ├── KeyguardViewManager.java
+    │       ├── KeyguardViewMediator.java
+    │       ├── KeyguardViewStateManager.java
+    │       ├── KeyguardWidgetCarousel.java
+    │       ├── KeyguardWidgetFrame.java
+    │       ├── KeyguardWidgetPager.java
+    │       ├── LiftToActivateListener.java
+    │       ├── MultiPaneChallengeLayout.java
+    │       ├── MultiUserAvatarCache.java
+    │       ├── NumPadKey.java
+    │       ├── ObscureSpeechDelegate.java
+    │       ├── PagedView.java
+    │       ├── PlayPauseButton.java
+    │       ├── SecurityMessageDisplay.java
+    │       └── SlidingChallengeLayout.java
+    ├── mediatek
+    │   └── keyguard
+    │       ├── AntiTheft
+    │       │   ├── AntiTheftManager.java
+    │       │   └── KeyguardAntiTheftLockView.java
+    │       ├── Clock
+    │       │   ├── ClockView.java
+    │       │   ├── MediatekClock.java
+    │       │   ├── MediatekClockView.java
+    │       │   ├── MediatekDigitalClock.java
+    │       │   └── MediatekDomesticClockView.java
+    │       ├── GlowPadView
+    │       │   ├── DragView.java
+    │       │   ├── Ease.java
+    │       │   ├── LockScreenLayout.java
+    │       │   ├── MediatekGlowPadView.java
+    │       │   ├── PointCloud.java
+    │       │   ├── TargetDrawable.java
+    │       │   └── Tweener.java
+    │       ├── PowerOffAlarm
+    │       │   ├── Alarm.java
+    │       │   ├── Alarms.java
+    │       │   ├── MediatekZeroTopPaddingTextView.java
+    │       │   ├── PowerOffAlarmManager.java
+    │       │   └── PowerOffAlarmView.java
+    │       ├── Telephony
+    │       │   ├── KeyguardDialogManager.java
+    │       │   ├── KeyguardSimPinPukView.java
+    │       │   └── MediatekCarrierText.java
+    │       ├── UnreadEvent
+    │       │   ├── CalendarUnReadObserver.java
+    │       │   ├── EmailUnReadObserver.java
+    │       │   ├── LockScreenNewEventView.java
+    │       │   ├── MissCallUnReadObserver.java
+    │       │   ├── MmsUnReadObserver.java
+    │       │   ├── UnReadEventView.java
+    │       │   ├── UnReadHintAnimation.java
+    │       │   └── UnReadObserver.java
+    │       ├── Utils
+    │       │   └── KeyguardUtils.java
+    │       └── VoiceUnlock
+    │           ├── KeyguardVoiceUnlockView.java
+    │           └── VoiceUnlock.java
+    └── sonymobile
+        └── lockscreen
+            ├── environment
+            │   ├── RealExternalKeyguardDismisser.java
+            │   ├── RealExternalKeyguardPowerManager.java
+            │   ├── RealExternalViewStubInitializer.java
+            │   └── RealKeyguardComponentEnvironment.java
+            └── IceButton.java

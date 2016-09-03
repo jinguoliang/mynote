@@ -1,0 +1,9 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-01-01T17:32:07+08:00
+
+====== modules ======
+Created Wednesday 01 January 2014
+
+popen  		provides the means for communicating with other processes over pipes
+rdelim		provides the function `read-line'

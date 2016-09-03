@@ -1,0 +1,9 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-10-17T20:03:28+08:00
+
+====== Android Menafest.xml ======
+Created Thursday 17 October 2013
+
+Build.VERSION.SDK_INT==Build.VERSION_CODES.GINGERBREAD_MR1  判断SDK版本
+

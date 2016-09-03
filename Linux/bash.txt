@@ -1,0 +1,140 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-10-29T21:24:37+08:00
+
+====== bash ======
+Created Tuesday 29 October 2013
+
+==== 快捷键 ====
+：
+Ctrl + a  切换到命令行开始
+Ctrl + e  切换到命令行末尾
+
+Ctrl + u  清除剪切光标之前的内容
+Ctrl + k  剪切清除光标之后的内容
+
+Ctrl + w  删除光标前一个单词
+Ctrl + h  删除光标前一个字母
+
+Ctrl + r  在历史命令中查找 （zsh能自动匹配，更好用）
+
+Ctrl + p  上翻前面键入的命令
+Ctrl + o  输入完命令后，这个动作相当于按下<ENTER>，不同的是，你在按下CTRL + o时，它会记住上一次你Ctrl+ o的命令
+
+__bash compelement:__
+modify [[/etc/bash.bashrc]]
+
+__输入不可打印字符如回车符'\r' 在shell里显示是^M__
+__但是直接输入不对应该是ctrl+v,ctrl+M__
+
+
+参数从1开始
+$@ 和 $* 都存储了所有参数，但是有区别，什么区别见-->恶心的地方
+
+字符串  == ！= < > <= >=
+逻辑	[] || []      []&&[]
+计算 	
+	expr 5 \* 3
+	expr 5 \< 3
+	expr 5 \> 8
+
+文件 -f -d (-nt -ot 比较谁更新）
+
+扩展：
+	 Parameter Expansion:
+		1.remove the match strs
+		hello=hello/jin/guo
+		echo ${hello__##__*/}		guo		
+		 echo ${hello__#__*/}			jin/guo
+		echo ${hello__%%__/*}		hello
+		echo ${hello__%__/*}			hello/jin
+		${var:start:len} 截取字符串的一部分	var是个变量，直接用字符串不行
+	${ls} 	同 `ls` 输出到标准输出的数据作为值	
+	echo ${x//?1/z3}  替换
+易混点：
+echo hello 输出hello到标准输出
+echo的返回值存在$?
+M=`echo hello` 先解释执行``内的命令，把输出到标准输出的值存入M
+M=echo hello  把echo存入M，把后边hello当命令执行 ，error ，Wrong
+
+sed：
+sed 's:hello:jin:' file  把文件内的每一行的hello替换为jin
+sed  "/.*UMENG_CHANNEL.*/ s/\(.*value=\"\)[^\"]\+\(\".*\)/\1${channel}\2/ " AndroidManifest.xml.bak > AndroidManifest.xml   __替换模式匹配的字符串__
+
+awk -v RS=" " -v ORS=" " '/^-.*$/'           -v  assign a program var    RS: record sign default(\n)  ORS: out record sign default(\n)
+	here divide record by " " and filter the record prefix "-"
+	
+let n=2+3		这个样子？？！！
+
+echo 颜色菜单
+
+read -p "Input the value [$OLD_PRODUCT_TYPE]: " PRODUCT_TYPE     -p   prompt
+
+替换字符串
+replace() {
+ fileName=$1
+ OldWord=$2
+ NewWord=$3
+ 
+ ed - $fileName <<!
+ s/$OldWord/$NewWord/g
+ w
+ q
+ !
+}
+
+=== 分割字符串对每个字段依次处理 ===
+ while IFS=',' read -ra ADDR; do  # IFS为分隔符,  把$ChannelIds值作为标准输入,用read读取,
+	  for i in "${ADDR[@]}"; do
+	  	#process $i
+	  done
+ done <<< "$ChannelIds"
+
+=== 重定向 ===
+1. cat <<a   用一个标识符作为开始和结束,之间的文本作为标准输入
+helloworld
+$a
+www
+"helo"
+a
+输出
+helloworld
+$a
+www
+"helo"
+a
+2. cat <<<$a  把$a的值作为标准输入
+输出
+$a的值
+
+=== 正则表达式 regular ===
+\s 空字符
+\S 非空字符
+
+=== 恶心的地方 ===
+$@ 和 $* 都存储了所有参数,肯定有区别，但是还没测试出来
+括号（）什么时候转意呀（加\)    如：[ \( -f file1 \) -a \( -f file2 \) ]
+
+=== 环境变量： ===
+PS1  每个命令的提示词（不好理解，看下图）
+PS2  二级提示词
+{{./pasted_image.png}}
+
+==== 电源管理： ====
+	pm-hibernate       
+	pm-powersave       
+	pm-suspend-hybrid  
+	pm-is-supported    
+	pm-suspend
+
+有时候一些文件名很奇怪不容一删除可按下面方式：
+	rm  —-  --hello     可以删除掉--hello   如果不加--  会认为是参数的
+
+link the net with __proxy__:
+	http_proxy=http://192.168.20.20:3128 # 分别指定http、https、ftp协议使用的代理服务器地址
+	https_proxy=http://192.168.20.20:3128
+	ftp_proxy=http://192.168.20.20:3128
+	no_proxy=192.168.20. # 访问局域网地址（192.168.20.0/24网段）时不使用代理，可以用逗号分隔多个地址
+	export http_proxy https_proxy ftp_proxy no_proxy
+	so:
+		export https_proxy="http://proxy.global.sonyericsson.net:8080/accelerated_pac_base.pac"

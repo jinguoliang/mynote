@@ -1,0 +1,324 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn"><head><script src="android%20Instrumentation%20%E8%BD%AC%E8%BD%BD%20-%20carbs%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/gpt.js" type="text/javascript" async=""></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>android Instrumentation 转载 - carbs - 博客园</title>
+<link type="text/css" rel="stylesheet" href="android%20Instrumentation%20%E8%BD%AC%E8%BD%BD%20-%20carbs%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="android%20Instrumentation%20%E8%BD%AC%E8%BD%BD%20-%20carbs%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/style.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/carbs/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/carbs/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/carbs/wlwmanifest.xml">
+<script src="android%20Instrumentation%20%E8%BD%AC%E8%BD%BD%20-%20carbs%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'carbs', cb_enable_mathjax=false;</script>
+<script src="android%20Instrumentation%20%E8%BD%AC%E8%BD%BD%20-%20carbs%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/blog-common.js" type="text/javascript"></script>
+<script src="android%20Instrumentation%20%E8%BD%AC%E8%BD%BD%20-%20carbs%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/pubads_impl_32.js" type="text/javascript" async=""></script><script src="android%20Instrumentation%20%E8%BD%AC%E8%BD%BD%20-%20carbs%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/osd.js" type="text/javascript"></script></head>
+<body>
+<a name="top"></a>
+
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+		
+<!--done-->
+<div class="title"><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/carbs/">carbs</a></div>
+<div class="subtitle"></div>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li id="nav_sitehome"><a id="MyLinks1_HomeLink" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+<li id="nav_myhome"><a id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/carbs/">首页</a></li>
+<li id="nav_q"><a class="menu" href="http://q.cnblogs.com/">博问</a></li>
+<li id="nav_ing"><a class="menu" href="http://home.cnblogs.com/ing/">闪存</a></li>
+<li id="nav_newpost"><a id="MyLinks1_NewPostLink" class="menu" rel="nofollow" href="http://www.cnblogs.com/carbs/admin/EditPosts.aspx?opt=1">新随笔</a></li>
+<li id="nav_contact"><a id="MyLinks1_ContactLink" class="menu" rel="nofollow" href="http://space.cnblogs.com/msg/send/carbs">联系</a></li>
+<li id="nav_rss"><a id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/carbs/rss">订阅</a>
+<!--<a id="MyLinks1_XMLLink" class="aHeaderXML" href="http://www.cnblogs.com/carbs/rss"><img src="http://www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></li>
+<li id="nav_admin"><a id="MyLinks1_Admin" class="menu" rel="nofollow" href="http://www.cnblogs.com/carbs/admin/EditPosts.aspx">管理</a></li>
+</ul>
+
+		<div class="blogStats">
+			
+			
+<!--done-->
+随笔-136&nbsp;
+文章-0&nbsp;
+评论-1&nbsp;
+
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/carbs/archive/2013/01/12/2857596.html">android Instrumentation 转载</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body"><p>Android提供了一系列强大的测试工具，它针对Android的环境，扩展了业内标准的JUnit测试框架。尽管你可以使用JUnit测试Android工程，但Android工具允许你为应用程序的各个方面进行更为复杂的测试，包括单元层面及框架层面。<br><br>Android测试环境的主要特征有：<br><br>l&nbsp;&nbsp; 可以访问Android系统对象。<br><br>l&nbsp;&nbsp; Instrumentation框架可以控制和测试应用程序。<br><br>l&nbsp;&nbsp; Android系统常用对象的模拟版本。<br><br>l&nbsp;&nbsp; 运行单个test或test suite的工具，带或不带Instrumentation。<br><br>l&nbsp;&nbsp; 支持以Eclipse的ADT插件和命令行方式管理Test和Test工程。<br><br>这篇文章是对Android测试环境和测试方法的简要介绍，并假设你已经拥有一定的Android应用程序编程及JUnit测试的经验。<br><br>概要<br><br>Android
+测试环境的核心是一个Instrumentation框架，在这个框架下，你的测试应用程序可以精确控制应用程序。使用Instrumentation，
+你可以在主程序启动之前，创建模拟的系统对象，如Context；控制应用程序的多个生命周期；发送UI事件给应用程序；在执行期间检查程序状态。
+Instrumentation框架通过将主程序和测试程序运行在同一个进程来实现这些功能。<br><br>通过在测试工程的manifest文件中添
+加&lt;instrumentation&gt;元素来指定要测试的应用程序。这个元素的特性指明了要测试的应用程序包名，以及告诉Android如何
+运行测试程序。在Inustrumentation TestRunner章节有更多的细节描述。<br><br>下面的图片概要的描述了Android的测试环境：<br><img src="android%20Instrumentation%20%E8%BD%AC%E8%BD%BD%20-%20carbs%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/c73b901b-d73e-3eda-b404-42dce74c6a5a.png" alt=""><br><br><br>在
+Android中，测试程序也是Android程序，因此，它和被测试程序的书写方式有很多相同的地方。SDK工具能帮助你同时创建主程序工程及它的测试
+工程。你可以通过Eclipse的ADT插件或者命令行来运行Android测试。Eclipse的ADT提供了大量的工具来创建测试用例，运行以及查看
+结果。<br><br>Testing API<br><br>Android提供了基于JUnit测试框架的测试API来书写测试用例和测试程序。另外，Android还提供了强大的Instrumentation框架，允许测试用例访问程序的状态及运行时对象。<br><br>下面的章节描述了Android中可利用的主要测试API。<br><br>JUnit TestCase类<br><br>继
+承自JUnit的TestCase，不能使用Instrumentation框架。但这些类包含访问系统对象（如Context）的方法。使用
+Context，你可以浏览资源，文件，数据库等等。基类是AndroidTestCase，一般常见的是它的子类，和特定组件关联。<br><br>子类有：<br><br>l&nbsp;&nbsp; ApplicationTestCase——测试整个应用程序的类。它允许你注入一个模拟的Context到应用程序中，在应用程序启动之前初始化测试参数，并在应用程序结束之后销毁之前检查应用程序。<br><br>l&nbsp;&nbsp; ProviderTestCase2——测试单个ContentProvider的类。因为它要求使用MockContentResolver，并注入一个IsolatedContext，因此Provider的测试是与OS孤立的。<br><br>l&nbsp;&nbsp; ServiceTestCase——测试单个Service的类。你可以注入一个模拟的Context或模拟的Application（或者两者），或者让Android为你提供Context和MockApplication。<br><br>Instrumentation TestCase类<br><br>继
+承自JUnit 
+TestCase类，并可以使用Instrumentation框架，用于测试Activity。使用Instrumentation，Android可
+以向程序发送事件来自动进行UI测试，并可以精确控制Activity的启动，监测Activity生命周期的状态。<br><br>基类是InstrumentationTestCase。它的所有子类都能发送按键或触摸事件给UI。子类还可以注入一个模拟的Intent。<br><br>子类有：<br><br>l&nbsp;&nbsp; ActivityTestCase——Activity测试类的基类。<br><br>l&nbsp;&nbsp;
+ 
+SingleLaunchActivityTestCase——测试单个Activity的类。它能触发一次setup()和tearDown()，而不
+是每个方法调用时都触发。如果你的测试方法都是针对同一个Activity的话，那就使用它吧。<br><br>l&nbsp;&nbsp; SyncBaseInstrumentation——测试Content Provider同步性的类。它使用Instrumentation在启动测试同步性之前取消已经存在的同步对象。<br><br>l&nbsp;&nbsp; ActivityUnitTestCase——对单个Activity进行单一测试的类。使用它，你可以注入模拟的Context或Application，或者两者。它用于对Activity进行单元测试。<br><br>不同于其它的Instrumentation类，这个测试类不能注入模拟的Intent。<br><br>l&nbsp;&nbsp;
+ 
+ActivityInstrumentationTestCase2——在正常的系统环境中测试单个Activity的类。你不能注入一个模拟的
+Context，但你可以注入一个模拟的Intent。另外，你还可以在UI线程（应用程序的主线程）运行测试方法，并且可以给应用程序UI发送按键及触
+摸事件。<br><br>Assert类<br><br>Android还继承了JUnit的Assert类，其中，有两个子类，MoreAsserts和ViewAsserts：<br><br>l&nbsp;&nbsp; MoreAsserts类包含更多强大的断言方法，如assertContainsRegex(String, String)，可以作正则表达式的匹配。<br><br>l&nbsp;&nbsp;
+ ViewAsserts类包含关于Android View的有用断言方法，如assertHasScreenCoordinates(View, 
+View, int, int)，可以测试View在可视区域的特定X、Y位置。这些Assert简化了UI中几何图形和对齐方式的测试。<br><br>Mock对象类<br><br>Android
+有一些类可以方便的创建模拟的系统对象，如Application，Context，Content 
+Resolver和Resource。Android还在一些测试类中提供了一些方法来创建模拟的Intent。因为这些模拟的对象比实际对象更容易使
+用，因此，使用它们能简化依赖注入。你可以在android.test和android.test.mock中找到这些类。<br><br>它们是：<br><br>l&nbsp;&nbsp; IsolatedContext——模拟一个Context，这样应用程序可以孤立运行。与此同时，还有大量的代码帮助我们完成与Context的通信。这个类在单元测试时很有用。<br><br>l&nbsp;&nbsp; RenamingDelegatingContext——当修改默认的文件和数据库名时，可以委托大多数的函数到一个存在的、常规的Context上。使用这个类来测试文件和数据库与正常的系统Context之间的操作。<br><br>l&nbsp;&nbsp;
+ 
+MockApplication,MockContentResolver,MockContext,MockDialogInterface,MockPackageManager,MockResources
+——创建模拟的系统对象的类。它们只暴露那些对对象的管理有用的方法。这些方法的默认实现只是抛出异常。你需要继承这些类并重写这些方法。<br><br>Instrumentation TestRunner<br><br>Android
+提供了自定义的运行测试用例的类，叫做InstrumentationTestRunner。这个类控制应用程序处于测试环境中，在同一个进程中运行测试
+程序和主程序，并且将测试结果输出到合适的地方。IntrumentationTestRunner在运行时对整个测试环境的控制能力的关键是使用
+Instrumentation。注意，如果你的测试类不使用Instrumentation的话，你也可以使用这个TestRunner。<br><br>当
+你运行一个测试程序时，首先会运行一个系统工具叫做Activity Manager。Activity 
+Manager使用Instrumentation框架来启动和控制TestRunner，这个TestRunner反过来又使用
+Intrumentation来关闭任何主程序的实例，然后启动测试程序及主程序（同一个进程中）。这就能确保测试程序与主程序间的直接交互。<br><br>在测试环境中工作<br><br>对Android程序的测试都包含在一个测试程序里，它本身也是一个Android应用程序。测试程序以单独的Android工程存在，与正常的Android程序有着相同的文件和文件夹。测试工程通过在manifest文件中指定要测试的应用程序。<br><br>每个测试程序包含一个或多个针对特定类型组件的测试用例。测试用例里定义了测试应用程序某些部分的测试方法。当你运行测试程序，Android会在相同进程里加载主程序，然后触发每个测试用例里的测试方法。<br><br>测试工程<br><br>为了开始对一个Android程序测试，你需要使用Android工具创建一个测试工程。工具会创建工程文件夹、文件和所需的子文件夹。工具还会创建一个manifest文件，指定被测试的应用程序。<br><br>测试用例<br><br>一个测试程序包含一个或多个测试用例，它们都继承自Android TestCase类。选择一个测试用例类取决于你要测试的Android组件的类型以及你要做什么样的测试。一个测试程序可以测试不同的组件，但每个测试用例类设计时只能测试单一类型的组件。<br><br>一
+些Android组件有多个关联的测试用例类。在这种情况下，在可选择的类间，你需要判断你要进行的测试类型。例如，对于Activity来说，你有两个
+选择，ActivityInstrumentationTestCase2和ActivityUnitTestCase。<br><br>ActivityInstrumentationTestCase2设计用于进行一些功能性的测试，因此，它在一个正常的系统环境中测试Activity。你可以注入模拟的Intent，但不能是模拟的Context。一般来说，你不能模拟Activity间的依赖关系。<br><br>相比而言，ActivityUnitTestCase设计用于单元测试，因此，它在一个孤立的系统环境中测试Activity。换句话说，当你使用这个测试类时，Activity不能与其它Activity交互。<br><br>作为一个经验法则，如果你想测试Activity与Android的交互的话，使用ActivityInstrumentationTestCase2。如果你想对一个Activity做回归测试的话，使用ActivityUnitTestCase。<br><br>测试方法<br><br>每
+个测试用例类提供了可以建立测试环境和控制应用程序的方法。例如，所有的测试用例类都提供了JUnit的setUp()方法来搭建测试环境。另外，你可以
+添加方法来定义单独的测试。当你运行测试程序时，每个添加的方法都会运行一次。如果你重写了setUp()方法，它会在每个方法运行前运行。相似
+的，tearDown()方法会在每个方法之后运行。<br><br>测试用例类提供了大量的对组件启动和停止控制的方法。由于这个原因，在运行测试之
+前，你需要明确告诉Android启动一个组件。例如，你可以使用getActivity()来启动一个Activity。在整个测试用例期间，你只能调
+用这个方法一次，或者每个测试方法一次。甚至你可以在单个测试方法中，调用它的finishing()来销毁Activity，然后再调用
+getActivity()重新启动一个。<br><br>运行测试并查看结果<br><br>编译完测试工程后，你就可以使用系统工具Activity
+ Manager来运行测试程序。你给Activity 
+Manager提供了TestRunner的名（一般是InstrumentationTestRunner，在程序中指定）；名包括被测试程序的包名和
+TestRunner的名。Activity 
+Manager加载并启动你的测试程序，杀死主程序的任何实例，然后在测试程序的同一个进程里加载主程序，然后传递测试程序的第一个测试用例。这个时
+候，TestRunner会接管这些测试用例，运行里面的每个测试方法，直到所有的方法运行结束。<br><br>如果你使用Eclipse，结果会在JUnit的面板中显示。如果你使用命令行，将输出到STDOUT上。<br><br>测试什么？<br><br>除了一些功能测试外，这里还有一些你应该考虑测试的内容：<br><br>l&nbsp;&nbsp;
+ 
+Activity生命周期事件：你应该测试Activity处理生命周期事件的正确性。例如，一个Activity应该在pause或destroy事件
+时保存它的状态。记住一点的是屏幕方向的改变也会引发当前Activity销毁，因此，你需要测试这种偶然情况确保不会丢失应用程序状态。<br><br>l&nbsp;&nbsp; 数据库操作：你应该确保数据库操作能正确处理应用程序状态的变化。使用android.test.mock中的模拟对象。<br><br>l&nbsp;&nbsp; 屏幕大小和分辨率：在发布程序之前，确保在所有要运行的屏幕大小和分辨率上测试通过。你可以使用AVD来测试，或者使用真实的目标设备进行测试。<br><br>附加：UI测试<br><br>接下来的章节为应用程序UI的测试提供了一些提示，特别是帮助你在UI线程里处理动作，触屏和按键事件，和锁屏。<br><br>UI线程中测试<br><br>Activity运行在程序的UI线程里。一旦UI初始化后，例如在Activity的onCreate()方法后，所有与UI的交互都必须运行在UI线程里。当你正常运行程序时，它有权限可以访问这个线程，并且不会出现什么特别的事情。<br><br>当
+你运行测试程序时，这一点发生了变化。在带有instrumentation的类里，你可以触发方法在UI线程里运行。其它的测试用例类不允许这么做。为
+了一个完整的测试方法都在UI线程里运行，你可以使用@UIThreadTest来声明线程。注意，这将会在UI线程里运行方法里所有的语句。不与UI交
+互的方法不允许这么做；例如，你不能触发Instrumentation.waitForIdleSync()。<br><br>如果让方法中的一部分代码运行在UI线程的话，创建一个匿名的Runnable对象，把代码放到run()方法中，然后把这个对象传递给appActivity.runOnUiThread()，在这里，appActivity就是你要测试的app对象。<br><br>例如，下面的代码实例化了一个要测试的Activity，为Spinner请求焦点，然后发送一个按键给它。注意：waitForIdleSync和sendKeys不允许在UI线程里运行：<br><br>&nbsp; private MyActivity mActivity; // MyActivity is the class name of the app under test <br><br>&nbsp; private Spinner mSpinner; <br><br> <br><br>&nbsp; ... <br><br> <br><br>&nbsp; protected void setUp() throws Exception { <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; super.setUp(); <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mInstrumentation = getInstrumentation(); <br><br> <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mActivity = getActivity(); // get a references to the app under test <br><br> <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /* <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * Get a reference to the main widget of the app under test, a Spinner <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */ <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mSpinner = (Spinner) mActivity.findViewById(com.android.demo.myactivity.R.id.Spinner01); <br><br> <br><br>&nbsp; ... <br><br> <br><br>&nbsp; public void aTest() { <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /* <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * request focus for the Spinner, so that the test can send key events to it <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * This request must be run on the UI thread. To do this, use the runOnUiThread method <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * and pass it a Runnable that contains a call to requestFocus on the Spinner. <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */ <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mActivity.runOnUiThread(new Runnable() { <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public void run() { <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mSpinner.requestFocus(); <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }); <br><br> <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mInstrumentation.waitForIdleSync(); <br><br> <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.sendKeys(KeyEvent.KEYCODE_DPAD_CENTER);<br><br> <br><br>关闭触屏模式<br><br>为了控制从测试程序中发送给模拟器或设备的按键事件，你必须关闭触屏模式。如果你不这么做，按键事件将被忽略。<br><br>关
+闭触摸模式，你需要在调用getActivity()启动Activity之前调用
+ActivityInstrumentationTestCase2.setActivityTouchMode(false)。你必须在非UI线程中运
+行这个调用。基于这个原因，你不能在声明有@UIThread的测试方法调用。可以在setUp()中调用。<br><br>模拟器或设备的解锁<br><br>你可能已经发现，如果模拟器或设备的键盘保护模式使得HOME画面不可用时，UI测试不能正常工作。这是因为应用程序不能接收sendKeys()的事件。避免这种情况最好的方式是在启动模拟器或设备时关闭键盘保护模式。<br><br>你还可以显式地关闭键盘保护。这需要在manifest文件中添加一个权限，然后就能在程序中关闭键盘保护。注意，你必须在发布程序之前移除这个，或者在发布的程序中禁用这个功能。<br><br>在&lt;manifest&gt;
+元素下添加&lt;uses-permission 
+android:name=”androd.permission.DISABLE_KEYGUARD”/&gt;。为了关闭键盘保护，在你测试的
+Activity的onCreate()方法中添加以下代码：<br><br>&nbsp; mKeyGuardManager = (KeyguardManager)getSystemService(KEYGUARD_SERVICE); <br><br>&nbsp; mLock = mKeyGuardManager.newKeyguardLock("activity_classname"); <br><br>&nbsp; mLock.disableKeyguard();<br><br>这里，activity_classname是Activity的类名。</p></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="blog_post_info"><div id="BlogPostCategory"></div>
+<div id="EntryTag"></div>
+<div id="green_channel">
+绿色通道：
+<a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(cb_entryId,cb_blogId,1);green_channel_success(this,'谢谢推荐！');">好文要顶</a>
+<a id="green_channel_follow" onclick="c_follow();" href="javascript:void(0);">关注我</a>
+<a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a><a id="green_channel_contact" href="http://space.cnblogs.com/msg/send/carbs" target="_blank">与我联系</a>
+<a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="android%20Instrumentation%20%E8%BD%AC%E8%BD%BD%20-%20carbs%20-%20%E5%8D%9A%E5%AE%A2%E5%9B%AD_files/icon_weibo_24.png" alt=""></a>
+</div>
+<div id="digg_block">
+<div id="author_profile">
+<div id="author_profile_info" class="author_profile_info">
+<div id="author_profile_detail" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/carbs/">carbs</a><br>
+<a href="http://home.cnblogs.com/u/carbs/followees">关注 - 0</a><br>
+<a href="http://home.cnblogs.com/u/carbs/followers">粉丝 - 7</a>
+</div>
+</div>
+<div class="clear"></div>
+<div id="author_profile_honor"></div>
+<div id="author_profile_follow">
+<a href="javascript:void(0);" onclick="c_follow();return false;">+加关注</a>
+</div>
+</div>
+<div id="div_digg">										
+	<div class="diggit" onclick="votePost(cb_entryId,'Digg')"> 
+		<span class="diggnum" id="digg_count">0</span>
+	</div>
+	<div class="buryit" onclick="votePost(cb_entryId,'Bury')"> 
+		<span class="burynum" id="bury_count">0</span>
+	</div>
+	<div class="clear"></div>	
+	<div class="diggword" id="digg_tips">
+    (请您对文章做出评价)
+    </div>	
+</div>
+</div></div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/carbs/archive/2013/01/11/2856895.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/carbs/archive/2013/01/11/2856895.html" title="发布于2013-01-11 18:48">浅谈HTTP中Get与Post的区别</a><br><a href="http://www.cnblogs.com/carbs/archive/2013/01/16/2863296.html" class="p_n_p_prefix">» </a> 下一篇：<a href="http://www.cnblogs.com/carbs/archive/2013/01/16/2863296.html" title="发布于2013-01-16 20:02">JSP自定义标签开发入门</a><br></div>
+</div>
+
+
+		</div>
+		<div class="postDesc">posted @ <span id="post-date">2013-01-12 13:47</span> <a href="http://www.cnblogs.com/carbs/">carbs</a> 阅读(<span id="post_view_count">1798</span>) 评论(<span id="post_comment_count">0</span>)  <a href="http://www.cnblogs.com/carbs/admin/EditPosts.aspx?postid=2857596" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(2857596);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,isLogined=false,cb_blogId=113673,cb_entryId=2857596,cb_blogApp=currentBlogApp,cb_blogUserGuid='78f3a846-687c-e111-aa3f-842b2b196315',cb_entryCreatedDate='2013/1/12 13:47:00';loadViewCount(cb_entryId);</script>
+	
+</div><!--end: topics 文章、评论容器-->
+<a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" id="lnk_RefreshComments" onclick="return RefreshCommentList();">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login('commentform');">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"><a target="_blank" href="http://q.cnblogs.com/">程序员问答平台，解决您的技术难题</a></div>
+<div id="site_nav_under"><a href="http://www.cnblogs.com/" target="_blank" title="程序员的网上家园">博客园首页</a><a href="http://q.cnblogs.com/" target="_blank" title="程序员问答社区">博问</a><a href="http://news.cnblogs.com/" target="_blank" title="IT新闻">新闻</a><a href="http://home.cnblogs.com/ing/" target="_blank">闪存</a><a href="http://job.cnblogs.com/" target="_blank">程序员招聘</a><a href="http://kb.cnblogs.com/" target="_blank">知识库</a></div>
+<div id="ad_under_post_holder">
+
+<div id="google_ad_c1" class="c_ad_block">
+    <!-- cnblogs_blogpost_C1_sitehome -->
+    <div id="div-gpt-ad-1346480159711-0" style="width: 300px; height: 250px;">
+    
+    <div style="border: 0pt none;" id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__container__"><iframe src="javascript:&quot;<html><body style='background:transparent'></body></html>&quot;" style="border: 0px none; vertical-align: bottom;" marginheight="0" marginwidth="0" name="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0" id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0" width="300" frameborder="0" height="250" scrolling="no"></iframe></div><iframe src="javascript:&quot;<html><body style='background:transparent'></body></html>&quot;" style="border: 0px none; vertical-align: bottom; visibility: hidden; display: none;" marginheight="0" marginwidth="0" name="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__hidden__" id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__hidden__" width="0" frameborder="0" height="0" scrolling="no"></iframe></div>
+</div>
+<div id="blog_news_kb"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="http://news.cnblogs.com/n/199417/" target="_blank">埃森哲：企业端的6大技术趋势</a><br> ·  <a href="http://news.cnblogs.com/n/199416/" target="_blank">小编等不及来爆料了 360手机助手免流量准备更新</a><br> ·  <a href="http://news.cnblogs.com/n/199415/" target="_blank">腾讯未必生，阿里未必死</a><br> ·  <a href="http://news.cnblogs.com/n/199414/" target="_blank">暗地招兵买马，Facebook 密谋新闻应用</a><br> ·  <a href="http://news.cnblogs.com/n/199413/" target="_blank">智能门锁会否引起酒店业变革？</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/198974/" target="_blank">全栈工程师就是一棵歪脖子树</a><br> ·  <a href="http://kb.cnblogs.com/page/191744/" target="_blank">Linux上的基础网络设备详解</a><br> ·  <a href="http://kb.cnblogs.com/page/198414/" target="_blank">深入剖析阿里巴巴云梯YARN集群</a><br> ·  <a href="http://kb.cnblogs.com/page/196718/" target="_blank">关于技术团队管理的胡言乱语</a><br> ·  <a href="http://kb.cnblogs.com/page/197406/" target="_blank">浅谈TCP优化</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div></div>
+<script type="text/javascript">
+var enableGoogleAd = true;
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+fixPostBodyFormat();
+loadAdUnderPost();
+</script>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+loadBlogSignature();
+LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+</script>
+<script type="text/javascript">
+    $.ajax({ url: 'http://counter.cnblogs.com/blog/post/' + cb_entryId, type: 'get', dataType: 'script', cache: true });
+</script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"><div id="profile_block">昵称：<a href="http://home.cnblogs.com/u/carbs/">carbs</a><br>园龄：<a href="http://home.cnblogs.com/u/carbs/" title="入园时间：2012-04-02">1年9个月</a><br>粉丝：<a href="http://home.cnblogs.com/u/carbs/followers/">7</a><br>关注：<a href="http://home.cnblogs.com/u/carbs/followees/">0</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="cnblogs.UserManager.FollowBlogger('78f3a846-687c-e111-aa3f-842b2b196315')">+加关注</a></div></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="calendar"><div id="blog-calendar" style=""><table id="blogCalendar" class="Cal" title="日历" cellpadding="0" cellspacing="0">
+	<tbody><tr><td colspan="7"><table class="CalTitle" cellspacing="0">
+		<tbody><tr><td class="CalNextPrev"><a href="javascript:void(0);" onclick="loadBlogCalendar('2012/12/01');return false;">&lt;</a></td><td align="center">2013年1月</td><td class="CalNextPrev" align="right"><a href="javascript:void(0);" onclick="loadBlogCalendar('2013/02/01');return false;">&gt;</a></td></tr>
+	</tbody></table></td></tr><tr><th class="CalDayHeader" abbr="日" scope="col" align="center">日</th><th class="CalDayHeader" abbr="一" scope="col" align="center">一</th><th class="CalDayHeader" abbr="二" scope="col" align="center">二</th><th class="CalDayHeader" abbr="三" scope="col" align="center">三</th><th class="CalDayHeader" abbr="四" scope="col" align="center">四</th><th class="CalDayHeader" abbr="五" scope="col" align="center">五</th><th class="CalDayHeader" abbr="六" scope="col" align="center">六</th></tr><tr><td class="CalOtherMonthDay" align="center">30</td><td class="CalOtherMonthDay" align="center">31</td><td align="center">1</td><td align="center">2</td><td align="center">3</td><td align="center">4</td><td class="CalWeekendDay" align="center">5</td></tr><tr><td class="CalWeekendDay" align="center">6</td><td align="center">7</td><td align="center">8</td><td align="center">9</td><td align="center">10</td><td align="center"><a href="http://www.cnblogs.com/carbs/archive/2013/01/11.html"><u>11</u></a></td><td class="CalWeekendDay" align="center"><a href="http://www.cnblogs.com/carbs/archive/2013/01/12.html"><u>12</u></a></td></tr><tr><td class="CalWeekendDay" align="center">13</td><td align="center">14</td><td align="center">15</td><td align="center"><a href="http://www.cnblogs.com/carbs/archive/2013/01/16.html"><u>16</u></a></td><td align="center">17</td><td align="center">18</td><td class="CalWeekendDay" align="center">19</td></tr><tr><td class="CalWeekendDay" align="center">20</td><td align="center">21</td><td align="center"><a href="http://www.cnblogs.com/carbs/archive/2013/01/22.html"><u>22</u></a></td><td align="center">23</td><td align="center">24</td><td align="center">25</td><td class="CalWeekendDay" align="center">26</td></tr><tr><td class="CalWeekendDay" align="center">27</td><td align="center">28</td><td align="center">29</td><td align="center">30</td><td align="center">31</td><td class="CalOtherMonthDay" align="center">1</td><td class="CalOtherMonthDay" align="center">2</td></tr><tr><td class="CalOtherMonthDay" align="center">3</td><td class="CalOtherMonthDay" align="center">4</td><td class="CalOtherMonthDay" align="center">5</td><td class="CalOtherMonthDay" align="center">6</td><td class="CalOtherMonthDay" align="center">7</td><td class="CalOtherMonthDay" align="center">8</td><td class="CalOtherMonthDay" align="center">9</td></tr>
+</tbody></table></div><script type="text/javascript">loadBlogDefaultCalendar();</script></div>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn">
+
+<div class="mySearch">
+<h3 class="catListTitle">搜索</h3>
+<div id="widget_my_zzk" class="div_my_zzk"><input id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk" type="text">&nbsp;<input onclick="zzk_go()" value="找找看" id="btnZzk" class="btn_my_zzk" type="button"></div>
+<div id="widget_my_google" class="div_my_zzk"><input name="google_q" id="google_q" onkeydown="return google_go_enter(event)" class="input_my_zzk" type="text">&nbsp;<input onclick="google_go()" value="谷歌搜索" class="btn_my_zzk" type="button"></div>
+</div>
+
+
+<div class="catListLink">
+<h3 class="catListTitle">常用链接</h3>
+<ul>
+
+		<li><a id="ctl01_rptMainLinks_lnkLinkItem_0" href="http://www.cnblogs.com/carbs/p/">我的随笔</a></li>
+	
+		<li><a id="ctl01_rptMainLinks_lnkLinkItem_1" href="http://www.cnblogs.com/carbs/MyComments.html">我的评论</a></li>
+	
+		<li><a id="ctl01_rptMainLinks_lnkLinkItem_2" title="我发表过评论的随笔" href="http://www.cnblogs.com/carbs/OtherPosts.html">我的参与</a></li>
+	
+		<li><a id="ctl01_rptMainLinks_lnkLinkItem_3" href="http://www.cnblogs.com/carbs/RecentComments.html">最新评论</a></li>
+	
+		<li><a id="ctl01_rptMainLinks_lnkLinkItem_4" href="http://www.cnblogs.com/carbs/tag/">我的标签</a></li>
+	
+</ul>
+<div id="itemListLin_con" style="display:none;">
+<ul>
+
+</ul>
+</div>
+</div>
+<div class="catListPostArchive">
+<h3 class="catListTitle">随笔档案</h3>
+
+<ul>
+
+<li><a id="ctl03_CatList_LinkList_0_Link_0" href="http://www.cnblogs.com/carbs/archive/2013/01.html">2013年1月 (6)</a> </li>
+
+<li><a id="ctl03_CatList_LinkList_0_Link_1" href="http://www.cnblogs.com/carbs/archive/2012/12.html">2012年12月 (1)</a> </li>
+
+<li><a id="ctl03_CatList_LinkList_0_Link_2" href="http://www.cnblogs.com/carbs/archive/2012/07.html">2012年7月 (70)</a> </li>
+
+<li><a id="ctl03_CatList_LinkList_0_Link_3" href="http://www.cnblogs.com/carbs/archive/2012/06.html">2012年6月 (14)</a> </li>
+
+<li><a id="ctl03_CatList_LinkList_0_Link_4" href="http://www.cnblogs.com/carbs/archive/2012/05.html">2012年5月 (5)</a> </li>
+
+<li><a id="ctl03_CatList_LinkList_0_Link_5" href="http://www.cnblogs.com/carbs/archive/2012/04.html">2012年4月 (40)</a> </li>
+
+</ul>
+
+</div>
+
+
+<div class="catListComment">
+<h3 class="catListTitle">最新评论</h3>
+	<div id="RecentCommentsBlock"><ul>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/carbs/archive/2012/07/16/2593295.html#2694733">1. Re:.使用ContactsContract API</a></li>
+    <li class="recent_comment_body">受益匪浅哇~</li>
+    <li class="recent_comment_author">--msg2030</li>
+</ul>
+</div>
+</div>
+
+<div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock"><ul><li><a href="http://www.cnblogs.com/carbs/archive/2012/07/03/2575474.html">1. Android中的android:layout_width和android:width(10549)</a></li><li><a href="http://www.cnblogs.com/carbs/archive/2012/04/29/2475955.html">2. OnCreate 函数的说明(3430)</a></li><li><a href="http://www.cnblogs.com/carbs/archive/2012/04/06/2434407.html">3. 虚基类(1973)</a></li><li><a href="http://www.cnblogs.com/carbs/archive/2013/01/12/2857596.html">4. android Instrumentation 转载(1798)</a></li><li><a href="http://www.cnblogs.com/carbs/archive/2012/07/09/2583829.html">5. 主题：android之XmlResourceParser类使用实例 转(1746)</a></li></ul></div>
+</div>
+
+<div class="catListFeedback">
+<h3 class="catListTitle">评论排行榜</h3>
+	<div id="TopFeedbackPostsBlock"><ul><li><a href="http://www.cnblogs.com/carbs/archive/2012/07/16/2593295.html">1. .使用ContactsContract API(1)</a></li><li><a href="http://www.cnblogs.com/carbs/archive/2012/07/11/2587177.html">2. android 中 的 matrix  转(0)</a></li><li><a href="http://www.cnblogs.com/carbs/archive/2012/07/11/2586921.html">3. 屏幕旋转 转(0)</a></li><li><a href="http://www.cnblogs.com/carbs/archive/2012/07/11/2586885.html">4. Android 禁止屏幕旋转 &amp; 旋转屏幕时保持Activity内容  转(0)</a></li><li><a href="http://www.cnblogs.com/carbs/archive/2012/07/11/2586848.html">5. Android getWindow().setFlags方法(0)</a></li></ul></div>
+</div>
+
+<div class="catListView">
+<h3 class="catListTitle">推荐排行榜</h3>
+<div id="TopDiggPostsBlock"><ul><li><a href="http://www.cnblogs.com/carbs/archive/2012/04/06/2434407.html">1. 虚基类(4)</a></li><li><a href="http://www.cnblogs.com/carbs/archive/2012/07/04/2576995.html">2. hashmap hashtable 的区别(1)</a></li><li><a href="http://www.cnblogs.com/carbs/archive/2012/07/04/2576961.html">3. map list...(1)</a></li><li><a href="http://www.cnblogs.com/carbs/archive/2012/07/16/2593295.html">4. .使用ContactsContract API(1)</a></li><li><a href="http://www.cnblogs.com/carbs/archive/2012/07/10/2585145.html">5. Android 开发 – 使用菜单(1)</a></li></ul></div>
+</div></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright ©2014 carbs
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+<iframe style="display: none; width: 0px; height: 0px;" name="google_osd_static_frame" id="google_osd_static_frame_6921278670257"></iframe></body></html>

@@ -1,0 +1,32 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-31T12:05:04+08:00
+
+====== kindle做屏幕 ======
+Created Friday 31 July 2015
+
+硬件：
+1. Kindle3：淘宝
+2. raspberry PI：易络盟
+3. microUSB充电器一个：淘宝
+4. USB转microUSB数据线一条：淘宝
+5. USB键盘一个：淘宝
+6. 视频线一条+电视一个 或 HDMI线一条+显示器一个：用于初始化设置raspberry PI, 以后就不用了。
+7. SD卡一个：SanDisk闪迪 Ultra 高速 SD卡 SDHC 16G Class10 30M/s 200X 高清
+8. SSD读卡器一个：淘宝
+9. 网线：淘宝
+软件：
+1. Kindle3 越狱包：update_jailbreak_0.6.N_k3g_install.bin
+2. Kindle3 usbnetwork：update_usbnetwork_0.33.N_k3g_install.bin
+3. Kindle3 launchpad：update_launchpad_0.0.1c_k3g_install.bin
+4. Kindle3 myts（Kindle3的虚拟终端）：myts-7.zip
+5. Kindle3 usbnetwork的Windows驱动：XP-RNDIS-Ethernet-Gadget
+6. win32DiskImage：Win32DiskImager.exe
+7. raspberry pi镜像：2012-09-18-wheezy-raspbian.img
+8. raspberry tmux：使用电视启动后，sudo apt-get install
+9. raspberry dropbear：使用电视启动后，sudo apt-get install
+原理：
+1. pi启动时自动登录，且自动使用tmux/screen共享session
+2. kindle和pi使用usbnetwork创建连接
+3. kindle自动登录pi，且自动使用tmux/screen共享session
+4. USB键盘和Kindle键盘分别操作两个pi和kindle，但是两者共享session，所以看起来是一样的。

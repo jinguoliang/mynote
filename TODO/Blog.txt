@@ -1,0 +1,28 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-06-01T11:08:59+08:00
+
+====== Blog ======
+Created Monday 01 June 2015
+
+TODO:
+	[*] listview item 最外层布局的layout属性不起作用 @Blog
+	[ ] contact indexer @Blog
+	[ ] mysql  auto-increment   sqlite autoincrement @Blog
+	[ ] git add -i @Blog
+	[ ] [[+Android Gradle 构建|Android Gradle 构建 @Blog]]
+	[ ] [[+Android 测试|Android 测试 @Blog]]
+	[ ] [[ScaleDrawable @Blog]]
+	[ ] [[+完全了解Android Touch Mode和Focus|完全了解Android Touch Mode和Focus @Blog]]
+
+	[ ] [[ApplicationInfo]]
+	[ ] 显示go项目的依赖 →  go list → gotools
+	[ ] vimgo学习
+	[ ] Git Hook @Blog
+	[ ] 自定义控件，属性的解析，获取资源id
+	[ ] 为了弄懂协程要去看本书,学个语言<Programming in Lua>
+	[ ] [[+repo|repo]]
+	[ ] 深入比较一下三种解析xml的方式
+	[ ] 总结悬浮框相关
+	[ ] 总结support-v7
+

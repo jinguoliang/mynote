@@ -1,0 +1,25 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-17T11:20:07+08:00
+
+====== 子分类 ======
+Created Friday 17 July 2015
+
+1. onCreate
+	a. 获取传进来的分类id
+	b. initUI
+	c. 读取分类数据(先读缓存,在请求网络)
+2. 请求分类数据
+	a. 在无网状态时
+		1. 如果有分类缓存,则显示messageBox
+		2. 否则,提示网络错误并退出界面
+	b. 有网时,
+		1. 显示加载,网络错误messageBox
+		2. 正常刷新分类列表,缓存数据 refreshCategoriesData → 设置以及分类adapter, initDefaultSelection() → 
+			a. 当前二级子分类和排序初始化为0, 当前一级子分类
+			b. 根据一级子分类的选项初始化 (二级子分类,进而根据二级id请求第一页数据)
+			c. 在这里请求数据与home不同,这里请求第一页和请求以后的页只是页号不同,所以使用了一个方法,但是第一页和第二页的很多行为是不同的
+				1. 第一页, 无网时competeheder和messageBox,onStart里显示加载,onFailer显示网络错误,onSuccess() 如果不正常则显示网络出错,如果正常则要么显示空数据要么显示数据
+				2. 更多页, 无网时completeFooter和toast提示,onStart没,onFailer,onSuccess()不正常都toast提示,正常则添加数据
+3. 初始化UI 太复杂了, 没怎么用xml
+	a. 要用xml

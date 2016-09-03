@@ -1,0 +1,51 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-12-07T19:49:28+08:00
+
+====== Linux启动过程分析 ======
+Created Saturday 07 December 2013
+
+Stage 1: the BIOS
+	the first few sectors of the first found selected device are loaded to the memory and this initial code is executed. This initial code can be any one of the following.
+		1.The boot loader code
+
+		2.The kernel code of the stepping stone OS such as FreeDOS
+
+		3.The kernel code of the target OS if it fits in this small space
+	__First 2 sectors__ of the hard disk on legacy PC contain the master boot record (__MBR__). __The disk partition information__ including the boot __selection__ is recorded __at the end of this MBR__. The __first boot loader__ code executed from the BIOS __occupies the rest of this MBR__.
+	|start  mbr
+	|         mbr
+	|
+	-----第一个boot loader
+	|
+	|分区表？？ 启动选择？->从那个分区启动？
+Stage 2: the boot loader
+	kernel
+	initrd
+		The initrd image for the current 2.6 Linux kernel is technically the initramfs (initial RAM filesystem) image. The initramfs image is a gzipped cpio archive of files in the root filesystem.
+Stage 3: the mini-Debian system
+Stage 4: the normal Debian system
+	 The system kernel for the mini-Debian system continues to run in this environment. The root filesystem is switched from the one on the memory to the one on the real hard disk filesystem.
+	1.excute __/sbin/init__
+		1)init system by reading /etc/inittab ( none on debian)
+		2)init hardware under single-user(1) mode
+		3)start service under multi-user(2-5) mode
+		!!!/etc/init.d
+	__runlevel:__ N 0 S 1 - 9
+	runlevel 命令查看当前运行级别
+	sudo telinit   4      change the runlevel
+	[[/etc/rcS.d/]]  [[/etc/rc0.d/----/etc/rc9.d/]]
+	in rcN.d/     
+		S25brltty -> [[../init.d/brltty]]    
+	file name format is [SK]<2digit>name
+
+Stage 5: Xwindow
+	1.Display manager
+
+		    1.Starting and managing local __instances of the X server__.
+		    2.Authenticating users.
+
+		    3.Starting and managing user __sessions__. 
+		***Load sessions from /usr/share/xsessions 
+		***Store session configuration in ~/.dmrc 
+		

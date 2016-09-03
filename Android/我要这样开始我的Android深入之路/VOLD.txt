@@ -1,0 +1,14 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-12-23T11:41:05+08:00
+
+====== VOLD ======
+Created Monday 23 December 2013
+
+1.Vold 的全称是 Volume Daemon
+ 2.vold 的机制和 udev 是一样的,理解了 udev,也就理解了 vold。
+3.无论是 udev 还是 vold,都是基于 sysfs 的,sysfs 为内核与用户层的通讯提供了一种全新的方式,并将这种方式加以规范
+4.kernel 层能检测到有新的设备接入,并能为之加载相应的驱动,但如何通知用户层呢?这就是 sysfs 的工作,内核中的 sysfs 机制要求当有新的驱动加载时给用户层发送相应的 event.但这些 event 只尽告知的义务,具体怎么处理,这就是 vold 的事了。
+{{./pasted_image.png}}
+5.Android 的 volume 服务主要是用来管理 usb/sd 卡等外部存储设备。平台可以对外部存储设备进行操作和轮询状态,当外部存储设备状态发生变化时,volume 服务也会实时报告平台。
+6.参数间不能有空格,应该以 tab 制表符为参数的间隔,原因是 android 对vold.fstab 的解析是以”\t”为标识

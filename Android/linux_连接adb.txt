@@ -1,0 +1,24 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-05-03T18:51:22+08:00
+
+====== linux 连接adb ======
+Created Sunday 03 May 2015
+
+If you're developing on Ubuntu Linux, you need to add a rules file:
+Login as root and create this file: /etc/udev/rules.d/50-android.rules.
+For Gusty/Hardy, edit the file to read: 
+SUBSYSTEM=="usb", SYSFS{idVendor}=="0bb4", MODE="0666"
+For Dapper, edit the file to read: 
+SUBSYSTEM=="usb_device", SYSFS{idVendor}=="0bb4", MODE="0666"
+Now execute:
+chmod a+rx /etc/udev/rules.d/50-android.rules
+具体的设备idVendor可以通过lsusb查看。
+然后运行：
+ $ sudo /etc/init.rd/udev restart
+ $ sudo ./adb devices
+
+如果不行，则是因为设备的vid没有被google添加到adb里，所以要从adb_usb.ini中读取
+所以，我们需要添加vid，如下
+android update adb
+echo 0x0bb4 >> ~/.android/adb_usb.ini

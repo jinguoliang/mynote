@@ -1,0 +1,24 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-17T15:23:52+08:00
+
+====== 详情 ======
+Created Friday 17 July 2015
+
+1. onCreate
+	a. 初始化UI
+	b. 获取参数商品id和商品类型
+	c. 请求数据
+2. 请求数据
+	a. 显示loading
+	b. 准备请求参数
+	c. onFailer显示错误
+	d. 成功
+		a. 如果result==null 显示错误
+		b. 正常则开始提取数据,更新UI
+			a. 准备sliding的图片
+				1. 添加slider
+				2. 添加监听,当点击图片是会去专门浏览图片的页面,这里
+			b. 准备tags
+			c. 准备推荐tags
+3. 显示分享界面

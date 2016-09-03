@@ -1,0 +1,43 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-26T10:10:05+08:00
+
+====== repo ======
+Created Tuesday 26 November 2013
+
+repo COMMAND OPTIONS
+repo help COMMAND
+
+1.init
+repo init -u URL [OPTIONS]
+-u: specify a URL from which to retrieve a manifest repository. The common manifest can be found at https://android.googlesource.com/platform/manifest
+-m: select a manifest file within the repository. If no manifest name is selected, the default is default.xml.
+-b: specify a revision, i.e., a particular manifest-branch
+2.sync
+repo sync [PROJECT_LIST]
+Downloads new changes and updates the working files in your local environment
+	If the project has never been synchronized, then repo sync is equivalent to git clone. All branches in the remote repository are copied to the local project directory.
+	If the project has already been synchronized once, then repo sync is equivalent to:
+	git remote update 
+	git rebase origin/BRANCH
+	where BRANCH is the currently checked-out branch in the local project directory. If the local branch is not tracking a branch in the remote repository, then no synchronization will occur for the project.
+-d: switch specified projects back to the manifest revision. Helpful if the project is currently on a topic branch, but the manifest revision is temporarily needed.
+-s: sync to a known good build as specified by the manifest-server element in the current manifest.
+-f: proceed with syncing other projects even if a project fails to sync.
+3.status
+repo status [PROJECT_LIST]
+Compares __the working tree__ to __the staging area__ (index) and t__he most recent commit__ on this branch (HEAD) in each project specified. Displays a summary line for each file where there is a difference between __these three states.__
+
+some status mark:
+R	renamed	not in HEAD, path changed in index
+C	copied	not in HEAD, copied from another in index
+T	mode changed	same content in HEAD and index, mode changed
+U	unmerged	conflict between HEAD and index; resolution required
+
+=== Package Manifest ===
+<project name="platform/mediatek/build" path="mediatek/build" revision="kk-amur-jasmine-arima-somc">
+     <__copyfile__ dest="mediatek/platform/Android.mk" src="addon/mediatek/platform/Android.mk"/>
+    <copyfile dest="makeMtk" src="makeMtk"/>
+   __ <copyfile dest="mk" src="mk"/>   复制当前项目的mk文件到codebase根目录的mk   即：dest的默认根目录是codebase根目录， src根目录为项目根目录__
+    <copyfile dest="bl_envsetup.sh" src="addon/bl_envsetup.sh"/>
+</project>

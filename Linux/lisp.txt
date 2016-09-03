@@ -1,0 +1,22 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-10-20T00:38:58+08:00
+
+====== lisp ======
+Created Sunday 20 October 2013
+
+[[+comman lisp|common lisp]]
+
+===   一种lisp方言 ===
+[[+scheme]]   一种lisp方言
+
+=== REPL ===
+ a Scheme process offering you a Read-Eval-Print Loop
+
+[[http://book.douban.com/doulist/1128439/|通向lisp之路]]
+[[+Lisp永恒之道]]
+[[~/Downloads/html/为什么Lisp语言如此先进？（译文） - 阮一峰的网络日志.html|为什么Lisp语言如此先进？（译文）]]
+
+
+[[~/resource/third_part/source/newlisp-10.5.4|newlisp]] 一种类lisp语言   
+

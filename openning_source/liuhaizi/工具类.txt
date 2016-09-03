@@ -1,0 +1,51 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-27T16:59:55+08:00
+
+====== 工具类 ======
+Created Monday 27 July 2015
+
+1. apk安装的状态码
+2. 下载任务的状态
+3. 异常错误码
+4. 事件码
+5. 通过preference保存下载的路径和保存文件路径, 实现暂停功能
+6. 以root权限安装apk
+String cmd = "pm install -r " + path + "\n";
+		Process process = null;
+		DataOutputStream os = null;
+		BufferedReader br = null;
+		StringBuilder sb = null;
+		try {
+			process = Runtime.getRuntime().exec("su");
+			os = new DataOutputStream(process.getOutputStream());
+			os.writeBytes(cmd + "\n");
+			os.writeBytes("exit\n");
+			br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+			sb = new StringBuilder();
+			String temp = null;
+			while ((temp = br.readLine()) != null) {
+				sb.append(temp + "\n");
+				if ("Success".equalsIgnoreCase(temp)) {
+					return true;
+				}
+			}
+			process.waitFor();
+		} catch (Exception e) {
+		} finally {
+			try {
+				if (os != null) {
+					os.flush();
+					os.close();
+				}
+				if (br != null) {
+					br.close();
+				}
+				process.destroy();
+			} catch (Exception e) {
+				return false;
+			}
+		}
+		return false;
+8. 以root权限设置文件权限码chmod 777 file

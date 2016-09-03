@@ -1,0 +1,11 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-23T17:00:50+08:00
+
+====== 或许是未来 ======
+Created Saturday 23 November 2013
+
+
+最危险的开源项目——[[~/Downloads/html/最危险的开源项目——比特币-CSDN.NET.html|比特币]]
+
+[[:thinking:寻找理想的工作:soho 一族]]

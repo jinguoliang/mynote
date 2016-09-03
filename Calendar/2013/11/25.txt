@@ -1,0 +1,6 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-26T10:34:45+08:00
+
+====== Monday 25 Nov 2013 ======
+deep investigate my features and confirm the solution is porting apk from rhine 1.1 and rhine 1.2 to eagle tina and porting the needed patch.

@@ -1,0 +1,13 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-11-13T17:22:52+08:00
+
+====== 程序开机自启动 ======
+Created 星期四 13 十一月 2014
+
+自定义的执行脚本放在 /etc/init.d/
+
+删除某项启动
+update-rc.d -f <server>  remove
+update-rc.d apachectl start 20 2 3 4 5 . stop 20 0 1 6 .
+会对/etc/init/*

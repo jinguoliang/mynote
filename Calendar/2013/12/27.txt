@@ -1,0 +1,24 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-12-27T21:40:38+08:00
+
+====== Friday 27 Dec 2013 ======
+
+=== On Doing： ===
+	《乱世佳人》	45  ok
+	《Ubuntu手册》		no
+	《数据结构》		no
+	《重新认识你自己》	ok
+	《精通 git》		分支完成  ok
+	《嵌入式Android》	暂缓  深入Android  ok
+	Android Service			这周学习
+
+
+=== TODO: ===
+	1.《乱世佳人》共62章现在读了30章，平均一天1章一个月内可以完成--->1月14日检查完成
+	2.《Ubuntu手册》看我这周能不能完成，这周不能完成，下周一定完成    too old
+	3.《数据结构》《重新认识你自己》没有结束，这是一种修养
+	4.《精通 git》分支章节，自定义，内部原理,tree周完成
+
+	5.《嵌入式Android》翻译  但是需要先通篇浏览一遍  在公司看，晚上了
+		不太合理，要有嵌入深，要有耐心，

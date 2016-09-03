@@ -1,0 +1,53 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-10T15:08:55+08:00
+
+====== 特色和特性 ======
+Created Sunday 10 November 2013
+
+	Google在发布2.3.x/Gingerbread的那段时间，曾经在它的开发者网站上公布了Android下列特性：
+	应用框架
+	应用框架被开发者用来创造Android应用。框架的用法有在线文档，也有很所像O’Reilly’s Learning Android这样的书。
+	Dalvik虚拟机
+	作为Sun 的jvm的代替品，它是一个实现了clean-room 字节码 的 解释器。前者解释.class文件，Dalvik解释.dex文件。.dex文件是用dx工具由.class文件生成，而.class则是由JDK中的Java编译器编译而来。
+	集成浏览器
+	Android包含一个基于WebKit的浏览器作为它的标准应用之一。应用开发者在他们的应用中可以用WebView类来是使用WebKit 引擎。
+	优化的图形显示
+	Android提供了自己的2D图形库，但3D则由OpenGL ES提供
+	SQLite
+	它是一个标准的数据库，通过应用框架提供给应用开发者
+	媒体支持
+	Android使用自己的自定义媒体框架StageFright支持广泛的媒体格式。2.2之前，Adroid使用PacketVideo的OpenCore 框架
+	GSM 电话支持
+	电话支持是以来硬件的，硬件厂商必须提供一个HAL模块，Android才能与他们的硬件交互。HAL模块将会在下一章讨论
+	蓝牙，EDGE，3G，WiFi
+	Android提供了对大部分无线传输技术的支持。一些是以Android特定的方式实现，如EDGE和3G，其他则使用了普通Linux的方式，如蓝牙，WiFi
+	相机，GPS，指南针，accelerometer？？
+	与用户的外在环境交互对Android来说是关键的。应用框架的APIs提供了访问这些设备的方法，他们有些需要某些HAL模块支持。
+	丰富的开发环境
+	这可能是Android最大的财富。开发环境容易得到有利与Android的普及。完整的SDK很容易下到，里面包括模拟器，Eclipse插件，还有好多调试和profile工具
+	当然还有很多其他的特性，如USB支持，多任务，多点触控，SIP（？？），tethering（？？），Voice-activated commands（语音控制）等等，但是上边列的那些能让你知道Android中到底是什么。另外需注意的是，Android的每个新的版本都会引入它自己的新的特性。自己去那些发布的版本的各种亮点把。
+	除了上边这些，Android平台还有一些是Adroid为很有趣的嵌入式开发平台的特点。下面是简单的总结：
+	Broad app ecosystem（板级应用生态系统？？）
+	在写这本书的时候，Google Play也就是Anroid市场，已有70万应用了。This compares quite favorably to the Apple App
+Store’s 700,000 apps ， and ensures that you have a large pool to choose from should
+you want to prepackage applications with your embedded device.
+注意，在打包程序时，你可能需要与应用发布者达成协议。你从Google Play上买到应用并不意味这你有权利作为第三方重新发布它。
+	固定的应用APIs
+	应用框架的所有APIs都是向前兼容的。因此，你的嵌入式系统中的自定义应用都应该可以运行在未来的Android版本。相反，你对Android源代码的修改不能保证继续在下一个Adnroid 版本中运行的
+	可替换的组件
+	因为Android是开源的，它的很多组建可以完全替换掉。例如，如果你不喜欢默认的Laucher app（home screen），你可以自己写一个。在android里你还可以做底层的改变。例如Gstreamer 开发者能够用GStreamer替换掉Android默认的媒体框架StageFright，却不改变应用API
+	可扩展的
+	Android的开放和体系结构的另一个优势是添加新特性和新硬件相对简单。你只需要模拟平台对其他相同类型的硬件和特性所做的事。例如，你可以通过添加几个文件向HAL添加自定义硬件，AppendixB 会讲到
+	自定义。
+	如果你想使用存在的部件，如自带的Launcher，你可以自定义它。无论你是修改它的功能还是修改它的样式，只要你愿意。
+	
+	开发模型
+	When considering whether to use Android, it’s crucial that you understand the rami‐
+fications its development process may have on any modifications you make to it or to
+any dependencies you may have on its internals.
+	不同于“经典”的开源项目
+	Android的开源环境（nature）是最受鼓吹的特性之一。事实上，想刚才看到的那样，很多特性正式因为Android的开源才的以实施。
+	然而，Android不像大部分开源项目，它的开发大部分是（behind closed doors）。例如，各种开源项目都有公开得邮件列表，论坛，在这里有主要的开发者互相交流，还有公共的开源库，在那里提供了主要的开发分支的相关代码和文档。这些东西Android都没有。Andy Rubin总结的好：“开源不同于社区驱动，Android依赖社区少，一定程度上是更开源的。”
+	无论怎样，Android就是主要有Android团队在Google开发的，and the public is not privy to either internal discussions nor the tip
+of the development branch. Google在每次开发出新版本

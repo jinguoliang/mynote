@@ -1,0 +1,8 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-04-06T20:52:37+08:00
+
+====== Ubuntu 64bit with Android ADT... ======
+Created 星期日 06 四月 2014
+
+$ sudo apt-get install git-core gnupg flex bison gperf build-essential zip curl sun-java6-jdk zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev ia32-libs x11proto-core-dev libx11-dev lib32readline5-dev lib32z-dev

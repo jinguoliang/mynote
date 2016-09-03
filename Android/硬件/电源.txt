@@ -1,0 +1,11 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-09T18:20:23+08:00
+
+====== 电源 ======
+Created Saturday 09 November 2013
+
+获取PowerManager
+ PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+通过PowerManager检测屏幕是否锁屏
+pm.isScreenOn()

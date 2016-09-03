@@ -1,0 +1,8 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-01-02T14:30:08+08:00
+
+====== Binder ======
+Created Thursday 02 January 2014
+
+{{./pasted_image.png}}

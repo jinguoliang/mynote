@@ -1,0 +1,18 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-20T15:45:06+08:00
+
+====== 验证手机 ======
+Created Monday 20 July 2015
+
+1. initView
+	a. 绑定各种控件
+	b. 如果有绑定的手机号则设置要发送的手机号,并且设置为不可编辑
+2. 验证验证码:
+	a. 如果输入错误的验证码则code 10050 data为空数组
+	b. 如果成功则data mobile返回带*的手机号,code 0    
+	c. 验证码不会更新,所以一个验证码可以解绑后在绑定, 只要不发送验证码
+3. 倒计时
+	a. 当发送验证码成功时开始倒计时
+	b. 验证成功时停止倒计时
+	c. ondestroy时, 停止倒计时

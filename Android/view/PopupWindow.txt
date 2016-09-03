@@ -1,0 +1,17 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-11-12T12:31:50+08:00
+
+====== PopupWindow ======
+Created 星期三 12 十一月 2014
+
+一个好用的popupwindow
+			pop = new PopupWindow(context,
+					resources.getDimensionPixelSize(R.dimen.px624),
+					resources.getDimensionPixelSize(R.dimen.px150), false);
+			// 需要设置一下此参数，点击外边可消失
+			__pop.setBackgroundDrawable(new BitmapDrawable());   //没它真的不能点击窗外消逝__
+			// 设置点击窗口外边窗口消失
+			pop.setOutsideTouchable(true);
+			// 设置此参数获得焦点，否则无法点击
+			pop.setFocusable(true);

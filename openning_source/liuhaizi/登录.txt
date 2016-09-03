@@ -1,0 +1,22 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-20T11:35:45+08:00
+
+====== 登录 ======
+Created Monday 20 July 2015
+
+三个按钮,分别是三种第三方登录方式
+
+1. onCreate
+	a. 绑定控件
+2. onClick
+	a. Platform qqLogin = ShareSDK
+						.getPlatform(LoginActivity.this, QQ.NAME);
+	 qqLogin.setPlatformActionListener(this);
+		qqLogin.authorize();
+	b. excuteLogin
+		1. RequestParams params = new RequestParams();
+				params.addBodyParameter("login_type", platform.getName());
+				params.addBodyParameter("open_id", platform.getDb().getUserId());
+				params.addBodyParameter("access_token", platform.getDb().getToken());
+	c. 使用了shareSDK,简化了不少工作.

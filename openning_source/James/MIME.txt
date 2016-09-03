@@ -1,0 +1,35 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-02-10T15:38:39+08:00
+
+====== MIME ======
+Created Monday 10 February 2014
+
+Multipurpose Internet Mail Extensions (MIME) is an Internet standard that extends the format of email to support:
+	Text in character sets other than ASCII
+	Non-text attachments
+	Message bodies with multiple parts
+	Header information in non-ASCII character sets
+
+MIME allows mail messages to contain:
+	Multiple objects in a single message.
+	Text having unlimited line length or overall length.
+	Character sets other than ASCII, allowing non-English language messages.
+	Multi-font messages.
+	Binary or application specific files.
+	Images, Audio, Video and multi-media messages.
+
+MIME defines the following __new__ header fields:
+	1.The __MIME-Version__ header field, which uses a version number to declare that a message conforms to the MIME standard.
+	2.The __Content-Type__ header field, which can be used to specify the type and subtype of data in the body of a message and to fully specify the encoding of such data.
+		a.The Content-Type value __Text__, which can be used to represent textual information in a number of character sets and formatted text description languages in a standardized manner.
+		b.The Content-Type value __Multipart__, which can be used to combine several body parts, possibly of differing types of data, into a single message.
+		c.The Content-Type value __Application__, which can be used to transmit application data or binary data.
+		d.The Content-Type value __Message__, for encapsulating a mail message.
+		e.The Content-Type value __Image__, for transmitting still image (picture) data.
+		f.The Content-Type value __Audio__, for transmitting audio or voice data.
+		g.The Content-Type value __Video__, for transmitting video or moving image data, possibly with audio as part of the composite video data format.
+	3.The __Content-Transfer-Encoding__ header field, that specifies how the data is encoded to allow it to pass through mail transports having data or character set limitations.
+	4.Two header fields that can be used to further identify and describe the data in a message body: the __Content-ID__ and __Content-Description__ header fields.
+	
+MIME is an extensible mechanism. It is expected that the set of content-type/subtype pairs and their associated parameters will grow with time. Several other MIME fields, such as character set names, are likely to have new values defined over time. To ensure that the set of such values develops in an orderly, and public manner, MIME defines a registration process that uses the Internet Assigned Numbers Authority (IANA) as a central registry for such values.

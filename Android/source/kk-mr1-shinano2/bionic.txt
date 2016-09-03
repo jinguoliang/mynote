@@ -1,0 +1,8 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-07-04T13:17:59+08:00
+
+====== bionic ======
+Created Friday 04 July 2014
+
+Bionic libc，是一種 C 標準函式庫，由 Google 所開發的自由軟體，用於 Android 嵌入式系統上，採用 BSD 授權條款。Google 希望用它來取代 glibc，它的發展目標是達到輕量化以及高運行速度。

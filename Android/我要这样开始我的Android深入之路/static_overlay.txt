@@ -1,0 +1,33 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-12-31T10:22:02+08:00
+
+====== static overlay ======
+Created Tuesday 31 December 2013
+
+Compile-time (static) overlays
+Finally, we reach what this short article is really about, that is overlays, we need to have a look at the product configuration.
+In device/semc/anzu/anzu.mk, we find the following directives:
+PRODUCT_PACKAGE_OVERLAYS := \
+       device/semc/anzu/overlay \                                     # git: platform/vendor/semc/products/anzu/overlay
+       vendor/semc/overlay/translations-overlay \
+       vendor/semc/overlay/application-overlay \
+       vendor/semc/overlay/platform-custom-additions/semc-generic \
+       vendor/semc/overlay/platform-custom-replacements \
+       vendor/semc/overlay/vanilla-complements 
+This directive tells the build-system, that when looking for resources to build into the application, to also look in the folders listed here (in order). This means, that it’s possible to make changes to applications that the product specific by making changes in the overlay folders (without the need to change the original file). I.e. with the example above:
+my-application/res/values/strings.xml
+<?xml version="1.0" encoding="utf-8"?>
+        <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+        <string name="example_test_string">Test</string>
+</resources>
+my-overlay-folder-product1/path-to-my-application-in-repo/res/values/strings.xml
+<?xml version="1.0" encoding="utf-8"?>
+       <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+       <string name="example_test_string">Overlayed Test</string>
+</resources>
+device/semc/my-product:
+PRODUCT_PACKAGE_OVERLAYS := \
+          my-overlay-folder
+When building this product, the build system will take the values in the applications resource folder, and then apply the changes in the overlay folder on top (not the entire contents, the xml fields).
+As an exercise, please have a look at the final generated resources.arsc file, to see that the change really had effect at build-time.

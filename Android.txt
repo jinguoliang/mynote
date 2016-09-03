@@ -1,0 +1,140 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-10-12T22:17:25+08:00
+
+====== Android ======
+Created 星期六 12 十月 2013
+
+我的目标就是老罗 锤子科技
+{{./pasted_image002.png}}
+1.[[+多媒体框架|多媒体框架]]：[[~/Nutstore/resource/html/深入了解MediaServer-1 - MyArrow的专栏 - 博客频道 - CSDN.NET.html|MediaServer]]，[[~/Nutstore/resource/html/StageFright框架流程解读 - uBar_Multimedia Dev. and Data mining （CodeCore） - 博客频道 - CSDN.NET.html|Stagefright]]
+2.[[+OpenGL ES]]
+3.[[+蓝牙 wifi NFC相关协议]]
+4.Android上线产品开发经验 
+5.Android FrameWork开发集成经验
+6.Linux系统编程经验   
+7. 精通脚本编程   Going On  — ok
+8. 精通Android view系统及其绘制流程；
+9. 精通Android 事件传递流程；
+10. 精通Android 资源架构和资源加载流程；
+11. 熟悉Android 控件开发流程、动画设计；
+12. 熟悉Android编译系统，能熟练编写makefile；
+13. 熟悉ActivityManager、PackageManager、InputManager、WindowManager等；
+14. 曾从事中间件开发相关工作者、对android性能优化有经验与见解者优先。
+15. -熟悉插件化开发模式 Going On
+16. 熟悉Android开发技术，包括UI、网络等方面
+17. 熟悉Android开发工具和相关开发测试工具的使用 ok
+18. 精通多线程和网络编程，对高性能程序设计、架构有较多的工程经验 
+19. 热爱互联网，对移动产品研发有浓厚兴趣 
+
+[[+面试技术|面试技术]]
+
+{{./pasted_image003.png}}
+
+===== 我应该如何开始我的Android深入学习？？？ =====
+[[+我要这样开始我的Android深入之路]]  
+
+
+[[+C++]]
+[[+JAVA|JAVA]]
+[[+Android 编译]]
+
+[[file:///usr/local/adt-bundle-linux-x86_64-20130219/sdk/docs/guide/topics/ui/dialogs.html|Android Google Officail Document]]
+
+[[+嵌入式Android]] 翻译中
+
+[[+view]]
+
+[[+基本组件]]
+
+[[+tools]]
+
+[[+resource]]
+
+[[+Android背后的思想]]
+
+[[+存储]]
+
+[[+MultiMedia]]
+
+[[+java]]
+
+[[+test|test]]
+
+[[+硬件]]
+
+[[+图像]]
+
+[[+网络|网络]]
+
+[[+xml parser]]
+
+[[+game]]
+
+[[+source|source]]
+
+[[+Android Log|Android Log]]
+
+[[+Android 环境搭建|Android 环境搭建]]
+
+[[+内存优化|内存优化]]
+
+[[+包信息|包信息]]
+
+[[+linux 连接adb|linux 连接adb]]
+
+[[+android性能优化|android性能优化]]
+
+[[+知识点|知识点]]
+[[+总结|总结]]
+
+
+frameworks/base/core/res/res/values/config.xml     config the __default value__ of sync,data trasaction,wifi etc.
+runtime overlay      example:[[./auto-sync.tar.gz]]           
+项目目录
+	AndroidManifest.xml 		Config file that tells Android about your project
+	bin 				generated binaries (compiled class files)
+	build.properties 		Editable properties file
+	build.xml 			Standard Ant build control file
+	default.properties
+	gen 				Generated stuff
+	libs 				Libraries, of course
+	res 				important resource files (strings.xml, layouts, etc.)
+	src 				source code for your application
+	src/packagename/ActivytName.java source of "main" starting activity
+	test 				copies of most of the above
+	
+apk是一个zip解压后是：
+	AndroidManifest.xml，  
+	classes.dex，  
+	resources.arsc，  
+	META-INF，  
+	res，  
+编译成apk
+{{./pasted_image.png}}
+1)所有的XML文件，都会被aapt解析成二进制格式，准确地说，这样的二进制格式，是可以被直接映射到内存里的二进制树
+做过XML相关开发的工程师，都会知道，XML的验证与解析是非常消耗时间与内存的，而通过编译时进行XML解析，则节省了运行时的开销。当然解析的结果最后会被aapt通过一个R.java保存一个二进制树的索引，编程时可通过这个R.java文件进行XML的访问。aapt会处理所有的资源文件，也就是Java代码之外的任何静态性文件，这样处理既保证了资源文件间的互相索引得到了验证，也确保了R.java可以索引到这个应用程序里所有的资源。
+
+2)      所有的Java文件，都会被JDK里的javac工具编译成bin目录下按源代码包结构组织的.class文件（.class是标准的Java可解析执行的格式），比如我们这个例子里生成的bin/classes/org/lianlab/hello/*.class文件。然后这些文件，会通过SDK里提供的一个dx工具转换成classes.dex文件。这一文件，就是会被Dalvik虚拟机所解析执行的
+
+3)      最后我们得到的编译过的二进制资源文件和classes.dex可执行文件，会通过一个apkbuilder工具，通过zip压缩算法打包到一个文件里，生成了我们所常见的.apk文件。
+
+4)      最后，.apk文件，会通过jarsigner工具进行校验，这一校验值会需要一个数字签名。如果我们申请了Android开发者帐号，这一数字签名就是Android所分发的那个数字证书；如果没有，我们则使用debug模式，使用本地生成的一个随机的数字证书，这一文件位于~/.android/debug.keystore。
+
+			虽然我们只是下载了SDK，通过一行脚本创建了Android应用程序工程，通过另一行完成了编译。但也许还是会被认为过于麻烦，因为需要进行字符界面的操作，而且这种开发方式也不是常用的方式，在Java环境下，我们有Eclipse可用。我们可以使用Eclipse的图形化开发工具，配合ADT插件使用。
+
+
+重新看Activity
+[java] view plaincopy
+
+	super.onCreate(savedInstanceState);  
+
+从字面上看，这种方式相当于我们继承了父类方法，然后又回调到父类的onCreate()来进行处理。这种方式貌似很怪，但这是设计模式（Design Pattern）里鼎鼎大名的一种，叫IoC ( Inversion of Control)。通过这样的设计模式，我们可以同时提供可维护性与可调试性，我们可以在通过覆盖的方法提供功能更丰富的子类，实际上每次调用子类的onCreate()方法，都将调用到各个Activity拓展类的onCreate()方法。而这个方法一旦进入，又会回调到父类的onCreate()方法，在父类的onCreate()方法里，我们可以提供更多针对诸多子类的通用功能（比如启动时显示的上下文状态的恢复，关闭时一些清理性工作），以及在这里面插入调试代码。
+
+Listener本身也会被作为Observer设计模式的一种别称，主要是用于实现被动调用逻辑，比如事件回馈。
+
+Observer(Listener)设计模式的思路，跟我们数据库里使用到的Trigger功能类似，我们可对需要跟踪的数据操作设置一个Trigger，当这类数据操作进行时，就会触发数据库自动地执行某些操作代码。而Observer(Listener)模式也是类似的，监听端通过注册Observer来处理事件的回调，而真正的事件触发者则是Observer，它的工作就是循环监听事件，然后再调用相应监听端的回调。
+{{./pasted_image001.png}}
+Click事件的触发源是Touch事件，而当前View的Touch事件在属于点击事件的情况下，会生成一个performClick的Runnable对象（可交由Thread对象来运行其run()回调方法）。在这个Runnable对象的run()方法里会调用注册过的OnClickListener对象的OnClick()方法，也就是图示中的mOnClickListener::onClick()。当这个对象被post()操作发送到主线程时（作为Message发送给UI线程的Hander进行处理），我们覆盖过的OnClick()回调方法就由主线程执行到了。
+
+

@@ -1,0 +1,16 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-06-01T21:47:43+08:00
+
+====== 总结 ======
+Created Monday 01 June 2015
+
+1. [[BaseActivity]]  
+	a. 埋点
+2. __统一的未登录，网页报错,加载,空数据提示!!__
+3. [[ListView]] 充分利用header and footer, 由于item的重用,每次getview(),view的改变的属性都要初始化,改变的状态都要保存在model中
+4. [[+版本的命名规则|版本的命名规则]]借鉴linux内核
+5. ViewAdapter里使用LayoutInflater,使用inflate（resid，parent,false)  这样可以保证生成正确的layoutparamater
+6. getView,要使用convertView并且要初始化,所有改变的属性都要初始化
+7. 页面缓存罗辑
+8. 对于第三方的依赖，尽量的抽象出接口，以便于解耦，比如，对网络请求的抽象，不直接依赖与xutils

@@ -1,0 +1,53 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-06T22:08:02+08:00
+
+====== widget ======
+Created Wednesday 06 November 2013
+
+1.Manifest注册
+        <receiver			
+            android:name=".widget.NoteWidgetProvider_2x"		//类名
+            android:label="@string/app_widget2x2" >			
+            <intent-filter>						
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_DELETED" />
+                <action android:name="android.intent.action.PRIVACY_MODE_CHANGED" />
+            </intent-filter>
+
+            <meta-data							//元数据文件，是一个描述某些属性的文件
+                android:name="android.appwidget.provider"		//名字固定是这个		
+                android:resource="@xml/widget_2x_info" [[/>]]		//配置文件
+        </receiver>
+2.元数据	xml/widget_2x_info.xml
+<appwidget-provider
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:initialLayout="@layout/widget_2x"				初始化时的layout
+    android:minWidth="146dip"						
+    android:minHeight="146dip">
+</appwidget-provider>
+
+3.继承AppWidgetProvider
+public abstract class NoteWidgetProvider extends AppWidgetProvider {
+
+	 @Override
+	    public void onDeleted(Context context, int[] appWidgetIds) {//从界面上删除一个控件是调用
+		}
+		
+	 @Override
+	    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+		}
+		
+}
+4.实现onUpdate
+onUpdate传入三个参数，应用上下文，AppWidgetManager，所拥有widget的id
+我们就通过AppWidgetManager来逐个更新widget
+首先：RemoteViews rv = new RemoteViews(context.getPackageName(), getLayoutId());//找到布局加载过来
+然后：对其配置
+	rv.setImageViewResource(R.id.widget_bg_image, getBgResourceId(bgId));	//设置图片资源
+	rv.setTextViewText(R.id.widget_text,context.getString(R.string.widget_under_visit_mode));//设置文本框文字
+	rv.setOnClickPendingIntent(R.id.widget_text, pendingIntent);	//设置click事件
+	因为是跨应用的，所以都很不同，最不同的就是click事件了，用到了PendingIntent
+	pendingIntent = PendingIntent.getActivity(context, appWidgetIds[i], intent,
+	                            PendingIntent.FLAG_UPDATE_CURRENT);
+最后：appWidgetManager.updateAppWidget(appWidgetIds[i], rv);

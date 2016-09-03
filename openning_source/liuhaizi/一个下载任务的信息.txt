@@ -1,0 +1,12 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-28T10:34:53+08:00
+
+====== 一个下载任务的信息 ======
+Created Tuesday 28 July 2015
+
+1. 更新的apk的url
+2. 要保存的路径
+3. 文件大小
+4. 下载了多少
+5. 状态

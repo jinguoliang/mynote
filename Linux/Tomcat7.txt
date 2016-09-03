@@ -1,0 +1,12 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-10-06T10:37:44+08:00
+
+====== Tomcat7 ======
+Created 星期一 06 十月 2014
+
+log files:   [[/var/log/tomcat7]]
+tomcat home:		[[/var/lib/tomcat7/]]
+
+sudo service  tomcat7 restart/start/stop/status
+

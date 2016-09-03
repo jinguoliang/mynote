@@ -1,0 +1,14 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-02-10T14:18:38+08:00
+
+====== James ======
+Created Monday 10 February 2014
+
+James is a 100% pure Java SMTP, POP3 Mail server, IMAP (James V3) and NNTP News (James V2) server designed to be a complete and portable enterprise mail/messaging engine solution based on currently available open messaging protocols.
+
+Amongst the benefits of James over other mail platforms is its support for building custom mail handling applications.
+
+[[+Mime4j|Mime4j]]
+
+[[+MIME|MIME]]

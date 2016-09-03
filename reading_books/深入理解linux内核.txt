@@ -1,0 +1,37 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-06-17T14:48:30+08:00
+
+====== 深入理解linux内核 ======
+Created Tuesday 17 June 2014
+
+问题驱动
+
+
+=== 2.内存寻址 ===
+You will find, we hope, that when you learn the implementation details on Linux's most popular platform you will better
+understand both the general theory of paging and how to research the implementation on other platforms.
+
+The cs register has another important function: it includes a 2-bit field that specifies the Current
+Privilege Level (CPL) of the CPU. The value 0 denotes the highest privilege level, while the value 3
+denotes the lowest one. Linux uses only levels 0 and 3, which are respectively called __Kernel Mode__
+and __User Mode__.
+
+问题：
+	1.内存寻址
+		1.1 三种类型内存地址分别是什么：	
+		=== 逻辑地址 ===
+		------段处理单元---->
+		
+		=== 线性地址(虚拟地址） ===
+		---页处理单元--->
+		
+		=== 物理地址 ===
+		1.2 什么是逻辑地址  两部分：段选择器，段内偏移
+		1.3什么是现行地址
+		1.4什么是物理地址 
+	2.硬件层的分段是什么样的？
+	3.linux中的分段是什么样的？
+	4.硬件层的分页是什么样的？
+	5.linux中的分页是什么样的？
+	6.fix-maped linear address?

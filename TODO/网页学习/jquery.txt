@@ -1,0 +1,37 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-01-20T10:15:46+08:00
+
+====== jquery ======
+Created 星期二 20 一月 2015
+
+$() 三种用法：
+	1. $()可以是$(expresion)，即css选择器、Xpath或html元素
+		a. $("a").click(function(){...})   就是在点击页面上的任何一个链接时的触发事件。确切地说，就是jQuery用<a/>这个标签构建了一个对象$("a")，函数 click()是这个jQuery对象的一个（事件）方法。 
+		b. alert($("div>p").html());  $()中的是一个查询表达式，也就是用“div>p”这样一个查询表达式构建了一个jQuery对象，然后的“html()”意思是显示其html内容，也就是上面HTML代码段的[two]
+		c. $("<div><p>Hello</p></div>").appendTo("body"); $()中的是一个字符串，用这样一段字串构建了jQuery对象，然后向<body/>中添加这一字串
+	2. $()可以是$(element)，即一个特定的DOM元素。如常用的DOM对象有document、location、form等
+		a. $(document).find("div>p").html()); $()中的document是一个DOM元素，即在全文寻找带<p>的<div>元素，并显示<p>中的内容。
+	3. $()可以是$(function)，即一个函数，它是$(document).ready()的一个速记方式
+		a. $(document).ready(function(){ alert("Hello world!"); }); 可变为	$(function(){ alert("Hello world!"); }); 
+搜索元素：
+	1. $("div>ul a")，它的意思是div标签中的ul标签中的a标签 
+		a. $('div>ul')和$('div ul')是有区别的，
+		b. $('div>ul')是<div>的直接后代里找<ul>； 
+		c. 而$('div ul')是在<div>的所有后代里找<ul>。 
+	2. 用jQuery对象的几个方法（如方法find()、each()等） 
+		a. $("#orderedlist).find("li") 
+		b. $("#orderedlist li"). each()
+	3. 标签选择器$('p')、类选择器$('.myClass')、id选择器$('#myId')相对简单
+	4. XPath选择器 
+		a. 选择所有带有title 属性的链接，我们会这样写：$('a[@title]') 
+			1. []里带@，说明[]里的是元素的属性；是个属性选择器
+			2. []里没@，说明[]里的是元素的子孙。 
+			3. $('ul li')和$('ul[li]')虽然返回的都是一个jQuery数组，但两者的含义正好相反。前者是要找<ul>下所有<li>子孙，而后者却是在找所有子孙为<li>的<ul>数组。 
+		b. 在XPath中，要找一个“以...开头”的属性，用^=，如找一个name属性是以mail开头的input元素，就用$('input[@name^="mail"]') 
+		c. 要找一个“以...结尾”的属性，要用$= 
+		d. 要找一个“不头不尾”的属性，用*= 
+	5. 不属于上述的CSS和XPath的选择器，就是自定义的选择器了，用“:”表示，这里要用的就是:first，:last，:parent ，:hidden，:visible，:odd，:even，:not('xxx')， ":eq(0)"（始于0)，:nth(n），:gt(0)，:lt(0)，:contains("xxx") 
+		a. $('tr:not([th]):even')意为<tr>元素的子孙中不含<th>的所有子孙的偶数项 
+	   $('th').parent()—— 父节点$('td:contains("Henry")').prev() $('td:contains("Henry")').next()$('td:contains("Henry")').siblings()   内容包含有"Henry"的<td>的所有兄弟节点d.  $(...).parent().find(...).addClass().end() e.  这里执行动作的节点是find(...)，是一个数组对象，它所做的动作是“addClass()”，之后，用了个end()，这时所返回的东东就是指向了parent()所指向的节点，也就是执行“addClass()”动作的那个数组对象的父节点。 f.  myelement').get(0)，也可缩写成$('#myelement')[0]
+

@@ -1,0 +1,169 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-02-09T20:11:32+08:00
+
+====== Golang ======
+Created 星期一 09 二月 2015
+
+[[+liteide|liteide]]
+基础
+Generality ？
+
+godoc安装:
+	golang-doc  文档html
+	golang-go.tools 工具包括godoc命令
+	
+go list -f '{{range .Imports}}{{.}} 
+> {{end}}'    __??好吧！与zim的格式冲突了__#遍历显示依赖的包名，为了换行需要加换行，有因为在单引号里，所以在中断显示成这样
+
+
+==== 这是go的执行， 让人恍然大悟 ====
+{{./pasted_image.png}}
+	
+
+==== 包 ====
+├── archive
+│   ├── __tar ok__ 
+│   └── __zip ok__
+├── __bufio ok__
+├── __builtin__ 
+├── __bytes ok__
+├── compress
+│   ├── bzip2
+│   ├── flate
+│   ├── gzip
+│   ├── lzw
+│   └── zlib
+├── container
+│   ├── heap
+│   ├── list
+│   └── ring
+├── crypto
+│   ├── aes
+│   ├── cipher
+│   ├── des
+│   ├── dsa
+│   ├── ecdsa
+│   ├── elliptic
+│   ├── hmac
+│   ├── md5
+│   ├── rand
+│   ├── rc4
+│   ├── rsa
+│   ├── sha1
+│   ├── sha256
+│   ├── sha512
+│   ├── subtle
+│   ├── tls
+│   └── x509
+│       └── pkix
+├── database
+│   └── sql
+│       └── driver
+├── debug
+│   ├── dwarf
+│   ├── elf
+│   ├── gosym
+│   ├── macho
+│   └── pe
+├── encoding
+│   ├── ascii85
+│   ├── asn1
+│   ├── base32
+│   ├── base64
+│   ├── binary
+│   ├── csv
+│   ├── gob
+│   ├── hex
+│   ├── json
+│   ├── pem
+│   └── xml
+├── errors
+├── expvar
+├── flag
+├── __fmt ok__
+├── go
+│   ├── ast
+│   ├── build
+│   │       └── other
+│   │           └── file
+│   ├── doc
+│   ├── format
+│   ├── parser
+│   ├── printer
+│   ├── scanner
+│   └── token
+├── hash
+│   ├── adler32
+│   ├── crc32
+│   ├── crc64
+│   └── fnv
+├── html
+│   └── template
+├── image
+│   ├── color
+│   │   └── palette
+│   ├── draw
+│   ├── gif
+│   ├── jpeg
+│   ├── png
+│   │       └── pngsuite
+├── index
+│   └── suffixarray
+├── io
+│   └── ioutil
+├── log
+│   └── syslog
+├── math
+│   ├── big
+│   ├── cmplx
+│   └── rand
+├── mime
+│   ├── multipart
+├── net
+│   ├── http
+│   │   ├── cgi
+│   │   ├── cookiejar
+│   │   ├── fcgi
+│   │   ├── httptest
+│   │   ├── httputil
+│   │   ├── pprof
+│   ├── mail
+│   ├── rpc
+│   │   └── jsonrpc
+│   ├── smtp
+│   ├── textproto
+│   └── url
+├── os
+│   ├── exec
+│   ├── signal
+│   └── user
+├── path
+│   └── filepath
+├── reflect
+├── regexp
+│   ├── syntax
+├── runtime
+│   ├── cgo
+│   ├── debug
+│   ├── pprof
+│   └── race
+├── sort
+├── __strconv ok__
+├── __strings ok__
+├── sync
+│   └── atomic
+├── syscall
+├── testing ok
+│   ├── iotest
+│   └── quick
+├── text
+│   ├── scanner
+│   ├── tabwriter
+│   └── template
+│       ├── parse
+├── __time ok__
+├── unicode
+│   ├── utf16
+│   └── utf8
+└── unsafe

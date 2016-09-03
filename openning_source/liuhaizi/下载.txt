@@ -1,0 +1,16 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-27T16:31:04+08:00
+
+====== 下载 ======
+Created Monday 27 July 2015
+
+run() → executeDownload() → download() {
+1. 创建要下载的本地文件
+2. 给它两次机会去下载
+3. 如果有本地文件, 但是与正要下载不是同一文件则删除,否则以现在文件的大小作为当前的下载大小,并创建连接range到该位置下载
+4. 然后就是下载了
+}
+
+1. createConnection() 创建连接的时候设置便宜,从而实现断电续传:conn.setRequestProperty("RANGE", range); range="bytes=234234";
+2. createSaveFile()  

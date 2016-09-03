@@ -1,0 +1,30 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-03T11:23:24+08:00
+
+====== 概述 ======
+Created Sunday 03 November 2013
+
+将Android移植到嵌入式设备上是一项复杂的任务，它需要对Android内部原理的理解，对AOSP和它所基于的LInux内核做各种更改。在我们开始学习嵌入式Android之前，先让我们了解一些嵌入式开发者在使用Android是需要参考背景知识，比如Android的硬件需求，还有围绕Android的框架及它在嵌入式设置中的实现。首先，让我们先来看看Android从哪来的，如何开发。
+
+
+	[[+历史]]
+	特色和特性
+	开发模式
+		不同于“经典”开源项目
+		特性的包含，路线图和新的发布版本
+	生态系统
+		开放手持设备联盟的世界
+	获取“Android”
+	法律的框架
+		代码许可证
+		商标使用
+		Google自己的应用
+		其他的app商店
+		Oracle vs Google
+		手机专利权之争
+	固件和顺应需求
+		Compliance 定义文档
+		Compliance 测试套件
+	开发环境配置和工具
+

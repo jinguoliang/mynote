@@ -1,0 +1,13 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-05-17T14:16:05+08:00
+
+====== github ======
+Created Sunday 17 May 2015
+
+博客系统 pages
+
+搭建jekyll
+sudo apt-get install ruby ruby1.9.1-dev gem
+ sudo apt-get install nodejs 	#需要使用js解析器
+gem install jekyll

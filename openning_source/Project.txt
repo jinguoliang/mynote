@@ -1,0 +1,47 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-22T22:37:34+08:00
+
+====== Project ======
+Created Wednesday 22 July 2015
+
+├── conf				配置
+│   └── app.conf
+├── controllers			控制器
+│   └── default.go
+├── helloworldProject
+├── helloworldProject.tar.gz  
+├── main.go			入口  beego.Run()
+├── models			模型
+├── routers			路由器
+│   └── router.go	在 init（）来设置路由，对url映射
+├── static				静态
+│   ├── css
+│   ├── img
+│   └── js
+├── tests				测试
+│   └── default_test.go
+└── views			视图
+    └── index.tpl
+
+添加模板使用的函数：
+	beego.AddFuncMap("Setting", func(key string) string {
+		return beego.AppConfig.String(key)
+	})
+获取配置的属性：
+	beego.AppConfig.String(key)
+模板Layout里嵌套内容：
+{{.LayoutContent}}
+controller:
+c.Data["Title"] = "hello"  设置一个模板参数可在模板里{{.Title}}来显示hello
+c.Layout = "home.html"	设置布局
+c.TplNames = "index.html" 设置内容模板
+路由：
+beego.Router("/", &controllers.HomeController{}) 将根目录下的所有url给HomeController处理，会自动调用GET，POST等
+控制器：
+type HomeController struct {
+	beego.Controller
+}
+要继承beego.Controller，然后实现它的GET,POST等方法
+
+

@@ -1,0 +1,24 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-08-17T00:48:57+08:00
+
+====== learn ======
+Created 星期三 17 八月 2016
+ 
+1. 导入库 import
+2. sys.version_info python版本信息 (major, minor)   version <= (2, 6)
+3. try：exception： 
+4. 断言 assert <判断>
+5. print >> sys.stderr, 'hello error'
+6. os.name 系统架构如：‘nt'
+7. tempfile 库 获取临时文件，临时目录
+8. os.path.isdir('') 判断是否是目录
+9. os.makedirs() 创建目录
+10.stream =  open('path', 'w') 打开文件
+11. sys.stderr = stream 重定向错误输出
+12. ------------------------------------------------------------
+13. list 抽象类型
+14. raise 产生一个异常
+15. 字符串格式化‘hello "%s"' % str
+16. -----------------------------------------------------------
+17. (r1, r2...) = [ method(s) for s in slist ] 类似map对每一个元素施加某个方法

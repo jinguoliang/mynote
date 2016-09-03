@@ -1,0 +1,87 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-01-28T15:30:53+08:00
+
+====== orm ======
+Created 星期三 28 一月 2015
+
+__1. OrmLite__
+OrmLite 不是 Android 平台专用的ORM框架，它是Java ORM。支持JDBC连接，Spring以及Android平台。语法中广泛使用了注解（Annotation）。
+__2. SugarORM__
+SugarORM 是 Android 平台专用ORM。提供简单易学的APIs。可以很容易的处理1对1和1对多的关系型数据，并通过3个函数save(), delete() 和 find() (或者 findById()) 来简化CRUD基本操作。
+要启用SugarORM，需要在你的应用程序 AndroidManifest.xml 配置中添加如下meta-data标签：
+<meta-data android:name="DATABASE" android:value="my_database.db" />  
+<meta-data android:name="VERSION" android:value="1" />  
+<meta-data android:name="QUERY_LOG" android:value="true" />  
+<meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.my-domain" />  
+然后就可以从SugarORM扩展需要保存的数据类：
+[java] view plaincopy在CODE上查看代码片派生到我的代码片
+public class User extends SugarRecord<User> {  
+    String username;  
+    String password;  
+    int age;  
+    @Ignore  
+    String bio; //this will be ignored by SugarORM  
+   
+    public User() { }  
+   
+    public User(String username, String password,int age){  
+        this.username = username;  
+        this.password = password;  
+        this.age = age;  
+    }  
+}  
+要添加一个User，代码如下：
+[java] view plaincopy在CODE上查看代码片派生到我的代码片
+User johndoe = new User(getContext(),"john.doe","secret",19);  
+johndoe.save(); //stores the new user into the database  
+__3. GreenDAO__
+
+当性能很重要时（数据访问频繁），GreenDao是一个很快的解决方案，它能够支持数千条记录的CRUD每秒，和OrmLite相比，GreenDAO要快几乎4.5倍。（准确数据请自行benchmark）。
+greenDAO vs OrmLite
+
+GreenDAO小于100KB，所以对于应用程序APK的大小影响很小。
+这里有一个教程，演示如何使用Android Studio，在Android应用程序中使用GreenDAO框架。
+
+__4. Active Android__
+
+Active Record（活动目录）是Yii、Rails等框架中对ORM实现的典型命名方式。Active Android 帮助你以面向对象的方式来操作SQLite。
+在你的项目中包含Active Android，你需要在项目的 /libs 目录下添加一个jar文件。可以从Github中获取源代码并使用Maven进行编辑。然后你应该添加这些meta-data到你应用程序的 AndroidManifest.xml 配置中：
+[java] view plaincopy在CODE上查看代码片派生到我的代码片
+<meta-data android:name="AA_DB_NAME" android:value="my_database.db" />  
+<meta-data android:name="AA_DB_VERSION" android:value="1" />  
+然后在你的Activity中调用 ActiveAndroid.initialize() 方法：
+[java] view plaincopy在CODE上查看代码片派生到我的代码片
+public class MyActivity extends Activity {  
+    @Override  
+    public void onCreate(Bundle savedInstanceState) {  
+        super.onCreate(savedInstanceState);  
+        ActiveAndroid.initialize(this);  
+   
+        //rest of the app  
+    }  
+}  
+现在，你可以使用Java注解来创建模型类：
+[java] view plaincopy在CODE上查看代码片派生到我的代码片
+@Table(name = "User")  
+public class User extends Model {  
+    @Column(name = "username")  
+    public String username;  
+   
+    @Column(name = "password")  
+    public String password;  
+   
+    public User() {  
+        super();  
+    }  
+   
+    public User(String username,String password) {  
+        super();  
+        this.username = username;  
+        this.password = password;  
+    }  
+}  
+
+__5. Realm__
+
+Realm 是一个将可以使用的Android ORM，基于C++编写，直接运行在你的设备硬件上（不需要被解释），因此运行很快。它同时是开源跨平台的，iOS的代码可以在GitHub找到，你还可以找到Objective C以及Swift编写的Realm使用实例。

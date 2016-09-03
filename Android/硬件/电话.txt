@@ -1,0 +1,35 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-09T18:20:03+08:00
+
+====== 电话 ======
+Created Saturday 09 November 2013
+
+		读取一个Thread
+		Cursor c=cr.query(Uri.parse("content://mms-sms/conversations"), 
+	                new String[]{"thread_id","address","body","type","date","read","status"}, null,null,"date desc");
+	    ChatEntity chatEntity=new ChatEntity();系统提供的实体类方便使用传递数据
+	    读取某个Thread的所有短信
+		Cursor mCursor = mContentResolver.query(Uri.parse("content://sms"), new String[] { "thread_id", "address",
+	                "body", "type", "date", "read", "status","_id" }, "thread_id = ?", new String[] { "" + threadId }, "date");
+	    删除一个Thread
+	    delete(Uri.parse("content://sms"),"thread_id ="+chatEntity.getThreadId(),null);
+	    发短信
+	    SmsManager smsManager = SmsManager.getDefault();
+	    smsManager.sendTextMessage(phoneNumber, null（服务器，null表示手机默认服务器), message, sentIntent(发送成功或失败的广播）, deliveryIntent（发送成功收到的广播）);
+		短信内容有字数限制，SmsManager提供了一个方法来切分短信divideMessage
+	    打电话
+	    TelephonyManager manager=(TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+	    Intent 打电话
+	                Intent mIntent = new Intent();
+	                mIntent.setAction(Intent.ACTION_CALL);
+	                Uri telUri = Uri.parse("tel:" + sender_phone_num.getText().toString());
+	                mIntent.setData(telUri);
+	                SendMessageActivty.this.startActivity(mIntent);
+
+SIM card State:
+    public int getSimState() {
+        TelephonyManager tm = (TelephonyManager)mContext
+                .getSystemService(Context.TELEPHONY_SERVICE);
+        return tm.getSimState();
+    }

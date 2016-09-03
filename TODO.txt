@@ -1,0 +1,80 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-23T18:56:34+08:00
+
+====== TODO ======
+Created Saturday 23 November 2013
+1. [[+录屏|录屏]]
+2. sdk
+3. app
+[[+奇阅Android TODO|奇阅Android TODO]]：
+[[+一百世纪--遛孩子TODO|一百世纪--遛孩子TODO]]
+[[+Android 学习 TODO|Android 学习 TODO]]
+[[+网页学习|网页学习]]
+[[+Blog]]
+[[+Material Demo|Material Demo]]
+[[+Plan30|Plan30]]
+用go写一个查看gbk编码文件的应用
+
+[[:TODO:那本书对程序员影响最大]]
+[[~/shared_with_windows/我的坚果云/resource/html/s.html|编程面试的10大算法概念汇总]]
+NS编程辅助工具
+[[+N-S diagram|N-S diagram]]
+
+重装系统TODO：
+1. 导入浏览器书签，整理 
+2. Retext ok 
+
+==== 要精通： ====
+1.事件捕获机制
+2.apk打包
+3.类加载器
+4.Activity栈
+5.Android配置加载
+6. Activity生命周期调用
+7. _{签名}
+8. android UI 向量图 基本控件
+9. layout onclick 如何调用？
+10. 混淆
+11. https
+12. http://douban.fm/j/mine/playlist?type=n&channel=1   就拿它来练习http
+13. 各种输入输出流的关系
+
+
+===== 做个有心人 =====
+	1.整理明确自己的方法
+	2.整理自己的电脑(公司和家里的) 各每天一个番茄钟
+	3.整理自己的知识
+	5.整理自己的关系
+
+
+==== TODownload: ====
+	Movie:
+ 
+
+
+
+1. ~~网站 ~~
+	a. ~~ui amase ui   inkscape~~
+	b. ~~后台 go~~
+	c. ~~mongodb~~ 
+
+==== 这不是说说而已: ====
+1. 买个一加 ok   但我没计划要掉呀
+2. 搬个一居室   ok   有居有室
+3. 买个音响
+4. 4块镜子
+5. 给我哥买个车
+6. 把家里房子那事解决掉
+7. 买个自行车 ok
+8. 买个小提琴
+9. 买个钢琴
+10. mac air
+11. www.luoo.net/music/640
+从这个开始，写一个软件来把这些美文，美图，美曲，凭借自己美丽的感觉组合出感动
+
+==== 树莓派大项目 ====
+	1. 激光打印机
+	2. 平板的屏幕给它弄上
+	3. 六足机器人
+

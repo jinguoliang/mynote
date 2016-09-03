@@ -1,0 +1,18 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-12-03T08:57:31+08:00
+
+====== Tuesday 03 Dec 2013 ======
+
+againt download and fullbuild the code but it should have  been not necessary.
+port in the autopoweroff.apk
+
+from today.I must manage my self well.
+wow, it's so nice.
+
+just now,the fullbuild is finish but yesterday it had err and I'm so happy that I was not annoyed by it yesterday.
+
+todo:
+port playanywhere.apk , email solution,notification tray
+
+ 

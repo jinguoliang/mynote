@@ -1,0 +1,10 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-10-17T20:09:06+08:00
+
+====== Fragment ======
+Created Thursday 17 October 2013
+
+{{./pasted_image.png}}
+TabActivity被抛弃了，代之以Fragment
+获取FragmentManager Activity.getFragmentManager() and Fragment.getFragmentManager().

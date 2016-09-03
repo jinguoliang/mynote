@@ -1,0 +1,58 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-01-09T15:34:27+08:00
+
+====== android window analysis ------UI管理系统 ======
+Created Thursday 09 January 2014
+
+==== android的窗口机制分析------UI管理系统 ====
+2011-11-10 21:39 7716人阅读 评论(4) 收藏 举报
+androidlayoutsystemuiuserxml
+    Activity可以看做是整个android系统的人机接口，它提供了一个窗口来绘制UI，每个Activity在启动时，我们都需要给它设置一个Content view，作为Activity所呈现的UI内容，这个过程是通过setContentView()方法来实现的。
+
+    众所周知，android系统中强化了view的概念，主要是体现在对view的管理上，Android中的view以2种形态存在，单一的View和多个View组成的ViewGroup。Content view是以ViewGroup的形式存在的，也就是说在一个Activity窗口中可以添加多个View，这样就实现了Android窗口系统的UI多样化。activity启动时给activity窗口设置的Content view 是从xml文件中解析出来的，那么android是怎么样对这个ContentView进行管理的呢，它的内部实现逻辑又是怎样的呢？
+
+    在进行分析之前，首先给出一个Activity的window和view系统的层级关系，这个层级关系就是在Activity设置完ContentView之后的状况。    
+
+    如下图。
+
+
+{{./pasted_image.bmp}}
+
+
+下面来一一介绍各个层级的含义与作用
+
+1.1  PhoneWindow
+
+    PhoneWindow是Android中的最基本的窗口系统，每个Activity 均会创建一个PhoneWindow对象，是Activity和整个View系统交互的接口。
+
+
+
+1.2  DecorView
+
+    DecorView是当前Activity所有View的祖先，它并不会向用户呈现任何东西，它主要有如下几个功能，可能不全：
+
+A.  Dispatch ViewRoot分发来的key、touch、trackball等外部事件；
+
+B.  DecorView有一个直接的子View，我们称之为System Layout,这个View是从系统的Layout.xml中解析出的，它包含当前UI的风格，如是否带title、是否带process bar等。可以称这些属性为Window decorations。
+
+C.  作为PhoneWindow与ViewRoot之间的桥梁，ViewRoot通过DecorView设置窗口属性。
+
+
+1.3  System Layout
+
+    目前android根据用户需求预设了几种UI 风格，通过PhoneWindow通过解析预置的layout.xml来获得包含有不同Window decorations的layout，我们称之为System Layout，我们将这个System Layout添加到DecorView中，目前android提供了8种System Layout，如下图。
+{{./pasted_image001.bmp}}
+    预设风格可以通过PhoneWindow方法requestFeature()来设置，需要注意的是这个方法需要在setContentView()方法调用之前调用。
+
+
+1.4  Content Parent
+
+    Content Parent这个ViewGroup对象才是真真正正的ContentView的parent，我们的ContentView终于找到了寄主，它其实对应的是System Layout中的id为”content”的一个FrameLayout。这个FrameLayout对象包括的才是我们的Activity的layout(每个System Layout都会有这么一个id为”content”的一个FrameLayout)。
+
+
+ 
+
+1.5  Activity Layout
+
+    这个ActivityLayout便是我们需要向窗口设置的ContentView，现在我们发现其实它的地位很低，同时这一部分才是和user交互的UI部分，其上的几层并不能响应并完成user输入所期望达到的目的。

@@ -1,0 +1,27 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-01-28T15:28:02+08:00
+
+====== test ======
+Created Tuesday 28 January 2014
+
+====  android Instrumentation ====
+[[./android Instrumentation 转载 - carbs - 博客园.html]] 
+
+Android提供了一系列强大的测试工具，它针对Android的环境，扩展了业内标准的JUnit测试框架。尽管你可以使用JUnit测试Android工程，但Android工具允许你为应用程序的各个方面进行更为复杂的测试，包括单元层面及框架层面。
+Android测试环境的主要特征有：
+l   可以访问Android系统对象。
+l   Instrumentation框架可以控制和测试应用程序。
+l   Android系统常用对象的模拟版本。
+l   运行单个test或test suite的工具，带或不带Instrumentation。
+l   支持以Eclipse的ADT插件和命令行方式管理Test和Test工程。
+
+概要
+
+Android 测试环境的核心是一个Instrumentation框架，在这个框架下，你的测试应用程序可以精确控制应用程序。使用Instrumentation， 你可以在主程序启动之前，创建模拟的系统对象，如Context；控制应用程序的多个生命周期；发送UI事件给应用程序；在执行期间检查程序状态。 Instrumentation框架通过将主程序和测试程序运行在同一个进程来实现这些功能。
+
+通过在测试工程的manifest文件中添 加<instrumentation>元素来指定要测试的应用程序。这个元素的特性指明了要测试的应用程序包名，以及告诉Android如何 运行测试程序。在Inustrumentation TestRunner章节有更多的细节描述。
+
+下面的图片概要的描述了Android的测试环境：
+
+{{./pasted_image001.png}}

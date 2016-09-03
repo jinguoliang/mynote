@@ -1,0 +1,90 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-10-14T21:19:02+08:00
+
+====== menu ======
+Created Monday 14 October 2013
+
+getMenuInflater().inflate(R.menu.main, menu);
+
+Context menu
+1.Activity.registerForContextMenu(View) 注册View的上下文菜单监听，它会自动设置view为可长按，并且长按时显示上下文菜单
+onCreateContextMenu() 在这里实现如何显示菜单内容
+不能再给View添加长按时间的监听了	
+
+2.onContextItemSelected(Item item)中
+对于AdapterView，如果想获取当前是哪个条目，需
+AdapterContextMenuInfo menuInfo = (AdapterContextMenuInfo) item.getMenuInfo();
+从menuInfo里可以获取所点AdapterView的信息
+FileInfo info=(FileInfo) listAdapter.getItem(menuInfo.position);
+
+3.Action Bar
+3.0后支持，Theme.Holo主题自带
+想取消选择Theme.Holo.NoActionBar
+或：
+    ActionBar actionBar = getActionBar();  
+    actionBar.hide();  
+action bar 是option menu的一种模式
+menu 的设置：
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_save"
+          android:icon="@drawable/ic_menu_save"
+          android:title="@string/menu_save"
+          android:showAsAction="ifRoom|withText" />--------------这里设置了是否在actionbar显示
+</menu>
+同样是在这inflate menu
+@Override
+public boolean onCreateOptionsMenu(Menu menu) {
+    MenuInflater inflater = getMenuInflater();
+    inflater.inflate(R.menu.main_activity, menu);
+    return true;
+}
+同样是重写它来实现事件监听
+@Override
+public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+        case android.R.id.home:
+            // app icon in action bar clicked; go home
+            Intent intent = new Intent(this, HomeActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+    }
+}
+
+向上导航：
+    ActionBar actionBar = getActionBar();
+    actionBar.setDisplayHomeAsUpEnabled(true);
+
+4.[[+Action mode 实现的上下文操作模式]]
+
+5.popup menu
+
+public void showMenu(View v) {
+    PopupMenu popup = new PopupMenu(this, v);
+
+    // This activity implements OnMenuItemClickListener
+    popup.setOnMenuItemClickListener(this);
+    popup.inflate(R.menu.actions);
+    popup.show();
+}
+
+@Override
+public boolean onMenuItemClick(MenuItem item) {
+    switch (item.getItemId()) {
+        case R.id.archive:
+            archive(item);
+            return true;
+        case R.id.delete:
+            delete(item);
+            return true;
+        default:
+            return false;
+    }
+}
+
+
+

@@ -1,0 +1,6 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-06-16T19:01:42+08:00
+
+====== Tuesday 16 Jun 2015 ======
+{{./pasted_image.png}}

@@ -1,0 +1,10 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-23T16:22:05+08:00
+
+====== 一些有趣的词 ======
+Created Thursday 23 July 2015
+
+echo
+http://www.behindthename.com/name/echo
+来自希腊语, 回音的意思, echo "hello" 返回"hello"的确是回音

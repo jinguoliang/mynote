@@ -1,0 +1,50 @@
+#!/bin/bash
+
+#filename:	copyToDisk.sh
+#author: 	Jinux
+#create:	Mon 28 Oct 2013 04:48:00 PM
+#提示:		脚本是是我们工作便利的工具，短小的脚本，减少重复，让一切自动化
+
+function copyfile ()  {
+	IGIT=igit
+	filename=${1:2}
+	filename=${filename/\.*\.swp/$IGIT}
+	echo $filename
+	if [ $filename = $IGIT ];then
+		return 
+	fi
+	filename=${1:2}
+	filename=${filename/%*\~/$IGIT}
+	echo $filename
+	if [ $filename = $IGIT ];then
+		return 
+	fi
+	cp $1 $2 -f; 
+	echo finished $filename
+}
+	 
+
+destDir=$1
+for f in `find .` ;do 
+	newfile=./${f:2}
+	destfile=$destDir/${f:2}
+	if [ -d $f ];then		
+		if [ ! -d $destfile ];then
+			mkdir $destfile
+			echo "mkdir $destfile"
+		fi
+	elif [ -f $f ];then 
+		if [ ! -f $destfile ] ;then
+			copyfile $newfile $destfile
+		elif  [ $newfile -nt $destfile ]; then 
+			md5new=(`md5sum $newfile`)
+			md5new_md5=${md5new[0]}
+			md5dest=(`md5sum $destfile`)
+			md5dest_md5=${md5dest[0]}
+			if [ p"$md5new_md5" != p"$md5dest_md5" ];then
+				copyfile $newfile $destfile
+			fi
+		fi
+	fi
+done
+

@@ -1,0 +1,30 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-04-14T11:52:14+08:00
+
+====== Jenkins ======
+Created 星期二 14 四月 2015
+
+支持好多插件啊,功能强大啊
+
+参数化配置:
+多选框需要下插件  Extended Choice Parameter plugin
+
+支持git:
+需要下载git插件  Git Client Plugin |Git Plugin	
+
+添加git库,会报host key verify failed
+切换到jenkins用户, 如果第一次 用sudo passwd jenkins修改密码
+ssh-keygen 生成密钥,添加到git仓库的托管网站
+然后输入一下命令
+git -c core.askpass=true ls-remote -h git@git.oschina.net:wytt/liuhaizi.gi HEAD
+会提示添加known hosts
+输入yes后回车
+此时再去jenkins添加git url应该不会报错了
+
+该调用Ant构建了(以后会调用maven,或gradle)
+安装ant,设置ant home
+
+android签名
+ant.property内设置,两次配置都把别名写错了,想当然的写成文件名,惭愧呀
+

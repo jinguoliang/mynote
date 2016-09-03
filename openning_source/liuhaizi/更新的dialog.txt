@@ -1,0 +1,15 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-24T17:39:25+08:00
+
+====== 更新的dialog ======
+Created Friday 24 July 2015
+
+1. parseUpdate() 将当前版本和请求的版本比较,判断是否需要升级
+2. private void settingUpdateDialog(Update update) 
+	a. 设置相关的信息
+	b. 根据请求到的允许最小版本判断是否需要强制更新
+3. 说实话,写的的确很烂
+4. 功能有:
+	a. 弹dialog, 下载apk的界面, 强制更新的界面, 更新提示界面
+	b. 添加监听,

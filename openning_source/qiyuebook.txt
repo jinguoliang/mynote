@@ -1,0 +1,45 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-08-01T23:19:22+08:00
+
+====== qiyuebook ======
+Created Saturday 01 August 2015
+
+差评！！
+什么破架构！！
+我一定会重构或者重写你的！！
+
+来几个核心问题：
+1. 翻页效果如何实现的？
+	a. PageWidgetFactory.createPageWidget() 创建一个翻页效果
+	b. [[RealPageWidget]]
+		1. 先画
+2. 订阅逻辑
+	a. ReadBook.loadChapter(textid, preload,callback)
+		1. 从menu取到对应textId的chapterInfo
+		2. 如果当前章节不是vip或者用户登录了并且订阅了（isSubedChapter）则__加载显示章节__
+		3. 否则进入订阅逻辑
+			a. 先检查是否登录，没登陆则去登录
+			b. 根据配置是否是自动订阅
+			c. 如果是自动订阅，则调用订阅下载逻辑
+				1. 订阅成功则调用下载逻辑
+				2. 否则根据返回码处理，余额不足则去充值，订阅失败则显示信息
+			d. 不是自动订阅则弹出订阅框
+3. 加载章节
+	a. 更具tid得到file，然后判断文件是否存在
+	b. 如果不存在则请求下载章节，当下载完成并且ok，设置title，加载章节，调用回调，开新线程预加载
+	c. 如果存在直接设置title，加载章节，调用回调，开新线程预加载
+4. realpagewidget， readbook，pagefactory ，pagewidgetlistener关系
+	a. realpagewidget，实现仿真翻页，包括翻页的效果，交互效果事件，是基于两个bitmap
+	b. pageFactory用于将文章排版后返回一个页面的内容page，而page有个draw方法，通过它就可以把排版的文字画到bitmap上了
+	c. pagewidgetlistener处理事件
+		1. onTouch 如果是down，如果是正常模式则隐藏正在显示的弹框
+		2. 如果是action_up,action_outside 则翻页
+		3. 交由gestureDetector处理
+			a. PageWidgetListener构造时会new PageWidgetListener（）并设置一个simpleOnGestureListener
+			b. 
+	e. readbook.onresume 里 new Bookpagefactory
+	f. basereadbook.oncreate里init → createPagewidget()
+	g. readbook里在加载章节时，或pagefactory.openBook, getNextPage会返回page对象
+	h. readbook里在加载章节时， pagewidget.setbitmap设置翻页
+

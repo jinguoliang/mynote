@@ -1,0 +1,102 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-04-21T14:42:49+08:00
+
+====== Android Log ======
+Created Monday 21 April 2014
+
+android各层中加入log语句的方法整理如下.
+
+1. Android __java代码__
+
+(a) 导入log包
+
+   import android.util.Log;
+
+(b) 定义log标签  
+private static final String TAG = "DeviceStorageMonitorService";
+当然我们也可以定义自己的标签, 以便在从上到下中, 只打印我们自己关注的log
+
+private static final String MYTAG = "MytagTest";
+
+(c) 添加log语句, Log的输出有 : v, i, d, w, e 五种级别
+
+
+d）打印相应标签的log信息 ,只需要敲入如下命令即可.
+
+logcat -s MytagTest
+
+2.__Kernel代码__  printk
+#include <linux/printk.h>
+
+  #define DBG(x...)   printk(x)
+  DBG("%d::%s acc_irq=%d\n",__LINE__, __func__, switch_data->acc_irq);
+
+
+
+/* If you are writing a driver, please use dev_dbg instead */
+#if defined(DEBUG)
+#define pr_debug(fmt, ...) \
+    printk(KERN_DEBUG pr_fmt(fmt), ##__VA_ARGS__)
+#elif defined(CONFIG_DYNAMIC_DEBUG)
+/* dynamic_pr_debug() uses pr_fmt() internally so we don't need it here */
+#define pr_debug(fmt, ...) \
+    dynamic_pr_debug(fmt, ##__VA_ARGS__)
+#else
+#define pr_debug(fmt, ...) \
+    no_printk(KERN_DEBUG pr_fmt(fmt), ##__VA_ARGS__)
+#endif
+
+for example : --------------------------->      pr_debug("kobject: '%s' (%p): %s\n",    kobject_name(kobj), kobj, __func__);
+
+
+
+3. NDK开发__ jni C代码__
+    #include<android/log.h>
+
+   static const char *TAG="libgpio"
+   #define LOGI(fmt,args...) ((void) __android_log_print(ANDROID_LOG_INFO,TAG,fmt,##args)
+
+  #define LOGD(fmt,args...) ((void) __android_log_print(ANDROID_DEBUG_INFO,TAG,fmt,##args)
+
+   #define LOGE(fmt,args...) ((void) __android_log_print(ANDROID_ERROR_INFO,TAG,fmt,##args)
+   LOGI("open path=%s",path)
+
+4.Android c/c++代码
+
+在各种jni, hal层, 驱动层都是c和c++的代码, 在这里插入log, 可以帮助我们找到上层调用下来的参数是多少, 调用的是哪个具体函数等.
+
+(a) 添加tag标签,
+
+#define LOG_TAG "LightSensor"
+(b) 引入log库
+
+#include <utils/Log.h>
+(c) 加入log语句
+
+在这一步中, 和java不同的是, 不能加入不同的tag标签只能用当前源文件的标签,即 LOG_TAG
+
+LOGI("LightSensor.cpp -> readEvent() : event->value = %d", event->value);
+5. __在mk文件中加入log__
+
+很多人都不知道, mk文件在运行的时候(也就是android源码编译的时候)也可以输出log, 这大大的方便我们调试编译信息.
+
+在make文件中有两种log级别error和warning :
+
+$(error TEXT...)
+$(warning TEXT...)
+$(info Checking build tools versions...)
+用error可以准确定位我们需要的log信息, 因为编译会终止, 一般来说终止的地方会有我们的log信息,
+
+warning不会终止在我们的log信息上, 大家可以根据自己的情况来选择.
+
+另外,还可以在编译输出的log语句中加入mk定义的变量信息
+
+举例, 比如我们需要知道libsensors目录下的so编译后叫什么名字, 通过在此目录下的android.mk文件中加入以下代码来输出log:
+
+在LOGCAL_MODULE 的定义之后, 写上
+
+$(error module is $(LOCAL_MODULE))
+输出结果:
+
+hardware/sansung/libsensors/Android.mk:27: *** module is Sensors.sansung. Stop.

@@ -1,0 +1,32 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-03-16T15:23:37+08:00
+
+====== Graphic ======
+Created 星期一 16 三月 2015
+
+==== Shader   ====
+着色器			材质：texture
+拿一种材质来贴附一个区域。
+
+已知的子类：	
+BitmapShader 	图片渲染器
+ComposeShader   组合渲染器，组合两个渲染器 使用porter-duff来组合层次效果
+LinearGradient  	线性渐变
+RadialGradient	辐射渐变 一环一环的
+SweepGradient	扫射渐变 
+
+Shader.TileMode  平铺模式：重复，镜像，clamp(夹钳，固定住？？？？） 如果材质比区域小，则用材质的边缘的颜色来填充
+组合渲染器如何组合两个渲染器：
+PorterDuff.Mode  
+图形层次的堆叠方式：
+1.CLEAR，2.SRC， 3.DST ，4.SRC_OVER ，5.DST_OVER ， 6.SRC_IN ，7.DST_IN，8.SRC_OUT   ，9.DST_OUT，10.SRC_ATOP ，11.DST_ATOP， 12.XOR  ，13.DARKEN， 14.LIGHTEN，15.MULTIPLY ，16.SCREEN，17.ADD，18.OVERLAY
+
+材质的矩阵变换，大小，位移。。。
+Shader.setLocalMatrix(Matrix localM)
+
+使用：
+Paint.setShader(Shader)
+
+
+

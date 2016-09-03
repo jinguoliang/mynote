@@ -1,0 +1,31 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-10-15T20:41:23+08:00
+
+====== 基本组件 ======
+Created Tuesday 15 October 2013
+
+[[+Intent]]
+
+[[+Activity]]
+
+[[+Service]]
+
+[[+Activity:Loader]]
+
+[[+ContentProvider]]
+
+[[+Fragment]]
+
+[[Android Menafest.xml]]
+
+[[+Notification|Notification]]
+
+	Stop a Component:
+	public void disableComponent() {
+		PackageManager pm = mContext.getPackageManager();
+		pm.setComponentEnabledSetting(new ComponentName(mContext, BootCompletedReceiver.class),
+				PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+	}
+
+[[+Application|Application]]

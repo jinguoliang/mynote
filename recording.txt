@@ -1,0 +1,26 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-12-02T12:41:55+08:00
+
+====== recording ======
+Created Monday 02 December 2013
+
+郭栋 vps
+54.64.154.241   pptp  加密方式mschap-v2   mppe-128
+jinguol999
+8146999
+
+liuhaizi wifi 64788096
+施耐德利德华福
+
+
+那人客户端
+登录用户名： jinguol999@163.com
+登录密码：065481
+
+thunder bird 
+163配置：
+imap.163.com
+smtp.163.com
+姓名：jinguol999
+

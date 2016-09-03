@@ -1,0 +1,27 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-03T11:04:34+08:00
+
+====== ContentProvider ======
+Created Sunday 03 November 2013
+
+1.图片资源
+Cursor c=ContentResolver.query(Media.EXTERNAL_CONTENT_URI,null,null,null)
+c.getString(c.getColumnIndex(Media.DATA)) 获取到图片路径。
+c.getString(c.getColumnIndex(Media.DATA_ADDED)) 获取到图片添加时间。
+
+2.实现批处理，就是一次对多个表进行操作
+ArrayList<ContentProviderOperation> operationList = new ArrayList<ContentProviderOperation>();
+ContentProviderOperation.Builder builder = null;
+builder = ContentProviderOperation.newUpdate(ContentUris.withAppendedId(
+                            Notes.CONTENT_DATA_URI, mCallDataId));//指明了uri
+builder.withValues(ContentValue);	//指明数据
+mCallDataValues.clear();		//添加一个
+还可以添加多个
+ContentProviderResult[] results = context.getContentResolver().applyBatch(Notes.AUTHORITY, operationList);//批提交
+返回多个结果对应多个ContentProviderOperation
+
+3. 数据改变通知Cursor？？？？
+getContext().getContentResolver().notifyChange(
+                    ContentUris.withAppendedId(Notes.CONTENT_NOTE_URI, noteId), null);
+

@@ -1,0 +1,21 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-05-08T21:27:44+08:00
+
+====== UI优化 ======
+Created Friday 08 May 2015
+
+1. 使用系统定义的id ????  
+	a. @android:id/list  替代  @+id/mylist  
+2. 利用系统图片资源
+	a. @*android:drawable/ic_menu_attachment  使用系统没公开的资源
+3. 利用系统的字符串资源
+	a. @android:string/no   本地化自动做好了
+4. 利用系统的Style
+	a. ?android:attr/textAppearanceMedium  而不是 @android:
+5. 使用系统的颜色定义
+6. UI 抽出可重用的布局
+	a. 背景,后期可能会经常修改背景,为了界面统一
+	b. 头部标题栏
+	c. ListView统一风格,统一修改
+7. [[ViewStub]] 延迟加载

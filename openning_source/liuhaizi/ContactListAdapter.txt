@@ -1,0 +1,17 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-28T15:38:08+08:00
+
+====== ContactListAdapter ======
+Created Tuesday 28 July 2015
+
+1. 继承自ArrayAdapter<ContactItemInterface>
+2. 构造函数
+	a. Collections.sort(_items, new ContactItemComparator()); 使用比较器,对传进来的城市列表进行排序
+	b. 设置indexer
+3. getView
+	a. 准备好convertView
+	b. 显示sectionview
+		1. 如果是搜索模式则不显示
+4. inflate出带有section的item，根据数据判断是否需要显示section
+5. 还会根据inSearchMode判断是否显示section

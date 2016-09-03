@@ -1,0 +1,42 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-05-08T21:48:25+08:00
+
+====== ViewStub ======
+Created Friday 08 May 2015
+
+有时候，我们的页面中可能会包含一些布局，这些布局默认是隐藏的，当用户触发了一定的操作之后，隐藏的布局才会显示出来。比如，我们有一个Activity用来显示好友的列表，当用户点击Menu中的“导入”以后，在当前的Activity中才会显示出一个导入好友的布局界面。从需求的角度来说，这个导入功能，一般情况下用户是不使用的。即大部分时候，导入好友的布局都不会显示出来。这个时候，就可以使用延迟加载的功能。
+
+ViewStub是一个隐藏的，不占用内存空间的视图对象，它可以在运行时延迟加载布局资源文件。当ViewStub被设置为可见，或者调用inflate()函数时，才会真的去加载这个布局资源文件。该ViewStub在加载视图时会在父容器中替换它本身。因此，ViewStub会一直存在于视图中，直到调用setVisibility(int)或者inflate()为止。ViewStub的布局参数会随着加载的视图数一同被添加到ViewStub父容器。同样，也可以通过使用inflated Id属性来定义或重命名要加载的视图对象的Id值。
+
+请参考下面的代码片段。
+
+<ViewStub 
+ 
+android:id="@+id/stub_import" 
+ 
+android:inflatedId="@+id/panel_import" 
+ 
+android:layout="@layout/progress_overlay" 
+ 
+android:layout_width="fill_parent" 
+ 
+android:layout_height="wrap_content" 
+ 
+android:layout_gravity="bottom" /> 
+  
+通过“stub_import”这个id可以找到被定义的ViewStub对象。加载布局资源文件“progress_overlay”后，ViewStub对象从其父容器中移除。可以通过“panel_import”这个id找到由布局资源“progress_overlay”创建的View。
+
+执行加载布局资源文件的推荐方式如下：
+
+((ViewStub) findViewById(R.id.stub_import)).setVisibility(View.VISIBLE); 
+ 
+// 或者 
+ 
+View importPanel = ((ViewStub) findViewById(R.id.stub_import)).inflate(); 
+  
+当inflate()被调用, 这个ViewStub被加载的视图所替代，并且返回这个视图对象。这使得应用程序不需要额外执行findViewById()来获取加载视图的引用。
+
+经验分享：
+
+利用ViewStub可以与xml文件里面指定的布局资源文件关联起来，让布局资源文件在需要使用的时候再加载上去。什么时候用什么时候才加载，不用在开始启动的时候一次加载。这样做既可以加快应用的启动速度，又可以节省内存资源。

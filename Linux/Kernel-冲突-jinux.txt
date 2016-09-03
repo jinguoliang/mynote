@@ -1,0 +1,14 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-01-06T09:24:26+08:00
+
+ 
+
+====== Kernel ======
+Created Monday 06 January 2014
+[[./UNIX环境高级编程_第二版中文.pdf]] 
+[[./Linux设备驱动开发详解 822页 17.5M 超清书签版.pdf]]
+ [[./深入理解Linux内核第3版.pdf]] 
+[[./深入理解Linux内核%28第三版 中文版%29.pdf]] 
+[[./【Linux Device Drivers(2rd Edition) 中文版】.pdf]]
+ 

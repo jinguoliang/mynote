@@ -1,0 +1,21 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-10-15T20:42:23+08:00
+
+====== AdapterView ======
+Created Tuesday 15 October 2013
+
+1.在数据改变后调用notifyDataSetChanged（）
+
+2.ListView中Item加入Button后,导致ListView无法点击。
+
+解决方案:
+如果ListView子视图中有Button等抢焦点的控件，那么需要在ListView的xml配置中加入
+    android:descendantFocusability="blocksDescendants"  
+同时，对Button等控件需要加入 
+    android:focusable="false"  
+
+3.[[+convertView]]
+
+
+

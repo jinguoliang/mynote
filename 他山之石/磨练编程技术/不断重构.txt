@@ -1,0 +1,61 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-18T21:56:53+08:00
+
+====== 不断重构 ======
+Created Monday 18 November 2013
+
+这两个函数实现了判断在lst内first是否在second的前面，但是有点太难看了！！！！需要这么多判断吗？？？？
+ (define (before-in-list-helper? lst first second has-first) (cond  ((empty? lst) #f) ((equal? (car lst) first) (before-in-list-helper? (cdr lst) first second #t)) ((equal? (car lst) second) has-first) (else (before-in-list-helper? (cdr lst) first second has-first))))
+(define (before-in-list? lst first second ) (before-in-list-helper? lst first second #f))
+
+算数表达式的中缀表达式
+(define (parse expr)
+(parse-helper expr ’() ’()))
+(define (parse-helper expr operators operands)
+(cond ((null? expr)
+(if (null? operators)
+(car operands)
+(handle-op ’() operators operands)))
+((number? (car expr))
+(parse-helper (cdr expr)
+operators
+(cons (make-node (car expr) ’()) operands)))
+((list? (car expr))
+(parse-helper (cdr expr)
+operators
+(cons (parse (car expr)) operands)))
+(else (if (or (null? operators)
+(> (precedence (car expr))
+(precedence (car operators))))
+(parse-helper (cdr expr)
+(cons (car expr) operators)
+operands)
+(handle-op expr operators operands)))))
+
+(define (handle-op expr operators operands)
+(parse-helper expr
+(cdr operators)
+(cons (make-node (car operators)
+(list (cadr operands) (car operands)))
+(cddr operands))))
+(define (precedence oper)
+(if (member? oper ’(+ -)) 1 2))
+We promised that after building the tree it would be easy to compute the value of
+the expression. Here is the program to do that:
+(define (compute tree)
+(if (number? (datum tree))
+(datum tree)
+((function-named-by (datum tree))
+(compute (car (children tree)))
+(compute (cadr (children tree))))))
+(define (function-named-by oper)
+(cond ((equal? oper ’+) +)
+((equal? oper ’-) -)
+((equal? oper ’*) *)
+((equal? oper ’/) /)
+(else (error "no such operator as" oper))))
+
+
+
+

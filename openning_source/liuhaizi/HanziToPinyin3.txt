@@ -1,0 +1,13 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-30T01:54:19+08:00
+
+====== HanziToPinyin3 ======
+Created Thursday 30 July 2015
+
+1. 单例
+2. getInstance()
+	a. 活取可用的本地化
+	b. 如果有中国则实例化
+3. get（）
+	a. 如果中国本地化则需要转，否则不需要所以返回空token数组

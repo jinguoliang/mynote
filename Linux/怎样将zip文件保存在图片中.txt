@@ -1,0 +1,12 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-04-27T10:50:25+08:00
+
+====== 怎样将zip文件保存在图片中 ======
+Created 星期一 27 四月 2015
+
+linux下执行：
+cat aaa.png  bbb.zip >> zzz.png
+windows下执行：
+COPY /b aaa.png+bbb.zip zzz.png
+命令运行完得到的zzz.png打开就是和aaa.png一样的图片，修改扩展名为zip后就是bbb.zip的内容。

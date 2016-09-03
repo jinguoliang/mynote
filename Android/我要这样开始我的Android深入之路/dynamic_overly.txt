@@ -1,0 +1,14 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-12-31T10:22:37+08:00
+
+====== dynamic overly ======
+Created Tuesday 31 December 2013
+
+Runtime resource overlay
+
+So far, the article has focused on resource overlay at compile time. Starting with commit
+https://review.source.android.com/#change,19337
+the Android resource lookup framework has been extended to perform the actual overlay in runtime. This is done by loading the original (unmodified) .apk together with a special overlay .apk containing only new resource values. During lookup, resources may be fetched from either .apk.
+Our plan is to gradually use and extend runtime resource overlay. The above commit limits usage to overlay of the Android framework resources. Our end goal is to provide a framework for skinning of third party applications, but it is still far in the future: to achieve the goal several issues must be solved, not least security concerns.
+Resource overlays is a powerful tool, which can be used to solve several problems, without the need to patch – please use it.

@@ -1,0 +1,26 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-17T20:16:55+08:00
+
+====== 查看图片 ======
+Created Friday 17 July 2015
+
+
+
+1. onCreate
+	a. 创建一个PhotoSelectorDomain, 调用init() 传入intent.getExtral()
+2. init
+	a. 设置数据,配置,显示三种,图片预览,最近图片,相册浏览
+
+
+继承自BasePhotoPreviewActivity
+1. onCreate
+	a. 绑定控件, viewpager设置监听
+2. bindData
+	a. 绑定adapter
+3. adapter里,instantiateItem
+	a. 创建PhotoPreview,添加到container,加载图片,添加监听
+	b. 为什么添加到container还返回????
+
+[[PhotoSelectorDomain]]
+1. 包含一个AlbumController

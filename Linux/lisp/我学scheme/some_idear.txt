@@ -1,0 +1,302 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-20T22:12:22+08:00
+
+====== some idear ======
+Created Wednesday 20 November 2013
+
+Scheme is a dialect of Lisp, a family of computer programming 
+
+languages
+invented for computing with words, sentences, and ideas instead of just numbers.
+
+part 1：function
+Traditionally, computer programs are built out of actions:
+First do this, then do that, and finally print the results.
+Each step in the program does something. Functional programming is different, in that
+we are less concerned with actions and more concerned with values.
+1.show off scheme
+We are going to use the programming language Scheme to teach you some big ideas in
+computer science. The ideas are mostly about control of complexity—that is, about how to
+develop a large computer program without being swamped in details.
+For example, once you’ve solved part of the large problem, you can give that partial
+solution a name and then you can use the named subprogram as if it were an indivisible
+operation, just like the ones that are built into the computer. Thereafter, you can forget
+about the details of that subprogram. This is the beginning of the idea of abstraction,
+which we’ll discuss in more depth throughout the book.
+2.function
+If you’ve used other computer programming languages, it may seem strange to use a
+function—that is, a part of a computer program—as data. Most languages make a sharp
+distinction between program and data. We’ll soon see that the ability to treat functions
+as data helps make Scheme programming very powerful and convenient.
+
+If you’ve used other computer programming languages, it may seem strange to use a
+function—that is, a part of a computer program—as data. Most languages make a sharp
+distinction between program and data. We’ll soon see that the ability to treat functions
+as data helps make Scheme programming very powerful and convenient.
+called zero; then let’s suppose we have the function given by f (x ) = x + 1. By applying that
+function repeatedly, we can create 1 = f (0), then 2 = f (1), and so on.
+
+Functions are important in computer science because they give us a way to think
+about process —in simple English, a way to think about something happening, something
+changing. A function embodies a transformation of information, taking in something
+we know and returning something we didn’t know. That’s what computers do: They
+transform information to produce new results.
+
+Part of the definition of a function is that you always get the same answer whenever
+you call a function with the same argument(s). The value returned by the function,
+in other words, shouldn’t change regardless of anything else you may have computed
+meanwhile. 
+
+We’ve hinted at two different ways of thinking about functions. The first is called
+function as process. Here, a function is a rule that tells us how to transform some
+information into some other information. The function is just a rule, not a thing in
+its own right. The actual “things” are the words or numbers or whatever the function
+manipulates. The second way of thinking is called function as object. In this view, a function
+is a perfectly good “thing” in itself. We can use a function as an argument to another
+function, for example. Research with college math students shows that this second idea is
+hard for most people, but it’s worth the effort because you’ll see that higher-order functions
+(functions of functions) like keep and every can make programs much easier to write.
+
+part 2 Composition of function
+The big idea in this part of the book is deceptively simple. It’s that we can take the value
+returned by one function and use it as an argument to another function. By “hooking
+up” two functions in this way, we invent a new, third function.
+We know that this idea probably doesn’t look like much of a big deal to you. It seems
+obvious. Nevertheless, it will turn out that we can express a wide variety of computational
+algorithms by linking functions together in this way. This linking is what we mean by
+“functional programming.”
+
+3 expression
+The interaction between you and Scheme is called the “read-eval-print loop.” Scheme
+reads what you type, evaluates it, and prints the answer, and then does the same thing over
+again. We’re emphasizing the word “evaluates” because the essence of understanding
+Scheme is knowing what it means to evaluate something.
+In other programming languages, the name for what you type might be a “command” or an
+“instruction.” The name “expression” is meant to emphasize that we are talking about the notation
+in which you ask the question, as distinct from the idea in your head, just as in English you express
+an idea in words. Also, in Scheme we are more often asking questions rather than telling the
+computer to take some action.
+If an expression
+is atomic, Scheme just knows the value.* Otherwise, it is a compound expression,
+so Scheme first evaluates all the subexpressions (in some unspecified order) and then
+applies the value of the first one, which had better be a procedure, to the values of the
+rest of them. Those other subexpressions are the arguments.
+真的抽象，你真的递归，真的函数
+
+4.Defining Your Own Procedures
+By the way, when we talk about “substituting into the body,” we don’t mean that the
+procedure’s definition is changed in any permanent way. The body of the procedure
+doesn’t change; what happens, as we said before, is that Scheme constructs a new
+expression that looks like the body, except for the substitutions.*
+
+Compound expressions tell Scheme to “do” a procedure.
+5.Words and Sentences
+If you just type square into Scheme, you will
+find out that square is a procedure:
+> square
+#<PROCEDURE>
+What you need is a way to say that you want to use the word “square” itself, rather
+than the value of that word, as an expression. The way to do this is to use quote:
+> (quote square)
+SQUARE
+Scheme programmers use quote a lot, so there is an abbreviation for it:
+> ’square
+SQUARE
+''square----->'(quote square)---->(quote square)
+6.True and False
+A function that returns either #t or #f is called a predicate.
+ It’s a convention in Scheme
+that the names of predicates end with a question mark, but that’s just a convention. 
+#T isn’t the only true value. In fact, every value is considered true except for #f.
+And and or are also semipredicates. We’ve already explained that or returns a true
+result as soon as it evaluates a true argument. The particular true value that or returns
+is the value of that first true argument:
+> (or #f 3 #f 4)
+3
+And returns a true value only if all of its arguments are true. In that case, it returns the
+value of the last argument:
+> (and 1 2 3 4 5)
+5
+As an example in which this behavior is useful, we can rewrite integer-quotient
+more tersely:
+(define (integer-quotient big little)
+(and (divisible? big little)
+(/ big little)))
+
+(define (roman-value letter)
+(cond ((equal? letter ’i) 1)
+((equal? letter ’v) 5)
+((equal? letter ’x) 10)
+((equal? letter ’l) 50)
+((equal? letter ’c) 100)
+((equal? letter ’d) 500)
+((equal? letter ’m) 1000)
+(else ’huh?)))
+
+!!!!!好好想明白
+(cond (empty? 3)  ;;;cond 参数是每一个都以括号括起为一组（#t/#f exp）  empty?=#t
+(square 7)
+(else 9))
+结果是3
+
+7Variables
+A variable is a connection between a name and a value.
+Since a variable is the connection between a name and a value, a formal
+parameter in a procedure definition isn’t a variable; it’s just a name. But when we invoke
+the procedure with a particular argument, that name is associated with a value, and a
+variable is created. If we invoke the procedure again, a new variable is created, perhaps
+with a different value.
+ Part of what we mean by functional
+programming is that once a variable exists, we aren’t going to change the value of that
+variable.
+
+Remember that we said a variable is a connection between a name and a value. So
+x isn’t a variable! The association of the name x with the value 5 is a variable.
+we can usually get away with saying “x is a variable” when we mean “there is some
+variable whose name is x.”
+Another important point about the way little people do variables is that they can’t
+read each others’ minds. In particular, they don’t know about the values of the local
+variables that belong to the little people who hired them. For example, the following
+attempt to compute the value 10 won’t work:
+(define (f x)
+(g 6))
+(define (g y)
+(+ x y))
+
+Just as we’ve been using define to associate names with procedures globally, we can
+also use it for other kinds of data:
+(define pi 3.141592654)
+
+Just as we’ve been using define to associate names with procedures globally, we can
+also use it for other kinds of data:
+
+The association of a formal parameter (a name) with an actual argument (a value)
+is called a local variable.
+
+Let is a special form that takes two arguments. The first is a sequence of name-value
+pairs enclosed in parentheses. 
+
+A definition is meant to be
+permanent in functional programming.
+
+Let’s notation is tricky because, like cond, it uses parentheses that don’t mean
+procedure invocation. Don’t teach yourself magic formulas like “two open parentheses
+before the let variable and three close parentheses at the end of its value.” Instead,
+think about the overall structure:
+(let variables body)
+Let takes exactly two arguments. The first argument to let is one or more name-value
+groupings, all in parentheses:
+((name1 value1) (name2 value2) (name3 value3) . . . )
+
+let 格式
+(let  ((name1 value1) (name2 value2 )(name3 value3)
+	body)
+例子：
+(define (roots a b c)
+(let ((discriminant (sqrt (- (* b b) (* 4 a c)))))
+(se (/ (+ (- b) discriminant) (* 2 a))
+(/ (- (- b) discriminant) (* 2 a)))))
+
+
+参数名别与函数名重了，否则很恶心的
+
+Part III
+Functions as Data
+All we’re saying is that a function
+can have functions as its domain or range
+
+8
+Higher-Order Functions
+
+A function that takes another function as one of its arguments, as every does, is
+called a higher-order function.
+
+(define (make-conjugator prefix ending)
+(lambda (verb) (sentence prefix (word verb ending))))
+
+lambda
+
+This idea of
+naming something and forgetting the details of its implementation is what we’ve been
+calling “abstraction.”
+
+自低向上的编程，容易保证功能的正确性，因为容易做单元测试，但不容易掌握架构
+
+[[10.Example]][[10.Example:Tic-Tac-Toe|:]]Tic-Tac-Toe
+
+数据的不同表现形式，转换数据的形式以便是数据共容易处理。
+
+This technique of converting data from one form to another so that it can be
+manipulated more easily is an important idea in computer science. There are really three
+representations of the same thing. There’s this picture:
+{{./pasted_image.png}}
+as well as the word xo x o
+and the sentence (1xo 4x6 o89 14o xx8 o69 1x9
+oxo). All three of these formats have the same information but are convenient in
+different ways. The pictorial form is convenient because it makes sense to the person
+who’s playing tic-tac-toe. Unfortunately, you can’t type that picture into a computer, so
+we need a different format, the word xo x o , which contains the contents of the
+nine squares in the picture, but without the lines separating the squares and without the
+two-dimensional shape.
+The third format, the sentence, is quite inconvenient for human beings. You’d never
+want to think about a tic-tac-toe board that way yourself, because the sentence doesn’t
+have the visual simplicity that lets you take in a tic-tac-toe position at a glance. But the
+sentence of triples is the most convenient representation for our program. Ttt will
+have to answer questions like “can x win on the next move?” To do that, it will have
+to consider an equivalent but more detailed question: “For each of the eight possible
+winning combinations, can x complete that combination on the next move?” It doesn’t
+really matter whether a combination is a row or a column; what does matter is that each of
+the eight combinations be readily available for inspection by the program. The sentence-
+of-triples representation obscures part of the available information (which combination
+is where) to emphasize another part (making the eight combinations explicit, instead of
+implicit in the nine boxes of the diagram).
+The representation of fractions as “mixed numerals,” such as 2 1 , and as “improper
+3
+fractions,” such as 7 , is a non-programming example of this idea about multiple repre-
+3
+sentations. A mixed numeral makes it easier for a person to tell how big the number is,
+but an improper fraction makes arithmetic easier.
+
+11. recersive 
+Every recursive procedure must include two parts: one or more recursive cases, in
+which the recursion reduces the size of the problem, and one or more base cases, in
+which the result is computable without recursion.
+
+15.Advanced Recursion
+
+
+(define (mergesort sent)
+	(if (<= (count sent) 1)
+		sent	
+		(merge (mergesort (one-half sent))		//这里一开始没发现，取一半，算法任意
+				(mergesort (other-half sent)))))
+
+(define (merge left right)		//这个好，我当时受C的影响，添加了一个额外的句子，归并到了另一个句子里
+	(cond ((empty? left) right)
+		((empty? right) left)
+		((before? (first left) (first right))
+			(se (first left) (merge (bf left) right)))
+		(else (se (first right) (merge left (bf right))))))
+		
+(define (one-half sent)		//这里是奇偶分半的
+	(if (<= (count sent) 1)
+		sent
+		(se (first sent) (one-half (bf (bf sent))))))
+(define (other-half sent)
+	(if (<= (count sent) 1)
+	’()
+	(se (first (bf sent)) (other-half (bf (bf sent))))))
+19 Implementing Higher-Order Functions
+A program that behaves politely when given incorrect input is called robust.
+
+Part VI
+Sequential Programming
+Until now, we’ve been doing functional programming, where the focus is on functions
+and their return values. Invoking a function is like asking a question: “What’s two plus
+two?” In this part of the book we’re going to talk about giving commands to the computer
+as well as asking it questions. That is, we’ll invoke procedures that tell Scheme to do
+something, such as wash-the-dishes. (Unfortunately, the Scheme standard leaves
+out this primitive.) Instead of merely computing a value, such a procedure has an effect,
+an action that changes something.
+

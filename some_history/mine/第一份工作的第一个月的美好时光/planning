@@ -1,0 +1,1975 @@
+Mon Oct 28 09:11:05 CST 2013
+周计划：
+	《和时间做朋友》第一版本**
+	《倾城之恋》看完*
+	《scheme》三章**  做个小游戏或者小程序**
+	把衣服都洗了** 买件上衣*** 
+	《嵌入式Android》翻译完第一章*
+	写好堆排序**
+日计划：
+    把短信的相关调用接口实现并合并
+	翻译两段
+	构思设计《和时间做朋友》
+	
+Mon Oct 28 11:29:56 CST 2013
+	发短信的函数还没有实现，功能原先没有理清
+	老同事给讲解了点代码风格问题，发现我的FileExplorer列表刷新问题
+
+Mon Oct 28 14:02:11 CST 2013
+	吃完饭			15
+	睡觉			12：30---1：24
+	发短信函数算完了	---2：00
+Mon Oct 28 15:18:52 CST 2013
+	短信函数完成
+Mon Oct 28 16:10:21 CST 2013
+	正在合并，先得了解修复对方
+Mon Oct 28 16:54:16 CST 2013
+	解决一个小问题
+Mon Oct 28 22:20:27 CST 2013
+	翻译	1小时
+	回家	1:30小时
+	吃饭	1小时??? 19:30---->
+	scheme  1小时	22：10-----	23：10
+
+Mon Oct 28 17:51:41 CST 2013
+	翻译了4段		1个小时？
+	!!!《和时间做朋友》***
+Mon Oct 28 23:24:16 CST 2013
+	ok 今天还是不错的
+Tue Oct 29 09:07:50 CST 2013
+	今天计划：
+	继续整合---
+	研习Android Example
+	买衣服
+	!!!《和时间做朋友》***
+
+Tue Oct 29 15:27:32 CST 2013
+	学习android training 4 个 fragment有了解了一点，很恶心---生命周期
+	
+	
+Tue Oct 29 15:30:08 CST 2013
+	这周博客《学习fragment》
+Tue Oct 29 17:14:54 CST 2013
+	用bash写了个同步软件	1小时
+Wed Oct 30 09:06:42 CST 2013
+	使用rlucache
+	结束training ‘getting started'
+	写堆排序
+Wed Oct 30 16:38:02 CST 2013
+	写堆排序
+Thu Oct 31 08:55:55 CST 2013
+	training Multimedia部分
+	翻译 历史 特性
+	!!!《和时间做朋友》****设计
+
+
+Thu Oct 31 13:22:22 CST 2013
+	多媒体完成
+Thu Oct 31 15:25:57 CST 2013
+	了解info命令，ed，sed  1小时
+	调试相机		半小时
+Thu Oct 31 08:55:55 CST 2013
+	training Multimedia部分
+	翻译 历史 特性
+	!!!《和时间做朋友》****设计
+
+
+Thu Oct 31 13:22:22 CST 2013
+	多媒体完成
+Thu Oct 31 15:25:57 CST 2013
+	了解info命令，ed，sed  1小时
+	调试相机		半小时
+
+Fri Nov  1 09:37:09 CST 2013
+	training 图像和动画
+	完善merger_planning学习sed
+	翻译 特性
+Thu Oct 31 08:55:55 CST 2013
+	training Multimedia部分
+	翻译 历史 特性
+	!!!《和时间做朋友》****设计
+
+
+Thu Oct 31 13:22:22 CST 2013
+	多媒体完成
+Thu Oct 31 15:25:57 CST 2013
+	了解info命令，ed，sed  1小时
+	调试相机		半小时
+
+Fri Nov  1 09:37:09 CST 2013
+	training 图像和动画
+	完善merger_planning学习sed
+	翻译 特性
+Mon Nov  4 08:59:20 CST 2013
+周计划：
+	修好手机*****
+	trainning ---graphic and UI 用户体验
+	《和时间做朋友》第一版本***
+	做个小游戏或者小程序***
+	把衣服都洗了** 买件上衣****
+	《嵌入式Android》翻译完第一章* 
+日计划：
+	trainning ---- opengl
+	设计出 《和时间做朋友》主界面来***
+
+
+ 	
+Mon Nov  4 22:08:32 CST 2013
+	手机不修了，买新的，红米
+	openGL放弃
+	《和时间做朋友》主界面完成，OK   5个小时
+	打扫卫生洗衣服					 1个小时
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+	
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+	
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+	
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+	
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+	
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+	
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+	
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+	
+	
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+	
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+	
+	
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+	
+	
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+	
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+	
+	
+	
+	
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+	
+	
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+	
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+	
+	
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+	
+	
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+MonOct2817:51:41CST2013
+	翻译了4段		1个小时？
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+	
+	
+ThuNov717:43:16CST2013
+	整合短信数据库完成
+	了解了一点搜索功能
+	
+TueNov509:19:29CST2013
+	training----动画效果
+TueNov515:38:28CST2013
+	模糊变换	viewanimate
+	反转特效通过FragmentManager添加切换特效，使用xmlobjectAnimator
+	viewpager	通过ViewPager的setPageTransformer添加切换特效
+	zoomView	通过代码编写objectAnimator实现特效
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+
+FriNov109:37:09CST2013
+	training图像和动画
+	完善merger_planning学习sed
+	翻译特性
+ThuOct3108:55:55CST2013
+	trainingMultimedia部分
+	翻译历史特性
+	!!!《和时间做朋友》****设计
+
+
+ThuOct3113:22:22CST2013
+	多媒体完成
+ThuOct3115:25:57CST2013
+	了解info命令，ed，sed1小时
+	调试相机		半小时
+	
+MonNov422:08:32CST2013
+	《和时间做朋友》主界面完成，OK5个小时
+	打扫卫生洗衣服					1个小时
+	layoutAnimator	通过它的setLayoutTransition添加特效
+		
+			
+					
+	
+	
+ThuNov717:43:16CST2013

@@ -1,0 +1,38 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-08-17T14:39:52+08:00
+
+====== Start ======
+Created 星期日 17 八月 2014
+
+====  树莓派首次安装系统，一台笔记本、一个路由器、一根网线、无显示器，使用VNC，进入图形化界面 ====
+分类： Linux 2013-12-19 00:18 6809人阅读 评论(1) 收藏 举报
+转载务必注明出处：http://blog.csdn.net/xhz1234/article/details/17403757
+ 
+1.先看看我所用的”原料“：
+   （1）树莓派
+   （2）SD卡
+   （3）网线
+   （4）路由器
+   （5）一台笔记本
+2.从官网下载http://www.raspberrypi.org/downloads，我下载的是raspbian
+3.将raspbian烧录到SD卡中，我是在windows下进行的操作：
+      下载Win32DiskImager，把raspbian镜像烧录至SD卡;
+4.把SD卡插入树莓派的SD卡插槽
+5.把树莓派和路由器用网线连接，登录路由器，查看客户端列表，树莓派的客户端名称是raspberrypi。这样，我们就知道树莓派的IP了
+6.用SSH连接树莓派
+    输入$ ssh pi@树莓派的IP  ，输入密码raspberry，即可登录树莓派
+   具体的安装步骤，大家可以看看这个文档：http://download.csdn.net/detail/xhz1234/6737663
+
+7.如何使用图形化界面操作树莓派呢？
+   (1)树莓派安装vncserver:
+     $sudo apt-get install tightvncserver
+   (2)设置vnc密码:vncpasswd,  先输入密码两次，之后会有提示是否输入view-only密码，根据自己喜好设置。
+   (3)$pi@raspberrypi ~ $ /usr/bin/tightvncserver -depth 16 -geometry 1024x768 :1   设置颜色深度为16（如果设置32,则连接后看到一片空白），后面是屏幕分辨率，你可以自己设置，1是显示编号。
+   (4)笔记本如果是Linux，要安装vncserver，同树莓派安装方法：$sudo apt-get install tightvncserver
+     之后使用VNC的vncviwer（在终端输入vncviwer即可弹出一个对话框），我的树莓派ip是192.168.1.101,在VNC Server一栏中输入192.168.1.101:5901，点击connect按钮，然后输入在树莓派中为vncserver设置的密码，即可显示树莓派图形界面。
+   注：普及一下小知识，给VNCVIWEWE的端口是5900+N，N就是树莓派启动vncserver时设置的display号。
+
+
+
+更新：2014-8-2，Ubuntu-keylin14.02 笔记本需要安装$apt-get install xtightvncviewer 才能使用vncviwer

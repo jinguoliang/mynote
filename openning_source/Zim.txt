@@ -1,0 +1,602 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-16T17:18:16+08:00
+
+====== Zim ======
+Created Thursday 16 July 2015
+
+[[/home/jinux/Project/zim]]
+
+[[:Linux:python:learn|边学python]] 变看zim
+
+[[+HACKING|HACKING]]
+
+{{./pasted_image.png}}
+
+├── cgi-bin
+│   └── zim.cgi
+├── __CHANGELOG.txt__
+├── contrib
+│   └── zim2trac.py  trac是一个wiki/缺陷跟踪工具,这个py应该是转成相应的格式能被它显示
+├── data
+│   ├── dates.list
+│   ├── globe_banner_small.png
+│   ├── globe_banner.svg
+│   ├── globe.svg
+│   ├── helpers
+│   │   └── compare_files
+│   │       └── meld.desktop
+│   ├── manual
+│   │   ├── About.txt
+│   │   ├── Bugs.txt
+│   │   ├── FAQ.txt
+│   │   ├── Help
+│   │   │   ├── Attachments.txt
+│   │   │   ├── Auto_Formatting.txt
+│   │   │   ├── Automount.txt
+│   │   │   ├── Check_Boxes.txt
+│   │   │   ├── Commandline_Options.txt
+│   │   │   ├── Config_Files.txt
+│   │   │   ├── Custom_Tools.txt
+│   │   │   ├── Default_Applications.txt
+│   │   │   ├── Export
+│   │   │   │   ├── HTML.txt
+│   │   │   │   └── LaTeX.txt
+│   │   │   ├── Export.txt
+│   │   │   ├── Importing_external_files.txt
+│   │   │   ├── Key_Bindings.txt
+│   │   │   ├── Links.txt
+│   │   │   ├── Menu_Items.txt
+│   │   │   ├── Notebooks.txt
+│   │   │   ├── Pages.txt
+│   │   │   ├── Preferences.txt
+│   │   │   ├── Properties.txt
+│   │   │   ├── Searching.txt
+│   │   │   ├── Tags.txt
+│   │   │   ├── Templates.txt
+│   │   │   └── Wiki_Syntax.txt
+│   │   ├── Help.txt
+│   │   ├── notebook.zim
+│   │   ├── Plugins
+│   │   │   ├── Arithmetic.txt
+│   │   │   ├── Attachment_Browser.txt
+│   │   │   ├── BackLinks_Pane.txt
+│   │   │   ├── BookmarksBar.txt
+│   │   │   ├── Diagram_Editor
+│   │   │   │   └── diagram.png
+│   │   │   ├── Diagram_Editor.txt
+│   │   │   ├── Distraction_Free_Editing.txt
+│   │   │   ├── Ditaa_Editor
+│   │   │   │   ├── ditaa.dia
+│   │   │   │   └── ditaa.png
+│   │   │   ├── Ditaa_Editor.txt
+│   │   │   ├── Equation_Editor
+│   │   │   │   └── equation_01.png
+│   │   │   ├── Equation_Editor.txt
+│   │   │   ├── Gnuplot_Editor
+│   │   │   │   ├── gnuplot.gnu
+│   │   │   │   └── gnuplot.png
+│   │   │   ├── Gnuplot_Editor.txt
+│   │   │   ├── GNU_R_Plot_Editor
+│   │   │   │   ├── gnu_r_plot001.png
+│   │   │   │   ├── gnu_r_plot001.r
+│   │   │   │   ├── gnu_r_plot.png
+│   │   │   │   └── gnu_r_plot.r
+│   │   │   ├── GNU_R_Plot_Editor.txt
+│   │   │   ├── Inline_Calculator.txt
+│   │   │   ├── Insert_Screenshot.txt
+│   │   │   ├── Insert_Symbol.txt
+│   │   │   ├── Journal.txt
+│   │   │   ├── Line_Sorter.txt
+│   │   │   ├── Link_Map.txt
+│   │   │   ├── Log_events_with_Zeitgeist.txt
+│   │   │   ├── Print_to_Browser.txt
+│   │   │   ├── Quick_Note.txt
+│   │   │   ├── Score_Editor
+│   │   │   │   ├── score001.ly
+│   │   │   │   ├── score001.png
+│   │   │   │   ├── score002.ly
+│   │   │   │   ├── score002.png
+│   │   │   │   ├── score003.ly
+│   │   │   │   ├── score003.png
+│   │   │   │   ├── score.ly
+│   │   │   │   └── score.png
+│   │   │   ├── Score_Editor.txt
+│   │   │   ├── Sequence_Diagram_Editor
+│   │   │   │   └── diagram.png
+│   │   │   ├── Sequence_Diagram_Editor.txt
+│   │   │   ├── Source_View.txt
+│   │   │   ├── Spell_Checker.txt
+│   │   │   ├── Table_Editor
+│   │   │   │   ├── Basic_Table_Operations
+│   │   │   │   │   ├── insert-table.png
+│   │   │   │   │   ├── table_popup.png
+│   │   │   │   │   └── table_settings_dialog.png
+│   │   │   │   ├── Basic_Table_Operations.txt
+│   │   │   │   ├── Superior_Table_Operations
+│   │   │   │   │   ├── cell_after_text_formatting.png
+│   │   │   │   │   └── cell_editing_with_text_formatting.png
+│   │   │   │   ├── Superior_Table_Operations.txt
+│   │   │   │   ├── table_demo.png
+│   │   │   │   ├── table_footer.png
+│   │   │   │   ├── table_toolbar.png
+│   │   │   │   ├── with_borders.png
+│   │   │   │   └── without_borders.png
+│   │   │   ├── Table_Editor.txt
+│   │   │   ├── Table_Of_Contents.txt
+│   │   │   ├── Tags.txt
+│   │   │   ├── Task_List.txt
+│   │   │   ├── Tray_Icon.txt
+│   │   │   └── Version_Control.txt
+│   │   ├── Plugins.txt
+│   │   ├── Start.txt
+│   │   ├── Usage
+│   │   │   ├── Collaboration.txt
+│   │   │   ├── Creative_Writing.txt
+│   │   │   ├── Daily_Journal.txt
+│   │   │   ├── Getting_Started.txt
+│   │   │   ├── Getting_Things_Done.txt
+│   │   │   ├── GTD_flowchart.png
+│   │   │   ├── GTD_flowchart.svg
+│   │   │   └── Publishing.txt
+│   │   └── Usage.txt
+│   ├── menubar.xml
+│   ├── pixmaps
+│   │   ├── add-bookmark.png
+│   │   ├── attachment.png
+│   │   ├── calendar.png
+│   │   ├── checked-box.png
+│   │   ├── favicon.ico
+│   │   ├── insert-table.png
+│   │   ├── linkmap.png
+│   │   ├── linkmap.svg
+│   │   ├── link.png
+│   │   ├── task-list.png
+│   │   ├── unchecked-box.png
+│   │   └── xchecked-box.png
+│   ├── style.conf
+│   ├── symbols.list
+│   ├── templates
+│   │   ├── html
+│   │   │   ├── Default.html
+│   │   │   ├── Default_with_index.html
+│   │   │   ├── Presentation.html
+│   │   │   ├── Print.html
+│   │   │   ├── SlideShow_(S5)
+│   │   │   │   └── ui
+│   │   │   │       └── default
+│   │   │   │           ├── blank.gif
+│   │   │   │           ├── bodybg.gif
+│   │   │   │           ├── framing.css
+│   │   │   │           ├── iepngfix.htc
+│   │   │   │           ├── opera.css
+│   │   │   │           ├── outline.css
+│   │   │   │           ├── pretty.css
+│   │   │   │           ├── print.css
+│   │   │   │           ├── s5-core.css
+│   │   │   │           ├── slides.css
+│   │   │   │           └── slides.js
+│   │   │   ├── SlideShow_(S5).html
+│   │   │   └── ZeroFiveEight.html
+│   │   ├── latex
+│   │   │   ├── Article.tex
+│   │   │   ├── Part.tex
+│   │   │   └── Report.tex
+│   │   ├── markdown
+│   │   │   └── Default.markdown
+│   │   ├── plugins
+│   │   │   ├── equationeditor.tex
+│   │   │   ├── gnuploteditor.gnu
+│   │   │   ├── gnu_r_editor.r
+│   │   │   ├── quicknote.txt
+│   │   │   └── scoreeditor.ly
+│   │   ├── rst
+│   │   │   └── Default.rst
+│   │   └── wiki
+│   │       ├── Default.txt
+│   │       └── Journal.txt
+│   ├── urls.list
+│   └── zim.png
+__├── debian		deb包的文件__
+__│   ├── changelog__
+__│   ├── compat__
+__│   ├── control__
+__│   ├── copyright__
+__│   ├── rules__
+__│   └── source__
+__│       └── format__
+├── epydoc.conf  epydoc 是一个自动化的api文档到处工具, 这个是它的配置文件
+__├── HACKING  黑客行为:)__
+__│   ├── Coding_Style_and_Guidelines.txt__
+__│   ├── Coding_Tools.txt__
+__│   ├── Gtk_and_GObject_and_signals.txt__
+__│   ├── HACKING.txt__
+__│   ├── LIMITATIONS.txt__
+__│   ├── notebook.zim__
+__│   ├── objects.dot__
+__│   ├── Release_checklist.txt__
+__│   ├── Test_Suite.txt__
+__│   ├── Translation_Guidelines.txt__
+__│   ├── Unicode.txt__
+__│   ├── Working_with_Bazaar.txt__
+__│   └── Writing_plugins.txt__
+├── icons
+│   ├── ubuntu-mono-dark
+│   │   └── zim-panel.svg
+│   ├── ubuntu-mono-light
+│   │   └── zim-panel.svg
+│   ├── zim16.png
+│   ├── zim16.svg
+│   ├── zim22.png
+│   ├── zim22.svg
+│   ├── zim24.png
+│   ├── zim32.png
+│   ├── zim32.svg
+│   ├── zim48.png
+│   ├── zim48.svg
+│   └── zim.ico
+├── LICENSE.txt 许可证
+├── Makefile 构建脚本
+├── makeman.py
+├── MANIFEST.in
+├── msgfmt.py
+├── README.txt
+├── setup.py
+├── test.py
+├── tests
+│   ├── actions.py
+│   ├── applications.py
+│   ├── arithmetic.py
+│   ├── attachmentbrowser.py
+│   ├── bookmarksbar.py
+│   ├── calendar.py
+│   ├── clipboard.py
+│   ├── config.py
+│   ├── data
+│   │   ├── byteordermark.txt
+│   │   ├── formats
+│   │   │   ├── equation001.tex
+│   │   │   ├── export.html
+│   │   │   ├── export.markdown
+│   │   │   ├── export.rst
+│   │   │   ├── export.tex
+│   │   │   ├── parsetree.xml
+│   │   │   ├── plain.txt
+│   │   │   ├── README.txt
+│   │   │   ├── update.sh
+│   │   │   └── wiki.txt
+│   │   ├── non-utf8.txt
+│   │   ├── notebook.gjots
+│   │   ├── notebook-list-old-format.list
+│   │   ├── notebook-wiki.xml
+│   │   ├── templates
+│   │   │   └── html
+│   │   │       ├── Default
+│   │   │       │   ├── checked-box.png
+│   │   │       │   └── foo
+│   │   │       │       └── bar.png
+│   │   │       └── Default.html
+│   │   └── TestTemplate.html
+│   ├── datetimetz.py
+│   ├── environ.py
+│   ├── errors.py
+│   ├── export.py
+│   ├── formats.py
+│   ├── fs.py
+│   ├── gui.py
+│   ├── history.py
+│   ├── imagegenerators.py
+│   ├── index.py
+│   ├── __init__.py
+│   ├── inlinecalculator.py
+│   ├── insertsymbol.py
+│   ├── ipc.py
+│   ├── main.py
+│   ├── notebook.py
+│   ├── objectmanager.py
+│   ├── package.py
+│   ├── pageview.py
+│   ├── parsing.py
+│   ├── plugins.py
+│   ├── printtobrowser.py
+│   ├── quicknote.py
+│   ├── search.py
+│   ├── signals.py
+│   ├── sourceview.py
+│   ├── spell.py
+│   ├── stores.py
+│   ├── tableeditor.py
+│   ├── tableofcontents.py
+│   ├── tags.py
+│   ├── tasklist.py
+│   ├── templates.py
+│   ├── translations.py
+│   ├── utils.py
+│   ├── versioncontrol.py
+│   ├── widgets.py
+│   └── www.py
+├── tools
+│   ├── build_website.sh
+│   ├── class_tree.py
+│   ├── clean.py
+│   ├── data_uri.py
+│   ├── dump_clipboard.py
+│   ├── extract_dependencies.py
+│   ├── extract_translator_comments.py
+│   ├── generate_test_notebook.py
+│   ├── import-launchpad-translations.py
+│   ├── internationalizer.py
+│   ├── list_TODO_FIXME_tags.sh
+│   ├── package_test_data.py
+│   ├── replace_in_all_files.py
+│   ├── test_file.py
+│   ├── test_website.py
+│   ├── time_parsing.py
+│   ├── xdot_tree.py
+│   └── xgettext.sh
+├── translations 翻译
+│   ├── ca.po
+│   ├── cs.po
+│   ├── da.po
+│   ├── de.po
+│   ├── el.po
+│   ├── en_GB.po
+│   ├── es.po
+│   ├── et.po
+│   ├── fi.po
+│   ├── fr.po
+│   ├── gl.po
+│   ├── he.po
+│   ├── hu.po
+│   ├── it.po
+│   ├── ja.po
+│   ├── ko.po
+│   ├── nb.po
+│   ├── nl.po
+│   ├── pl.po
+│   ├── pt_BR.po
+│   ├── ro.po
+│   ├── ru.po
+│   ├── sk.po
+│   ├── sl.po
+│   ├── sr.po
+│   ├── sv.po
+│   ├── tr.po
+│   ├── uk.po
+│   ├── zh_CN.po
+│   ├── zh_TW.po
+│   └── zim.pot
+├── website
+│   ├── files
+│   │   ├── downloads
+│   │   ├── favicon.ico
+│   │   ├── images
+│   │   │   ├── bullet.png
+│   │   │   ├── globe.png
+│   │   │   ├── invade_your_desktop.png
+│   │   │   ├── os-ubuntu.png
+│   │   │   ├── os-windows.gif
+│   │   │   ├── package-x-generic.png
+│   │   │   ├── zim32.png
+│   │   │   ├── zim64.png
+│   │   │   └── zim.png
+│   │   └── screenshots
+│   │       ├── thumbs
+│   │       │   ├── zim-calendar-embedded.png
+│   │       │   ├── zim-calendar.png
+│   │       │   ├── zim-equation-editor.png
+│   │       │   ├── zim-image-open.png
+│   │       │   ├── zim-minimal.png
+│   │       │   ├── zim-normal.png
+│   │       │   ├── zim-tasklist.png
+│   │       │   └── zim-versions.png
+│   │       ├── zim-calendar-embedded.png
+│   │       ├── zim-calendar.png
+│   │       ├── zim-equation-editor.png
+│   │       ├── zim-image-open.png
+│   │       ├── zim-minimal.png
+│   │       ├── zim-normal.png
+│   │       ├── zim-tasklist.png
+│   │       └── zim-versions.png
+│   ├── pages
+│   │   ├── contact.txt
+│   │   ├── contribute.txt
+│   │   ├── development.txt
+│   │   ├── donations.txt
+│   │   ├── downloads.txt
+│   │   ├── index.txt
+│   │   ├── install.txt
+│   │   ├── notebook.zim
+│   │   ├── screenshots.txt
+│   │   └── translations.txt
+│   └── template.html
+├── windows
+│   ├── build_win32.py
+│   ├── create-zim-setup.nsi
+│   ├── README-BUILD-win32.txt
+│   └── src
+│       ├── App
+│       │   └── readme.txt
+│       ├── AppInfo
+│       │   ├── appicon_128.png
+│       │   ├── appinfo.ini
+│       │   └── Launcher
+│       │       ├── Custom.nsh
+│       │       ├── splash.jpg
+│       │       └── ZimDesktopWikiPortable.ini
+│       ├── help.html
+│       ├── hicolor-icon-theme__index.theme
+│       ├── Other
+│       │   ├── Help
+│       │   │   └── images
+│       │   │       └── globe_64.png
+│       │   └── Source
+│       │       ├── AppNamePortable.ini
+│       │       ├── LICENSE.txt
+│       │       └── readme.txt
+│       ├── registerExtension.nsh
+│       └── zim-logo-big.bmp
+├── xdg
+│   ├── hildon
+│   │   └── zim.desktop
+│   ├── zim.appdata.xml
+│   ├── zim.desktop
+│   └── zim.xml
+├── zim
+│   ├── actions.py
+│   ├── actions.pyc
+│   ├── applications.py
+│   ├── base.py
+│   ├── base.pyc
+│   ├── command.py
+│   ├── command.pyc
+│   ├── config
+│   │   ├── basedirs.py
+│   │   ├── basedirs.pyc
+│   │   ├── dicts.py
+│   │   ├── dicts.pyc
+│   │   ├── __init__.py
+│   │   ├── __init__.pyc
+│   │   ├── manager.py
+│   │   └── manager.pyc
+│   ├── datetimetz.py
+│   ├── datetimetz.pyc
+│   ├── environ.py
+│   ├── environ.pyc
+│   ├── errors.py
+│   ├── errors.pyc
+│   ├── export
+│   │   ├── exporters
+│   │   │   ├── files.py
+│   │   │   ├── __init__.py
+│   │   │   └── mhtml.py
+│   │   ├── __init__.py
+│   │   ├── layouts.py
+│   │   ├── linker.py
+│   │   ├── __main__.py
+│   │   ├── selections.py
+│   │   └── template.py
+│   ├── formats
+│   │   ├── html.py
+│   │   ├── html.pyc
+│   │   ├── __init__.py
+│   │   ├── __init__.pyc
+│   │   ├── latex.py
+│   │   ├── __main__.py
+│   │   ├── markdown.py
+│   │   ├── plain.py
+│   │   ├── plain.pyc
+│   │   ├── rst.py
+│   │   ├── wiki.py
+│   │   └── wiki.pyc
+│   ├── fs.py
+│   ├── fs.pyc
+│   ├── gui
+│   │   ├── applications.py
+│   │   ├── clipboard.py
+│   │   ├── customtools.py
+│   │   ├── exportdialog.py
+│   │   ├── __init__.py
+│   │   ├── notebookdialog.py
+│   │   ├── objectmanager.py
+│   │   ├── pageindex.py
+│   │   ├── pageview.py
+│   │   ├── pathbar.py
+│   │   ├── preferencesdialog.py
+│   │   ├── propertiesdialog.py
+│   │   ├── recentchangesdialog.py
+│   │   ├── searchdialog.py
+│   │   ├── server.py
+│   │   ├── templateeditordialog.py
+│   │   └── widgets.py
+│   ├── history.py
+│   ├── inc
+│   │   ├── arithmetic.py
+│   │   ├── __init__.py
+│   │   └── xdot.py
+│   ├── index.py
+│   ├── index.pyc
+│   ├── __init__.py
+│   ├── __init__.pyc
+│   ├── ipc.py
+│   ├── ipc.pyc
+│   ├── main.py
+│   ├── main.pyc
+│   ├── notebook.py
+│   ├── notebook.pyc
+│   ├── objectmanager.py
+│   ├── objectmanager.pyc
+│   ├── parser.py
+│   ├── parser.pyc
+│   ├── parsing.py
+│   ├── parsing.pyc
+│   ├── plugins
+│   │   ├── arithmetic.py
+│   │   ├── attachmentbrowser
+│   │   │   ├── filebrowser.py
+│   │   │   ├── __init__.py
+│   │   │   └── thumbnailer.py
+│   │   ├── backlinkpane.py
+│   │   ├── base
+│   │   │   ├── imagegenerator.py
+│   │   │   └── __init__.py
+│   │   ├── bookmarksbar.py
+│   │   ├── calendar.py
+│   │   ├── diagrameditor.py
+│   │   ├── distractionfree.py
+│   │   ├── ditaaeditor.py
+│   │   ├── equationeditor.py
+│   │   ├── gnuplot_ploteditor.py
+│   │   ├── gnu_r_ploteditor.py
+│   │   ├── __init__.py
+│   │   ├── __init__.pyc
+│   │   ├── inlinecalculator.py
+│   │   ├── insertsymbol.py
+│   │   ├── linesorter.py
+│   │   ├── linkmap.py
+│   │   ├── printtobrowser.py
+│   │   ├── quicknote.py
+│   │   ├── scoreeditor.py
+│   │   ├── screenshot.py
+│   │   ├── sequencediagrameditor.py
+│   │   ├── sourceview.py
+│   │   ├── spell.py
+│   │   ├── tableeditor.py
+│   │   ├── tableofcontents.py
+│   │   ├── tags.py
+│   │   ├── tasklist.py
+│   │   ├── trayicon.py
+│   │   ├── versioncontrol
+│   │   │   ├── bzr.py
+│   │   │   ├── fossil.py
+│   │   │   ├── git.py
+│   │   │   ├── hg.py
+│   │   │   └── __init__.py
+│   │   └── zeitgeist-logger.py
+│   ├── search.py
+│   ├── signals.py
+│   ├── signals.pyc
+│   ├── stores
+│   │   ├── files.py
+│   │   ├── files.pyc
+│   │   ├── __init__.py
+│   │   ├── __init__.pyc
+│   │   ├── memory.py
+│   │   └── xml.py
+│   ├── templates
+│   │   ├── expressionparser.py
+│   │   ├── expressionparser.pyc
+│   │   ├── expression.py
+│   │   ├── expression.pyc
+│   │   ├── functions.py
+│   │   ├── functions.pyc
+│   │   ├── __init__.py
+│   │   ├── __init__.pyc
+│   │   ├── parser.py
+│   │   ├── parser.pyc
+│   │   ├── processor.py
+│   │   └── processor.pyc
+│   ├── utils.py
+│   ├── utils.pyc
+│   └── www.py
+└── zim.py

@@ -1,0 +1,33 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-06T21:08:07+08:00
+
+====== 一些问题 ======
+Created Wednesday 06 November 2013
+
+foo 什么意思
+
+[[+java|java]]
+
+[[+android|android]]
+[[+gtk|gtk]]
+[[+linux|linux]]
+
+=== ubuntu vim 安装失败 ===
+先卸载vim-common
+再装vim
+
+当在RadioGroup动态添加RadioButton时，要设置它的LayoutParams，是它的（RadioGroup.LayoutParams)
+设LinearLayout的应该也可以，但是却不可以，？？？？？？
+
+wifi 
+
+__eclipse too many opened files__
+这是linux打开的文件有限制。
+[[/etc/security/limits.conf]]   nofile → max number of opened filehhh
+
+==== retext installiation ====
+python3-pip
+python3-markups
+markdowns
+

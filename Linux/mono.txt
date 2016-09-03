@@ -1,0 +1,13 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-17T11:18:19+08:00
+
+====== mono ======
+Created Sunday 17 November 2013
+.net 框架
+C#文件必须是以.cs结尾
+mcs Hello.cs	编译源文件生成.exe文件
+gmcs 
+smcs //参考man
+mint name.exe 	执行，调试？？？
+mono name.exe	执行

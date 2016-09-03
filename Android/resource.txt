@@ -1,0 +1,46 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-10-16T20:48:34+08:00
+
+====== resource ======
+Created Wednesday 16 October 2013
+
+assets
+	1.放在assets下的文件，url表示如下：
+	webview.loadUrl("file:///__android_asset__/calendarview.html");注意，__android_asset__
+	2.
+	AssetManager am= getAssets();    
+	InputStream is = __assset.open__("filename"); 
+
+animator and anim:
+animator 以XML文件保存在res/animator目录下，用来描述__属性动画__.属性动画通过改变对象的属性来实现动画效果，例如，通过不断地修改对象的坐标值来实现对象移动动画
+anim	以XML文件保存在res/anim目录下，用来描述__补间动画__。补间动画和属性动画不同，它不是通过修改对象的属性来实现，而是在对象的原来形状或者位置的基础上实现一个变换来得到的.
+从数学上来讲，就是在对象的__原来形状或者位置的__基础上__施加一个变换矩阵__来实现动画效果。注意，在动画的执行过程中，__对象的属性是始终保持不变的__，我们看到的只不过是它的一个变形副本。
+ --raw。这类资源以任意格式的文件保存在__res/raw__目录下，它们和assets类资源一样，都是__原装不动__地打包在apk文件中的(因为其他xml都会被编译为二进制）（这些二进制格式的XML文件分别有一个字符串资源池，用来保存文件中引用到的每一个字符串，包括XML元素标签、属性名称、属性值，以及其它的一切文本值所使用到的字符串。这样原来在文本格式的XML文件中的每一个放置字符串的地方在二进制格式的XML文件中都被替换成一个索引到字符串资源池的整数值）
+应用程序资源的组织方式有18个维度：
+		{{./pasted_image.png}}
+	
+
+==== String resource ====
+ getResources().getString(R.string.hello_world);
+Arrays.asList(array）	//把array转化为list
+context.getString(resId,args)		//格式化字符串，不过从资源获取格式字符串
+<string name="html_fmt">hello world __&lt;__b>__%1$s__&lt;/b> &lt;i>haha&lt;/i> &lt;u>nini&lt;/u></string>
+					String str=getResources().__getString__(R.string.html_fmt,"jinguol999");   //参数
+		CharSequence cs=Html.fromHtml(str);		//带格式的
+					et.append(cs);
+
+
+
+[[+Drawable Resources|Drawable Resources]]
+Corlor Resources 		
+	1. res/color/filename.xml
+	2. selector 		item  
+	3. #RGB
+		#ARGB
+		#RRGGBB
+		#AARRGGBB
+[[+Animation Resources|Animation Resources]]
+
+[[+TextView|TextView]]
+

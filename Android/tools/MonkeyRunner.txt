@@ -1,0 +1,55 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-06-25T09:46:48+08:00
+
+====== MonkeyRunner ======
+Created Wednesday 25 June 2014
+
+=== A Simple monkeyrunner Program ===
+
+# Imports the monkeyrunner modules used by this program
+from com.android.monkeyrunner import MonkeyRunner, MonkeyDevice
+
+# Connects to the current device, returning a MonkeyDevice object
+device = MonkeyRunner.waitForConnection()
+
+# Installs the Android package. Notice that this method returns a boolean, so you can test
+# to see if the installation worked.
+device.installPackage('myproject/bin/MyApplication.apk')
+
+# sets a variable with the package's internal name
+package = 'com.example.android.myapplication'
+
+# sets a variable with the name of an Activity in the package
+activity = 'com.example.android.myapplication.MainActivity'
+
+# sets the name of the component to start
+runComponent = package + '/' + activity
+
+# Runs the component
+device.startActivity(component=runComponent)
+
+# Presses the Menu button
+device.press('KEYCODE_MENU', MonkeyDevice.DOWN_AND_UP)
+
+# Takes a screenshot
+result = device.takeSnapshot()
+
+# Writes the screenshot to a file
+result.writeToFile('myproject/shot1.png','png')
+
+=== The monkeyrunner API ===
+The monkeyrunner API is contained in three modules in the package com.android.monkeyrunner:
+
+MonkeyRunner: A class of utility methods for monkeyrunner programs. This class provides a method for connecting monkeyrunner to a device or emulator. It also provides methods for creating UIs for a monkeyrunner program and for displaying the built-in help.
+MonkeyDevice: Represents a device or emulator. This class provides methods for installing and uninstalling packages, starting an Activity, and sending keyboard or touch events to an application. You also use this class to run test packages.
+MonkeyImage: Represents a screen capture image. This class provides methods for capturing screens, converting bitmap images to various formats, comparing two MonkeyImage objects, and writing an image to a file.
+
+==== hierarchyviewer ====
+为了通过控件ID操作手机，我们需要在代码开头import这两个类：
+from com.android.monkeyrunner.easy import By
+from com.android.chimpchat.hierarchyviewer import [[HierarchyViewer]]
+
+hierarchyViewer = device.getHierarchyViewer()
+viewNodeButton = hierarchyViewer.findViewById("id/button")
+pointButton = HierarchyViewer.getAbsoluteCenterOfView(viewNodeButton)

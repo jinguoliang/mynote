@@ -1,0 +1,116 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-06-03T17:08:09+08:00
+
+====== Android Gradle 构建 ======
+Created Wednesday 03 June 2015
+
+==== Android构建系统概览 ====
+https://developer.android.com/sdk/installing/studio-build.html
+Android构建系统是一个工具集,它帮助开发者去构建,测试,运行,打包应用.
+它可以从Android Studio的工具栏调用也可以从命令行单独运行.
+这个构建系统提供了一下特性:
+	1. 自定义,配置和扩展构建过程
+	2. 为应用创建多个apk,with different features using the same project and modules.
+	3. __跨资源集合来重用资源?__
+
+这个构建系统使用了很多工具来生成中间文件最终生成apk文件
+{{./pasted_image.png}}
+一个经典的构建过程如下所示:
+构建系统会合并来自项目喜好配置,构建类型和依赖里所有的资源. 如果不同的文件夹包含同名的资源或配置, 按以下顺序覆盖: 依赖会覆盖构建类型,构建类型会覆盖喜好,洗好覆盖源码目录.
+1. aapt(Android Asset Packaging Tool)编译你的资源,如AndroidManifest.xml,布局文件.同时生成一个R.java文件来供你引用资源.
+2. aidl工具会转化.aidl文件为java文件
+3. 所有你的java文件包括R.java和.aidl生成的java文件都会被编译成class文件
+4. dex工具会把class文件,和第三方的库都转化称Dalvic byte code.
+5. apkbuilder工具把所有的没编译的资源(如图片),编译的资源和.dex文件打包到.apk文件
+6. 签名,调试的或者发布的
+7. zipalign工具,减少运行时的内存使用
+
+注意:
+应用被限制64k方法引用,如果超过这个限制报错:
+Unable to execute dex: method ID not in [0, 0xffff]: 65536.
+
+最终的输出:
+app/build/outputs/apk/<appname>-<flavor>-<buildtype>.apk
+
+==== 签名 ====
+1. Android允许相同签名的应用运行在同一进程,系统对待他们如同一个应用.这种情况下,可以以module形式构建工程.
+2. 签名相同的多个应用通过使用给予签名的权限检查,可以共享代码和数据. ???
+3. debug签名有效期为365天,过期后,构建会失败.此时删掉~/.android/debug.keystore即可,会重新生成.机器使用了设置为非公历本地化,生成的key总是失效的
+4. 手动签名app
+	a. 生成keystore: 	keytool -genkey -v -keystore my-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
+	b. 签名:			jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore my_application.apk alias_name
+	c. 检查是否被签名:	jarsigner -verify -verbose -certs my_application.apk
+	d. 对齐zip:		zipalign -v 4 your_project_name-unaligned.apk your_project_name.apk	减少ram的使用
+
+==== Android 的Gradle插件 ====
+1. android构建系统包含一个gradle插件
+2. Gradle是一个高级的构建工具集,它能管理依赖,并且允许你自定义构建过程.
+3. Android Studio使用一个Gradle Wrapper完全继承了Android的Gradle插件.!!!!!!!
+4. 这个插件也可以独立与Android Studio运行
+5. Gradle使用DSL(Domain Specific Language)描述和操作这个构建逻辑
+6. 使用了Groovy语法
+7. Groovy是一种动态语言,你可以使用它定义构建罗辑,与Gradle插件提供的Android特定的元素交互
+8. Android构建系统使用大量默认的配置如项目结构和其他选项.同时你有可以配置几乎每个方面
+
+=== 构建配置 ===
+1. 构建的所有配置都在build.gradle.使用了Gradle的语法和选项,主要配置以下方面:
+	a. 构建过程的变量.构建系统可以对同一个Module生成多个apk,这些apk是不同的产品有不同的配置.比如不同的版本
+	b. 依赖.本地和远程
+	c. Manifest 配置.能声明某些元素值,覆盖AndroidManifest
+	d. 签名配置
+	e. 混淆规则 [[ProGuard]]
+	f. 测试
+
+=== 项目和模块的构建配置 ===
+1. 项目代表android顶层的开发结构,项目包含项目文件和一个或多个模块
+2. 模块应用的一部分,你可以对他单独构建,测试或者调试,模块包含源码和资源.
+3. 模块种类:
+	a. 应用模块
+	b. android 库模块	生成aar(Android ARchive)
+	c. 应用引擎模块包含应用引擎集成的源码和资源
+	d. java库模块	生成jar
+4. Android包含一个顶层的配置文件,每个模块有自己的配置文件
+
+=== 模块的构建文件 ===
+可以配置模块构建的设置,覆写manifest设置,设置包选项
+1. 安卓设置
+	a. compileSdkVersion
+	b. buildToolsVersion
+2. defaultConfig 和 productFlavors
+	a. manifest属性如applicationId, minSdkVersion, targetSdkVersion和测试信息
+3. buildTypes
+4. 构建属性如debuggable, ProGuard enabling, debug signing, 版本命名后缀和测试信息
+5. 依赖
+
+=== 依赖 ===
+Android构建系统管理项目依赖,支持模块依赖,本地二进制依赖和远程二进制依赖
+构建系统支持远程库的远程依赖如maven,支持依赖管理器如ivy
+
+Tasks
+[[Android构建系统定义了一系列的构建Tasks:顶级或者anchor]] tasks调用依赖的tasks去生成集体的输出.顶级的构建tasks有:
+	1. assemble 构建
+	2. check  运行检查和测试
+	3. bulid	运行1 和 2
+	4. clean
+
+Gradle Wrapper
+包含:
+1. 一个jar文件
+2. 一个属性文件
+3. 一个window上的shell script
+4. 一个linux或者mac上的shell script
+
+使用Gradle wrapper(而不是本地安装的gradle),确保总是运行配置文件里的gradle. Android Studio会从Gradle Wrapper目录里读取配置并运行,所以不同的项目可以使用不同版本的gradle.
+Android Studio不使用script.
+
+=== Build variants ===
+你的应用的每一个版本在构建系统中被叫做一个build variant.Build variants是product flavors和 build types组合的结果.
+product flavors代表一个应用的构建版本,如付费版,免费版.
+Build types 代表构建包版本,如debug,release
+合并资源:
+	1. 配置
+	2. 源码		src/main    src/<buildType>/ 		src/<productFlavor>/
+	3. 优先级, 从低到高libraries/dependencies -> main src -> productFlavor -> buildType
+
+

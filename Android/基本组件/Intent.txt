@@ -1,0 +1,61 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-10-15T20:41:43+08:00
+
+====== Intent ======
+Created Tuesday 15 October 2013
+
+		intent.setDataAndType  可以，分开设置就不行了？？？？
+	mimetype 必须小写
+	
+	
+	=== 发送文件 ===
+	Intent intent = new Intent(Intent.ACTION_SEND);
+	intent.putExtra(Intent.EXTRA_SUBJECT, "Test single attachment");
+	intent.putExtra(Intent.EXTRA_EMAIL, new String[]{recipient_address});
+	intent.putExtra(Intent.EXTRA_TEXT, "Mail with an attachment");
+	intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File("/path/to/file")));
+	intent.setType("text/plain");
+	
+	=== 如果多个文件 ===
+	Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+	intent.setType("text/plain");
+	intent.putExtra(Intent.EXTRA_SUBJECT, "Test multiple attachments");
+	intent.putExtra(Intent.EXTRA_TEXT, "Mail with multiple attachments");
+	intent.putExtra(Intent.EXTRA_EMAIL, new String[]{recipient_address});
+	ArrayList<Uri> uris = new ArrayList<Uri>();
+	uris.add(Uri.fromFile(new File("/path/to/first/file")));
+	uris.add(Uri.fromFile(new File("/path/to/second/file")));
+	intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+	
+	onActivityResult
+	Intent pick 的结果传回intent.getdata（）--->Uri      ImageView.setImageURI(uri)
+	
+	判断返回结果成功与否：Activity.RESULT_OK   Activity.RESULT_CANCEL 	
+	
+Power ohhhjljkjkjkjkjkjkjkjkjjkjkjkjk
+    public void shutdownSystem() {
+        Intent shutDownIntent = new Intent(Intent.ACTION_REQUEST_SHUTDOWN);
+        shutDownIntent.putExtra(Intent.EXTRA_KEY_CONFIRM, false);
+        shutDownIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(shutDownIntent);
+    }
+
+
+Some [[+Actions|Actions]]
+
+
+           
+
+=== 从图集获得照片，并显示 ===
+	               Intent intent = new Intent();  
+	                intent.setType("image/*");  
+	                intent.setAction(Intent.ACTION_GET_CONTENT);   
+	                /* 取得相片后返回本画面 */  
+	                startActivityForResult(intent, 1);
+	//onActivityResult
+            ContentResolver cr = this.getContentResolver(); 
+                Bitmap bitmap = BitmapFactory.decodeStream(cr.openInputStream(uri));  
+                ImageView imageView = (ImageView) findViewById(R.id.iv);  
+                /* 将Bitmap设定到ImageView */  
+                imageView.setImageBitmap(bitmap);  

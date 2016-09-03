@@ -1,0 +1,47 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-04-23T16:25:15+08:00
+
+====== call ======
+Created Wednesday 23 April 2014
+
+The call function is unique in that it can be used to create new parameterized functions. You can write a complex expression as the value of a variable, then use call to expand it with different values.
+
+The syntax of the call function is:
+
+     $(call variable,param,param,...)
+When make expands this function, it assigns each param to temporary variables $(1), $(2), etc. The variable $(0) will contain variable. There is no maximum number of parameter arguments. There is no minimum, either, but it doesn't make sense to use call with no parameters.
+
+Then variable is expanded as a make variable in the context of these temporary assignments. Thus, any reference to $(1) in the value of variable will resolve to the first param in the invocation of call.
+
+Note that variable is the name of a variable, not a reference to that variable. Therefore you would not normally use a ‘$’ or parentheses when writing it. (You can, however, use a variable reference in the name if you want the name not to be a constant.)
+
+If variable is the name of a built-in function, the built-in function is always invoked (even if a make variable by that name also exists).
+
+The call function expands the param arguments before assigning them to temporary variables. This means that variable values containing references to built-in functions that have special expansion rules, like foreach or if, may not work as you expect.
+
+Some examples may make this clearer.
+
+This macro simply reverses its arguments:
+
+__     reverse = $(2) $(1)__
+     
+__     foo = $(call reverse,a,b)__
+Here foo will contain ‘b a’.
+
+This one is slightly more interesting: it defines a macro to search for the first instance of a program in PATH:
+
+     pathsearch = $(firstword $(wildcard $(addsuffix /$(1),$(subst :, ,$(PATH)))))
+     
+     LS := $(call pathsearch,ls)
+Now the variable LS contains /bin/ls or similar.
+
+The call function can be nested. Each recursive invocation gets its own local values for $(1), etc. that mask the values of higher-level call. For example, here is an implementation of a map function:
+
+     map = $(foreach a,$(2),$(call $(1),$(a)))
+Now you can map a function that normally takes only one argument, such as origin, to multiple values in one step:
+
+     o = $(call map,origin,o map MAKE)
+and end up with o containing something like ‘file file default’.
+
+A final caution: be careful when adding whitespace to the arguments to call. As with other functions, any whitespace contained in the second and subsequent arguments is kept; this can cause strange effects. It's generally safest to remove all extraneous whitespace when providing parameters to call.

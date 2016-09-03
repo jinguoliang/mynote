@@ -1,0 +1,19 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-22T18:05:16+08:00
+
+====== ssh ======
+Created Wednesday 22 July 2015
+
+通过在~/.ssh/config配置host来简化登录
+如:
+host jinux
+		HostName localhost
+		User jinux
+		Port 29418
+		IdentityFile [[~/.ssh/id_rsa]]
+则可以简单的使用以下命令来登录ssh
+ssh jinux
+它等同于:
+ssh -p 29418 -i ~/.ssh/id_rsa localhost -l jinux 
+的确简单不少.

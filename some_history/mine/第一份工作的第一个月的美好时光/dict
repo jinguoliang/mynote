@@ -1,0 +1,8 @@
+#!/bin/bash
+
+#filename:	dict.sh
+#author: 	Jinux
+#create:	Mon 28 Oct 2013 05:05:39 PM
+#提示:		脚本是是我们工作便利的工具，短小的脚本，减少重复，让一切自动化
+
+./sdcv --data-dir ./dictfile

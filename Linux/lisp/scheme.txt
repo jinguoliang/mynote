@@ -1,0 +1,96 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-12-31T21:54:32+08:00
+
+====== scheme ======
+Created Tuesday 31 December 2013
+
+[[+some idear]]
+[[+Simply Scheme --遗漏点]]
+[[+基础]]
+
+===== Guile =====
+
+extension 通过c语言注册一些C函数，编译成共享库，通过load-extension加载就可以使用其中的函数
+[[+modules]]	  相关功能的一些lisp函数可以放到一起叫做模块使用的时候用use-modules声明
+						使用define-module来开始一个module到define-module结束
+
+[[~/linux_program/lisp/scheme/guile.pdf|guile book]]
+scheme的一种实现
+’s particular characteristics are that
+1.is easy to combine with other code written in C	
+2.has a historical and continuing connection with the GNU Project
+3.emphasizes interactive and incremental programming
+4.actually supports several languages, not just Scheme.
+
+Guile is designed as a library you can include into your own project and make the interpreter run code within it; additionally, you can provide special procedures in this Guile environment that interface to the core of your application. This way, Scheme scripts written by a user can manipulate stuff “within” your application. 
+ The current development on Guile allows the core Guile “platform” to run not only Scheme code but support other languages as well on top of Guile. So you can just integrate Guile as scripting interpreter into your code, and have it also run scripts in ECMAScript, Emacs Lisp or any other language that Guile will implement in the future (like Perl, Tcl, Python or others) – and you don't have to think a single instant about this! 
+In concrete terms, installing Guile on your system provides basically two things for you:
+
+First, you can use the guile command-line utility as a Scheme interpreter to write programs (or as a table-top calculator if you want to).
+
+Second, use the libguile programming library to run applications using Guile as scripting extension; or write your own that can access the interpreter and make use of it to script your code.
+
+guile-config 命令
+CFLAGS = `guile-config compile`	 	输出cflags
+LIBS = `guile-config link` 		输出相关libs
+
+c语言函数：
+scm_from_bool (pendown);
+scm_from_double (direction * 180.0 / M_PI);
+ scm_to_double (length);
+scm_list_2 (scm_from_double (x), scm_from_double (y));
+scm_c_define_gsubr ("tortoise-reset", 0, 0, 0, &tortoise_reset);	//生成scheme函数
+scm_boot_guile (argc, argv, inner_main, 0);
+
+
+第一个参数是scheme中的名字，最后一个是c语言中第一的函数，中间三个数字分别是参数个数，？？
+Guile represents all Scheme values with the SCM type, and thus both the return values and argument-types of the C procedures need to be SCM's
+ In order to get the double values out, we need some Guile API functions
+static SCM
+tortoise_turn (SCM degrees)
+{
+  const double value = scm_to_double (degrees);
+  direction += M_PI / 180.0 * value;
+  return scm_from_double (direction * 180.0 / M_PI);
+}
+ SCM_UNSPECIFIED means just that there's no return value (like void in C). If you define a procedure that has no meaningful result, you at least need to return SCM_UNSPECIFIED from it to make Guile happy (and assert this fact).
+
+Unfortunatly, the __Gnuplot-over-a-pipe__ approach is quite slow
+ (at least on my system), so you could probably have been even more impressed if the graphics would have been there more quickly; but anyways, at least I like this very much! Regarding the Scheme code, I won't comment it further, as not to spoil all your fun thinking about it. I encourage you to do so, I like this recursive construction very much.
+tortoise-guile mail----d@domob.eu
+
+gnu modules
+(ice-9  popen)	提供通过管道与其他线程通信
+(define p (open-input-pipe "ls -l"))
+
+(ice-9 rdelim)  
+(read-line p)
+
+(%site-dir )  显示module存储的位置
+
+==== Geiser ====
+[[~/resource/third_part/geiser|geiser]]	emacs 的一个mode 实现在emacs中scheme的交互是处理
+emacs 运行geiser ：M-x run-geise
+连接远程guile：
+	首先启动一个guile --listen=（port）指定端口号
+	然后在emacs中运行mode ：M-x geiser-connect 或 M-x connect-to-guil
+命令 c-c m-p|m-n  上一条的表达式和下一条
+    m-p|m-n       根据当前输入匹配前一条下一条表达式
+	c-c c-q		退出
+	c-c c-z 	恢复
+	C-c C-d d	查看符号是什么，是函数还是宏，等等
+	c-c c-d m       查看某个模块 如（guile）
+emacs 
+	debug	m-g n
+[[~/linux_program/lisp/scheme/Tutorial Introduction to Guile.html|guile make]] a Tortoise
+
+
+{{./pasted_image.png}}
+(define (draw-triangle edge-len vetex-n)
+	(let ((ang (/ 360 vetex-n))) 
+		((repeated (lambda (x)(and (tortoise-move x) (tortoise-turn ang) x)) vetex-n) edge-len)))
+(define (repeate-draw n)
+	(and (tortoise-pendown) 
+		((repeated (lambda (x) (and (draw-triangle 2 (- (+ n 3) x)) (1- x))) n) n) 
+		(tortoise-penup)))

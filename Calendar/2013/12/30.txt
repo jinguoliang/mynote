@@ -1,0 +1,8 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-12-31T20:43:30+08:00
+
+====== Monday 30 Dec 2013 ======
+
+
+{{./pasted_image.png}}

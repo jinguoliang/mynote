@@ -1,0 +1,16 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-12-31T21:50:42+08:00
+
+====== comman lisp ======
+Created Tuesday 31 December 2013
+
+[[+搭建Hunchentoot服务器]]   clisp
+
+[[~/Nutstore/resource/Practical+Common+Lisp.pdf|Practical+Common+Lisp]]
+[[./Land.of.Lisp.pdf]]
+
+==== Getting Start ====
+	1.Common Lisp is a multiparadigm language, meaning that it supports
+	many different programming styles.
+	

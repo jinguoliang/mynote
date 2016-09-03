@@ -1,0 +1,12 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-04-04T12:08:26+08:00
+
+====== virtual box ======
+Created Friday 04 April 2014
+
+=== Ubuntu 11.10 安装vbox识别USB ===
+	1.sudo adduser 用户名 vboxusers
+		用户名是你安装virtualBox时的用户。
+	2.add filter
+	3.reboot.

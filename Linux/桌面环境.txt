@@ -1,0 +1,21 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-05-17T14:15:29+08:00
+
+====== 桌面环境 ======
+Created Sunday 17 May 2015
+
+FVWM 虚拟桌面，占内存少，可配置
+http://docs.huihoo.com/homepage/shredderyin/fvwm_frame.html
+Sawfish  使用lisp和scheme配置
+http://docs.huihoo.com/homepage/shredderyin/wiki/SawfishWindowManager.html
+gnome 2.0
+[[+gnome 3.0]]
+kde
+unity
+mate --gnome2-like
+sudo add-apt-repository "deb http://packages.mate-desktop.org/repo/ubuntu precise main"
+sudo apt-get update
+sudo apt-get install mate-archive-keyring
+sudo apt-get update
+sudo apt-get install mate-desktop-environment			kill my ubuntu ,it's so bad

@@ -1,0 +1,12 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-04-25T12:07:16+08:00
+
+====== Javascript ======
+Created 星期六 25 四月 2015
+
+__很难找到一个“正确”的方式来学习JavaScript，使得让你书写Node.js应用的时候感觉 自己是在真正开发它而不仅仅是使用它。__
+
+Jquery
+Prototype
+nodejs

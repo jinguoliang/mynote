@@ -1,0 +1,32 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-12-28T16:06:38+08:00
+
+====== python ======
+Created Saturday 28 December 2013
+
+wget https://bootstrap.pypa.io/ez_setup.py -O - | sudo python  安装python-tool easy_install
+sudo easy_install pip
+
+==== Tools: ====
+bpython
+ipython
+
+==== Gui lib: ====
+Tkinter all
+pygtk linux
+pyqt5 w/linux/osx
+
+==== Zip archive: ====
+zipfile
+
+==== 显示图片： ====
+import Image
+pic=Image.open(u'/tmp/res/drawable-hdpi/ic_launcher.png')
+pic.show()
+
+==== 音乐： ====
+python-mutagen - audio metadata editing library
+
+=== 网页： ===
+urllib2

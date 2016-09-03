@@ -1,0 +1,90 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-03T10:57:24+08:00
+
+====== strftime() ======
+Created Sunday 03 November 2013
+
+strftime(日期时间格式, 日期时间字符串, 修正符, 修正符, ……)
+
+    上述五个函数需要一个日期时间字符串做参数，后面可以跟零到多个修正符参数。而 strftime() 函数还需要一个日期时间格式字符串做第一个参数。
+
+　　1.date() 函数返回一个以 “YYYY-MM-DD” 为格式的日期；
+2.time() 函数返回一个以 “YYYY-MM-DD HH:MM:SS” 为格式的日期时间；
+3.julianday() 函数返回一个天数，从格林威治时间公元前4714年11月24号开始算起；
+4.strftime() 函数返回一个经过格式话的日期时间，它可以用下面的符号对日期和时间进行格式化：
+%d  一月中的第几天 01-31
+%f  小数形式的秒，SS.SSSS
+%H  小时 00-24
+%j  一年中的第几天 01-366
+%J  Julian Day Numbers
+%m  月份 01-12
+%M  分钟 00-59
+%s  从 1970-01-01日开始计算的秒数
+%S  秒 00-59
+%w  星期，0-6，0是星期天
+%W  一年中的第几周 00-53
+%Y  年份 0000-9999
+%%  % 百分号
+
+　　其他四个函数都可以用 strftime() 函数来表示：
+
+　　1.date(…)         ->   strftime(“%Y-%m-%d”,…)
+2.time(…)         ->   strftime(“%H:%M:%S”,…)
+3.datetime(…)     ->   strftime(“%Y-%m-%d %H:%M:%S”,…)
+4.julianday(…)    ->   strftime(“%J”,…)
+
+　　日期时间字符串，可以用以下几种格式：
+
+　　YYYY-MM-DD
+YYYY-MM-DD HH:MM
+YYYY-MM-DD HH:MM:SS
+YYYY-MM-DD HH:MM:SS.SSS
+YYYY-MM-DDTHH:MM
+YYYY-MM-DDTHH:MM:SS
+YYYY-MM-DDTHH:MM:SS.SSS
+HH:MM
+HH:MM:SS
+HH:MM:SS.SSS
+now
+DDDD.DDDD
+
+　　在第五种到第七种格式中的“T”是一个分割日期和时间的字符；第八种到第十种格式只代表2000-01-01日的时间，第十一种格式的’now’表示返回一个当前的日期和时间，使用格林威治时间(UTC）；第十二种格式表示一个 Julian Day Numbers。
+
+　　修正符，日期和时间可以使用下面的修正符来更改日期或时间：
+
+　　NNN days
+NNN hours
+NNN minutes
+NNN.NNNN seconds
+NNN months
+NNN years
+start of month
+start of year
+start of week
+start of day
+weekday N
+unixepoch
+localtime
+utc
+
+　　前六个修正符就是简单的增加指定数值的时间和日期；第七到第十个修正符表示返回当前日期的开始；第十一个修正符表示返回下一个星期是N的日期和时间；第十二个修正符表示返回从1970-01-01开始算起的秒数；第十三个修正符表示返回本地时间。
+
+　　下面举一些例子：
+
+　　计算机当前时间
+SELECT date(‘now’)
+计算机当前月份的最后一天
+SELECT date(‘now’,’start of month’,’+1 month’,’-1 day’)
+计算UNIX 时间戳1092941466表示的日期和时间
+SELECT datetime(‘1092941466’,’unixepoch’)
+计算 UNIX 时间戳1092941466 表示的本地日期和时间
+SELECT datetime(‘1092941466’,’unixepoch’,’localtime’)
+计算机当前UNIX 时间戳
+SELECT strftime(‘%s’,’now’)
+两个日期之间相差多少天
+SELECT jolianday(‘now’)-jolianday(‘1981-12-23’)
+两个日期时间之间相差多少秒
+SELECT julianday('now')*86400 - julianday('2004-01-01 02:34:56')*86400
+计算今年十月份第一个星期二的日期
+SELECT date('now','start of year','+9 months','weekday 2');

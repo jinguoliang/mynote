@@ -1,0 +1,772 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-12-08T14:30:50+08:00
+
+====== Ubuntu 手册 ======
+Created Sunday 08 December 2013
+
+
+__在按照这些示例下达命令之前,你必须要先理解其内容的含义。实际的命令序列可能会依你的系统的具体情况而有细微的差别。__
+
+
+== 序言 ==
+Ubuntu 软件仓库被分成四组,“__main__”、“__restricted__”、“__universe__”和“__multiverse__”,按照我们所能提供的基础能力以及它们是否符合 自由软件哲学 来划分。
+标准 Ubuntu 安装都采用 main 和 restricted 的软件
+
+=== 第 2 章 - Ubuntu 基础 ===
+ Ubuntu 镜像站点 的目录树:
+	dists/::: 本目录包含“发行版”(distributions),此处是获得 Ubuntu 发布版本(releases)和已发布版本(pre-releases)的软件包的正规途径。有些旧软件包及 Contens-*.gz Packages.gz 等文件仍在其中。
+	pool/::: 所有 Ubuntu 发布版及已发布版的软件包的新的物理地址。
+	indices/::: 维护人员文件和重载文件。
+	project/::: 大部分为开发人员的资源,如: project/experimental/::: 本目录包含了处于开发中的软件包和工具,它们均处于 alpha 测试阶段。用户不应使用这些软件,因为即使是经验丰富的用户也会被搞得一团糟。 project/orphaned/::: 已不再有人维护的软件包,它们已从发行版中孤立出来。
+	
+Ubuntu 软件包命名约定:
+	foo_ver-rev_arch.deb
+	文件很容易被改名;不过,你也可以通过运行下面的命令来找出文件 filename 实际是那个软件包:
+	dpkg --info filename
+保存本地配置:
+	 Ubuntu 策略中规定所有对本地配置文件的修改都可以在软件包升级过程中被保留下来。
+
+	下面的命令可以列出一个软件包中包含那些默认配置文件:
+	dpkg --status package
+查看某个库属于那个包：
+	dpkg-query -S lib
+Ubuntu 维护脚本:
+	所有的管理文件都存放在/var/lib/dpkg/info 目录。与 foo 软件包相关的文件,名字以“foo”打头,以 “preinst”、“postinst”等为扩展名。目录中的 foo.list 文件列出了 foo 软件包安装的所有文件
+软件包优先级:
+	请注意软件包描述中“Priority: required”( 优 先 级 : 必 须 )“Section: base”( 组 件 :基 本 )“Essential: yes”(必要:是)的区别。“Section: base”(组件:基本)意味着在安装新系统时这个软件包要先于其它所有软件安装。大多数在“Section: base”中的软件包都被打上了“Priority: required”(优先级:必须)标签,或者至少是“Priority:important”(优先级:重要);并且其中的很多也同时具有“Essential: yes”( 必要 :是 )标签。“Essential: yes”意味着要用软件包管理系统的 dpkg 等程序删除它时,必须给出额外的强制选项才行
+
+虚拟软件包:
+	虚拟软件包是一个统称,它代指一组具有相近功能的软件包中的任何一个
+	Ubuntu 有个机制,如果系统中提供同种虚拟包的软件包安装了多个,系统管理员可以指定一个为首选软件。相关的命令是 update-alternatives,
+
+何为“Pre-depends”___>?
+软件包状态:
+	unknown - 用户并没描述他想对软件包进行什么操作。
+	install - 用户希望对软件包进行安装或升级。
+	remove - 用户希望删除软件包,但不想删除任何配置文件。
+	purge - 用户希望完全删除软件包,包括配置文件。
+	hold - 用户希望软件包保持现状,例如,用户希望保持当前的版本,当前的状态,
+阻止软件包升级:
+dpkg --get-selections \* > selections.txt
+dpkg --set-selections < selections.txt
+dselect  对某个包 按=
+apt 参考  apt_preferences(5)
+编译源码包：
+	注意 ,对于由 Debian 开发的软件包,没有.diff.gz 文 件
+	将软件包解压到一个名为 foo-version 的目录
+
+	 dpkg-source -x foo_version-revision.dsc
+	使用下列命令创建二进制软件包:
+
+	$ cd foo-version
+	$ su -c "apt-get update ; apt-get install fakeroot"
+	$ dpkg-buildpackage -rfakeroot -us -uc
+	安装:
+	# su -c "dpkg -i [[../foo_version-revision_arch.deb"]]
+dpkg:
+	dpkg 由几个原始的辅助程序演化而来。
+
+		dpkg-deb:操作.deb 文件。dpkg-deb(1)
+		dpkg-ftp:一个旧的软件包获取命令。dpkg-ftp(1)
+		dpkg-mountable:一个旧的软件包获取命令。dpkg-mountable(1)
+		dpkg-split:将大软件包分割成小包。dpkg-split(1)	
+APT:
+	APT(the Advanced Packaging Tool)是 Ubuntu 软件包管理系统的高级界面,由几个名字以“apt-”打头的程序组成。apt-get、apt-cache 和 apt-cdrom 是处理软件包的命令行工 具 ,它们也是其它用户前台程序的後端,如 dselect 和 aptitude。
+dselect:
+	这个程序是 Ubuntu 软件包管理系统中菜单驱动的用户界面。特别适用于首次安装和大面积升级下载和缓存.deb 文件:如果是使用 APT,这些文件会缓存在/var/cache/apt/archives/目录中
+
+自定义内核创建工具：
+	在源码目录运行
+	# make-kpkg kernel_image
+	# make-kpkg --help
+卸载旧内核：
+# dpkg --purge --force-remove-essential linux-image-NNN
+
+===== 第 3 章 - Ubuntu 系统安装提示 =====
+
+在 Ubuntu 下确定 PC 硬件:
+	$ pager /proc/interrupts
+	$ pager /proc/ioports
+	$ lspci -v |pager
+	$ lsusb -v |pager
+
+硬盘分区:
+	df -h
+	fdisk -l [[/dev/sda]]
+	分区表  [[/etc/fstab]]    相关信息可用命令blkid获得
+	[[/etc/modules]]  kernel modules load on boot
+	
+
+===== 第 4 章 - Ubuntu 指南 =====
+
+=== 类 Unix 工作环境 ===
+	Ctrl-V TAB: 输入 TAB 而不是扩展命令行。
+	为了在 Linux 字符界面下使用鼠标,您需要使用 gpm 服务
+	apropos key-word
+
+		找到和 key-word 相关的命令。
+		man -k key-word 也可以做到
+	whatis commandname
+
+		显示该命令的一句话帮助。 commandname.
+	ls -A
+
+		列出目录内容。(几乎所有的文件和目录,略去".." and ".")
+
+	ls -d *
+		列出当前目录下的目录名称,而不是目录下的内容
+	lsof foo
+
+		显示文件 foo 的打开状态
+	</etc/motd pager            -------->why
+
+		使用默认的分页程序查看文件/etc/motd 的内容
+	ps aux | grep -e "[e]xim4*"              -e pattern
+	ps axf | pager
+
+		用 ASCCI 艺术形式来显示运行所有进程信息。
+	gzip foo
+		用 Lempel-Ziv(LZ77)压缩算法压缩 foo,生成 foo.gz
+	gunzip foo.gz
+		将文件 foo.gz 解压缩生成 foo
+	tar -xvvzf foo.tar.gz
+	tar -xvvf --bzip2 foo.tar.bz2
+	tar -cvvf foo.tar bar/
+	zcat README.gz | pager
+   locate -d . pattern
+		用 shell 找到匹配 pattern 的文件名(使用已有的规则的数据库,快一些)
+	命令执行和环境变量
+		LC_ALL=fr_FR date
+	Shell 通配符
+		*
+		这个匹配 0 个或者多个字符。
+		__它不会匹配以"."开始的文件名.__
+		[...]	这个匹配[]里面的某个字符
+		[a-z]	a-z 
+		__[^...]__   这个匹配任意不包含在[]里面的字符(不包含字符"^").
+	命令返回值
+		返回 0 表示命令被正确执行
+		返回值可以在命令执行后马上用 shell 用变量__$?__来访问。
+		$ __[ 1 === 1 ] ; echo $?__
+		0
+		$ [ 1 === 2 ] ; echo $?
+		1
+		请注意,在 shell 中的逻辑上下文中使用这些返回值的时候 __success__ 被看做逻辑值 __TRUE__。
+		这个多少有一点不直观,因为 __success__ 等价于值 __zero__
+	同时把 command 的标准输出和标准出错信息重定向到文件 foo。
+	command > foo 2>&1
+	command &> foo
+
+
+==== 类 Unix 文本处理 ====
+
+== 正则表达式 ==
+		非正则表达式的方法有:
+			head 显示文件的开始部分。
+			tail 显示文件的结尾部分。
+			sort 给文件中的每一行排序。
+			uniq 删除文件中重复的行。
+			tr 转换或者删除字符。
+			diff 把文件中的内容一行一行的比较。
+		基本的正则表达式 Basic regular expression (BRE) :
+			grep 按模式匹配文本。
+			ed 一个原始的行编辑器。
+			sed 一个流编辑器。
+			vi 一个屏幕编辑器。
+			emacs 一个屏幕编辑器。
+		扩展的正则表达式 Extended regular expression (ERE) is used:
+			egrep 按模式匹配文本。
+			awk 进行简单的文本处理。 查看 Awk, 第 13.3 节.
+			perl 做非常难以想像的文本处理。 查看 Perl, 第 13.4 节.
+		
+		正则表达式是由文本字符和元字符组成的,用来描述匹配模式
+
+		元字符是有特殊意义的字符
+		它们有两种主要的形式 BRE(basic regular expressions )和 ERE(extended regular expressions):
+			在扩展的正则表达式(EREs)里面元字符包括"\ . [ ] ^ $ * + ? ( ) { } |"
+			在 BREs 里面元字符"+ ? ( ) { } |"不再具有它们特殊的含义,而是使用的有反斜杠的版本"\+ \? \( \) \{ \} \|"
+
+
+=== 替换表达式 ===
+		在替换表达式里面,下面的字符有特殊的含义:
+			&
+			o 这个会替换正则表达式所匹配的部分。(在 emacs 里面用\&)
+			\n
+			o 这个会替换 n-th 括号正则表达式所匹配的内容。  在 Perl 里面,$n 替换了\n,&也没有特殊的含义。
+
+			举个例子:
+				$ echo zzz1abc2efg3hij4 | \
+				sed -e 's/\(1[a-z]*\)[0-9]*\(.*\)$/=&=/'
+				zzz=1abc2efg3hij4=
+				
+
+=== 类 Unix 文件系统 ===
+
+	 3 个更特殊的权限?????
+		为可执行文件设置 set user ID 位将允许用户以该文件拥有者的 ID 来执行该文件(例如以root 身份)
+		为可执行文件设置 set group ID 将允许用户以该文件所属组的 ID 来执行该文件(例如以 root 身份)
+		为目录设置 sticky bit 可防止非文件拥有者移动目录中的文件。
+	时间戳
+		mtime: 修改时间 (ls -l),
+		ctime: 状态改变时间 (ls -lc),以及
+		atime: 最近访问时间 (ls -lu).
+		在 Debian 系统中,即便是简单的读文件通常会引起文件的写操作,从而更新 inode
+		上的 atime 信息
+	命名管道(FIFOs)
+		mkfifo mypipe
+	设备文件
+		makedev 			?????
+		主从从设备			？？？？
+		dev 下的文件系统通过设备文件系统自动生成	???
+		
+	/proc 文件系统			???????
+		man proc
+
+
+==== 第 6 章 - Ubuntu 软件包管理 ====
+
+=== 主要的包管理工具 ===
+	dpkg		Debian 包安装工具
+	apt-get		APT 的命令行前端
+	aptitude	APT 的高级的字符和命令行前端
+	synaptic	图形界面的 APT 前端
+	dselect		使用菜单界面的包管理工具
+	tasksel		Task 安装工具
+	
+	这些工具不是用来取代对方的,比如 dselect 同时使用 APT 和 dpkg。
+	APT 使用 /var/lib/apt/lists/* 来跟踪可用的软件包,而 dpkg 使用的是/var/lib/dpkg/available
+
+
+=== 方便的工具 ===
+	dpkg-reconfigure - 重新配置已安装的软件包(如果它是使用 debconf 进行配置的)
+
+	dpkg-source- 管理源码包
+	dpkg-buildpackage - 自动生成包文件
+	apt-cache- 在本地缓冲区检查包文件
+
+
+==== Ubuntu 软件包管理基础 ====
+
+=== 重新配置已安装的软件包 ===
+
+		aptitude 是全新的可菜单操作的包安装工具,和 dselect 类似,但是是针对 APT 从头设
+		计的。从大多数参数来讲,aptitude 完全可以作为 apt-get 的一个兼容的代替品。
+		dpkg {-S|--search} pattern
+		dlocate filename
+
+		apt-get check   	# 更新缓冲区并检查损坏的软件包
+		apt-cache search pattern # 按文本描述搜索软件包
+		apt-cache policy package # 软件包的 priority/dists 信息
+		apt-cache show -a package # 显示所有 dists 中软件包描述信息
+		apt-cache showsrc package # 显示相应源码包的信息
+		apt-cache showpkg package # 软件包调试信息	包含反向依赖
+		dpkg --audit|-C		# 搜索未完成安装的软件包
+		dpkg {-s|--status} package ... # 已安装软件包描述
+		dpkg -l package ...	# 已安装软件包的状态(每个占一行)
+		dpkg -L package ...	# 列出软件包安装的文件的名称
+
+		相关文件：
+			/var/lib/apt/lists/*
+			/var/lib/dpkg/available
+		update-menus- Debian 菜单系统
+
+
+=== 删除和清除软件包 ===
+		保留其配置文件:
+			aptitude remove package
+			dpkg --remove package ...
+		并清除配置文件:
+			aptitude purge package ...
+			dpkg --purge package ...
+		删除缓存包文件
+			使用 APT 安装软件包会在 /var/cache/apt/archives 目录留下缓存文件
+			# aptitude autoclean 	# 仅删除无用的包
+			# aptitude clean	# 删除所有的包
+
+
+=== 记录/拷贝系统配置 ===
+		# dpkg --get-selections "*" >myselections	# 或使用 \*
+
+		# dselect update
+		# dpkg --set-selections <myselections
+		# apt-get -u dselect-upgrade
+		# 或者 dselect install
+
+
+=== 转换或安装外来的二进制软件包 ===
+		alien 可将其它格式的二进制软件包如 Redhat 的 rpm、Stampede 的 slp 、Slackware 的
+		tgz 和 Solaris 的 pkg 等转化成 Ubuntu 的 deb 格式软件包
+
+
+==== 第 7 章 - Ubuntu 下的 Linux 内核 ====
+	[[/proc/sys/fs/file-max]]		打开文件的最大数量
+
+
+==== 第 8 章 - Ubuntu 小技巧 ====
+	记录 shell 活动
+		Emacs:使用 M-x shell 在缓冲区中开始记录,使用 C-x C-w 将缓冲区中的记录写入文件。
+		script		会生成一个typescript文件，用cat可以完全再现终端的输出
+		bash -i 2>&1 | tee typescript		tee可以把输入同时输出到ｓｔｄｏｕｔ和多个文件
+	记录 X 活动
+		xwd
+		import		都可以实现截图
+		gnome-screenshot  -c -a         -c 表示将截图存入剪贴板   -a 表示area
+	拷贝整个子目录的基本命令
+
+		# cp -a /source/directory /dest/directory # 要求 GNU cp
+		# (cd /source/directory && tar cf - . ) | \
+		(cd /dest/directory && tar xvfp - )
+		如果包含硬链接,则需要更严谨的方法:
+		# cd /path/to/old/directory
+		# find . -depth -print0 | afio -p -xv -0a /mount/point/of/new/directory
+		如果是远程操作:
+		# (cd /source/directory && tar cf - . ) | \
+		ssh user@host.dom (cd /dest/directory && tar xvfp - )
+		如果没有链接文件:
+		# scp -pr user1@host1.dom:/source/directory \
+		user2@host2.dom:[[/dest/directory]]
+		# find . -depth -print0 | cpio --null --sparse -pvd new-dir
+	差异备份与数据同步
+		rcs:备份并进行历史记录,只支持文本。
+		rdiff-backup:备份并进行历史记录。支持链接。
+		pdumpfs:对文件系统进行备份和历史记录。支持链接。
+		rsync:单路同步。
+		unison:双路同步。
+		cvs:多路同步服务器备份并进行历史记录,只支持文本,技术成熟
+
+
+=== 系统冻结恢复 ===
+		运行 top 看看什么进程的活动有异常。按“P”以 CPU 使 用 率 排 序 ,“M”以内存使用率排序 ,“k”可以中止一个进程
+
+		经常使用的信号有:
+
+			1: HUP,重启 daemon
+			15: TERM,普通中止
+			9: KILL,强令中止
+ 
+禁用声音(响铃)
+	echo "set bell-style none">> ~/.inputrc
+如果执行 cat some-binary-file 后屏幕一片混乱(命令的返回值与你的输入大相径庭)
+	$ reset
+将 DOS 下的文本文件转换为 Unix 类型
+	# apt-get install sysutils
+	$ dos2unix dosfile
+使用 recode 转化文本文件
+	$ recode /cl../cr <dos.txt >mac.txt
+	$ recode /cr.. <mac.txt >unix.txt
+	$ recode ../cl <unix.txt >dos.txt
+正规表达式的置换
+	$ perl -i -p -e 's/FROM_REGEX/TO_TEXT/g;' FILES ...
+	-i 表示“就地编辑”,-p 表示“在 FILES...各文件中循环”。如果置换很复杂,应使用参数
+	-i.bak 而非-i,这有助于出错恢复;它会将每个原始文件保存为以.bak 为后缀的备份文件。
+分割大文件
+	$ split -b 650m file   	# 将大文件分块成多个 650MB 的小文件
+	$ cat x* >largefile	# 将所有小文件合并成一个大文件
+awk使用
+	awk '{ print $3 }' <DPL		输出第3个字段，默认以空字符隔开
+	awk '($1=="Ian") { print }' <DPL	加条件  ==等号   如果=则是赋值
+	 FS=":" 来设置列分隔符
+	
+bash:
+	$ oldIFS="$IFS" # 保存旧值
+	$ IFS=":"
+
+	$ while read user password uid gid reset ;do if [ "$user" == "gdm" ];then echo "$user's ID is $uid"; fi; done</etc/passwd
+	$ IFS="$oldIFS"
+	shell 也使用 IFS 来分开参数扩展、命令替换和算术扩展的结果集。 但在被单引号或双引号引用的单词内,不会发生这种情况。默认的 IFS 值 是 : <space>、 <tab> 和 <newline> 。
+	$ unset IFS		# 重设 IFS 为默认的
+使用脚本来编辑文件:
+	下面的脚本将删除 5–10 行以及 16–20 行。
+	#!/bin/bash
+	ed $1 <<EOF
+	16,20d
+	5,10d
+	w
+	q
+	EOF
+精巧的管道命令辅助脚本
+	find /usr | egrep __-v__ "/usr/var|/usr/tmp|/usr/local"
+	xargs -n 1 command # 对于标准输入的每个词，取一个参数给command，比如：
+		xargs -n 1 ls 回车后会要求输入，输入每一个人路径，ls会施于它
+	xargs -n 1 echo # 将空格隔离的项分开为行--->因为echo每输一次会输入换行符
+	xargs echo     	# 合并所有的行到一行里面--->因为-n指定每次取几个作为参数，没有-n表示把所有标准输入作为参数一次给echo
+	cut -d: -f3 -	-d指定分割符	-f指定字段
+		等同awk -F: '{ print $3 }' | # 提取用空格分开的第 3 列
+	__col -bx |	# 删除退格键,扩展 tab 为空格__
+
+	expand -|	# 扩展 tab
+
+	sort -u|	# 排序并删除重复行 unique
+
+	tr '\n' ' '|		将多行连接为一行
+	tr 'A-Z' 'a-z'|		转化大写字母为小写
+	sed 's/^/# '		将每行变为注释
+	sed -n -e 2p|		显示第 2 行	-n表示不显示pattern space -e 表示后边是要执行的script       
+	head -n 2 -|
+	tail -n 2 -|
+循环每一个文件的脚本片段
+	find . -type f -maxdepth 1 -exec cp  '{}' /tmp/backup/'{}' \; -exec file /tmp/backup/'{}' \;
+				-type 指定文件类型  f d c b ...
+				-exec cmd  args \;      '{}'表示找到的文件名  每个exec 以\;结尾
+	find 和 xargs 结合
+		find . -type f -maxdepth 1 -name '*.ext' -print0 | xargs -0 -n 1 command
+
+				-print 指明每个找到的文件名以换行符结尾 -print0 则以null结尾 而 xargs的-0正对应-print0它会把以null结尾的词作为token
+	加 -exec 选项的 find 和一个短的 shell 脚本结合:
+		find . -type f -maxdepth 1 -name '*.ext' -exec sh -c "command '{}' && echo 'successful'" \;
+
+短小的 Perl 脚本
+	脚本转化为一行 perl 脚本。例如:
+	awk '($2=="1957") { print $3 }' |
+	与下列任意一行相当:
+	perl -ne '@f=split; if ($f[1] eq "1957") { print "$f[2]\n"}' |
+	perl -ne 'if ((@f=split)[1] eq "1957") { print "$f[2]\n"}' |
+	perl -ne '@f=split; print $f[2] if ( $f[1]==1957 )' |
+	perl -lane 'print $F[2] if $F[1] eq "1957"' |
+	其实上面各行中所有 perl 参数中的空格均可去掉,这得益于 Perl 的数字字符串自动转换
+	功能。
+	perl -lane 'print$F[2]if$F[1]eq+1957' |
+	__推掉惨了perl__
+从网页上获取文本或邮件列表文档
+	lynx -dump http://www.remote-site.com/help-info.html >textfile
+	links 和 w3m 也可以这么用,只是生成的文本样式可能略有不同。
+打印帮助页面
+	$ man -Tps some-manpage | lpr
+	$ man -Tps some-manpage | mpage -2 | lpr
+合并两个 PostScript 或 PDF 文件
+	$ gs -q -dNOPAUSE -dBATCH -sDEVICE=pswrite \
+	-sOutputFile=bla.ps -f foo1.ps foo2.ps
+	$ gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite \
+	-sOutputFile=bla.pdf -f foo1.pdf foo2.pdf
+nice 命令
+# nice -19 top						# very nice
+# nice --20 cdrecord -v -eject speed=2 dev=0,0 disk.img # very fast
+日程安排(cron,at)
+	下面的一个 crontab 文件样例:
+		# use /bin/sh to run commands, no matter what /etc/passwd says
+		__SHELL__=/bin/sh
+		# mail any output to `paul', no matter whose crontab this is
+		__MAILTO__=paul
+		# Min Hour DayOfMonth Month DayOfWeek command (Day... are OR'ed)
+		# run at 00:05, every day
+		5 0 * * * $HOME/bin/daily.job >> $HOME/tmp/out __2>&1__
+		# run at 14:15 on the __first__ of every month -- output mailed to paul
+		15 14 __1__ * * $HOME/bin/monthly
+		# run at 22:00 on weekdays(1-5), annoy Joe. __% for newline__, __last % for cc__:
+		0 22 * * __1-5__ __mail__ -s "It's 10pm" joe%Joe,%%Where are your kids?%.%%
+		23 __*/2__ 1 2 * echo "run 23 minutes after 0am, 2am, 4am ..., on Feb 1"
+		5 4 * * __sun__ echo "run at 04:05 every sunday"
+		# run at 03:40 on the first Monday of each month
+		40 3 __1-7__ * * [ __"$(date +%a)"__ ==== "Mon" ] && command -args	------------??????
+		__@reboot /home/pi/your_program_here__		在启动时执行
+网络测试基础
+	ping yahoo.com		# 检查 Internet 连接
+
+	traceroute yahoo.com	# 跟踪 IP 数据包
+
+	ifconfig		# 检查主机设置
+
+	route -n		# 检查路由设置
+
+	dig [@dns-server.com] host.dom [{a|mx|any}] |less	检查 dns-server.com 的 host.dom DNS 记录查找{a|mx|any}记录
+
+	ipchains -L -n |less	# 检查包过滤(2.2 kernel)
+
+	iptables -L -n |less	# 检查包过滤(2.4 kernel)
+
+	netstat -a		# 查找系统上所有打开的端口
+
+	netstat -l --inet	# 查找系统监听的端口
+
+	netstat -ln --tcp	# 查找系统监听的 TCP 端口(端口数字)
+
+清空文件内容
+	要清空某些文件如日志文件的内容,千万不要使用 rm 删除文件然后再创建一个新的空文件,
+	因为在__两次操作的间隔__,系统可能需要__访问该文件__。下面是清空文件内容的__安全方法__:
+
+	$ :>file-to-be-cleared
+空文件
+	$ dd if=/dev/zero of=filename bs=1k count=5 # 5KB 零内容
+
+	$ dd if=/dev/urandom of=filename bs=1M count=7 # 7MB 随机内容
+	[[+查看进度|查看进度]]
+	
+	$ touch filename # 创建一个 0 B 大小的文件(如果文件存在,更新该文件的修改时间 )
+
+
+==== chroot ====
+	chroot 程序,chroot(8),__不需要重启系统__,就可以在__单独__的系统上__同时运行__多个不同的GNU/__Linux 环境__。
+
+	在__较快主机__的 chroot 下__运行__某些__需耗大量系统资源内存__的程序
+	将__较慢子机__的__硬盘__通过 __NFS__ 方式挂载到主机,__开放读/写权限__,在主机上以chroot 方式操作子机
+
+怎样检查硬链接
+	检查两个文件是否是指向同一个文件的两个硬链接:
+	$ ls -li file1 file2		print the inode index number
+mount 硬盘上的镜像文件
+	如果 file.img 文件是硬盘内容的镜像文件,而且原始硬盘的配置参数为 xxxx ===
+	(bytes/sector) * (sectors/cylinder),那么,下面的命令将其挂载到/mnt:
+	# mount -o loop,offset=xxxx file.img /mnt
+Samba
+	# mount -t smbfs -o username=myname,uid=my_uid,gid=my_gid //server/share /mnt/smb # 挂载 Windows 的文件到 Linux
+
+	# smbmount //server/share /mnt/smb -o "username=myname,uid=my_uid,gid=my_gid"
+
+	# smbclient -L 192.168.1.2 # 列出某个计算机的共享目录
+	可从 Linux 检查 Samba 网上邻居:
+	# smbclient -N -L ip_address_of_your_PC | less
+	# nmblookup -T "*"
+
+
+==== 需要注意的典型错误 ====
+	rm -rf *
+	rm [[/etc/passwd]]
+	Ubuntu 系统周期性的将他们备份到 /var/backups/
+
+	# cp /var/backups/passwd /etc/passwd
+	# chmod 644 /etc/passwd
+	
+
+===== X =====
+	man X 
+	man xorg
+	X服务器和x客户端与我们普通认识的cs是反着的
+		X服务器一定运行于本地，负责显示和接受输入
+		x客户端可以运行于本地或远程，负责应用的逻辑和计算
+	__有几种途径让“X server”(显示端)接收远程“X client”(应用端)的连接请求__:
+		 xhost 方式
+			1.# find /etc/X11 -type f -print0 | xargs -0 grep nolisten
+			/etc/X11/xinit/xserverrc:exec /usr/bin/X11/X -dpi 100 -nolisten tcp
+			删除 -nolisten 就可以恢复 X 服务器对 TCP/IP 的监听。
+			2.xhost 允许通过主机名访问。只要TCP/IP 套接字连接功能是打开的,本机就会接收来自任何地方的连接请求。
+
+			man xhost
+
+		 xauth 方式
+		 xdm, wdm, gdm, kdm, ... 方式
+		 ssh -X 方式
+			· 如果不想每次执行相同的命令行选项,可在远程主机的 /etc/ssh/sshd_config 文
+			件中,打开 X11Forwarding 和 AllowTcpForwarding 选项。
+			
+	__从本地控制台调用 X 服务器__:
+		1.startx -- :1 vt8 -bpp 16	__--__后面的参数用于__设置 X 服务器__
+
+		... start on __vt8__ connected to __localhost:1__ with __16 bpp mode__
+		使用 ~/.xserverrc 脚本定制 X 服务器启动进程
+	__X 客户端__:
+	$ xterm -geometry 80x24+30+200 -fn 6x10 -display hostname:0 &
+				-geometry 大小和位置	-fn 字体   
+				-display   指定xserver 
+					[[hostname:D.S]]	hostname 的主机的显示器 D 上显示的屏幕 S,工作于该显示器的 X 服务器监听 TCP 端口 6000+D
+					host/unix:D.S 表示在 host 主机的显示器 D 上显示的屏幕 S,工作于该显示器的 X 服务器监听 UNIX domain socket [[/tmp/.X11-unix/XD(故只能从主机访问它)]]
+					:D.S 等价于 host/unix:D.S,其中 host 代表本地主机名
+					__默认__的 __X 客户端程序__(应用端)的 displayname 可通过 __DISPLAY__ __环境变量__来设置。
+						export DISPLAY=:0	默认情况下,本地机器使用第一个 X 屏幕
+			程序启动方式可以在~/.xinitrc 中进行自定义。例如:
+				xrdb -load $HOME/.Xresources
+				xsetroot -solid gray &
+				xclock -g 50x50-0+0 -bw 0 &
+				xload -g 50x50-50+0 -bw 0 &
+				xterm -g 80x24+0+0 &
+				xterm -g 80x24+0-0 &
+				当使用 startx 启动 X 时,
+				该脚本将重载 Xsession 所做的所有常规操作,通常用 ~/.xsession 来代替,而该方法仅作为最后的手段使用。参阅 xsetroot(1x)、xset(1x)
+
+	__X 会话__
+		X 会话(X 服务器 + X 客户端)可使用下列方法启动:
+			1.startx: xinit 的脚本化命令(wrapper script command) 负 责 从 Linux 字符型,控制台启动 X 服务器和客户端。如果 ~/.xinitrc 文件不存在,/etc/X11/xinit/xinitrc 会调用并执行 /etc/X11/Xsession。
+
+			2.xdm、gdm、kdm 或 wdm:X 显示管理器守护进程,负责启动 X 服务器和客户端,并
+			管理来自 GUI 屏幕的登录行为。直接执行 [[/etc/X11/Xsession。]]
+		自定义 X 会话
+			/etc/X11/Xsession 的执行会受 /etc/X11/Xsession.options 的影响,从本质上讲,它使用 exec 命令执行系统中按下面的次序排序,排在第一位的程序:
+
+				1.~/.xsession or ~/.Xsession,如果它被定义。
+				2./usr/bin/x-session-manager,如果它被定义。
+				3./usr/bin/x-window-manager,如果它被定义。
+				4./usr/bin/x-terminal-emulator,如果它被定义。
+			Ubuntu __选择系统__ (Ubuntu alternative system )对这些命令的确切定义进行了描述:
+				# update-alternatives --config x-session-manager
+				... 或
+				# update-alternatives --config x-window-manager
+			1.对于那些 /etc/X11/Xsession.options 中仅包含一行 allow-user-xsession 的 系 统 ,任何定义了 ~/.xsession ~/.Xsession 的用户,均可以自定义 /etc/X11/Xsession 的行为。
+			2.~/.xsession 文件中排在最后的命令,其格式应该为 exec some-window/session-manager,用来启动你喜欢的 X 窗口/会话管理器。
+			3.用户自己添加的 X 资源保存在 ~/.Xresources,而系统级的 X 资源保存于/etc/X11/Xresources/*。参阅 xrdb(1x)。
+			4.用户可以在 ~/.xmodmaprc 中自定义键盘布局和鼠标按键布局,参阅 xmodmap(1x)。
+			
+			用户自己添加的 X 资源保存在 ~/.Xresources,而系统级的 X 资源保存于/etc/X11/Xresources/*。参阅 xrdb(1x)。
+
+			用户可以在 ~/.xmodmaprc 中自定义键盘布局和鼠标按键布局,参阅 xmodmap(1x)。
+		
+		==== X 资源 ====
+			~/.Xresources:
+			! Set the font to a more readable 9x15
+			XTerm*font: 9x15
+			! Display a scrollbar
+			XTerm*scrollBar: true
+			! Set the size of the buffer to 1000 lines
+			XTerm*saveLines: 1000
+			! Large kterm screen
+			KTerm*VT100*fontList: -*-fixed-medium-r-normal--24-*,\
+			-*-gothic-medium-r-normal--24-*,\
+			-*-mincho-medium-r-normal--24-*
+			要使上述设置立即生效,可用下面的命令将它们合并到数据库:
+			xrdb -merge ~/.Xresources
+		
+		
+		==== ==== X 中键盘和指针按钮的映射 ==== ====
+			xmodmap -pm		print mapping
+			xmodmap -e "pointer = 3 2 1"	设置鼠标为左手惯用
+			xev   				
+
+
+==== font ====
+	Fontconfig 应 该能 直接 获得 字体 信息“fc-list”能列出你的新字体。
+	,
+	另外一个 fontconfig
+	的特色是,你能把字体放在 ~/.fonts/ 中,而所有字体可设置的程序都能立即访问它们。
+	如果你在 X 中手动安装了新的一个 TrueTyep 字体,而没有使用 Ubuntu 的软件包,运行
+	# xset fp rehash
+	让 xorg 重新检查目录下面的内容并找到新的字体。
+
+
+===== SSH =====
+	SSH(Secure SHell) 在 Internet 中建立连接的安全途径。是OpenSSH 是一个自由的 SSH 实现软件,它包含 在 Debian 的 ssh 软件包中。
+
+	要运行 OpenSSH 服务器,还得屏蔽掉 /etc/ssh/__sshd_not_to_be_run__
+	SSH 有两个__验证协议__:
+		SSH 协议 __第 1 版__:
+			可用的__验证方法__:
+				__RSA__ 验证:基于 RSA 密钥的用户验证
+				__Rhosts__ 验证:基于 .rhosts 的主机验证(不安全,有缺陷)
+				__RhostsRSA__ 验证:.rhosts 验证与 RSA 主机密钥相结合(有缺陷)
+				__ChallengeResponse__ 验证:RSA Challenge-response 验证
+				__Password__ 验证:基于 password 的验证
+		SSH 协议 __第 2 版__
+			可用的__验证方式__:
+				§ __Pubkey__ 验证:基于公共密钥的用户验证
+				§ __Hostbase__ 验证:.rhosts 或 /etc/hosts.equiv 验证与公共密钥客
+				户端主机验证相结合(有缺陷)
+				§ __ChallengeResponse__ 验证:challenge-response 验证
+				§ __Password__ 验证:基于 password 的验证
+	__关键的配置文件__:
+		/etc/ssh/ssh_config:默认的 SSH 客户机。
+			__Host__:__作用于__所有与该__关键字后所列出的主机__相匹配的主机,它们须遵守下
+			面(处于本 __host__ 关键字之后下一个 __host__ 关键字之前的内容)所列的各项
+			条款。
+			__Protocol__:规定所使用的 SSH 协议的版本。默认为“2,1”。
+			__PreferredAuthentications__:规定 SSH2 客户端验证方式。默认为
+			“hostbased,publickey,keyboard-interactive,password”。
+			__PasswordAuthentication__:如果想使用密码登录,须确认该选项没有设置成
+			no。
+			__ForwardX__11:默认为关闭状态。可使用命令行选项“-X”重载它。
+		/etc/ssh/sshd_config:默认的 SSH 服务器
+			__ListenAddress__:规定 sshd 监听的本地地址。允许多重指定。
+			__AllowTcpForwarding__:默认为关闭状态。
+			__X11Forwarding__:默认为关闭状态。
+		· $HOME/.ssh/authorized_keys:__默认公共密钥列表__,客户机可使用这些密钥连接本
+		主机的该用户帐号。参阅 ssh-keygen(1)。
+		· $HOME/.ssh/identity:参阅 ssh-add(1) 和 ssh-agent(1)。
+	
+	=== 下面的操作将从客户机建立一个 ssh 连接 ===
+		ssh username@hostname.domain.ext
+		ssh -1 username@hostname.domain.ext # Force SSH version 1
+		ssh -1 -o RSAAuthentication=no -l username foo.host
+		force password on SSH1
+		ssh -o PreferredAuthentications=password -l username foo.host
+		force password on SSH2
+	
+	=== 在用户眼里,ssh 的功能相当于一个更灵巧更安全的 telnet(will not bomb with ^]) ===
+	
+	
+
+
+
+
+
+
+
+
+
+[[~/Nutstore/resource/UbuntuManual.pdf|原书]]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

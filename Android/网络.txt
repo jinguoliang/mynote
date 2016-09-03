@@ -1,0 +1,47 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-23T17:52:56+08:00
+
+====== 网络 ======
+Created Thursday 23 July 2015
+
+__ConnectivityManager  __
+1. 监控网络连接(wifi, GPRS, UMTS等等)
+2. 当网络连接改变,发出广播
+3. 当一个连接失败,跳转到下一个网络
+4. 提供查看网络状态的api
+5. 提供改变网络连接的api
+__NetworkInfo__
+1. 描述了一个网络接口的状态
+2. State 组粒度的状态, DetailedState细粒度的状态
+3. 类型,联通状态,失败原因
+__Network__
+1. 代表了一个网络
+2. It is used to direct traffic to the given Network, either on a Socket basis through a targeted SocketFactory or process-wide via ConnectivityManager.setProcessDefaultNetwork.
+3. 让某个网络来进行传输
+	a. boolean setProcessDefaultNetwork(Network network)  当前进程未来所有的socket操作都由该网络来传输
+	b. 实现SocketFactory来使用特定的网络传输
+__LinkProperties__
+1. 连接属性
+2. 可能有多个地址,多个gateway,多个dns服务器
+3. 但只有一个http 代理,一个网络接口
+__NetworkCapabilities__
+1. 代表了一个网络的能力
+2. 可以获取上传下载的带宽
+__InetAddress__
+1. 标识一个ip地址
+2. 两个实现: Inet4Address 和 Inet6Address
+3. 但一般用的时候都是InetAddress
+
+__ConnectivityManager__ manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+__NetworkInfo__ info = manager.getActiveNetworkInfo();   __need__ android.Manifest.permission#ACCESS_NETWORK_STATE
+
+__Network__[] netwoks = manager.getAllNetworks();
+
+__LinkProperties__ prop = manager.getLinkProperties(n);
+
+__NetworkCapabilities__ cap = manager.getNetworkCapabilities(n);
+
+
+

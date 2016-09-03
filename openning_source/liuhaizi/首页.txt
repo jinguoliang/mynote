@@ -1,0 +1,35 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-16T17:38:16+08:00
+
+====== 首页 ======
+Created Thursday 16 July 2015
+
+OK 
+
+1. 做了什么事?
+	a. 请求数据并加载
+	b. 分为slider, 子分类入口,运营区域(web页), 热门推荐(商品列表)
+	c. onCreate → (initView, readHomeDataFromCache, requestHomeData, locateCity)
+	d. onResume/onPause 来停止和开始slider的动画
+	e. 定位的罗辑
+		1. GpsUtils.locateCity  → 通过回调,当定位到位置时保存当前的真实城市(由于有的城市没有开,所以有真实和当前城市之分)
+		2. 根据当前城市与定位的当前城市对比,提示切换城市对话框
+		3. 每日限定提示次数,首先判断是否是当天,然后判断次数是否达到
+	f. 缓存的罗辑
+	g. 请求数据的罗辑
+		1. 请求第一页
+			a. 根据有没有缓存决定是否显示网络错误信息,加载动画
+			b. 更新ui数据
+			c. 数据获取成功时缓存
+		2. 请求更多
+			a. 不显示网络错误框和加载动画msgBox
+			b. 添加数据
+		3. 每一条路都要onFooterRefreshComplete/onHeaderRefreshComplete
+		4. 先判断有没有网,然后准备请求url需要的参数
+		5. onFailure 无网等情况,根本没连到服务器
+		6. onSuccess里: 
+			a. 正常的情况是空数据,和有数据
+			b. 请求错误,请求到达了服务器,然后服务器返回错误码404,502...
+	h. 下拉刷新控件: 注册监听来调用更新,或者根据刷新控件状态来对动画进行一些控制
+2. [[AbSlidingPlayView]]

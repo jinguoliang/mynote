@@ -1,0 +1,77 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-06-19T15:27:12+08:00
+
+====== sublime-text-2 ======
+Created Friday 19 June 2015
+
+
+
+=== 破解 ===
+ 首先查看一下sublime-text 2安装路径，然后用vim打开sublime_text文件
+
+＃  whereis sublime-text-2
+
+输出结果：
+
+＃ sublime-text-2:/usr/bin/sublime-text-2 /usr/lib/sublime-text-2 /usr/bin/X11/sublime-text-2    －－这里是两条信息，第二个/usr/前面有一个空格的
+
+然后，进入第一个路径下，查看有哪些文件，输入：
+ 
+#  cd /usr/lib/sublime-text-2/
+#  ls 
+会列出的文件信息有：
+ 
+Icon lib PackageSetup.py Pristine Packages sublime_plugin.py sublime_text
+ 
+然后我们用VIM打开这个文件（如果没有装VIM 输入：#  sudo apt-get install vim 安装）
+
+#  vim /usr/lib/sublime-text-2/sublime_text
+
+
+将文件转成十六进制形式。vim中输入
+
+:%!xxd
+
+
+在vim中定位至“Thanks”文字附近。
+
+/Thanks
+
+
+接着查找数字串“3342”
+
+/3342
+
+
+找到一处3342的地方大致是这个样子 ……4333 3342 3032…….
+ 
+将这里的3342 改为3242,在vim中输入
+
+:s/3342/3242
+
+
+将文件转换回去。
+
+:%!xxd -r
+
+
+保存文件、退出。
+
+:wq
+
+打开程序，去help-enter licence 里贴进去通过程序算出来的Licence，OK 成功了。
+
+—–BEGIN LICENSE—–
+China
+Unlimited User License
+EA7E-2861
+BE67D2175D3569FDAB9EB5340FAD2822
+E7B56B3397A76AA9FBE8AC3D3C65918B
+DFC28F2EA158140D9E07853D594818EB
+3A237B2E8E98ED257C269548F50EDA34
+EF0C7F72D8917DB538A0245E46BFD6B1
+85F4EDE331F253530ED67A5C19E92399
+04C5F4A1AF4AF3DB5EC49C1FEE17CA76
+7E369F8AAE4AC6C6E756B5882E1608B9
+—–END LICENSE—–

@@ -1,0 +1,965 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html class="dj_gecko dj_contentbox" xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>用 Guile 来为 GTK+ 应用添加扩展语言 Scheme</title>
+<link rel="schema.DC" href="http://purl.org/DC/elements/1.0/">
+<link rel="SHORTCUT ICON" href="https://www.ibm.com/favicon.ico">
+<meta name="DC.Rights" content="© Copyright&nbsp;IBM Corporation&nbsp;2005">
+<meta name="Keywords" content="Guile, GTK, Scheme, 扩展语言, Linux 桌面, 宋国伟, tttlca">
+<meta name="DC.Date" scheme="iso8601" content="2005-04-26">
+<meta name="Source" content="v17 delivery:developerWorks">
+<meta name="Security" content="Public">
+<meta name="Abstract" content="本文以用 GTK+ 开发一个简单的绘图应用，结合 Guile 来为这个简单的应用增添一种扩展语言 - Scheme 语言，从而使我们的这个简单应用具有灵活的扩展功能。">
+<meta name="Description" content="本文以用 GTK+ 开发一个简单的绘图应用，结合 Guile 来为这个简单的应用增添一种扩展语言 - Scheme 语言，从而使我们的这个简单应用具有灵活的扩展功能。">
+<meta name="IBM.Effective" scheme="W3CDTF" content="2005-04-26">
+<meta name="Owner" content="developerWorks/China/IBM">
+<meta name="DC.Language" scheme="rfc1766" content="zh-CN">
+<meta name="IBM.SpecialPurpose" content="SP001">
+<meta name="IBM.Country" content="CN">
+<meta name="Robots" content="index,follow">
+<meta name="DC.Type" scheme="IBM_ContentClassTaxonomy" content="CT316">
+<meta name="DC.Subject" scheme="IBM_SubjectTaxonomy" content="SWGC0">
+<meta name="dW.ContentArea" content="2">
+<meta name="dW.Topic" content="80">
+<!-- META_INCLUDE -->
+<meta scheme="IBM_WTMCategory" name="IBM.WTMCategory" content="SOFDCLNXCN">
+
+<!-- HEADER_SCRIPTS_AND_CSS_INCLUDE -->
+<link href="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/www.css" rel="stylesheet" title="www" type="text/css">
+<link href="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/cnzh.css" rel="stylesheet" title="www" type="text/css">    
+
+<!-- Masthead/footer -->
+<link href="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/dw-mfN.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/dw-article-6.css" rel="stylesheet" title="www" type="text/css">
+
+<link href="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/dw-common-features.css" rel="stylesheet" title="www" type="text/css">
+<link href="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/dw-local-site-v17-N.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<script type="text/javascript" src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/www.js">//</script><script type="text/javascript" src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/eluminate.js"></script><link title="IBM Search" href="https://www.ibm.com/search/opensearch/description.xml" type="application/opensearchdescription+xml" rel="search"><script type="text/javascript">ibmweb.config.eluminate.enabled=true;if(typeof ibmweb.config.eluminate.siteID==="undefined"){ibmweb.config.eluminate.siteID=String(dojo.query("meta[name='IBM.WTMSite']").attr("content"));}if(ibmweb.config.eluminate.siteID.length==0){ibmweb.config.eluminate.siteID=String(dojo.query("meta[name='WTMSite']").attr("content"));}if(ibmweb.config.eluminate.siteID.length==0&&typeof digitalData.page!=="undefined"){if(typeof digitalData.page.site!=="undefined"&&typeof digitalData.page.site.siteID!=="undefined"){ibmweb.config.eluminate.siteID=digitalData.page.site.siteID;}if(typeof digitalData.page.category!=="undefined"&&typeof digitalData.page.category.categoryID!=="undefined"){ibmweb.config.eluminate.siteID=digitalData.page.category.categoryID;}}if(ibmweb.config.eluminate.siteID.length==0){ibmweb.config.eluminate.siteID="IBMTEST";}ibmweb.config.eluminate.cmSetClientID.id=ibmweb.config.eluminate.CID+"|"+ibmweb.config.eluminate.siteID;cmSetClientID(ibmweb.config.eluminate.cmSetClientID.id,ibmweb.config.eluminate.cmSetClientID.managedFirstParty,ibmweb.config.eluminate.cmSetClientID.dataCollectionDomain,ibmweb.config.eluminate.cmSetClientID.cookieDomain);dojo.connect(null,"onclick",ibmweb.eluminate,ibmweb.eluminate.download_and_offset_tracking);</script><script src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/head.js"></script><script src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/50200000.js" type="text/javascript" language="javascript"></script><script src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/cookie-id.js" type="text/javascript" language="javascript"></script><script src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/rules_50200000.js" type="text/javascript" language="javascript"></script><script src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/dispatcher-v3.js" type="text/javascript" language="javascript"></script>
+<script type="text/javascript" src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/dw-www.js">//</script><script src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/Dialog.js" charset="utf-8" type="text/javascript"></script>
+
+<script type="text/javascript">
+//  ibmweb.config.set({ sbs: { enabled: false }});
+</script>
+<!-- LEADSPACE_STYLES -->
+
+
+<script charset="utf-8" id="dojoIoScript1" src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/cnzh-utf8.js" type="text/javascript"></script><script charset="utf-8" id="dojoIoScript2" src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/a" type="text/javascript"></script><script src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/move.js" charset="utf-8" type="text/javascript"></script><script src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/TimedMoveable.js" charset="utf-8" type="text/javascript"></script><script src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/_CssStateMixin.js" charset="utf-8" type="text/javascript"></script><script src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/_FormMixin.js" charset="utf-8" type="text/javascript"></script><script src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/_DialogMixin.js" charset="utf-8" type="text/javascript"></script><script src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/DialogUnderlay.js" charset="utf-8" type="text/javascript"></script><script src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/ContentPane.js" charset="utf-8" type="text/javascript"></script><script src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/common_002.js" charset="utf-8" type="text/javascript"></script><script src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/TooltipDialog.js" charset="utf-8" type="text/javascript"></script><script type="text/javascript" src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/cp-v3.js"></script><script src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/Mover.js" charset="utf-8" type="text/javascript"></script><script src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/Moveable.js" charset="utf-8" type="text/javascript"></script><script src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/_ContentPaneResizeMixin.js" charset="utf-8" type="text/javascript"></script><script src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/html.js" charset="utf-8" type="text/javascript"></script><script src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/loading.js" charset="utf-8" type="text/javascript"></script><script src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/common.js" charset="utf-8" type="text/javascript"></script><script src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/autoscroll.js" charset="utf-8" type="text/javascript"></script><script src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/_LayoutWidget.js" charset="utf-8" type="text/javascript"></script></head>
+
+<body aria-busy="false" class="v17" id="ibm-com">
+
+	<div id="ibm-top" class="ibm-landing-page ibm-no-scroll"><img src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/ibm_logo_print.png" id="ibm-print-masthead" alt="IBM Print" width="43" height="15">
+
+<!-- MASTHEAD_BEGIN -->
+<!-- MASTHEAD_BEGIN -->
+<div role="banner" id="ibm-masthead">
+
+    <!-- TOP ROW -->    
+	<div id="dw-masthead-top-row">
+		<ul id="ibm-mast-options-dw" role="toolbar" class="cn">
+		<li role="presentation" id="dw-mast-top-4">
+				<a tabindex="0" href="http://www.ibm.com/developerworks/cn/"><img src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/dwn-dw-badge.png" alt="dW" aria-label="dW" width="43" height="22"></a></li>
+			<li role="presentation" id="dw-mast-top-0">
+				<div><a class="" href="https://www.ibm.com/developerworks/dwwi/DWAuthRouter?m=loginpage&amp;lang=zh&amp;d=https%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-gtk-scheme%2F" title="" role="button" tabindex="0">登录 (或注册)</a></div>
+			</li>
+			<li role="presentation" id="dw-mast-top-1">
+				<div><a href="#SELECTLANG" role="button">中文</a></div>
+			</li>
+			<li role="presentation" id="dw-mast-top-3">
+				<a role="button" href="http://www.ibm.com/">IBM</a>
+			</li>
+			<li role="presentation" id="dw-mast-top-2" class="dw-mf-hide">
+				<a href="#">[userid]</a>
+			</li>
+		</ul>
+	</div>
+
+    <!-- TOP ROW SLIDER -->
+	<div id="ibm-my-menu-dw" style="display:none">
+        <!-- Sign-in -->
+		
+        <!-- Language selector --> 
+		
+		<div id="empty_div" class="dw-mast-columns" role="group"><!-- Authenticated --></div>		
+		<!-- IBM -->
+				
+	<div widgetid="ibmweb_ribbon_0" id="ibmweb_ribbon_0" class="ibm-container-body" dojoattachpoint="ribbonContainer"><a title="上一个" style="margin-top: -12px;" class="ibm-ribbon-prev ibm-disabled" dojoattachpoint="scrollLeftButton" role="button" href="#">上一个</a><div style="height: 0px;" class="ibm-ribbon-pane" dojoattachpoint="scrollContainer"><div id="ibmweb_ribbon_0_scrollable" class="ibm-ribbon-section" dojoattachpoint="scrollableNode" role="listbox"><div aria-labelledby="ibm-rib-menu-0" widgetid="ibmweb_ribbonSlide_0" id="ibmweb_ribbonSlide_0" class="ibm-columns" dojoattachpoint="containerNode" role="dialog"><h2 id="ibm-rib-menu-0" class="ibm-access">登录 (或注册)</h2><div widgetid="ibmweb_ribbonItemAbstract_0" tabindex="0" id="ibmweb_ribbonItemAbstract_0" class="dw-mast-columns" role="group">
+			<div class="dw-mast-col-1-1">
+				<div id="dw-mast-sso">
+					<div id="signin_error_mf" class="no-display"></div>
+					<div id="dw-mast-sso-form">
+						<form id="sForm_mf" action="" method="post" name="sForm_name_mf" onsubmit="return false;">
+							<div id="dw-mast-sso-id" class="dw-mast-sso-id-cn">
+								<label for="ibmid_mf">IBM ID:</label>
+								<input id="ibmid_mf" name="ibmid_name_mf" maxlength="100" onkeypress="dwsi.siInst.handleEP(event,this.form,'mf');" type="text">
+							</div>
+							<div id="dw-mast-sso-pw" class="dw-mast-sso-pw-cn">
+								<label for="pw_mf">密码：</label>
+								<input id="pw_mf" value="" name="pw_name_mf" maxlength="100" onkeypress="dwsi.siInst.handleEP(event,this.form,'mf');" type="password">
+							</div>
+							<div id="dw-mast-sso-target" class="dw-mast-sso-target-cn">
+								<p class="dw-mf-perm-box">
+									<input id="perm_mf" name="perm_name_mf" type="checkbox"><label for="perm_mf"> 保持登录。</label>
+								</p>
+							</div>					
+							<div id="dw-mast-sso-terms">
+								<p class="dw-mast-sso-terms-cn">单击提交则表示您同意developerWorks 的条款和条件。 <a href="https://www.ibm.com/developerworks/community/terms?lang=zh">查看条款和条件</a>.</p>
+									</div>
+							<div>
+								<input class="dw-mf-submit-btn-cn" name="ibm_submit_name_mf" value="提交" onclick="dwsi.siInst.signin('mf');return false;" type="submit">
+							</div>
+						</form>
+					</div>
+					<div id="dw-mast-sso-update">
+						<div id="dw-mast-sso-update-id">
+							<ul>
+								<li><a href="#" onclick="(function ()
+								    {window.location='//www.ibm.com/developerworks/dwwi/DWAuthRouter?m=reg&amp;lang=zh_CN&amp;d='+encodeURIComponent(location.href);})();">需要一个 IBM ID？</a></li>
+								<li><a href="https://www.ibm.com/developerworks/dwwi/jsp/WSHelp.jsp?lang=zh_CN">忘记 IBM ID？</a></li>
+							</ul>
+						</div>
+						<div id="dw-mast-sso-update-pw">
+							<ul class="dw-mf-pwupdate">
+								<li><a href="#" onclick="(function ()
+								    {window.location='https://www.ibm.com/account/profile?page=forgot&amp;lang=zh_CN&amp;appname=ibm&amp;required=null&amp;d='+encodeURIComponent(dwsi.siInst.getAuthUrl())+'%3Fm%3Dloginpage%26lang%3Den_US%26d%3D'+encodeURIComponent(location.href);})();">忘记密码？</a></li>
+								<li><a href="#" onclick="(function ()
+								    {window.location='https://www.ibm.com/account/profile?page=chpw&amp;lang=zh_CN&amp;appname=ibm&amp;required=null&amp;d='+encodeURIComponent(location.href);})();">更改您的密码</a></li>
+							</ul>
+						</div>
+					</div>
+					<div id="dw-mast-sso-text">
+						<p>这是您第一次登陆到
+						    developerWorks，已经自动为您创建了您的概要文件。 <strong>选择您概要文件中可以公开的信息的信息（如姓名、国家/地区，以及公司），这些信息同时也会与您所发布的内容相关联。 </strong>您可以随时更新您的 IBM 账号。</p>
+						<p class="dw-mf-secure-cn">所有提交的信息确保安全。</p>
+					</div>
+				</div>
+				<div id="dw-mast-dname" class="dw-mf-hide">
+					<p>当您初次登录到 developerWorks 时，将会为您创建一份概要信息，您需要指定一个昵称。您的昵称将和您在 developerWorks 发布的内容显示在一起。</p><p><strong>昵称长度在 3 至 31 个字符之间</strong>。 您的昵称在 developerWorks 社区中必须是唯一的，并且出于隐私保护的原因，不能是您的电子邮件地址。</p>
+					<div id="signin_dname_error_mf" class="no-display"></div>
+					<div id="dw-mast-dname-form" class="dw-mast-dname-form-cn">
+						<form id="dForm_mf" action="" method="post" name="dForm_name_mf" onsubmit="return false;">
+							<div id="dw-mast-dname-mf">
+								<label for="dname_mf">昵称：</label>
+								<input id="dname_mf" name="dname_name_mf" maxlength="31" size="25" onkeypress="dwsi.siInst.handleEP(event,this.form,'mf');" type="text">
+							</div>
+							<div id="dw-mast-dname-terms">
+								<p class="dw-mast-dname-terms-cn">单击<strong>提交</strong>则表示您同意developerWorks
+								    的条款和条件。 <a href="https://www.ibm.com/developerworks/community/terms?lang=zh">查看条款和条件</a>.</p>
+									</div>
+							<div>
+								<input class="dw-mf-submit-btn-cn" name="dname_submit_name_mf" value="提交" onclick="dwsi.siInst.signin('mf');return false;" type="submit">
+							</div>
+						</form>								
+					</div>
+					<div id="dw-mast-dname-secure">
+						<p class="dw-mf-secure-cn">所有提交的信息确保安全。</p>
+					</div>
+				</div>
+				<div id="dw-mast-auth" class="dw-mf-hide">
+					<div>
+						<h2>developerWorks 社区:</h2>
+                		<ul>
+							<li><a id="dw-mast-top-0-0" href="https://www.ibm.com/developerworks/community/homepage?lang=zh">我的首页</a></li>						    
+							<li><a href="https://www.ibm.com/developerworks/community/profiles/html/myProfileView.do?lang=zh">我的概要信息</a></li>
+							<li><a href="https://www.ibm.com/developerworks/community/groups/service/html/mycommunities?lang=zh">我的社区</a></li>
+			                 <li><a href="https://www.ibm.com/developerworks/community/news/?lang=zh">设置</a></li>
+										    
+						</ul>     
+					</div>
+					
+					<div class="dw-mast-more">
+						<ul class="ibm-link-list">
+							<li><a class="dw-more-link" href="#" onclick="dwsi.siInst.signOut(); return false;"><strong>退出</strong></a></li>
+						</ul>
+					</div>
+				</div>								
+			</div>		
+		</div></div><div aria-labelledby="ibm-rib-menu-1" widgetid="ibmweb_ribbonSlide_1" id="ibmweb_ribbonSlide_1" class="ibm-columns" dojoattachpoint="containerNode" role="dialog"><h2 id="ibm-rib-menu-1" class="ibm-access">中文</h2><div widgetid="ibmweb_ribbonItemAbstract_1" tabindex="0" id="ibmweb_ribbonItemAbstract_1" class="dw-mast-columns" role="group">
+			<div class="dw-mast-col-2-1">
+				<h2>选择语言：</h2>
+				<ul>
+					<li><a id="dw-mast-top-1-0" href="http://www.ibm.com/developerworks/" lang="en">English</a></li>
+					<li><a href="http://www.ibm.com/developerworks/cn/">中文</a></li>
+					<li><a href="http://www.ibm.com/developerworks/jp/" lang="ja">日本語</a></li>
+					<li><a href="http://www.ibm.com/developerworks/ru/" lang="ru">Русский</a></li>
+				</ul>
+			</div>
+			<div class="dw-mast-col-2-2">
+				<ul>
+					<li><a href="http://www.ibm.com/developerworks/br/" lang="pt">Português (Brasil)</a></li>
+					<li><a href="http://www.ibm.com/developerworks/ssa/" lang="es">Español</a></li>
+					<li><a href="http://www.ibm.com/developerworks/vn/" lang="vi">Việt</a></li>
+				</ul>
+			</div>
+		</div></div><div aria-labelledby="ibm-rib-menu-2" widgetid="ibmweb_ribbonSlide_2" id="ibmweb_ribbonSlide_2" class="ibm-columns" dojoattachpoint="containerNode" role="dialog"><h2 id="ibm-rib-menu-2" class="ibm-access">IBM</h2><div widgetid="ibmweb_ribbonItemAbstract_2" tabindex="0" id="ibmweb_ribbonItemAbstract_2" class="dw-mast-columns" role="group">
+			<div class="dw-mast-col-2-1">
+				<ul>
+					<li><a id="dw-mast-top-3-0" href="http://www.ibm.com/cn/zh/">IBM 主页</a></li>
+					<li><a href="http://www.ibm.com/solutions/cn/zh/">解决方案</a></li>
+					<li><a href="http://www.ibm.com/software/cn/">软件</a></li>
+				</ul>
+			</div>
+			<div class="dw-mast-col-2-2 dw-mast-ibm">
+				<ul>
+							<li><a href="http://www.ibm.com/support/cn/zh/">支持门户</a></li>
+							<li><a href="http://www.ibm.com/support/documentation/cn/zh/">产品文档</a></li>
+							<li><a href="http://www.ibm.com/redbooks/">Redbooks（英文）</a></li>
+				</ul>
+			</div>	
+		</div></div></div></div><a title="下一个" style="margin-top: -12px;" class="ibm-ribbon-next" dojoattachpoint="scrollRightButton" role="button" href="#">下一个</a><div class="ibm-mm-close"><span tabindex="0" aria-label="关闭" role="button" title="关闭"></span></div></div></div>
+		
+    <!-- BOTTOM ROW -->
+	<div id="ibm-universal-nav-dw" aria-label="Site map">
+		<ul id="ibm-unav-links-dw">
+			<li id="ibm-unav-home-dwlogo">
+				<a href="http://www.ibm.com/developerworks/cn/"><img src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/dwn-dw-wordmark.png" alt="developerWorks®" width="225" height="28"></a>
+			</li>
+		</ul>
+		<ul id="ibm-menu-links-dw" class="ibm-menu-links-dw-cn" role="toolbar" aria-label="Site map">
+			<li id="dw-mast-nav-0" role="presentation"><a href="http://www.ibm.com/developerworks/cn/topics/" role="button" tabindex="0">技术主题</a></li>
+			<li id="dw-mast-nav-1" role="presentation"><a href="http://www.ibm.com/developerworks/cn/downloads/" role="button">软件下载</a></li>
+			<li id="dw-mast-nav-2" role="presentation"><a href="http://www.ibm.com/developerworks/community/?lang=zh" role="button">社区</a></li>
+			<li id="dw-mast-nav-3" role="presentation"><a href="https://www.ibm.com/developerworks/community/groups/service/html/communityview?communityUuid=6d7f9e5d-5f89-4767-a006-a81b8d186370&amp;lang=zh" role="button">技术讲座</a></li>
+		</ul>
+		<form id="ibm-search-form" action="//www.ibm.com/search/csass/search/" method="get" name="form1">
+			<input name="sn" value="dw" type="hidden">
+			<input name="lang" value="zh" type="hidden">
+			<input name="cc" value="CN" type="hidden">
+			<input name="en" value="utf" type="hidden">
+			<input name="hpp" value="20" type="hidden">
+			<input name="dws" value="cndw" type="hidden">
+		    <input name="lo" value="zh" type="hidden">
+			<p>
+				<label for="q"><img alt="搜索 developerWorks" src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/c.gif" width="1" height="1"></label>
+				<input value="搜索 developerWorks" name="q" maxlength="100" id="q" type="text">
+				<input id="ibm-search" class="ibm-btn-search ibm-btn-search-cn" name="Search" value="搜索" type="submit">
+			</p>
+		</form>
+	</div>
+    
+	<!-- BOTTOM ROW SLIDER -->
+	<div style="display: none;" id="ibm-common-menu-dw">
+		<!-- Technical topics category -->
+		
+		<!-- Evaluation software category -->
+		
+		<!-- Community category -->
+	    
+		
+		<!-- Events category -->
+		
+	<div widgetid="ibmweb_ribbon_1" id="ibmweb_ribbon_1" class="ibm-container-body" dojoattachpoint="ribbonContainer"><a title="上一个" style="margin-top: -12px;" class="ibm-ribbon-prev ibm-disabled" dojoattachpoint="scrollLeftButton" role="button" href="#">上一个</a><div style="height: 0px;" class="ibm-ribbon-pane" dojoattachpoint="scrollContainer"><div id="ibmweb_ribbon_1_scrollable" class="ibm-ribbon-section" dojoattachpoint="scrollableNode" role="listbox"><div aria-labelledby="ibm-rib-head-0" widgetid="ibmweb_ribbonSlide_3" id="ibmweb_ribbonSlide_3" class="ibm-columns" dojoattachpoint="containerNode" role="dialog"><h2 id="ibm-rib-head-0" class="ibm-access">技术主题</h2><div widgetid="ibmweb_ribbonItemAbstract_3" tabindex="0" id="ibmweb_ribbonItemAbstract_3" class="dw-mast-columns" role="group">
+			<div class="dw-mast-col-5-1">
+				<h2><a href="http://www.ibm.com/developerworks/cn/topics/">技术主题</a></h2>
+				<ul role="menu">
+					
+					<li role="menuitem"><a id="dw-mast-nav-0-0" href="http://www.ibm.com/developerworks/cn/aix/">AIX and UNIX</a></li>
+					<li role="menuitem"><a href="http://www.ibm.com/developerworks/cn/bigdata/">Big data</a></li>
+					<li role="menuitem"><a href="http://www.ibm.com/developerworks/cn/cloud/">Cloud computing</a></li>
+					<li role="menuitem"><a href="http://www.ibm.com/developerworks/cn/agile/">DevOps</a></li>
+					
+				</ul>     
+			</div>
+			<div class="dw-mast-col-5-2">
+				<ul role="menu">
+					<li role="menuitem"><a href="http://www.ibm.com/developerworks/cn/ibmi/">IBM i</a></li>
+					<li role="menuitem"><a href="http://www.ibm.com/developerworks/cn/data/">Information
+					    management</a></li>
+					<li role="menuitem"><a href="http://www.ibm.com/developerworks/cn/java/">Java technology</a></li>
+					<li role="menuitem"><a href="http://www.ibm.com/developerworks/cn/linux/">Linux</a></li>
+					
+				</ul>
+			</div>
+			<div class="dw-mast-col-5-3">
+				<ul role="menu">
+					<li role="menuitem"><a href="http://www.ibm.com/developerworks/cn/lotus/">Lotus</a></li> 
+				    <li role="menuitem"><a href="http://www.ibm.com/developerworks/cn/mobile/">Mobile development</a></li> 
+					<li role="menuitem"><a href="http://www.ibm.com/developerworks/cn/opensource/">Open source</a></li>
+					<li role="menuitem"><a href="http://www.ibm.com/developerworks/cn/rational/">Rational</a></li>
+					<!--<li role="menuitem"><a href="http://www.ibm.com/developerworks/cn/webservices/">SOA and web services</a></li>-->
+					
+					
+
+				</ul>
+			</div>
+			<div class="dw-mast-col-5-4">
+				<ul role="menu">
+				<li role="menuitem"><a href="http://www.ibm.com/developerworks/cn/social/">Social Business</a></li>
+				<li role="menuitem"><a href="http://www.ibm.com/developerworks/cn/web/">Web development</a></li>
+				<li role="menuitem"><a href="http://www.ibm.com/developerworks/cn/websphere/">WebSphere</a></li>
+				<!--<li role="menuitem"><a href="http://www.ibm.com/developerworks/cn/xml/">XML</a></li>-->
+				</ul>
+			</div>
+			<div class="dw-mast-col-5-5">
+				<ul role="menu">
+					<li role="menuitem"><a href="http://www.ibm.com/developerworks/cn/library/"><strong>文档库</strong></a></li>
+					<li role="menuitem"><a href="http://www.ibm.com/developerworks/cn/products/"><strong>产品 A - Z</strong></a></li>
+				</ul>
+			</div>  
+		</div></div><div aria-labelledby="ibm-rib-head-1" widgetid="ibmweb_ribbonSlide_4" id="ibmweb_ribbonSlide_4" class="ibm-columns" dojoattachpoint="containerNode" role="dialog"><h2 id="ibm-rib-head-1" class="ibm-access">软件下载</h2><div widgetid="ibmweb_ribbonItemAbstract_4" tabindex="-1" role="document" id="ibmweb_ribbonItemAbstract_4" class="dw-mast-columns">
+			<div class="dw-mast-col-2-1">
+				<h2><a tabindex="-1" id="dw-mast-nav-1-0" href="http://www.ibm.com/developerworks/cn/downloads/">软件下载</a></h2>
+				<ul role="menu">
+					<li role="menuitem"><a tabindex="-1" href="http://www.ibm.com/developerworks/cn/downloads/#ba">Big data</a></li>
+					<li role="menuitem"><a tabindex="-1" href="http://www.ibm.com/developerworks/cn/downloads/#data">Information management</a></li>
+					<li role="menuitem"><a tabindex="-1" href="http://www.ibm.com/developerworks/cn/downloads/#lotus">Lotus</a></li>
+					</ul>            
+			</div>
+			<div class="dw-mast-col-2-2">
+				<ul role="menu">
+					<li role="menuitem"><a tabindex="-1" href="http://www.ibm.com/developerworks/cn/downloads/#rational">Rational</a></li>
+					<li role="menuitem"><a tabindex="-1" href="http://www.ibm.com/developerworks/cn/downloads/#tivoli">Tivoli</a></li>
+					<li role="menuitem"><a tabindex="-1" href="http://www.ibm.com/developerworks/cn/downloads/#websphere">WebSphere</a></li>
+				</ul>            
+            </div>
+		</div></div><div aria-labelledby="ibm-rib-head-2" widgetid="ibmweb_ribbonSlide_5" id="ibmweb_ribbonSlide_5" class="ibm-columns" dojoattachpoint="containerNode" role="dialog"><h2 id="ibm-rib-head-2" class="ibm-access">社区</h2><div widgetid="ibmweb_ribbonItemAbstract_5" tabindex="-1" role="document" id="ibmweb_ribbonItemAbstract_5" class="dw-mast-columns">
+			<div class="dw-mast-col-2-1">
+				<h2><a tabindex="-1" id="dw-mast-nav-2-0" href="http://www.ibm.com/developerworks/community/?lang=zh">社区</a></h2>
+				<ul role="menu">
+					<li role="menuitem"><a tabindex="-1" href="https://www.ibm.com/developerworks/community/homepage/?lang=zh">我的首页</a></li>
+					<li role="menuitem"><a tabindex="-1" href="https://www.ibm.com/developerworks/community/profiles/?lang=zh">概要信息</a></li>
+					<li role="menuitem"><a tabindex="-1" href="https://www.ibm.com/developerworks/community/groups/?lang=zh">群组</a></li>
+					<li role="menuitem"><a tabindex="-1" href="https://www.ibm.com/developerworks/community/blogs/?lang=zh">博客</a></li>
+
+				</ul>     
+			</div>
+			<div class="dw-mast-col-2-2">
+				<ul role="menu">
+				<li role="menuitem"><a tabindex="-1" href="https://www.ibm.com/developerworks/community/forums/?lang=zh">论坛</a></li>
+				<li role="menuitem"><a tabindex="-1" href="https://www.ibm.com/developerworks/community/wikis?lang=zh">Wiki</a></li>
+				<li role="menuitem"><a tabindex="-1" href="https://www.ibm.com/developerworks/community/activities/?lang=zh">活动</a></li>
+				</ul>
+			</div>
+
+		</div></div><div aria-labelledby="ibm-rib-head-3" widgetid="ibmweb_ribbonSlide_6" id="ibmweb_ribbonSlide_6" class="ibm-columns" dojoattachpoint="containerNode" role="dialog"><h2 id="ibm-rib-head-3" class="ibm-access">技术讲座</h2><div widgetid="ibmweb_ribbonItemAbstract_6" tabindex="-1" role="document" id="ibmweb_ribbonItemAbstract_6" class="dw-mast-columns">
+			<div class="dw-mast-col-1-1">
+				<h2><a tabindex="-1" id="dw-mast-nav-3-0" href="https://www.ibm.com/developerworks/community/groups/service/html/communityview?communityUuid=6d7f9e5d-5f89-4767-a006-a81b8d186370&amp;lang=zh">技术讲座</a></h2>
+					<ul role="menu">
+						<li role="menuitem"><a tabindex="-1" href="https://www.ibm.com/developerworks/community/groups/service/html/communityview?communityUuid=6d7f9e5d-5f89-4767-a006-a81b8d186370&amp;lang=zh">技术讲座</a></li>
+						<li role="menuitem"><a tabindex="-1" href="http://www.ibm.com/developerworks/cn/swi/">多媒体课堂</a></li>
+						<li role="menuitem"><a tabindex="-1" href="http://www.ibm.com/developerworks/find/webcasts/">网络广播（英文）</a></li>
+					    <li role="menuitem"><a tabindex="-1" href="http://www.ibm.com/developerworks/find/events/">查找活动（技术讲座，网络广播，会议等）（英文）</a></li> 
+				</ul>            
+			</div>
+		</div></div></div></div><a title="下一个" style="margin-top: -12px;" class="ibm-ribbon-next" dojoattachpoint="scrollRightButton" role="button" href="#">下一个</a><div class="ibm-mm-close"><span tabindex="0" aria-label="关闭" role="button" title="关闭"></span></div></div></div>
+	
+<div id="dw-masthead-top"><div aria-label="社交工具" role="navigation" style="display: block;" id="ibm-social-tools"><ul role="toolbar"><li><a tabindex="0" role="button" dojoattrid="1" rel="print" href="#" title="打印本页面" class="ibm-share-print">打印本页面</a></li><li><a tabindex="-1" role="button" dojoattrid="2" rel="email" href="#" title="用电子邮件发送本页面" class="ibm-share-email">用电子邮件发送本页面</a></li><li></li><li><a class="ibm-share-weibo" tabindex="-1" role="button" dojoattrid="2" rel="新浪微博" title="新浪微博" href="http://service.weibo.com/share/share.php?title=%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK%2B%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme&amp;url=https%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-gtk-scheme%2F&amp;language=zh_cn" onclick="ibmweb.sbs.clickHandler(event,{url:'http://service.weibo.com/share/share.php?title=%{TITLE}&amp;url=%{URL}&amp;language=zh_cn'});">新浪微博</a></li><li><a class="ibm-share-renren" tabindex="-1" role="button" dojoattrid="3" rel="人人网" title="人人网" href="http://share.renren.com/share/buttonshare?title=%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK%2B%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme&amp;link=https%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-gtk-scheme%2F" onclick="ibmweb.sbs.clickHandler(event,{url:'http://share.renren.com/share/buttonshare?title=%{TITLE}&amp;link=%{URL}'});">人人网</a></li><li><a class="dwcn-tencent-link" tabindex="-1" role="button" dojoattrid="4" rel="腾讯微博" title="腾讯微博" href="http://v.t.qq.com/share/share.php?title=%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK%2B%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme&amp;url=https%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-gtk-scheme%2F" onclick="ibmweb.sbs.clickHandler(event,{url:'http://v.t.qq.com/share/share.php?title=%{TITLE}&amp;url=%{URL}'});">腾讯微博</a></li><li><a class="dwcn-sohu-link" tabindex="-1" role="button" dojoattrid="5" rel="搜狐微博" title="搜狐微博" href="http://t.sohu.com/third/post.jsp?title=%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK%2B%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme%20&amp;link=https%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-gtk-scheme%2F" onclick="ibmweb.sbs.clickHandler(event,{url:'http://t.sohu.com/third/post.jsp?title=%{TITLE}%20&amp;link=%{URL}'});">搜狐微博</a></li><li><a class="dwcn-netease-link" tabindex="-1" role="button" dojoattrid="6" rel="网易微博" title="网易微博" href="http://t.163.com/article/user/checkLogin.do?info=%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK%2B%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme%20https%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-gtk-scheme%2F" onclick="ibmweb.sbs.clickHandler(event,{url:'http://t.163.com/article/user/checkLogin.do?info=%{TITLE}%20%{URL}'});">网易微博</a></li><li><a class="ibm-share-digg" title="Digg" href="http://digg.com/submit?phase=2&amp;url=https%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-gtk-scheme%2F&amp;title=%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK%2B%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme" rel="digg" dojoattrid="7" role="button" tabindex="-1" onclick="ibmweb.sbs.clickHandler(event,{url:'http://digg.com/submit?phase=2&amp;url=%{URL}&amp;title=%{TITLE}'});">Digg</a></li><li><a class="ibm-share-facebook" title="Facebook" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-gtk-scheme%2F&amp;t=%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK%2B%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme" rel="facebook" dojoattrid="8" role="button" tabindex="-1" onclick="ibmweb.sbs.clickHandler(event,{url:'http://www.facebook.com/sharer.php?u=%{URL}&amp;t=%{TITLE}'});">Facebook</a></li><li><a class="ibm-share-twitter" title="Twitter" href="http://twitter.com/?status=https%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-gtk-scheme%2F%20-%20%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK%2B%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme" rel="twitter" dojoattrid="9" role="button" tabindex="-1" onclick="ibmweb.sbs.clickHandler(event,{url:'http://twitter.com/?status=%{URL}%20-%20%{TITLE}'});">Twitter</a></li><li><a class="ibm-share-delicious" title="Delicious" href="http://delicious.com/post?url=https%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-gtk-scheme%2F&amp;title=%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK%2B%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme" rel="delicious" dojoattrid="10" role="button" tabindex="-1" onclick="ibmweb.sbs.clickHandler(event,{url:'http://delicious.com/post?url=%{URL}&amp;title=%{TITLE}'});">Delicious</a></li><li><a class="ibm-share-linkedin" title="Linked In" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-gtk-scheme%2F&amp;title=%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK%2B%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme" rel="linkedin" dojoattrid="11" role="button" tabindex="-1" onclick="ibmweb.sbs.clickHandler(event,{url:'http://www.linkedin.com/shareArticle?mini=true&amp;url=%{URL}&amp;title=%{TITLE}'});">Linked In</a></li></ul></div></div></div>
+<div id="fdiv" class="ibm-access"></div>
+    <!-- MASTHEAD_END -->
+<!-- MASTHEAD_END -->
+
+<!-- LAYOUT -->
+<!-- LEADSPACE_BEGIN --> 
+<div role="main" id="ibm-access-cntr"><div id="ibm-leadspace-head">
+	<!-- LEADSPACE_BODY_BEGIN --> 
+	<div id="ibm-leadspace-body">
+		<!-- Navigation_Trail_BEGIN -->
+      <ul aria-label="Bread Crumbs" role="navigation" id="ibm-navigation-trail"><li><a href="http://www.ibm.com/developerworks/cn/">developerWorks 中国</a></li><li><a href="http://www.ibm.com/developerworks/cn/topics/">技术主题</a></li><li><a href="http://www.ibm.com/developerworks/cn/linux/">Linux</a></li><li><a href="http://www.ibm.com/developerworks/cn/views/linux/libraryview.jsp">文档库</a></li></ul>
+		<!-- END_Navigation_Trail -->
+			<!-- Title_Subtitle -->
+			<h1>用 Guile 来为 GTK+ 应用添加扩展语言 Scheme</h1>
+	</div>
+	<!-- LEADSPACE_BODY_END --> 
+	<!-- SUMMARY_BEGIN -->
+	<div id="dw-summary-area" class="dw-summary-columns">
+		<div class="ibm-col-6-4">
+		<p>本文以用 GTK+ 开发一个简单的绘图应用，结合 Guile 来为这个简单的应用增添一种扩展语言 - Scheme 语言，从而使我们的这个简单应用具有灵活的扩展功能。</p>
+		<p class="ibm-no-print ibm-ind-link">
+
+			
+			<span id="nCmts"><span>0</span><img class="dw-cmts-arrow" alt="" src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/dw-cmts-arrow.png" width="7" height="7"> <a href="#icomments" class="dw-cmt-link">评论：</a></span>
+		<span id="relatedDownloads"></span></p>
+		</div>
+		<div class="ibm-col-6-2 dw-toc-margin">
+			<p class="dw-summary-author"><a href="#authorN10017" class="ibm-popup-link" onclick="ibmweb.overlay.show('authorN10017',this);return false;">宋国伟</a> (<a href="mailto:gwsong52@sohu.com?subject=%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme">gwsong52@sohu.com</a>)吉林省德惠市信息中心</p>
+<div id="authorN10017" class="ibm-common-overlay"><div class="ibm-head"><p><a href="#close" class="ibm-common-overlay-close">关闭 [x]</a></p></div><div class="ibm-body"><div class="ibm-main"><div class="ibm-title"><!--this is where the h2 usually goes--></div><div class="ibm-container ibm-alternate"><div class="ibm-container-body">
+<p><!--.-->
+宋国伟（<a href="mailto:gwsong52@sohu.com?cc=">gwsong52@sohu.com</a>），目前在吉林省德惠市信息中心从事网络维护工作，著有《GTK+2.0编程范例》一书，热衷于Linux系统上的GTK+图形界面开发工具编程和Scheme语言编程以及相关的研究。</p><br><br></div></div></div></div><div class="ibm-footer"><!----></div></div>
+			<p class="dw-summary-date">2005 年 4 月 26 日</p>
+			
+
+
+			<div aria-hidden="true" class="ibm-container" id="dw-toc"><div class="ibm-container-body"><ul class="ibm-twisty"><li><a href="#toggle" class="ibm-twisty-trigger ibm-twisty-trigger-closed"><img src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/c_002.gif" alt="+"></a><span class="ibm-twisty-head">内容</span><div style="display: none;" class="ibm-twisty-body"><ul style="font-size:0.8em" class="ibm-link-list">
+<li><a class="ibm-anchor-down-em-link" href="#N1002E">简介</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#N1003D">目标</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#N10066">扩展结构原理</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#N1008B">应用的创建</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#N100B0">Guile中的C API</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#N100CD">由Scheme到C</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#N100EC">将C函数导出为Scheme过程</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#N1010B">编译测试</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#N1012E">封装与扩展</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#N10172">两个示例</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#N10191">几个应注意的BUG</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#resources">参考资料 </a></li>
+<li><a class="ibm-anchor-down-em-link" href="#icomments">评论</a></li></ul></div></li></ul></div></div>
+		</div>
+	</div>
+	<!-- SUMMARY_END -->
+</div><div id="ibm-pcon">
+
+<!-- BEGIN_IBM-CONTENT -->
+<div id="ibm-content">
+
+<!-- BEGIN_IBM-CONTENT-BODY -->
+<div id="ibm-content-body">
+
+<!-- BEGIN_IBM-CONTENT-MAIN -->
+<div id="ibm-content-main">
+
+<!-- 1_1_COLUMN_BEGIN -->
+<div class="ibm-columns">
+<div class="ibm-col-1-1">
+
+<h2 id="N1002E">简介</h2><p>我们这里说的扩展语言又称嵌入式脚本语言，在开源社区，有一种工具可以为你开发的应用添加这种嵌入
+式脚本语言功能，这种工具就是扩展语言开发库，我们只要在应用中连接这一扩展语言开发库，经过简单的处理，就可以为我们的应用增加嵌入式脚本语言功能，也
+就是说可以为我们的应用编写脚本语言代码，达到相应的功能。本文用到的与这些相关的开发工具有三种：Scheme 语言、Guile 和 GTK+。</p><p>Scheme
+ 语言是一种函数编程语言，是古老的 LISP 
+语言的分支，它的特点是既简单易用，又富有灵活的技巧，同时它还具有挑战性，因为它具有目前许多新生的编程语言还不具备的特色。目前 Scheme 
+语言已经成为初学编程者首选的语言，也是值得有经验的编程者去研究的语言。它也是扩展语言较好的选择之一。</p><p>Guile是GNU工程的扩展语
+言库(Project GNU's extension language 
+library)，它是一个Scheme语言的实现版本，打包成为一个库后，你可以把这个库链接到你的应用中，这样你就为你的应用增加了一种扩展语言，这
+种语言就是Scheme语言。关于Guile的编译安装，见《Scheme语言概要(上)》。</p><p>GTK+是一种跨平台的图形界面开发工具，采用C语言来开发，在Linux平台，它是基于XWindow的GNOME桌面环境的基础开发工具，应用它可以在轻松的开发出图形界面应用程序来，本文就选用它来做GUI开发工具。</p><p>关于Scheme语言、Guile和GTK+的更多信息见参考资料。</p><div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><h2 id="N1003D">目标</h2><p>我们的目标很简单，就是用GTK+开发一个简单的应用，结合Guile来为这个简单的应用增添一种扩展语言--Scheme语言，从而使我们的这个简单应用具有灵活的扩展功能。</p><p>为什么加扩展语言？加什么样的扩展语言？加扩展语言能达到什么样的功能和效果？如何才能加上扩展语言？
+扩展语言会让您的简单应用的功能并不简单。</p><p>像编辑软件、图像处理软件、游戏、专家系统、办公套件等大型工具或软件开发项目拥有自己的扩展语言，扩展语言使它们多了一双无形的翅膀，灵活使它们更强大。</p><p>目
+前在不同的应用领域有三个代表性的工具软件都不约而同的具有这样的扩展语言，首先是编辑工具软件GNUEmacs，它的扩展语言称为Elisp；其次是著
+名的CAD工具软件AutoCAD，它的扩展语言称为AutoLisp；最后是开源的图像处理工具软件GIMP，它的扩展语言称为Script-Fu，用
+它编写的工具可以在GIMP中轻松创建下面这样有特色的图像。这些工具软件的扩展语言和Scheme语言一样，都是LISP语言的变体。而Guile做为
+GNU扩展语言库则正好为我们提供了达到这一功能的有效途径。</p><h5 id="N1004B"><img alt="" src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/image002.jpg" width="100" border="0"></h5><h5 id="N10057"><img alt="" src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/image004.gif" width="553" border="0"><p>(这
+是用GIMP1.3.x做的图像，可以在菜单中选择相应的创建功能，只需输入一串字符和更改几个参数就可以轻松创建，实现这些功能的脚本语言称为
+Script-Fu，它们的代码可以在/usr/share/gimp/scripts目录中找到，是Scheme语言代码)</p><p>我们做一个绘
+图软件，简单得很，以至于我们只能看到画板，而不能用鼠标来画图，（因为实现鼠标绘图要加很长一段令人费解的C代码）。用什么画图呢？用扩展语言代码。经
+过一翻简单的处理，我们可以用扩展语言代码在绘图板上画点、线、矩形、弧线、圆形，添充矩形、扇形、圆，更改颜色、输出字符串等功能，要画什么样的图形，
+只需要编写代码就可以了。</p><div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p></h5><h2 id="N10066">扩展结构原理</h2><p>怎
+样才能为应用加上扩展语言呢？首先得做出绘图板来，我们用GTK+来做应用程序的主体，GTK+中的GtkDrawarea控件的主要用途就是绘图的，用
+它可以轻松的做一个绘图板。画板是做出来了，怎样画图呢？在GTK+的底层绘图工具GDK中提供了一系列原始的基本绘图函数gdk_draw_*(见下面
+介绍)，用这些函数就可以在画板的GdkWindow上绘图了。如果用这些函数来编码绘图是一件非常繁琐的事情；事实上，应用程序加上Guile库后，只
+要将这些绘图函数转换为Scheme语言过程，就可以用Scheme语言代码来轻松绘图了。</p><p>如果您还没弄懂的话，看一看下面我们这个应用的结构原理图：</p><h5 id="N10070"><img alt="" src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/image006.jpg" width="553" border="0"><p>从图中可以看出，我们系统中必需安装有GTK+2.0开发库和Guile1.6.4开发库，否则我们将无法继续下面的构建应用和测试。</p><p>下
+面是我们应用执行时的效果图（在Fedora Core 
+2.0下运行），白色有图形的地方就是GtkDrawarea控件，即绘图板。在标明绘图文件的单行输入框里输入绘图文件名(如draw.scm)，然后
+点击执行按钮，即在绘图板上绘制您想要的图形。在标明图像的单行输入框里输入图像名(默认为test)，然后点击保存按钮，即在将绘图板上的图像以PNG
+格式保存在当前目录中(默认即保存为test.png文件)。</p></h5><h5 id="N10080"><img alt="" src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/image008.jpg" width="553" border="0"><div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p></h5><h2 id="N1008B">应用的创建</h2><p>如
+果您熟悉GTK+开发的话，创建上面的图形窗口是一件轻松的事。关键是创建Drawarea控件，定义指针area，则area-&gt;window即
+指向area控件底层的GdkWindow，我们应用GDK中的gdk_draw_*系列函数就可以在此控件的GdkWindow上绘图并能正常显示出
+来。</p><p>同时我们还应当将此area复制一个pixmap指针用于保存文件，也就是说在向屏幕绘制图形的同时还要向pixmap绘图(不可
+见)，保存时只保存此pixmap中的图像就可以了，这样做虽然很笨拙，但可以实现，其它方法（如直接保存area的内容为图像）笔者尚未实现。GTK+
+中的GDK-PIXBUF库提供了保存图像功能，我们这里简单的利用了一下，用gdk_pixbuf_get_from_drawable函数取得
+pixmap的pixbuf，然后用gdk_pixbuf_save函数将取得的pixbuf保存为文件，可以选择多种图像格式，为了简便我们只用PNG
+格式保存，这样我们的应用就更具实用价值了。</p><p>我们设定画板的默认尺寸为600x400，在绘图区上自动形成一个以左上角为原点(0，0)高为 400 像素宽为 600 像素的平面直角坐标系，以此为基点，我们就可以用 gdk_draw_* 系列函数在画板上绘图了。</p><p>以下为 gdk_draw_* 系列函数以及此应用涉及的其它相关函数的简单介绍（更详细的信息见参考资料）：</p><div class="codesection"><pre class="displaycode">                       //画点函数
+void gdk_draw_point (GdkDrawable *drawable, GdkGC *gc, gint x, gint y);
+//画线函数
+void gdk_draw_line (GdkDrawable *drawable, GdkGC *gc,
+                    gint x1_, gint y1_, gint x2_, gint y2_);
+//画矩形函数
+void gdk_draw_rectangle (GdkDrawable *drawable, GdkGC *gc, gboolean filled,
+                         gint x, gint y, gint width, gint height);
+//画弧线函数
+void gdk_draw_arc (GdkDrawable *drawable, GdkGC *gc, gboolean filled,
+                   gint x, gint y, gint width, gint height, gint angle1, gint angle2);
+//绘制字符串函数
+void gdk_draw_layout (GdkDrawable *drawable, GdkGC *gc,
+                      gint x, gint y, PangoLayout *layout);
+//画多边形函数
+void gdk_draw_polygon (GdkDrawable *drawable, GdkGC *gc, gboolean filled,
+                       GdkPoint *points, gint npoints);</pre></div><p>这些函数中都包括GdkDrawable *drawable和GdkGC *gc这两个参数，它们分别代表我们的绘图板和绘图的前景颜色；</p><p>在gdk_draw_rectangle、gdk_draw_arc和gdk_draw_polygon函数中还有一个gboolean filled参数，用来指定是否添充颜色，如为TRUE则添充颜色，如为FALSE则不添充颜色。</p><p>需
+要说明的是在gdk_draw_arc函数的最后是两个关于角度的参数，其中angle1表示此弧线旋转的角度，参数angle2表示此弧线的角度，此函
+数将圆周分为360度后，又将其中的1度64等分，也就是说，angle2为1的话，表示此弧线只有六十四分之一度；而angle1为1的话，则表示将此
+弧线旋转六十四分之一度。</p><p>gdk_draw_polygon函数中的GdkPoint结构如下所示：</p><div class="codesection"><pre class="displaycode">struct GdkPoint {
+  gint x;
+  gint y;
+};</pre></div><p>正好用Scheme语言中的点对来处理，car对应x，cdr对应y，而gdk_draw_polygon需要的GdkPoint数组指针正好用列表来实现。</p><p>gdk_draw_layout来向绘图板输出字符串，其中的PangoLayout *layout参数表示要输出的字符串，可以用gtk_widget_create_pango_layout函数创建。</p><p>另
+外我们还用到void gdk_gc_set_rgb_fg_color(GdkGc *gc, GdkColor 
+*color);函数，用来设置绘画板的前景颜色，这个函数用到了GdkColor结构，此结构中用red, green, 
+blue三个整型值来表示RGB颜色值，如此我们可以用RGB规则轻松设定颜色。</p><p>还有很多其它绘图及相关函数，此应用并未涉及，有兴趣的读者可以试一试。关于应用中控件的构建和组织可以见参考资料中的文章，此处不做更多的说明。</p><div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><h2 id="N100B0">Guile中的C API</h2><p>当
+了解了上面的绘图功能后，下一个课题就是Guile了。在Guile中，Scheme语言的每个R5RS中定义的基础过程几乎都有一个C函数与之相对应，
+也就是说，每一条Scheme语句都是在执行一个或多个C函数。如 Scheme 语言过程 string? 事实上就是在运行scm_string_p
+ 函数，而 string-&gt;list 过程则是在运行 scm_string_to_list 函数。要调用 Guile 开发库的 C 
+API，只需要在我们的代码中加入 #include &lt;libguile.h&gt; 
+就可以了。另一个重要的功能是初始化Guile的动态链接库以调用Guile的各种功能，只要在代码中执行scm_init_guile函数即可实现。</p><p>下面我们编写C代码来调用Guile中的C API，以此达到运行简单的Scheme语句的目的，代码如下：</p><div class="codesection"><pre class="displaycode">//tt.c
+#include &lt;libguile.h&gt;
+int main(int argc, char *argv[])
+{
+        char *ver = "(display \"Guile version \")(display (version))";
+        char *newline = "(newline)";
+        char *lambda = "(define newdisplay (lambda (n) (display n) (display \"\t\")))";
+        char *call = "(for-each newdisplay '(Tom Bob Peter Jim Lucy))";
+        scm_init_guile();
+        scm_c_eval_string(ver);
+        scm_c_eval_string(newline);
+        scm_c_eval_string(lambda);
+        scm_c_eval_string(call);
+        scm_c_eval_string(newline);
+        return 0;
+}
+//the end</pre></div><p>再做一个简单的Makefile来实现make编译，内容如下：</p><div class="codesection"><pre class="displaycode">        CC = gcc
+CFLAGS = `guile-config compile`
+LIBS = `guile-config link`
+all:
+        $(CC) $(CFLAGS) -c tt.c
+        $(CC) $(LIBS) tt.o -o tt</pre></div><p>编译后，执行./tt程序，结果如下所示：</p><div class="codesection"><pre class="displaycode">Guile version 1.6.4
+Tom     Bob     Peter   Jim     Lucy</pre></div><p>可见我们完全可以用C语言来实现自己的Scheme语言代码的运行，其中包括Scheme语言中的变量、过程的定义和调用。此处只用到了scm_c_eval_string函数，实事上几乎所有的Guile的C API可以像它这样来调用。</p><p>如果我们逆向思考，我们就可以自己定义一个C函数，通过某种功能将其转换为新的Scheme过程，再运行这个新定义的Scheme过程，就是执行我们自己定义的新的C函数。事实的确如此！</p><div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><h2 id="N100CD">由Scheme到C</h2><p>下
+一步就是如何为Guile定义C函数，使此C函数能转换为Scheme过程。这样我们就不得不提到一个Guile的C 
+API中经常用到的自定义结构体类型--SCM，几乎Guile中所有的C 
+API都要用到这一结构类型，它是Guile中的数据类型的通用体，也就是说，Guile在解释Scheme语言代码时，将所有的Scheme语言中的数
+据类型变量都做为一个SCM结构体类型来处理。Guile提供了一系列函数来将SCM结构转换为C语言其它类型，如整型、浮点型、字符指针类型等；同样，
+我们也可以将C语言中的整型、浮点型、字符指针类型变量转换为SCM结构，这样Guile中的C API就可以正常处理这一变量了。</p><p>如果我
+们正常定义一个C函数int add(int x, int y) ，转换为Scheme语言过程则应当是(add x 
+y)，而我们定义的C函数并不能为Guile正确执行，Guile所执行的应当是SCM add (SCM x, SCM y) 
+这样的函数，因为在Guile在执行(add x y)过程时，将x和y做为一个SCM结构来处理，返回值也应当是一个SCM，所以我们应当设计SCM 
+add(SCM x, SCM y)这样的C函数。</p><p>如此，则我们将函数 void gdk_draw_point(GdkWindow 
+*window, GdkColor gc, int x, int y) ，应当简单的封装为 SCM draw_point(SCM x, SCM 
+y) 以便于Guile解释执行，而其中的GdkWindow *area和GdkColor 
+gc_front则应首先定义为全局变量，直接在函数中调用，函数代码应当是：</p><div class="codesection"><pre class="displaycode">static SCM draw_point(SCM x, SCM y)
+{
+     gdk_draw_point(area, gc_front,
+		    SCM_INUM(x), SCM_INUM(y));
+     gdk_draw_point(map, gc_front,
+		    SCM_INUM(x), SCM_INUM(y));
+}</pre></div><p>其中的area和gc_front分别代表绘图区和前景颜色，map则代表用在保存时中用到的pixmap，在构建绘图控件时定义。由于其返回类型是空值，所以可以不做返回操作。还有就是这些将转换并封装为Scheme语言过程的函数都应当定义为静态的。</p><p>其
+中的SCM_INUM宏是Guile库内部定义的，可以将SCM结构转换为一个整型数；这样的宏还有SCM_STRING_CHARS和
+SCM_SYMBOL_CHARS，其中的SCM_STRING_CHARS宏将Scheme语言中的字符串型SCM结构转换为字符型指针；而
+SCM_SYMBOL_CHARS宏则将符号型SCM结构转换为字符型指针，我们在绘制输出字符串时就用到SCM_STRING_CHARS宏，这是因为
+我们设计的输出字符串的Scheme过程为(_string x y "some string here")。输出字符串的函数代码定义如下：</p><div class="codesection"><pre class="displaycode">//定义绘制输出字符串函数
+static SCM draw_string(SCM x, SCM y, SCM str)
+{
+  PangoLayout *layout =
+ gtk_widget_create_pango_layout(area, SCM_STRING_CHARS(str));
+  gdk_draw_layout(area-&gt;window, gc_front,
+                  SCM_INUM(x), SCM_INUM(y), layout);
+  gdk_draw_layout(map, gc_front,
+                  SCM_INUM(x), SCM_INUM(y), layout);
+}</pre></div><p>这其中最复杂的就是绘制多边形函数，我设计导出的Scheme过程为(_polygon point-list, 
+point-number 
+filled)，第一个参数为点列表，第二个参数是点数，第三个参数为是否添充。用SCM_NFALSEP宏可以将Scheme语言中的#f转换为
+0，#t转换为1，这样是否添充这个问题就解决了；而gdk_draw_polygon函数需要的GdkPoint指针数组需要分配内存来实现，我们设计
+的参数是一个列表，可以用scm_list_ref来取值，关键是这个函数的第二个参数并不是一个简单的整数，而是一个SCM结构，可以用
+scm_int2num函数将一个C整数转换为SCM结构，再用SCM_CAR和SCM_CDR分别取点对的左侧和右侧分别赋给GdkPoint结构中的
+x和y，绘图后释放内存，达到目的。</p><div class="codesection"><pre class="displaycode">//绘制多边形函数，参数为点数组，点数，是否添充
+static SCM draw_polygon(SCM spoints, SCM number, SCM filled)
+{
+  int i ;
+  GdkPoint *points = g_new(GdkPoint, SCM_INUM(number)) ; //为点分配内存
+  for(i=0; i&lt;SCM_INUM(number); i++)
+  {
+	points[i].x = SCM_INUM(SCM_CAR(scm_list_ref(spoints, scm_int2num(i))));
+	points[i].y = SCM_INUM(SCM_CDR(scm_list_ref(spoints, scm_int2num(i))));
+	//循环赋值，关键是将C中的int转换为SCM的 scm_int2num 函数
+  }
+  gdk_draw_polygon(area-&gt;window, gc_front, SCM_NFALSEP(filled), points, SCM_INUM(number));
+  g_free(points); //释放内存
+}</pre></div><p>更多函数定义请看此应用的C源码，可以到参考资料中下载。</p><div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><h2 id="N100EC">将C函数导出为Scheme过程</h2><p>我
+们可以将上面定义好的C函数导出Scheme过程，这一功能由Guile中的C函数scm_c_define_gsubr实现，这个函数需要5个参数，第
+一个参数是要转换为成的Scheme过程名，第2，3，4三个参数与要转换的Scheme过程的参数数量有关，第2个参数表示必需的参数的数量，第3个参
+数表示可选的参数的数量，第4个参数表示参数的数量是否可变，如果此参数置0则参数的总量为必需参数和可选参数的和，如果此参数非0，则参数的总量为必需
+参数与可选参数的和再加1；最后一个参数是要转换的C函数名指针，这一函数名必须按上面的要求，即返回类型和参数均为SCM结构类型。</p><p>我们的应用最后导出六个原始的绘图过程，分别是：</p><p>1、_point，画点，两个参数 x, y ；<br>
+2、_line，画线，四个参数 x1, y1, x2, y2 ；<br>
+3、_rectangle，画矩形，五个参数 x, y, width, height, filled ；<br>
+4、_arc，画弧线，七个参数 x, y, width, height, angle1, angle2, filled ；<br>
+5、_polygon，画多边形，三个参数 point-list, point-number, filled ；<br>
+6、_string，绘制字符串文本，三个参数 x, y, string；<br>
+7、_color，设定绘图颜色，三个参数 red, green, blue 。</p><p>导出代码如下：</p><div class="codesection"><pre class="displaycode">//编码绘图初始化过程
+void draw_init(void)
+{
+  scm_init_guile();
+  //初始化guile
+  scm_c_define_gsubr("_rectangle", 5, 0, 0, draw_rect);
+  scm_c_define_gsubr("_point", 2, 0, 0, draw_point);
+  scm_c_define_gsubr("_line", 4, 0, 0, draw_line);
+  scm_c_define_gsubr("_arc", 7, 0, 0, draw_arc);
+  scm_c_define_gsubr("_polygon", 3, 0, 0, draw_polygon);
+  scm_c_define_gsubr("_string", 3, 0, 0, draw_string);
+  scm_c_define_gsubr("_color", 3, 0, 0, set_front_color);
+  //定义六个原始绘图过程
+}</pre></div><p>当我们将上面的C函数转换为Scheme语言过程后，我们就可以在我们的Scheme语言代码中加入这些过程了，但要达
+到绘图效果还得有必须的一步，就是让我们的应用执行这些Scheme语言代码，以达到绘图效果。这样我们就必需在运行按钮点击信号的回调函数中加入执行
+Scheme语言代码的功能，这就用到了Guile的C 
+API中的scm_c_primitive_load函数，它的功能就是打开并运行一个Scheme语言代码文件，也就是我们的绘图文件。如此我们就真正
+达到了用代码画图形的功能了。（关于图像的保存读者可自行阅读代码）</p><div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><h2 id="N1010B">编译测试</h2><p>我们可以根据上面的Makefile文件再写一个用到GTK+库的Makefile来编译我们的应用，这个Makefile的内容如下：</p><div class="codesection"><pre class="displaycode">	CC = gcc
+GTK2_CFLAGS = `pkg-config --cflags gtk+-2.0`
+GTK2_LIBS = `pkg-config --libs gtk+-2.0`
+GUILE_CFLAGS = `guile-config compile`
+GUILE_LIBS = `guile-config link`
+all:
+	$(CC) $(GTK2_CFLAGS) $(GUILE_CFLAGS) -c brush.c
+	$(CC) $(GTK2_LIBS) $(GUILE_LIBS) -o brush brush.o
+clean:
+	rm *.o brush test.png *~ -fr</pre></div><p>当我们编译成功后，就可以编写一个简单的绘图文件来测试一下了，如我们在绘图文件test.scm中只写一行：(_line 100 100 300 300)，保存后，在我们的应用中运行一下，应该在绘图板上出现一条斜线，OK，成功了。</p><p>下面代码测试了一下弧线、弧线的添充和旋转：</p><div class="codesection"><pre class="displaycode">;;;设定前景为蓝色
+(_color 0 0 65535)
+;;; 宽高均为 100 的 270 度的弧，旋转0度
+(_arc 80 100 100 100 0 (* 64 270) #f)
+;;; 同上，添充效果
+(_arc 200 100 100 100 0 (* 64 270) #t)
+;;; 宽高均为 100 的270度的弧，旋转90度
+(_arc 320 100 100 100 (* 64 90) (* 64 270) #f)
+;;; 同上，添充效果
+(_arc 440 100 100 100 (* 64 90) (* 64 270) #t)</pre></div><p>测试效果如下图所示：</p><h5 id="N10121"><img alt="" src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/image010.jpg" width="444" border="0"><p>还可以用(_polygon (list (cons 100 150) (cons 100 200) (cons 200 200)) 3 #f)来画一个三角形，自己试一试吧！</p><div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p></h5><h2 id="N1012E">封装与扩展</h2><p>我们定义的六个原始过程用起来比较繁琐，但只要对它们进行简单的封装，就可以实现新的过程，来提高它们的易用性。</p><h3 id="N10135">1、对颜色的封装</h3><p>我们的应用中提供了简单的RGB前景颜色设定过程_color，此过程需要三个参数，分别代表RGB的三个颜色值，下面代码对这个过程进行了简单的封装：</p><div class="codesection"><pre class="displaycode">       ;;;set the front color
+(define set-color
+  (lambda (color)
+    (case color
+      ((white) (_color 65535 65535 65535))
+      ((black) (_color 0 0 0))
+      ((red) (_color 65535 0 0))
+      ((green) (_color 0 65535 0))
+      ((blue) (_color 0 0 65535))
+      ;;;如果你知道更多的RGB颜色值请在此处按上面规则扩展
+      (else
+       (display "Error : color not defined!\n")))))</pre></div><p>如此，我们只要用set-color过程中加一个颜色名做参数就可以了，如(set-color 'black)。</p><h3 id="N10142">2、设定背景颜色</h3><p>我
+们的应用中只提供了设定前景颜色的过程，由于背景和前景是相对的，完全可以用设定前景颜色功能来实现设定背景颜色过程，就是设定前景颜色后，用添充矩形过
+程来实现，如果此矩形的宽高为画板的默认的宽高，就实现了整个画板的背景颜色设定。如下面代码所示（注意，这样处理后前景和背景颜色都一样了，再绘图时一
+定要先改一下前景颜色）：</p><div class="codesection"><pre class="displaycode">			(define set-back-color
+	(lambda (red green blue)
+		(begin
+			(_color red green blue)
+			(_rectangle 0 0 600 400 #t))))</pre></div><h3 id="N1014D">3、丰富画点功能</h3><p>下面代码是对画点过程的一系列封装，实现了point，draw-point，draw-dot-hline，draw-color-dot-hline四种功能，相信读者会封装出更优秀的功能来。</p><div class="codesection"><pre class="displaycode">;;;画点 100 100
+(_point 100 100)
+;;;画点 150, 150
+(define point _point)
+(point 150 150)
+;;;画点 125, 125
+(define draw-point _point)
+(draw-point 125 125)
+;;;画点状横线，从x，y开始，宽度为width，每隔5点画一点
+(define draw-dot-hline
+  (lambda (x y width)
+    (let ((a x) (b (+ x width)))
+      (while (&lt; a b)
+	     (_point a y)
+	     (set! a (+ a 5))))))
+;;;测试
+(draw-dot-hline 30 30 150)
+;;;画带颜色的虚线，颜色为color，从x，y开始，宽度为width
+(define draw-color-dot-hline
+  (lambda (color x y width)
+    (begin
+      (set-color color)
+      (draw-dot-hline x y width)
+      (set-color 'black))))
+;;;测试
+(draw-color-dot-hline 'blue 50 50 200)</pre></div><h3 id="N10158">4、画圆形和添充圆形过程</h3><p>画圆形过程可以用画弧线过程来实现，毕竟圆形是一条封闭的弧线。只要设定弧线的宽高相等，不旋转（旋转也没有效果），并且度数为360度（应该是64x360，因为这里的单位是64分之一度），就是一个圆了。代码如下：</p><div class="codesection"><pre class="displaycode">		;;;draw a circle
+(define draw-circle
+	(lambda (x y d)
+		(_arc x y d d 0 (* 64 360) #f)))
+;;;fill a circle
+(define fill-circle
+	(lambda (x y d)
+		(_arc x y d d 0 (* 64 360) #t)))</pre></div><h3 id="N10163">5、实现项目列表</h3><p>项目列表，即先画一个圆形或矩形，然后再输出一串字符串，同时还可以设定项目标号的颜色，这一功能可由下面的代码实现：</p><div class="codesection"><pre class="displaycode">(define item
+  (lambda (x y color str)
+    (begin
+      (set-color color)
+      (fill-rect x y 10 10)
+      (set-color 'black)
+      (draw-string (+ x 12) y str))))
+;;;test
+(item 250 300 'black "A.com")</pre></div><p>以上几项只是基础功能的封装，还有画正方形，正三角形，菱形
+等等常用图形功能尚未实现。我们可以将这些函数统一做一个文件，在起动此应用时就调用这一文件，这样我们就可以在新的绘图文件中调用这些功能了。(详细内
+容见源码包中的src/brush.scm文件，如果你想实现上面的功能，请将它写入这个文件中去)</p><p>事实上我们的结构原理示意图就是用绘图
+代码做出来的。你发现用Guile为GTK+应用做扩展语言的功能强大了吧:-)，由于笔者条件所限，没能将此软件在开源网站上发布（这正是笔者所想要
+的），如果那位朋友愿意帮这个忙的话，将不胜感激，当然，还望对图形或CAD感兴趣的朋友多加指点。</p><div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><h2 id="N10172">两个示例</h2><p>在绘图领域，笔者是一个外行，下面两个示例，供大家参考，第一个是画条形图（ta.scm），第二个是折线形图（tb.scm），效果如下所示：</p><h5 id="N1017A"><img alt="" src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/image012.jpg" width="553" border="0"></h5><h5 id="N10186"><img alt="" src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/image014.jpg" width="553" border="0"><div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p></h5><h2 id="N10191">几个应注意的BUG</h2><p>如果输入错误的绘图文件名，点击运行按钮时会崩溃；绘图文件中有代码错误时，应用同样也会崩溃；所以一定要保证绘图代码正确无误。</p><p>同时还要保证Guile的完整安装（头文件、链接库和可执行文件），否则编译时会出问题。如果完整安装在执行configure脚本时还出问题，可以将guile.m4复制到/usr/share/aclocal目录下，以保证configure脚本的正常运行。</p><p>我们的应用还不具有重绘功能，也就是说当应用的窗口被其它窗口遮蔽或最小化后画板上的图形会被擦掉，但只要再按一下运行按钮就会重新显示出来。</p><p>在GTK+2的低版本（2.2.x）中保存图像会出问题，不过高版本中就不存在这个问题了。
+本文<a href="https://www.ibm.com/developerworks/cn/linux/l-gtk-scheme/brush-lite-1.0.tar.gz">所有代码</a>在RedHat Linux 9.0 系统环境下编译通过，GTK+库版本为2.4.0，Guile版本为1.6.4。在Fedora Core 2系统和最新的guile1.6.5版本中也可以正常运行。</p><!--CMA ID: 82748--><!--Site ID: 10--><!--XSLT stylesheet used to transform this file: dw-document-html-7.0.xsl-->
+
+
+</div>
+</div>
+<!-- 1_1_COLUMN_END -->
+
+<!-- SPLIT_COLUMNS_BEGIN -->
+<div class="ibm-columns">
+
+<!-- 6_4_COLUMN_BEGIN -->
+<div class="ibm-col-6-4">
+
+<h2 id="resources" class="ibm-rule">参考资料 </h2><ul class="ibm-bullet-list"><li>Scheme语言爱好者的大本营，<a href="http://www.schemers.org/">http://www.schemers.org</a>。</li><li>Guile的家，<a href="http://www.gnu.org/software/guile/">http://www.gnu.org/software/guile/</a></li><li>Guile的文档，<a href="http://www.gnu.org/software/guile/docs/docs.html">http://www.gnu.org/software/guile/docs/docs.html</a></li><li>GTK+的主网站 <a href="http://www.gtk.org/">http://www.gtk.org</a></li><li>GTK+的在线文档，<a href="http://developer.gnome.org/doc/API/gtk/index.html">http://developer.gnome.org/doc/API/gtk/index.html</a></li><li>GDK的在线文档，<a href="http://developer.gnome.org/doc/API/gdk/index.html">http://developer.gnome.org/doc/API/gdk/index.html</a></li><li>源码包下载 <a href="https://www.ibm.com/developerworks/cn/linux/l-gtk-scheme/brush-lite-1.0.tar.gz">brush-lite-1.0.tar.gz</a></li></ul>
+
+<!-- INLINE_COMMENTS_BEGIN -->
+<h2 id="icomments" class="ibm-alternate-rule ibm-no-print">条评论</h2>
+    
+<div class="ibm-no-print" id="dw-icomments-container">	
+	<div id="threadShow"><img style="display: none;" id="imgPlHdr" src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/animated-progress-38x38c.html" alt=""><div id="cmtTog" style=""><div class="ibm-container ibm-alternate-two dw-commentbox dw-noborder"><div class="ibm-container-body dw-commentbox dw-noborder"><p id="signInSect">请 <a onclick="var e=arguments[0] || window.event; dwsi.siInst &amp;&amp; dwsi.siInst.showSignIn(); if (e.stopPropagation){ e.stopPropagation();} else { e.cancelBubble = true; } e.preventDefault &amp;&amp; e.preventDefault(); return false;" href="#">登录</a> 或 <a href="https://www.ibm.com/developerworks/dwwi/DWAuthRouter?m=register&amp;lang=zh_CN&amp;d=https%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-gtk-scheme%2F%23icomments">注册</a>  后发表评论。</p><p id="cmtHead"><label for="newCmt"><strong>添加评论:</strong></label></p><p>注意：评论中不支持 HTML 语法</p><div id="infoCmt"></div><form focus="name" enctype="multipart/form-data" method="post" action="" name="form" class="ibm-column-form ibm-styled-form"><p class="6-4-textarea"><textarea rows="5" name="newCmt" id="newCmt" class="dw-inoperable" disabled="disabled"></textarea><br></p><span class="ibm-input-group"><input value="1" name="comment_notification" id="comment_notification" disabled="disabled" type="checkbox"><label id="notifyText" class="ibm-form-note dw-btn-cancel-sec" for="comment_notification">有新评论时提醒我</label></span><span class="ibm-form-note dw-btn-cancel-sec notifySection" id="maxCharsCount">剩余 <span id="charCount">1000</span> 字符</span><p class="ibm-buttons-row"><input value="发布" name="postCmt" id="postCmt" class="ibm-btn-sec ibm-btn-small ibm-disabled" disabled="disabled" type="button"></p></form></div></div><div class="ibm-alternate-rule"><hr></div><div id="topControl" class="ibm-container ibm-alternate-two dw-comment-totals" style="display: none;"><div class="ibm-container-body"><form id="selectComments" method="get" action=""><p>&nbsp;<span class="dw-comment-totals-label"><strong>共有评论 (<span id="numCmts">0</span>)</strong></span><span class="dw-how-many-comments-label" style="display:none" id="dropdownCmts"><label for="howManyComments"><strong>显示：</strong></label>&nbsp;<select name="comments" id="howManyComments" class="dw-how-many-comments"><option selected="selected" value="recent">最新评论   </option></select><input class="ibm-btn-go" name="ibm-go" value="Go" src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/short-btn.gif" alt="Go" type="image"><br></span></p></form></div></div><div id="cmtSect"><div class="comment"><div class="dw-icomment-container"><table class="dw-icomment-body" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><td><p>快来添加第一条评论</p></td></tr></tbody></table></div></div></div></div><div id="bottomControl" class="ibm-container ibm-alternate-two dw-comment-totals" style="display:none"><div class="ibm-container-body"><form id="selectComments2" method="get" action=""><p>&nbsp;<span class="dw-comment-totals-label"><strong>共有评论 (<span id="numCmts2">0</span>)</strong></span><span class="dw-how-many-comments-label" style="display:none" id="dropdownCmts2"><label for="howManyComments2"><strong>显示：</strong></label>&nbsp;<select name="comments" id="howManyComments2" class="dw-how-many-comments"><option selected="selected" value="recent">最新评论   </option></select><input class="ibm-btn-go" name="ibm-go" value="Go" src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/short-btn.gif" alt="Go" type="image"><br></span></p></form></div></div></div>
+</div>
+<!-- Sign in OVERLAY STARTS HERE -->
+    
+<!-- Sign in OVERLAY STARTS HERE -->
+<div class="ibm-common-overlay" id="signin_overlay">
+<div class="ibm-head">
+<p><a class="ibm-common-overlay-close" href="#" onclick="dwsi.siInst.clearForm();">关闭 [x]</a></p>
+</div>
+<div class="ibm-body">
+<div class="ibm-main">
+
+ <div class="ibm-title">
+<h2>developerWorks: 登录</h2>
+<div id="ibm-overlay-error-signin" class="no-display"></div>
+</div>
+<div class="ibm-container ibm-alternate ibm-buttons-last">
+<div class="ibm-container-body">
+<p class="ibm-overlay-intro">标有星（<span class="ibm-required">*<span class="ibm-access">required</span></span>）号的字段是必填字段。</p> 
+<form class="ibm-column-form" id="sFormId" action="" method="post" name="sForm" onsubmit="return false;">
+<p><label for="ibmid">IBM ID:<span class="ibm-required">*<span class="ibm-access">required</span></span></label><span>
+    <input name="ibm-id" id="ibmid" size="25" class="required" onkeypress="dwsi.siInst.handleEP(event,this.form);" type="text">
+    <br><a onclick="window.location='/developerworks/dwwi/DWAuthRouter?m=reg&amp;lang=zh_CN&amp;d='+encodeURIComponent(location.protocol + '//' + location.hostname + location.pathname + '#icomments'); return false;" href="#" class="ibm-forward-link">需要一个 IBM ID？</a> <br>
+    <a class="ibm-forward-link" href="https://www.ibm.com/developerworks/dwwi/jsp/WSHelp.jsp?lang=zh_CN">忘记 IBM ID？</a> 
+</span>
+</p> 
+<p><label for="password">密码：<span class="ibm-required">*<span class="ibm-access">required</span></span></label><span>
+    <input name="password" id="password" size="25" value="" class="required" onkeypress="dwsi.siInst.handleEP(event,this.form);" type="password">
+    <br><a class="ibm-forward-link" href="#" onclick="(function ()
+        {window.location='https://www.ibm.com/account/profile?page=forgot&amp;lang=zh_CN&amp;appname=ibm&amp;required=null&amp;d='+encodeURIComponent(dwsi.siInst.getAuthUrl())+'%3Fm%3Dloginpage%26lang%3Dzh_CN%26d%3D'+encodeURIComponent(location.href);})();">忘记密码？</a>
+    <br><a class="ibm-forward-link" href="#" onclick="(function () {window.location='https://www.ibm.com/account/profile?page=chpw&amp;lang=zh_CN&amp;appname=ibm&amp;required=null&amp;d='+encodeURIComponent(location.href);})();">更改您的密码</a></span></p> 
+<p class="dw-perm-box">
+	<span><input id="perm" name="perm_name" type="checkbox"><label for="perm"> 保持登录。</label></span>
+</p>
+<p>单击提交则表示您同意developerWorks 的条款和条件。 <a href="https://www.ibm.com/developerworks/community/terms?lang=zh">查看条款和条件</a>。</p>
+<div class="ibm-buttons-row">
+   <p><input class="ibm-btn-arrow-pri" name="ibm-submit" value="提交" onclick="dwsi.siInst.signin();return false;" type="submit"><span class="ibm-sep">&nbsp;</span>
+<input value="取消" name="ibm-cancel" class="ibm-btn-cancel-sec" onclick="dwsi.siInst.clearForm();ibmweb.overlay.hide('signin_overlay');return false;" type="button"></p>
+</div>
+</form>
+ <div class="ibm-overlay-rule"><hr></div> 
+
+<p>这是您第一次登陆到 developerWorks，已经自动为您创建了您的概要文件。 <strong>选择您概要文件中可以公开的信息的信息（如姓名、国家/地区，以及公司），这些信息同时也会与您所发布的内容相关联。 </strong>您可以随时更新您的 IBM 账号。</p>
+<div><p class="dw-c-overlay-secure">所有提交的信息确保安全。</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Display name OVERLAY STARTS HERE -->
+<div class="ibm-common-overlay" id="displayname_overlay">
+<div class="ibm-head">
+<p><a class="ibm-common-overlay-close" href="#" onclick="dwsi.siInst.clearForm();">关闭 [x]</a></p>
+</div>
+<div class="ibm-body">
+<div class="ibm-main">
+<div class="ibm-title">
+<h2>选择您的昵称</h2><br><br>
+<div id="ibm-overlay-error-dname" class="no-display"></div>
+</div>
+<div class="ibm-container ibm-alternate ibm-buttons-last">
+<div class="ibm-container-body">
+<p class="ibm-overlay-intro">当您初次登录到 developerWorks 时，将会为您创建一份概要信息，您需要指定一个昵称。您的昵称将和您在 developerWorks 发布的内容显示在一起。</p><p><strong>昵称长度在 3 至 31 个字符之间</strong>。 
+    您的昵称在 developerWorks 社区中必须是唯一的，并且出于隐私保护的原因，不能是您的电子邮件地址。</p>
+<p class="ibm-overlay-intro">标有星（<span class="ibm-required">*<span class="ibm-access">required</span></span>）号的字段是必填字段。</p> 
+<form id="dFormId" method="post" action="" name="dForm" onsubmit="return false;" class="ibm-column-form">
+<p><label for="displayname">昵称：<span class="ibm-required">*<span class="ibm-access">required</span></span></label><span>
+    <input name="displayname" id="displayname" size="25" onkeypress="dwsi.siInst.handleEP(event,this.form);" type="text"></span>
+    <span class="ibm-form-note">(昵称长度在 3 至 31 个字符之间)</span>
+</p>
+<p>单击<strong>提交</strong>则表示您同意developerWorks 的条款和条件。 <a href="https://www.ibm.com/developerworks/community/terms?lang=zh">查看条款和条件</a>.</p>
+<div class="ibm-buttons-row">
+   <p><input class="ibm-btn-arrow-pri" name="ibm-submit" value="提交" onclick="dwsi.siInst.signin();return false;" type="submit"><span class="ibm-sep">&nbsp;</span>
+<input value="取消" name="ibm-cancel" class="ibm-btn-cancel-sec" onclick="dwsi.siInst.clearForm();ibmweb.overlay.hide('displayname_overlay');return false;" type="button"></p>
+</div>
+</form>
+<div class="ibm-overlay-rule"><hr></div>
+<div><p class="dw-c-overlay-secure">所有提交的信息确保安全。</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+
+
+<!-- INLINE_COMMENTS_END -->
+
+</div>
+<!-- 6_4_COLUMN_END -->
+
+<!-- 6_2_COLUMN_BEGIN -->
+<div class="ibm-col-6-2">
+
+<!-- Next_Steps -->
+<!-- Dig_Deeper -->
+
+
+<!-- Promotion_Module -->
+    
+<!-- PROMOTION_MODULE_START -->
+<div class="ibm-alternate-rule"><hr></div>
+<ul class="ibm-portrait-module-list">
+<li><a role="presentation" tabindex="-1" class="" href="http://www.ibm.com/developerworks/cn/puresystems/"><img src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/sm-f-cl-puresystems70.jpg" alt="" width="60" height="60"></a>
+<h3><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/cn/puresystems/">IBM PureSystems</a></h3>
+<p>IBM PureSystems™ 系列解决方案是一个专家集成系统</p></li>
+<li><a role="presentation" tabindex="-1" class="" href="http://www.ibm.com/developerworks/cn/views/global/libraryview.jsp?type_by=Knowledge+paths"><img src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/sm-f-knowledgepath50.jpg" alt="" width="60" height="60"></a>
+<h3><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/cn/views/global/libraryview.jsp?type_by=Knowledge+paths">developerWorks 学习路线图</a></h3>
+<p>通过学习路线图系统掌握软件开发技能</p></li>
+<li><a role="presentation" tabindex="-1" class="" href="http://www.ibm.com/developerworks/cn/downloads/"><img src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/sm-f-evaluationsoftware60.png" alt="" width="60" height="60"></a>
+<h3><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/cn/downloads/">软件下载资源中心</a></h3>
+<p>软件下载、试用版及云计算</p></li>
+</ul>
+<!-- PROMOTION_MODULE_END -->
+
+</div>
+<!-- 6_2_COLUMN_END -->
+
+</div>
+<!-- SPLIT_COLUMNS_END -->
+
+<!-- BOTTOM_BACK_TO_TOP -->
+<div class="ibm-columns">
+<div class="ibm-col-1-1">
+	<div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p>
+</div>
+</div>
+
+<!-- Rating_Meta_BEGIN -->
+<!--Rating_Meta_BEGIN--><div class="metavalue">static.content.url=http://www.ibm.com/developerworks/js/artrating/</div><div class="metavalue">SITE_ID=10</div><div class="metavalue">Zone=Linux</div><div class="metavalue">ArticleID=82748</div><div class="metavalue">ArticleTitle=用 Guile 来为 GTK+ 应用添加扩展语言 Scheme</div><div class="metavalue">publish-date=04262005</div><script language="javascript" type="text/javascript">document.write('<div class="metavalue">url='+location.href.replace(/</g,  '%3C')+'</div>');</script><div class="metavalue">url=https://www.ibm.com/developerworks/cn/linux/l-gtk-scheme/</div><!--Rating_Meta_END-->
+<!-- Rating_Meta_END -->
+
+</div>
+<!-- END_IBM_CONTENT_MAIN -->
+
+</div>
+<!-- END_IBM_CONTENT_BODY -->
+
+</div>
+<!-- END_IBM_CONTENT -->
+
+</div></div>
+<!-- LEADSPACE_END -->
+
+
+<!-- END_IBM_PCON -->
+<!-- FOOTER_BEGIN -->
+<!-- FOOTER_BEGIN -->
+<div aria-label="页脚" id="ibm-footer"><!-- IBM footer container; disabled --></div>
+
+<div id="ibm-footer-module-dwwrapper" role="contentinfo" aria-label="developerWorks Footer">
+
+<div id="ibm-footer-module-dw">
+	<div class="dw-footer-columns">
+		<div class="dw-footer-col-5-1">
+			<ul>
+                <li><a href="https://www.ibm.com/developerworks/secure/feedback.jsp?domain=dwchina">帮助</a></li>
+				<li><a href="http://www.ibm.com/developerworks/cn/author/">联系编辑</a></li>
+				<li><a href="https://www.ibm.com/developerworks/secure/myideas2.jsp?domain=dwchina&amp;start=true">提交内容</a></li>
+				<li><a href="http://www.ibm.com/developerworks/cn/sitemap/">网站导航</a></li>
+				<li><a href="http://www.ibm.com/developerworks/cn/rss/">订阅源</a></li>
+			</ul>
+        </div>
+		<div class="dw-footer-col-5-2">
+			<ul>
+			<li><a href="http://www.ibm.com/vrm/newsletter/10104?S_TACT=105AGX52&amp;S_CMP=dwcntop">在线浏览每周时事通讯</a></li>
+				<li><a class="dwcn-sina-link" href="http://weibo.com/ibmdw/" target="_blank">新浪微博</a></li>
+				<li><a href="https://www.ibm.com/developerworks/community/report?lang=zh">报告滥用</a></li>
+				<li><a href="https://www.ibm.com/developerworks/community/terms?lang=zh">使用条款</a></li>
+				<li><a href="https://www.ibm.com/developerworks/cn/community/terms/thirdparty/">第三方提示</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-5-3">
+			<ul>
+				<li><a href="http://www.ibm.com/privacy/cn/zh/">隐私条约</a></li>
+				<li><a href="http://www.ibm.com/ibm/accessibility/cn/">浏览辅助</a></li>
+				<li><a href="http://www.ibm.com/developerworks/cn/academic/">IBM 教育学院教育培养计划</a></li><li><a href="http://www.ibm.com/developerworks/cn/gep/">IBM 创业企业全球扶持计划</a></li><li><a href="http://www.ibm.com/partnerworld/isv/">ISV 资源 (英语)</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-5-4">
+		
+ 
+			<ul>
+				<li><a href="https://www.ibm.com/developerworks/cn/newsletter/">dW 中国每周时事通讯</a><br> 
+				
+				</li>
+			</ul>
+			
+		</div>
+		<div class="dw-footer-col-5-5">
+			<img alt="IBM®" src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/dwn-ibm-logo-v17.png" width="223" height="46">
+			<img class="dw-preload" src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/ibm_sprite_social_blue_ON.png" alt="" width="1" height="1">
+		</div>
+	</div>
+	<!-- Language selector no-script -->
+	<noscript>
+	<div id="dw-footer-selectlang">
+		<h2><a name="SELECTLANG">选择语言：</a></h2>
+		<ul>
+			<li><a href="http://www.ibm.com/developerworks/" lang="en">English</a></li>
+			<li><a href="http://www.ibm.com/developerworks/cn/">中文</a></li>
+			<li><a href="http://www.ibm.com/developerworks/jp/" lang="ja">日本語</a></li>
+			<li><a href="http://www.ibm.com/developerworks/ru/" lang="ru">Русский</a></li>
+			<li><a href="http://www.ibm.com/developerworks/br/" lang="pt">Português (Brasil)</a></li>
+			<li><a href="http://www.ibm.com/developerworks/ssa/" lang="es">Español</a></li>
+			<li><a href="http://www.ibm.com/developerworks/vn/" lang="vi">Việt</a></li>
+		</ul>
+	</div>
+	</noscript>
+</div>
+
+</div><!-- FOOTER_END --><!-- FOOTER_END -->
+
+<!-- END_IBM-TOP -->
+</div>
+
+<!-- SCRIPTS_INCLUDE_BEGIN -->
+<script type="text/javascript" src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/dw-comments.js">//</script>
+<script type="text/javascript" language="JavaScript">
+		dojo.ready(function(){
+		rBHash = null;
+		rBHash = new Object();
+		rBHash['viperLang'] = 'zh';
+		rBHash['urlLang'] = 'cn';
+		
+		dwsi.siInst = new dwweb.dynnav.dwsi();
+		dwsi.siInst.initSI();		
+
+		// construct the comment widget
+dwc.cmts = '条评论';
+dwc.signInPreText = '请';
+dwc.signIn = '登录';
+dwc.or = '或';
+dwc.register = '注册';
+dwc.signInPostText = '';
+dwc.leaveCmt = '后发表评论。';
+dwc.view = '查看';
+dwc.totalCmts = '共有评论';
+dwc.postYourCmt = '添加您的评论';
+dwc.show = '显示：';
+dwc.recentCmts = '最新评论';
+dwc.allCmts = '所有评论';
+dwc.tooLongCmt = '您的评论超过了 1000 字符限制';
+dwc.numCharsLeft = '剩余 <span id="charCount">{1}</span> 字符';
+dwc.reportAbuse = '报告滥用';
+dwc.notifyMsg = '有新评论时提醒我';
+dwc.htmlWarning = '注意：评论中不支持 HTML 语法'; 
+dwc.cmt = '评论：';
+dwc.addCmts = '添加评论';
+dwc.addCmt = '添加评论';
+dwc.doNotErase = '--在下方添加评论--'; 
+dwc.viewOrAddCmts = '查看或添加评论';
+dwc.reportInapprCont = '举报不良信息';
+dwc.reportInapprContLink = 'http://www.ibm.com/developerworks/forums/forum.jspa?forumID=1834';
+dwc.postingCmt = '正在发布评论……';
+dwc.noCmt = '快来添加第一条评论';
+dwc.netwkErr = '在检索评论时出错，请稍后刷新。';
+dwc.addACmt = '添加评论';
+dwc.instructCmt = '标有星号（<span class="ibm-required">*</span>）的是必填项目。';
+dwc.btnPost = '发布';
+dwc.btnPostAnon = '匿名发布';
+dwc.btnClrCmt = '清除评论';
+dwc.btnCancel = '取消';
+dwc.showRecent = '显示最新的 {1} 条评论'; // {1} is the count to be substituted
+dwc.showNext = '显示后 {1} 条评论'; // {1} is the count to be substituted
+dwc.showAllCmts = '显示所有评论';
+dwc.enterCmt = '请输入评论内容。';
+dwc.loginErr = '暂时无法验证您的登录状态，请稍后再试。';
+dwc.postErr = '暂时无法发布您的评论，请稍后再试。';
+dwc.postBy = '由 <strong>{1}</strong>  于 {2} '; // {1} is the author to be substituted; {2} is the date
+dwc.siteId = 10;
+dwc.lang = 'zh_CN';
+dwc.viperLang = 'zh';
+//dwc.abuseHref =  null;
+dwc.maxChars = 1000;
+dwc.cmtTxt =  '评论：';
+dwc.cmtsTxt =  '评论：';  
+		dwc && new dwc.comments('threadShow','95%',5,'nCmts','icomments');
+		});
+</script>
+<!-- BEGIN: Use this section to set page specific variables for the Unica Page Tag -->
+<script language="JavaScript">var NTPT_PGEXTRA="ibmSkillLevel=1&ibmAdoptPhase=667&ibmRole=710&ibmCmaId=82748&ibmContentAreas=linux";</script>
+<!--END --><!-- SCRIPTS_INCLUDE_END -->
+
+<div id="ibm-metrics">
+<script src="%E7%94%A8%20Guile%20%E6%9D%A5%E4%B8%BA%20GTK+%20%E5%BA%94%E7%94%A8%E6%B7%BB%E5%8A%A0%E6%89%A9%E5%B1%95%E8%AF%AD%E8%A8%80%20Scheme_files/stats.js" type="text/javascript">//</script>
+</div>
+
+
+</body></html>

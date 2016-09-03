@@ -1,0 +1,13 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-30T00:05:33+08:00
+
+====== ssh ======
+Created Saturday 30 November 2013
+
+远程登录
+
+ssh-keygen -t rsa 生成密钥实现无密码登录   -t 声明类型   rsa是一种密钥类型（有两个密钥，私有密钥和公有密钥）
+ssh-add 私钥名    
+对于ssh登录，将ssh server所在的机器的 公钥拷到那个机器上(改名为.ssh/authorized.keys，那台机器就可以无密码登录 
+ssh  jinux@localhost

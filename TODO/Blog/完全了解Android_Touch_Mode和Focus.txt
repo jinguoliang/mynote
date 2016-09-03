@@ -1,0 +1,30 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-06-30T10:27:38+08:00
+
+====== 完全了解Android Touch Mode和Focus ======
+Created Tuesday 30 June 2015
+
+==== Touch Mode 是什么 ====
+用户与智能设备交互的方式有硬件键盘和触屏.
+触摸屏幕时设备进入Touch Mode.然后用户通过点击屏幕上的虚拟按钮或者图片来进行交互.
+在用户退出Touch Mode之前,Activity之间的切换不会影响Touch Mode状态.
+硬件按钮点击会使设备退出Touch Mode.
+你可以通过View类的isInTouchMode() 方法判断设备是否在Touch Mode状态.
+
+==== Focus是什么 ====
+View或Widget当获取焦点后(in focus),通常会被高亮显示或者显示闪烁的光标来指示用户输入.
+对于使用滚迹球,触笔,外部键盘和硬件按钮的设备,为了让用户知道哪个控件正在接受输入,焦点(focus)是必须的
+焦点在触摸模式(Touch Mode)是非必须的
+
+==== 处理焦点 ====
+系统预定义了哪些view可以获取焦点.系统根据用户的输入和View的添加和移除来变换焦点.
+
+=== 设置焦点 ===
+=== 检查焦点 ===
+=== 强制聚焦 ===
+=== 关注焦点的改变 ===
+=== 进出Touch Mode ===
+
+==== 用实例说话 ====
+

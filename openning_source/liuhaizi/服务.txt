@@ -1,0 +1,11 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-27T16:15:44+08:00
+
+====== 服务 ======
+Created Monday 27 July 2015
+
+1. 通过在onBind返回UpdateServiceBinder,给客户端提供操作的接口
+2. executeDownload 调用DownloadTask启动下载,并设置监听
+3. onCancel里停止task, 删除文件
+4. sendMessage发送消息, 接受并分发处理

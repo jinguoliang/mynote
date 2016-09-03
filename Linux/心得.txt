@@ -1,0 +1,38 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-04-26T00:26:45+08:00
+
+====== 心得 ======
+Created 星期六 26 四月 2014
+
+ubuntu 默认没有xorg.conf 生成xorg.conf步骤
+sudo service gdm stop
+sudo Xorg -configure
+sudo mv xorg.conf.new /etc/X11/xorg.conf
+sudo service gdm start
+
+各种驱动的配置可以用man来看
+
+触摸板驱动synaptics
+
+用xinput来控制管理输入设备（键盘，鼠标）
+xinput list 列出输入设备
+xinput list-props 输入设备 列出某个设备的属性
+xinput set-prop "设备名" "属性名" 值
+[[+stop touchpad|stop touchpad]]
+
+evdev 是一个驱动它统一了输入设备
+从而在xorg.conf内把驱动都用它就行了
+
+xset 配置x系统，包括字体，显示，led，按键，鼠标等
+只输入xset 显示用法
+xset 是更高的抽象，它不会针对特定的设备，而是针对一类设备，如对鼠标设备，只能设置移动速度
+
+stty 设置终端行信息
+
+！！调试
+strip file 从可执行文件中移除debug信息
+gdb命令：backtrace 显示函数调用的顺序
+
+andriod工具
+abooting 对img读取更改，以便把其他系统装在android设备上

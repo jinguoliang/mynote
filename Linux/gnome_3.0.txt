@@ -1,0 +1,15 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-12-07T17:20:58+08:00
+
+====== gnome 3.0 ======
+Created Saturday 07 December 2013
+
+Ctrl+Shift+Alt+R：可以录制屏幕图像，使用相同的快捷键关闭。
+
+
+Looking Glass：Gnome3原生的javascript Debug工具，在Alt+F2状态下输入lg命令即可打开，按ESC键退出。
+设置可以同时录制声音
+gsettings set org.gnome.shell.recorder pipeline 'webmmux name=mux videorate ! vp8enc quality=10 speed=2 threads=%T ! queue ! mux.video_0 pulsesrc ! audioconvert ! audiorate ! vorbisenc ! queue ! mux.audio_0' 
+
+pavucontrol  显示声音设置

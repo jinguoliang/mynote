@@ -1,0 +1,11 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-05-01T18:53:00+08:00
+
+====== 使用compiz ======
+Created Friday 01 May 2015
+开机使用compiz
+cp /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml [[~/.config/xfce4/xfconf/xfce-perchannel]]
+replace "xfwm4" with "compiz".
+手动执行
+compiz  --replace

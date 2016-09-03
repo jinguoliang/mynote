@@ -1,0 +1,133 @@
+前言：
+	Android的成长是惊人的。它跻身高级移动终端没用多长时间。很明显，独一无二的开源许可的组合（the unique combination of
+open source licensing），高度的市场竞争力，时髦的界面是Goole Android团队成功的表现。甚至，手持设备制造商，手机网络运营商，硅制造商和开发者注意到，Adnroid已产生了大量的用户理解（user uptake）。专门为Android打造的产品，兼容Adnroid的软件，基于Adnroid的设备都如雨后春笋一样席卷而来。
+	然而，除了手机的成功，android也吸引了另一个没有群体：嵌入式系统开发者。虽然有大量的嵌入设备有很少甚至没有用户界面，但也有很多是需要用户界面的。开发人员除了关注纯技术功能外，开发有界面的设备时也会关注人机交互因素。所以，设计师们必须要么给用户一个他们熟悉的界面体验，要么就冒险让他们来学习一种不太熟悉或全新的界面体验。在Android之前，可选择的用户界面对于这种设备的程序员来说是相当有限的。
+	很明显，嵌入式开发者更喜欢提供给用户一个他们已熟悉的界面。因为以前的界面都是基于窗口的，所以一直以来很多嵌入式设备都是以窗口为中心，桌面化的界面。然而Apple的iOS和Google的Android已经使得基于触摸的界面--像Iphone图形界面--被广泛接受。随着用户习惯的改变，加之Adndroid的开源协议，Android在开源世界已经引起广泛的兴趣。
+	然而，与Android应用开发者不同的是，嵌入式开发者想对Android做各种平台级的修改比如移植。他们很快发现严重缺少这方面的文档。而Google为应用开发者提供了大量的文档，应用开发方面的书也有很多如OReilly的Learning Android。嵌入式开发者这能研究Google在http://source.android.com提供的少量的文档。总之，嵌入式开发者因此减少了很多。
+        本书的目的是补救这种形势，是你能够用Android做嵌入式。所以，你将会学到Android的体系结构，怎样去浏览他的源码，怎样修改它的各种部件，怎样去创建你自己设备上的Adnroid版本。另外，你还会学到Android是怎样集成到Linux内核的，理解它和Linux roots的commonalities和不同。作为例子，我们将会讨论Android如何里利用Linux的驱动模型去创建它自己的硬件层，以及怎样将“legacy” LInux的glibc，Busybox等组件包装为Android的一部分来利用的。你还会顺便学到一些小技巧，如使用Adnroid的repo工具，集成和修改Android构建系统的方法。
+
+学习怎样嵌入Android
+	我从九十年代中期就参与开源软件的开发。我很庆幸我在它被认可为当今强有力的软件开发运动之前就加入了它并且目睹了它在21世纪初期的发展。我也给开源事业出了一份力，参加了各个地方的轰轰烈烈的战中，呵呵。与此同时，我也写了OReilly的构建嵌入式linux系统的第一版
+	所以当Adnroid--我知道它是基于linux的--开始被广泛知道时，根据我对Linux的历史和嵌入式Linux的深刻的了解，我知道对它深入的研究是值得的。于是，我想：“我对Linux想到了解，而Android是基于LInux的，它有多难呢？”直到我真正仔细深入去看Android时，我才意识到Android是非常不同的。我所知道的在嵌入式系统中常用的关于Linux和包的只是在Android中并没有。不仅如此，android内建的抽象机制甚至更是奇怪。
+	所以，一连串的问题困扰着我。Android如何工作？它与普通的LInux有什么不同？我怎样定制它？我如何把它用在嵌入式系统中？我如何构建它？如何把它的应用开发api翻译到我知道的Linux用户空间，等等。随着我对Android钻研的越来越深，越发觉得它的另类而且问题更多了。
+	我做的第一件事是去http://developer.android.com 和 http://source.android.com 网站，打印所有我能的得到的东西，并保存开发者API参考。我总共打印了8到10英尺的纸。我通读了他们，画出了许多我发现的关键文章，并在边缘添加了大量的笔记，列出了所有我没能找到答案的问题。同事，我开始研究Google提供的Android Open Source Project（AOSP）的源码。说实话，我是在6到12个月之后才真正刚觉到有足够的自信来深入进AOSP的。
+	现在你拿的这本书是我探索Android的成果，也包括各种我参与的项目，比如帮助不同团队自定义Android来适配他们的嵌入式设计。我已经学习了足够多的Android相关的知识敢说：无论如何这本书都不能是全面的。Android还有很多东西和内部原理在这本书里没有涉及到，也不能涉及到。然而，这本书应该可以使你通过努力将Andriod为你所用。
+
+本书的面向的读者
+	这本书是那些想创建基于Android的嵌入式系统或是想自定义Android来作为其他用处的读者的必备。它假设你了解嵌入式系统开发，并且至少了解一个版本的Linux的工作原理和如何与它命令行交互。
+	我不假设你熟悉java，（and you can get away without knowing
+Java for quite a few of the tasks required to customize Android
+）。然而，当你使用进程时，你会发现对java有一定的了解是必须的。事实上，Android的很多关键部分是用java写的，因此你为了（properly integrate most additions to
+specific parts of the stack
+）你需要学习java
+	然而，这本书不会涉及到应用开发和java编程。如果你对这些话题感兴趣，我推荐你查看其他资料。有很多的资料是讨论这些话题的。这本书也不会讲嵌入式系统，这方面的资料也很多。最后，这本书也讲嵌入式Linux的，这方面又有不少书。不过，熟悉Linux的使用对于我们自定义Android是有好出的。事实上，虽然Android很多东西都背离传统的嵌入式Linux，但是很多经典创建嵌入式Linux系统的技术都对我们创建嵌入式Android系统有帮助。
+	如果你想研究Adnrid内部，这本书也是有帮助的。自定义Android实际上需要知道一些基本原理的。所以，这部分的讨论尽管不会完全的探索Android的源码，但是对Android内部各部分是如何交互的也会讲的较详细。
+
+内容组织
+	这本书先讲一些基本内容，为后边的复杂论题打好基础。如果你是一个只想看看基本原理的管理者，又或者你想知道哪些章节必须读，那些可以选读，那么我推荐你至少读完前三章。这并不以为这以后的章节就不相联系了，只是或便的章节更模块化。
+	第一章，介绍，包括了将Android用于嵌入式系统需要知道的基本知识。如它从哪来，它的开发模型和执照与传统的开源项目有什么不同，和Android要求的硬件类型有哪些
+	第二章，内部原理，深入挖掘Android的内部机理，让你了解它的主要的抽象机制。我们先讲开发者熟悉的应用开发模型。然后深入挖掘Android对内核的更改，Android是如何支持硬件的，本地用户空间，Dalvik虚拟机，系统服务和系统的整个启动过程。
+	第三章，开始进入AOSP的世界，介绍了怎样从Google的到Android源码，如何把它们编译成模拟器能加载的image文件，怎样运行这个iamge，怎样用shell进入这个系统。模拟器是代替真机去研究android的很方便的工具。
+	第四章，构建系统，详细介绍了Adnroid的构建系统。事实上，Android不想其他开源项目，Android的构建系统是非递归的。这章介绍Android构建系统的体系结构，它通常是如何为AOSP所用的，怎样去修改AOSP
+	第五章，硬件入门，介绍了Android适用的硬件种类。涉及使用Adnroid的典型片上系统，典型Andorid的内存层，典型的用于Android的构建工具，还有几个很容易嵌入Android的开发板。
+	第六章，本地用户空间，	涉及文件系统层，adb工具，Android的命令行，和自定义init
+	第七章，Android 框架，	讨论了Android框架的启动，用来和它交互的工具命令，还有保证正确操作的后台服务。
+	附录A	Legacy 用户空间，介绍了如何使得其他嵌入式linux软件和Android用户空间一同存在
+	附录B	为新硬件添加支持，向你展示了如何扩展Android来支持新硬件。包括想你展示如何添加系统服务，如何扩展硬件抽象层。
+	附录C	自定义默认安装包，几个帮助你自定义AOSP生成的Image的默认安装包的建议
+	附录D	默认init.rc文件，contains a commented set of the default init.rc files
+used in version 2.3/Gingerbread and version 4.2/Jelly Bean.
+	附录E	资源，列出了一些可能对你有用的资源，有网站，邮件列表，书，事件
+
+第一章：概述
+	将Android移植到嵌入式设备上是一项复杂的任务，它需要对Android内部原理的理解，对AOSP和它所基于的LInux内核做各种更改。在我们开始学习嵌入式Android之前，先让我们了解一些嵌入式开发者在使用Android是需要参考背景知识，比如Android的硬件需求，还有围绕Android的框架及它在嵌入式设置中的实现。首先，让我们先来看看Android从哪来的，如何开发。
+	历史
+	这个故事要从2002年初说起，Google的Larry Page和Sergey Brin 在斯坦福参加了一个关于Danger公司的then-new SideKick 手机的讨论会。演讲这叫Andy Rubin，是Danger那时的CEO，SideKick是当时第一批多功能，可联网设备。在那次讨论会后，Larry去看这中设备，发现它的默认搜索引擎是Google，很是高兴。从那不久，Larry和Sergey就成了SideKick的用户。
+	尽管SideKick很新颖，吸引了不少用户，然而，它却没有取得商业成功。到2003年，Rubin和Danger的董事会达成协议离开公司。Rubin在尝试了其他一些事后，决定还是搞手机系统。他使用了自己的域名，android.com,打算为手机制造业创建一个开放的系统。After investing most of his savings in the project and having received some additional seed money
+他打算去创建一个公司。很快，在2005年八月，Google acquired Android Inc. with little fanfare
+	Google从获得这个项目到2007年11月向世界公布，几乎没有释放android的任何消息。这是开发团队奋战于幕后，忙着处理各种问题，构建原型。最初宣布Android的是开放手机联盟（OHA），揭去它什么的面纱，实际上是一群公司，他们提出自己的要求什么的，作为手机设备开发的开放标准。Android是他们的第一个产品。一年后，也就是2008年九月，Android的第一个开源版本，1.0,发布。
+	从那以后，Android发布了好几个版本了，他的进展和开发明显更公开了。但是，我们以后看到，Android依然有很多工作是不会开源的。Table1-1 显示了Android各个版本和对应版本最值得注意的特性
+
+	
+Table 1-1. Android versions
+Version Release date 
+Codename
+Most notable feature(s)
+Open source
+1.0 September 2008 Unknown Yes
+1.1 February 2009 Unknowna Yes
+1.5 April 2009 Cupcake 1.6 September 2009 Donut Onscreen soft keyboard Yes
+Battery usage screen and VPN support Yes
+2.0, 2.0.1, 2.1 October 2009 Eclair Exchange support Yes
+2.2 May 2010 Froyo Just-in-Time (JIT) compile Yes
+2.3 December 2010 Gingerbread SIP and NFC support Yes
+3.0 January 2011 Honeycomb Tablet form-factor support No
+3.1 May 2011 Honeycomb USB host support and APIs No
+4.0 November 2011 Ice-Cream Sandwich Merged phone and tablet form-factor support Yes
+4.1 June 2012 Jelly Bean Lots of performance optimizations Yes
+4.2 November 2012 Jelly Bean Multiuser support Yes
+a This version is rumored to have been called “Petit Four.” Have a look at this Google+ post for more information.
+
+特性
+	Google在发布2.3.x/Gingerbread的那段时间，曾经在它的开发者网站上公布了Android下列特性：
+	应用框架
+	应用框架被开发者用来创造Android应用。框架的用法有在线文档，也有很所像O’Reilly’s Learning Android这样的书。
+	Dalvik虚拟机
+	作为Sun 的jvm的代替品，它是一个实现了clean-room 字节码 的 解释器。前者解释.class文件，Dalvik解释.dex文件。.dex文件是用dx工具由.class文件生成，而.class则是由JDK中的Java编译器编译而来。
+	集成浏览器
+	Android包含一个基于WebKit的浏览器作为它的标准应用之一。应用开发者在他们的应用中可以用WebView类来是使用WebKit 引擎。
+	优化的图形显示
+	Android提供了自己的2D图形库，但3D则由OpenGL ES提供
+	SQLite
+	它是一个标准的数据库，通过应用框架提供给应用开发者
+	媒体支持
+	Android使用自己的自定义媒体框架StageFright支持广泛的媒体格式。2.2之前，Adroid使用PacketVideo的OpenCore 框架
+	GSM 电话支持
+	电话支持是以来硬件的，硬件厂商必须提供一个HAL模块，Android才能与他们的硬件交互。HAL模块将会在下一章讨论
+	蓝牙，EDGE，3G，WiFi
+	Android提供了对大部分无线传输技术的支持。一些是以Android特定的方式实现，如EDGE和3G，其他则使用了普通Linux的方式，如蓝牙，WiFi
+	相机，GPS，指南针，accelerometer？？
+	与用户的外在环境交互对Android来说是关键的。应用框架的APIs提供了访问这些设备的方法，他们有些需要某些HAL模块支持。
+	丰富的开发环境
+	这可能是Android最大的财富。开发环境容易得到有利与Android的普及。完整的SDK很容易下到，里面包括模拟器，Eclipse插件，还有好多调试和profile工具
+	当然还有很多其他的特性，如USB支持，多任务，多点触控，SIP（？？），tethering（？？），Voice-activated commands（语音控制）等等，但是上边列的那些能让你知道Android中到底是什么。另外需注意的是，Android的每个新的版本都会引入它自己的新的特性。自己去那些发布的版本的各种亮点把。
+	除了上边这些，Android平台还有一些是Adroid为很有趣的嵌入式开发平台的特点。下面是简单的总结：
+	Broad app ecosystem（板级应用生态系统？？）
+	在写这本书的时候，Google Play也就是Anroid市场，已有70万应用了。This compares quite favorably to the Apple App
+Store’s 700,000 apps ， and ensures that you have a large pool to choose from should
+you want to prepackage applications with your embedded device.
+注意，在打包程序时，你可能需要与应用发布者达成协议。你从Google Play上买到应用并不意味这你有权利作为第三方重新发布它。
+	固定的应用APIs
+	应用框架的所有APIs都是向前兼容的。因此，你的嵌入式系统中的自定义应用都应该可以运行在未来的Android版本。相反，你对Android源代码的修改不能保证继续在下一个Adnroid 版本中运行的
+	可替换的组件
+	因为Android是开源的，它的很多组建可以完全替换掉。例如，如果你不喜欢默认的Laucher app（home screen），你可以自己写一个。在android里你还可以做底层的改变。例如Gstreamer 开发者能够用GStreamer替换掉Android默认的媒体框架StageFright，却不改变应用API
+	可扩展的
+	Android的开放和体系结构的另一个优势是添加新特性和新硬件相对简单。你只需要模拟平台对其他相同类型的硬件和特性所做的事。例如，你可以通过添加几个文件向HAL添加自定义硬件，AppendixB 会讲到
+	自定义。
+	如果你想使用存在的部件，如自带的Launcher，你可以自定义它。无论你是修改它的功能还是修改它的样式，只要你愿意。
+	
+	开发模型
+	When considering whether to use Android, it’s crucial that you understand the rami‐
+fications its development process may have on any modifications you make to it or to
+any dependencies you may have on its internals.
+	不同于“经典”的开源项目
+	Android的开源环境（nature）是最受鼓吹的特性之一。事实上，想刚才看到的那样，很多特性正式因为Android的开源才的以实施。
+	然而，Android不像大部分开源项目，它的开发大部分是（behind closed doors）。例如，各种开源项目都有公开得邮件列表，论坛，在这里有主要的开发者互相交流，还有公共的开源库，在那里提供了主要的开发分支的相关代码和文档。这些东西Android都没有。Andy Rubin总结的好：“开源不同于社区驱动，Android依赖社区少，一定程度上是更开源的。”
+	无论怎样，Android就是主要有Android团队在Google开发的，and the public is not privy to either internal discussions nor the tip
+of the development branch. Google在每次开发出新版本
+
+
+
+
+
+	
+
+
+
+
+	
+
+	
+
+        
+

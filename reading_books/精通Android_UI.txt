@@ -1,0 +1,30 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-31T12:12:35+08:00
+
+====== 精通Android UI ======
+Created Friday 31 July 2015
+
+1. Part 1
+	a. chapter 1 UI 设计工具 <略>
+	b. [[+Android UI 布局： 布局容器和ViewGroup类|Android UI 布局： 布局容器和ViewGroup类]]
+	c. [[+Android UI 控件： 控件和View类|Android UI 控件： 控件和View类]]
+2. 了解Android菜单相关的类：OptionsMenu, ContextMenu,PopupMenu和ActionBar
+	a. OptionsMenu和ActionBar
+	b. ContextMenu,PopupMenu
+	c. 高级ActionBar设计和ActionBar类
+3. Android UI设计： UI布局考虑，Android系统设计原理和AndroidUI设计准则
+	a. UI布局考虑：Styles, 目标屏幕密度 和 新媒体形式
+	b. 设计原理：Wire-framing & UI Layout Design Patterns
+	c. Android UI Layout Conventions, Differences and Approaches
+	d. Android UI 主题，数字媒体设计原理
+4. Android UI设计基础： FrameLayout,LinearLayout, RelativeLayout，GridLayout 
+	a. FrameLayout： 使用数字影像
+	b. LinearLayout： 横屏竖屏UI设计
+	c. RelativeLayout： 只使用一个布局来设计UI
+	d. GridLayout： 基于表格的UI设计
+5. 高级Android UI 设计：DrawerLayout, SlidingPane, ViewPager, PagerTitleStrip 和 [[PagerTabStrip]]
+	a. DrawerLayout：使用抽屉设计
+	b. SlidingPane： 
+	c. ViewPager： 横屏滑动
+	d. PagerTitleStrip 和 [[PagerTabStrip]]

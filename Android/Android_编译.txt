@@ -1,0 +1,59 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-25T22:53:42+08:00
+
+====== Android 编译 ======
+Created Monday 25 November 2013
+
+[[+repo]]
+
+官方：
+详细：http://source.android.com/source/building-running.html#run-it
+Building for devices：http://source.android.com/source/building-devices.html#booting-into-fastboot-mode
+1.Initialize the environment
+source build/envsetup.sh
+2.Choose a Target
+ lunch
+All build targets take the form BUILD-BUILDTYPE, where the BUILD is a codename referring to the particular feature combination
+Build name 	Device 		Notes
+aosp_arm 	ARM emulator 	AOSP, fully configured with all languages, apps, input methods
+aosp_maguro 	maguro 		AOSP, running on Galaxy Nexus GSM/HSPA+ ("maguro")
+aosp_panda 	panda 		AOSP, running on PandaBoard ("panda")
+
+and the BUILDTYPE is one of the following:
+Buildtype 	Use
+user 		limited access; suited for production
+userdebug 	like "user" but with root access and debuggability; preferred for debugging
+eng 		development configuration with additional debugging tools
+
+3.Build the Code
+make -j4
+
+4.Run It!
+related with lunch
+
+5.Flash a Device
+adb reboot bootloader  进入fastboot模式
+fastboot flashall -w
+
+Using ccache
+
+ccache is a compiler cache for C and C++ that can help make builds faster. In the root of the source tree, do the following:
+$ export USE_CCACHE=1
+$ export CCACHE_DIR=/<path_of_your_choice>/.ccache
+
+watch -n1 -d prebuilts/misc/linux-x86/ccache/ccache -s
+$ prebuilts/misc/linux-x86/ccache/ccache -M 50G
+[[./Android.mk 简介 - haomcu的专栏 - 博客频道 - CSDN.NET.html]] 
+
+
+==== Android Make: ====
+LOCAL_MODULE_PATH := $(TARGET_OUT)/vendor/overlay
+
+# enable vm tracing in files for now to __help track__
+__# the cause of ANRs__ in the content process
+ADDITIONAL_BUILD_PROPERTIES += dalvik.vm.stack-trace-file=/data/anr/traces.txt
+
+
+=== Log 查错： ===
+搜：Error\Space     error:    make[1]...[3] 

@@ -1,0 +1,483 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-31T17:15:43+08:00
+
+====== java 的坑 ======
+Created Friday 31 July 2015
+
+java中的一些坑
+
+博客分类： java
+ 
+下面是去年的时候分享的一些java小知识点，今天在电脑里看到了，贴到这里。
+其中一些来自《java解惑》、一些来自自己平时的积累，还有一些是在项目中掉到了“坑”里后才明白的
+ 
+ 
+1.除0
+代码：
+ 
+Java代码  收藏代码
+System.out.println(1.0d / 0);  
+System.out.println(0.0d / 0);  
+System.out.println(1 / 0);  
+System.out.println(0 / 0);  
+ 
+ 
+输出：
+Infinity
+NaN
+java.lang.ArithmeticException: / by zero
+	at test.ww.Test.main(Test.java:27)
+java.lang.ArithmeticException: / by zero
+	at test.ww.Test.main(Test.java:32)
+ 
+原因：
+因为 IEEE 754 有规定无穷大是怎么表示的，因此被除数不为 0，除数是 0 的话计算结果是正无穷或者是负无穷，如果被除数和除数都是 0 的话，那么计算结果是 NaN
+ 
+整数不在是 IEEE 754 规定的，也没有无穷大的表示，因此只能抛出异常了
+ 
+2. Arrays.asList？可变长参数？
+ 
+ 
+Java代码  收藏代码
+int[] arr = new int[]{1,2,3};  
+System.out.println(Arrays.asList(arr).contains(1));  
+ 
+ 
+ 
+输出什么？
+大多数人的回答肯定是true，显而易见么。。但它输出的却是false，为什么，哪里出错了么？
+分解一下表达式，先调用Arrays.asList(arr),通过遍历或者debug你会发现里面的元素个数为1，这又是什么原因呢，查看一下API或者源代码，发现它声明为List<T> Arrays.asList（T... args），难道是可变长参数有问题？
+做一个测试：
+ 
+Java代码  收藏代码
+public static void main(String[] args) {  
+  
+       int[] arr = new int[]{1, 2, 3 };  
+       test1(arr);  
+  
+   }  
+  
+   private static void test1(Object... values) {  
+       System.out.println(values.length);  
+   }  
+ 
+ 
+ 
+输出
+1
+把int数组改为Integer数组后，输出
+3
+ 
+看来是基本类型的数组被当作了一个对象，而对象类型的数组的每个元素才能分别作为可变长参数方法的参数。
+ 
+3.诡异的三元表达式
+三元表达式，注释部分是该行的输出，为啥？
+ 
+Java代码  收藏代码
+char x = 'X';  
+int i = 0;  
+System.out.println(true ? x : 0);// X  
+System.out.println(false ? i : x);// 88  
+ 
+ 
+原因：
+ true ? x : 0返回的是x的类型，即char型，调用char的toString方法，输出X
+ false ? i : x返回的是i的类型，即int型，先把‘X’转为整型（88），再输出。
+ 
+即三元运算符返回类型以第二个变量为主（问号后第一个）
+
+4.我的钱呢？
+total是你兜里的所有的钱，price是你要买的东西的价格，remaining是剩余的钱。count是你最多买的东西的数量，请问下面的代码有什么问题，输出什么？
+ 
+Java代码  收藏代码
+double total = 2.0;  
+double price = 0.1;  
+double remaining = total;  
+int count = 0;  
+while (remaining >= price) {  
+    count++;  
+    remaining -= price;  
+}  
+System.out.println(count);  
+System.out.println(remaining);  
+ 代码看起来没有问题，判断兜里的钱大于物品的价格就买一个，直到买不起为止，看起来应该输出20和0.
+可运行后会发现输出19和0.09999999999999937（可能根据不同的机器这个余数略有差异）。
+钱怎么少了？
+ 
+这个原因，和二进制无法精确的表示某些浮点数有关，2.0-1.1结果是0.899999999999。
+所以，如果你想要精确的浮点数，请使用BigDecimal类进行运算，当然可能会慢一些，需要自己权衡。
+5.x+=i等同于x = x + i？
+1）
+ 
+Java代码  收藏代码
+short x = 1;  
+int i = 1;  
+x += i;  
+x = x + i;  
+ 
+ 
+当你试图编译上面代码的时候，编译器会报错，在x=x+i的地方：Type mismatch: cannot convert from int to short
+2)
+Java代码  收藏代码
+Object x = 1;  
+String i = "";  
+x += i;  
+x = x + i;  
+ 
+当你试图编译上面代码的时候，编译器会报错，在x += i;的地方：The operator += is undefined for the argument type(s) Object, String
+ 
+6.字符连接？？？
+ System.out.println('N' + 'C');
+当你运行上面代码的时候，它不会如你所愿输出NC，而会输出145，这是怎么了？
+char型变量的加法不是连接字符，而是和int类似，但相加的是它的ASCII码，本例中输出78+67=145
+7.E呢？
+Java代码  收藏代码
+StringBuffer sb = new StringBuffer('E');  
+sb.append('M');  
+sb.appent('S');  
+System.out.println(sb.toString());  
+ 
+ 
+当你满心欢喜的运行上面代码的时候，会发现它并没有如你所愿的输出EMS，而是输出了MS，E呢？
+ 
+看来是StringBuffer的构造器出问题，当你查看StringBuffer的构造函数的时候，你会惊奇的发现它并不提供char型参数的构造器，这是怎么回事？
+如果你使用eclipse或者其他IDE点进入的时候，会发现new StringBuffer('E');进入的是StringBuffer（int）的构造器，这个构造器只是初始化了一下缓冲区大小。
+ 
+到这里应该都明白了，所以使用char的时候要注意，它有时候更像是int而不是String。
+ 
+8.单例？
+相同虚拟机下下面的类什么时候能得到多于一个实例？
+ 
+Java代码  收藏代码
+public class Test implements Seraziable{  
+    private static Test  instance = null;  
+    private Test (){  
+    }  
+  
+    public static Test getInstance() {  
+        if(instance == null) {   
+            instance = new Test();  
+        }  
+    }  
+}  
+ 
+ 
+第一个想到的应该是多线程，两个线程同时访问的时候可能会产生两个实例。
+细心的人会发现这个类实现了序列化接口，也就是序列化反序列化的时候也可能产生多个实例：
+ 
+ 
+Java代码  收藏代码
+public class TestSerializable implements Serializable {  
+    private static final TestSerializable instance = new TestSerializable();  
+    private String name = "t1";  
+    private TestSerializable() {  
+        System.out.println("**********TestSerializable************");  
+    }  
+    public static TestSerializable getInstance() {  
+        return instance;  
+    }  
+    public String getName() {  
+        return name;  
+    }  
+    public void setName(String name) {  
+        this.name = name;  
+    }  
+    public static void main(String[] args) throws Exception {  
+        TestSerializable singleton = TestSerializable.getInstance();  
+           
+        FileOutputStream fos = new FileOutputStream("E:\\test.txt");  
+        ObjectOutputStream oos = new ObjectOutputStream(fos);  
+        oos.writeObject(TestSerializable.getInstance());  
+        oos.flush();  
+        oos.close();  
+          
+        FileInputStream fis = new FileInputStream("E:\\test.txt");  
+        ObjectInputStream ois = new ObjectInputStream(fis);  
+          
+        TestSerializable singleton2 = (TestSerializable)ois.readObject();  
+        singleton.setName("111");  
+        System.out.println(singleton.getName());  
+        System.out.println(singleton2.getName());  
+    }  
+}  
+ 
+输出：
+111
+t1
+ 
+解决这个问题首先要知道反序列化的时候怎么执行的，通过查找资料，知道了反序列化的时候调用了方法
+private Object readResolve()
+jdk有个默认的反序列化方式，会从序列化文件读取信息，并创建实例（不通过构造函数），然后对变量赋值。
+ 
+如果不考虑远程传数据，下面的办法可以保证当前jvm只有一个实例：
+在类中增加方法：
+Java代码  收藏代码
+private Object readResolve(){  
+        return instance;  
+    }  
+ 
+ 
+输出：
+**********TestSerializable************
+111
+111
+但是这样仅仅保证了单例，而丢失了序列化应有的功能。
+所以大家在设计可序列化接口的类时要多多考虑。
+ 
+9.泛型？
+编译下面的类，会发现编译器报错：Method test(List<String>) has the same erasure test(List<E>) as another method in type Test001
+Java代码  收藏代码
+public class Test001 {  
+  
+    public void test(List<String> lst) {  
+    }  
+    public void test(List<Object> lst) {  
+    }  
+  
+}  
+ 
+ 
+ 这就是泛型的类型擦除，也就是泛型会在编译后消失。
+ 
+但是看下面的代码，却能编译通过，难道java中返回类型也作为方法签名；不可能！绝对不可能！java规范明明写着方法签名不包括返回值，这到底怎么了？
+另外如果把泛型去掉这个类也不能通过编译，看来还是和泛型相关：
+ 
+Java代码  收藏代码
+public class Test001 {  
+    public static void test(List<Object> lst) {  
+        System.out.println("test(List<Object> lst)");  
+    }  
+  
+    public static String test(List<String> lst) {  
+        System.out.println("test(List<String> lst)");  
+        return "ttttt";  
+    }  
+}  
+ 
+ 
+ 
+调用一下试试？
+ 
+Java代码  收藏代码
+public class Test001 {  
+    public static void main(String[] args) {  
+        List<String> aaa = new ArrayList<String>();  
+        aaa.add("1");  
+        test(aaa);// 如果List不指定<String>，则编译报错  
+    }  
+  
+    public static void test(List<Object> lst) {  
+        System.out.println("test(List<Object> lst)");  
+    }  
+  
+    public static String test(List<String> lst) {  
+        System.out.println("test(List<String> lst)");  
+        return "ttttt";  
+    }  
+}  
+ 
+正如注释缩写，如果调用的时候不用泛型，java也无法找到该调用哪个。
+ 
+这到底怎么了，泛型不是被擦除了么？怎么会这样？？
+ 
+直接查看字节码javap -verbose：
+Java代码  收藏代码
+public class test.Test001 extends java.lang.Object  
+SourceFile: "Test001.java"  
+minor version: 0  
+major version: 49  
+Constant pool:  
+const #1 = class #2; // test/Test001  
+const #2 = Asciz test/Test001;  
+const #3 = class #4; // java/lang/Object  
+const #4 = Asciz java/lang/Object;  
+const #5 = Asciz <init>;  
+const #6 = Asciz ()V;  
+const #7 = Asciz Code;  
+const #8 = Method #3.#9; // java/lang/Object."<init>":()V  
+const #9 = NameAndType #5:#6;// "<init>":()V  
+const #10 = Asciz LineNumberTable;  
+const #11 = Asciz LocalVariableTable;  
+const #12 = Asciz this;  
+const #13 = Asciz Ltest/Test001;;  
+const #14 = Asciz main;  
+const #15 = Asciz ([Ljava/lang/String;)V;  
+const #16 = class #17; // java/util/ArrayList  
+const #17 = Asciz java/util/ArrayList;  
+const #18 = Method #16.#9; // java/util/ArrayList."<init>":()V  
+const #19 = String #20; // 1  
+const #20 = Asciz 1;  
+const #21 = InterfaceMethod #22.#24; // java/util/List.add:(Ljava/la  
+ng/Object;)Z  
+const #22 = class #23; // java/util/List  
+const #23 = Asciz java/util/List;  
+const #24 = NameAndType #25:#26;// add:(Ljava/lang/Object;)Z  
+const #25 = Asciz add;  
+const #26 = Asciz (Ljava/lang/Object;)Z;  
+const #27 = Method #1.#28; // test/Test001.test:(Ljava/util/List;)Ljava/la  
+ng/String;(2)调用的方法  
+const #28 = NameAndType #29:#30;// test:(Ljava/util/List;)Ljava/lang/String;(3)方法签名，可这里却包含了返回值。。。  
+const #29 = Asciz test;  
+const #30 = Asciz (Ljava/util/List;)Ljava/lang/String;;  
+const #31 = Asciz args;  
+const #32 = Asciz [Ljava/lang/String;;  
+const #33 = Asciz aaa;  
+const #34 = Asciz Ljava/util/List;;  
+const #35 = Asciz LocalVariableTypeTable;  
+const #36 = Asciz Ljava/util/List<Ljava/lang/String;>;;  
+const #37 = Asciz (Ljava/util/List;)V;  
+const #38 = Asciz Signature;  
+const #39 = Asciz (Ljava/util/List<Ljava/lang/Object;>;)V;  
+const #40 = Field #41.#43; // java/lang/System.out:Ljava/io/PrintS  
+tream;  
+const #41 = class #42; // java/lang/System  
+const #42 = Asciz java/lang/System;  
+const #43 = NameAndType #44:#45;// out:Ljava/io/PrintStream;  
+const #44 = Asciz out;  
+const #45 = Asciz Ljava/io/PrintStream;;  
+const #46 = String #47; // test(List<Object> lst)  
+const #47 = Asciz test(List<Object> lst);  
+const #48 = Method #49.#51; // java/io/PrintStream.println:(Ljava/l  
+ang/String;)V  
+const #49 = class #50; // java/io/PrintStream  
+const #50 = Asciz java/io/PrintStream;  
+const #51 = NameAndType #52:#53;// println:(Ljava/lang/String;)V  
+const #52 = Asciz println;  
+const #53 = Asciz (Ljava/lang/String;)V;  
+const #54 = Asciz lst;  
+const #55 = Asciz Ljava/util/List<Ljava/lang/Object;>;;  
+const #56 = Asciz (Ljava/util/List<Ljava/lang/String;>;)Ljava/lang/String;  
+;  
+const #57 = String #58; // test(List<String> lst)  
+const #58 = Asciz test(List<String> lst);  
+const #59 = String #60; // ttttt  
+const #60 = Asciz ttttt;  
+const #61 = Asciz SourceFile;  
+const #62 = Asciz Test001.java;  
+{  
+public test.Test001();  
+Code:  
+Stack=1, Locals=1, Args_size=1  
+0: aload_0  
+1: invokespecial #8; //Method java/lang/Object."<init>":()V  
+4: return  
+LineNumberTable:  
+line 6: 0  
+LocalVariableTable:  
+Start Length Slot Name Signature  
+0 5 0 this Ltest/Test001;  
+public static void main(java.lang.String[]);  
+Code:  
+Stack=2, Locals=2, Args_size=1  
+0: new #16; //class java/util/ArrayList  
+3: dup  
+4: invokespecial #18; //Method java/util/ArrayList."<init>":()V  
+7: astore_1  
+8: aload_1  
+9: ldc #19; //String 1  
+11: invokeinterface #21, 2; //InterfaceMethod java/util/List.add:(Ljava/lan  
+g/Object;)Z  
+16: pop  
+17: aload_1  
+18: invokestatic #27; //Method test:(Ljava/util/List;)Ljava/lang/String; //(1)调用入口  
+21: pop  
+22: return  
+LineNumberTable:  
+line 9: 0  
+line 10: 8  
+line 11: 17  
+line 12: 22  
+LocalVariableTable:  
+Start Length Slot Name Signature  
+0 23 0 args [Ljava/lang/String;  
+8 15 1 aaa Ljava/util/List;  
+LocalVariableTypeTable: length = 0xC  
+00 01 00 08 00 0F 00 21 00 24 00 01  
+public static void test(java.util.List);  
+Signature: length = 0x2  
+00 27  
+Code:  
+Stack=2, Locals=1, Args_size=1  
+0: getstatic #40; //Field java/lang/System.out:Ljava/io/PrintStream;  
+3: ldc #46; //String test(List<Object> lst)  
+5: invokevirtual #48; //Method java/io/PrintStream.println:(Ljava/lang/St  
+ring;)V  
+8: return  
+LineNumberTable:  
+line 15: 0  
+line 16: 8  
+LocalVariableTable:  
+Start Length Slot Name Signature  
+0 9 0 lst Ljava/util/List;  
+LocalVariableTypeTable: length = 0xC  
+00 01 00 00 00 09 00 36 00 37 00 00  
+public static java.lang.String test(java.util.List);  
+Signature: length = 0x2  
+00 38  
+Code:  
+Stack=2, Locals=1, Args_size=1  
+0: getstatic #40; //Field java/lang/System.out:Ljava/io/PrintStream;  
+3: ldc #57; //String test(List<String> lst)  
+5: invokevirtual #48; //Method java/io/PrintStream.println:(Ljava/lang/St  
+ring;)V  
+8: ldc #59; //String ttttt  
+10: areturn  
+LineNumberTable:  
+line 19: 0  
+line 20: 8  
+LocalVariableTable:  
+Start Length Slot Name Signature  
+0 11 0 lst Ljava/util/List;  
+LocalVariableTypeTable: length = 0xC  
+00 01 00 00 00 0B 00 36 00 24 00 00  
+}  
+ 
+ 
+上面标注的（1），（2），（3）可以看到，java字节码中的方法签名竟然有返回值（位置（3）），。
+如果是非泛型类，即使方法签名带返回值，也无法区分该调用哪个方法（因为调用时可以不要返回值）
+而是泛型类的话，通过编译器（编译的时候通过泛型可以知道该调用哪个方法）和带返回值的方法声明的结合，却可以找到调用的方法。
+ 
+另外注意：以上带返回值的泛型方法在有些编译器下也是不能通过编译的（sun的可以）
+ 
+10.靠，出错了？
+Java代码  收藏代码
+public static void main(String[] args) {  
+       List<String> aaa = new ArrayList<String>();  
+       aaa.add("1");  
+       test(aaa);  
+   }  
+   public static void test(List<Object> lst) {  
+       System.out.println("List<Object> lst");  
+   }  
+   public static void test(Object obj) {  
+       System.out.println("Object obj");  
+   }  
+ 
+当你想当然的认为输出List<Object> lst的时候，却输出了Object obj,难道List<String>不是List<Object>的子类？
+通过查看规范发现确实List<String>不是List<Object>的子类，它俩没啥关系。。。编译器直接就指向了test(Object obj)
+ 
+11.骗子！
+Java代码  收藏代码
+public static void main(String[] args) {  
+    List<Object> strList = new ArrayList<Object>();  
+    strList.add("1");  
+    strList.add("2");  
+    String[] arrA1 = strList.toArray(new String[0]);  
+    System.out.println(arrA1.length);  
+  
+    String[] arrA2 = (String[]) strList.toArray(new Object[0]);  
+    System.out.println(arrA2.length);  
+  
+}  
+ 
+ 
+上面的代码你可能认为第一个toArray会报错，因为list声明为Object，转化为String会错误，但运行你会发现它正确的输出了2，这是因为上面说的泛型的类型擦除的原因，运行时没有Object的声明，只会根据运行态的类型进行转化。
+而第二个toArray却会报错（类型转化异常），为啥？
+这种写法相当于
+Java代码  收藏代码
+Object[] o = new Object[]{"1", "2"};  
+String[] arrO = (String[]) 0;  
+System.out.println(arrO.length);  
+ 
+这回看出来了吧，要转化的数组和声明后的数组类型不一样（虽然存储的数据确实是String的），直接就报数组的类型转化错误。

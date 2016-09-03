@@ -1,0 +1,19 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-27T15:34:44+08:00
+
+====== 管理器 ======
+Created Monday 27 July 2015
+
+1. 启动更新
+		// 初始化更新管理对象
+		mUpdateManager = UpdateManager.getInstance(mContext, info);
+		// 设置下载状态变化监听器
+		mUpdateManager.setStateListener(mStateListener);
+		mUpdateManager.update();
+
+2. [[DownloadStateListener]] onUpdate
+3. 单例模式
+4. update() 启动更新服务UpdateService  暂停, 取消更新等
+5. 下载完后安装apk,调用系统安装
+	a. intent.setDataAndType(Uri.fromFile(new File(apkPath)), "application/vnd.android.package-archive");    Action_View

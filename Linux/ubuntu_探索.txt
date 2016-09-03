@@ -1,0 +1,11 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-12-07T22:12:04+08:00
+
+====== ubuntu 探索 ======
+Created Saturday 07 December 2013
+
+[[/etc/resolv.conf]]        nameserver  dns
+安装包系统
+[[/proc]]
+udev

@@ -1,0 +1,67 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-12-29T00:01:03+08:00
+
+====== bound service ======
+Created Sunday 29 December 2013
+
+
+==== The Basics ====
+	1.You __should__ create a bound service when you want to __interact with the service__ from __activities__ and other components in your application or to __expose__ some of your application's __functionality__ to __other__ applications, through __interprocess__ __communication__ (__IPC__).
+
+	2.Multiple clients can connect to the service at once. However, the system calls your service's onBind() method to retrieve the IBinder only when the first client binds. The system then delivers the same IBinder to any additional clients that bind, without calling onBind() again.
+	3.when there are __no__ components __bound__ to the service, the __system__ __destroys__ it(unless the service was also started by startService()). 
+	4. This __interface__ between the __service__ and a __client__ must be an implementation of __IBinder__ and is what your service must __return__ from the __onBind__() callback method
+	5.__bindService__(). it must provide an implementation of __ServiceConnection__, which __monitors__ the connection with the service. The bindService() method returns immediately without a value, but __when__ the Android __system__ __creates__ the connection between the client and service, it calls __onServiceConnected__() on the __ServiceConnection__, to __deliver__ the __IBinder__ that the client can use to communicate with the service.
+
+
+==== Creating a Bound Service ====
+There are three ways you can define the interface:
+
+== 1.Extending the Binder class ==
+	1.your service is __private__ to your __own__ application and runs in the __same__ __process__ as the client
+	2.The client receives the Binder and can use it to directly __access public methods__ available in either the __Binder__ implementation or even the __Service__. 
+	
+	=== Here's how to set it up: ===
+		1.In your service, create an __instance__ of Binder that either:
+
+		        1.__contains__ __public methods__ that the client can call
+		        2.__returns__ the __current Service instance__, which has __public methods__ the client can call
+		        3.or, __returns__ an instance of __another class__ hosted by the service with __public methods__ the client can call
+		2.__Return__ this instance of Binder __from__ the __onBind__() callback method.
+		3.In the __client__, __receive__ the Binder __from__ the __onServiceConnected__() callback method and __make calls__ to the bound service using the __methods__ provided.
+
+
+== 2.Using a Messenger ==
+	1.This is the __simplest__ way to perform __interprocess__ communication (IPC), because the Messenger queues all requests into a __single__ thread so that you don't have to design your service to be __thread-safe__.
+	
+	=== Here's a summary of how to use a Messenger: ===
+		1.The __service__ __implements__ a __Handler__ that receives a callback for each call from a client.
+		2.The __Handler__ is used to __create__ a __Messenger__ object (which is a __reference__ to the __Handler__).
+		3.The __Messenger__ creates an __IBinder__ that the service __returns__ to clients from __onBind__().
+		4.__Clients__ use the __IBinder__ to __instantiate__ the __Messenger__ (that references the service's Handler), which the client uses to __send__ __Message__ objects to the service.
+		5.The __service__ __receives__ each __Message__ in its __Handler__—specifically, in the __handleMessage__() method.
+
+		{{./pasted_image.png}}
+		{{./pasted_image001.png}}	
+		
+		===== NOTE: =====
+			1.Notice that this __example__ __does not__ show how the service can __respond__ to the __client__. If you want the service to respond, then you need to also __create__ a __Messenger__ in the __client__. Then when the client receives the __onServiceConnected__() callback, it __sends__ a __Message__ to the __service__ that __includes__ the client's __Messenger__ in the __replyTo__ parameter of the __send__() method.
+			2.You should always __trap__ __DeadObjectException__ exceptions, which are thrown when the connection has broken. This is the __only exception__ thrown by __remote methods__.
+3.[[+Using AIDL]]
+
+==== Binding to a Service ====
+	1. to bind to a service from your client, you must: 
+		1.Implement ServiceConnection. 
+			onServiceConnected()
+				1.The first parameter of bindService() is an Intent that __explicitly__ names the service to bind (thought the intent could be __implicit__)
+			onServiceDisconnected()
+				The Android __system calls this__ when the __connection__ to the service is __unexpectedly lost__, such as when the __service__ has __crashed__ or has been __killed__. This is __not called __when the __client__ __unbinds__.
+		2.Call bindService(), __passing__ the __ServiceConnection__ implementation. 
+		3.When the __system__ calls your __onServiceConnected__() callback method, you can begin making calls to the service, using the methods defined by the interface.
+		4.To __disconnect__ from the service, call __unbindService__(). 
+	.
+
+==== Managing the Lifecycle of a Bound Service ====
+	 if your service is __started and accepts binding__, then when the system calls your __onUnbind__() method, you can optionally return __true__ if you would like to receive a call to __onRebind__() the next time a client binds to the service (instead of receiving a call to onBind()). __onRebind__() returns __void__, but the client __still__ __receives__ the __IBinder__ in its __onServiceConnected__() callback. Below, figure 1 illustrates the logic for this kind of lifecycle.
+	{{./pasted_image002.png}}

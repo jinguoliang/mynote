@@ -1,0 +1,70 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-05-09T15:04:21+08:00
+
+====== 方法指针的使用 ======
+Created Friday 09 May 2014
+
+
+50int (*write_to_log)(log_id_t, struct iovec *vec, size_t nr) __attribute__((visibility ("hidden"))) = __write_to_log_init;
+
+77static int __write_to_log_null(log_id_t log_fd, struct iovec *vec, size_t nr)
+78{
+79    return -1;
+80}
+
+82static int __write_to_log_kernel(log_id_t log_id, struct iovec *vec, size_t nr)
+83{
+84    ssize_t ret;
+85    int log_fd;
+86
+87    if (/*(int)log_id >= 0 &&*/ (int)log_id < (int)LOG_ID_MAX) {
+88        log_fd = log_fds[(int)log_id];
+89    } else {
+90        return EBADF;
+91    }
+92
+93    do {
+94        ret = log_writev(log_fd, vec, nr);
+95    } while (ret < 0 && errno == EINTR);
+96
+97    return ret;
+98}
+
+
+100static int __write_to_log_init(log_id_t log_id, struct iovec *vec, size_t nr)
+101{
+102#ifdef HAVE_PTHREADS
+103    pthread_mutex_lock(&log_init_lock);
+104#endif
+105
+106    if (write_to_log == __write_to_log_init) {
+107        log_fds[LOG_ID_MAIN] = log_open("/dev/"LOGGER_LOG_MAIN, O_WRONLY);
+108        log_fds[LOG_ID_RADIO] = log_open("/dev/"LOGGER_LOG_RADIO, O_WRONLY);
+109        log_fds[LOG_ID_EVENTS] = log_open("/dev/"LOGGER_LOG_EVENTS, O_WRONLY);
+110        log_fds[LOG_ID_SYSTEM] = log_open("/dev/"LOGGER_LOG_SYSTEM, O_WRONLY);
+111
+112        write_to_log = __write_to_log_kernel;
+113
+114        if (log_fds[LOG_ID_MAIN] < 0 || log_fds[LOG_ID_RADIO] < 0 ||
+115                log_fds[LOG_ID_EVENTS] < 0) {
+116            log_close(log_fds[LOG_ID_MAIN]);
+117            log_close(log_fds[LOG_ID_RADIO]);
+118            log_close(log_fds[LOG_ID_EVENTS]);
+119            log_fds[LOG_ID_MAIN] = -1;
+120            log_fds[LOG_ID_RADIO] = -1;
+121            log_fds[LOG_ID_EVENTS] = -1;
+122            write_to_log = __write_to_log_null;
+123        }
+124
+125        if (log_fds[LOG_ID_SYSTEM] < 0) {
+126            log_fds[LOG_ID_SYSTEM] = log_fds[LOG_ID_MAIN];
+127        }
+128    }
+129
+130#ifdef HAVE_PTHREADS
+131    pthread_mutex_unlock(&log_init_lock);
+132#endif
+133
+134    return write_to_log(log_id, vec, nr);
+135}

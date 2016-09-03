@@ -1,0 +1,23 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-28T11:13:04+08:00
+
+====== CityListActivity ======
+Created Tuesday 28 July 2015
+
+=== onCreate ===
+1. Inflater热门城市布局,并设置adapter,设置监听,它作为城市Listview的header
+2. 当点击热门城市时,会保存当前的城市并通过setResult设置activity结果返回home
+3. 初始化城市列表, 设置hotcity为header,设置adapter, 设置监听,同2
+4. 初始化定位按钮,设置显示实际城市, 当点击定位时,先检测是否正在定位,如果没有就开始定位,当获得位置后,设置真实位置,设置当前位置,并返回给home
+5. 读取城市数据
+	a. 从preference读取城市json数据.读取并更新ui数据
+	b. updateData() 设置adapter数据
+6. 监听搜索框内容改变,当改变时调用搜索罗辑: 如果正在搜索则取消,然后执行新的搜索
+7. 搜索task
+	a. doInBackground
+		a. 取得搜索框关键字
+		b. 如果不为空就表示进入搜索模式
+		c. 遍历所有城市,如果直接包含关键字则加入filterlist, 否则如果城市的拼音包含关键字也加入filterList
+	b. onPostExecute
+		a. 根据是否在搜索模式, 设置list和adapter, 隐藏热门城市,

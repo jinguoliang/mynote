@@ -1,0 +1,650 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-16T17:15:06+08:00
+
+====== liuhaizi ======
+Created Thursday 16 July 2015
+
+[[/]][[/home/jinux/Project/liuhaizi/liuhaizi|home]][[/jinux/Project/liuhaizi/liuhaizi]]
+下面以问题的形式对项目进行总结：
+1. 如何兼容设备机型的？
+	a. 使用脚本生成不同的针对不同分辨率的values目录定义不同的dimen
+2. 有没有对应用进行内存的优化，性能优化？
+	a. 刚开始使用自定义的MyList来实现首页类似的界面，MyList会根据item展开，这样就失去了List的特性，重复利用itemview占内存肯定多
+3. 如何使用xutils，都用到了什么功能，在哪里使用的
+	a. [[HttpUtils]]
+		1. 在LiuhaiziApp做一个全局的初始化， 设置userAgent，设置默认缓存时间
+		2. 各个请求服务器的地方，都要new一个，然后send（method,url,callback）
+		3. 特别的post方法时， send（method,url,param，callback），param是new RequestParams（） 然后通过addBodyParameter（）添加参数
+		4. 自定义了一个callback，通过泛型，专门处理返回json对象
+├── AndroidManifest.xml
+├── ant.properties
+├── assets
+│   ├── sample.html
+│   └── ShareSDK.xml
+├── build.gradle
+├── build.xml
+├── DimensTools.bat
+├── DimensTools.class
+├── DimensTools.java
+├── gradle
+│   └── wrapper
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── gradle-app.setting
+├── gradlew
+├── gradlew.bat
+├── keystore
+├── keystore_pwd.txt
+├── libs
+│   ├── alipaysdk.jar
+│   ├── alipaysecsdk.jar
+│   ├── android-support-v4.jar
+│   ├── armeabi
+│   │   ├── libcocklogic.so
+│   │   ├── liblocSDK4d.so
+│   │   └── libtnet-1.1.5.so
+│   ├── BaiduLBS_Android.jar
+│   ├── com.umeng.message.lib_v2.0.0.jar
+│   ├── fastjson-1.2.4.jar
+│   ├── gson-2.2.4.jar
+│   ├── libammsdk.jar
+│   ├── mframework.jar
+│   ├── ShareSDK-Core-2.5.9.jar
+│   ├── ShareSDK-Email-2.5.9.jar
+│   ├── ShareSDK-QQ-2.5.9.jar
+│   ├── ShareSDK-QZone-2.5.9.jar
+│   ├── ShareSDK-SinaWeibo-2.5.9.jar
+│   ├── ShareSDK-Wechat-2.5.9.jar
+│   ├── ShareSDK-Wechat-Core-2.5.9.jar
+│   ├── ShareSDK-Wechat-Moments-2.5.9.jar
+│   ├── umeng-analytics-v5.5.3.jar
+│   ├── universal-image-loader-1.9.3-with-sources.jar
+│   └── x86
+│       ├── libcocklogic.so
+│       └── libtnet-1.1.5.so
+├── liuhaizi.iml
+├── local.properties
+├── proguard-project.txt
+├── project.properties
+├── res
+│   ├── layout
+│   │   ├── activity_about.xml
+│   │   ├── activity_appliy_refund.xml
+│   │   ├── activity_choose_date.xml
+│   │   ├── activity_citylist.xml
+│   │   ├── activity_commit_order.xml
+│   │   ├── activity_confirm_order.xml
+│   │   ├── activity_cooperation.xml
+│   │   ├── activity_detail.xml
+│   │   ├── activity_feedback.xml
+│   │   ├── activity_find.xml
+│   │   ├── activity_home.xml
+│   │   ├── activity_login.xml
+│   │   ├── activity_main.xml
+│   │   ├── activity_my_coupon.xml
+│   │   ├── activity_my_favorite.xml
+│   │   ├── activity_my_review.xml
+│   │   ├── activity_my_score.xml
+│   │   ├── activity_my_wallet.xml
+│   │   ├── activity_no_consumed_order_detail.xml
+│   │   ├── activity_orders.xml
+│   │   ├── activity_photopreview.xml
+│   │   ├── activity_photoselector.xml
+│   │   ├── activity_purchase_success.xml
+│   │   ├── activity_rename.xml
+│   │   ├── activity_review_success.xml
+│   │   ├── activity_review.xml
+│   │   ├── activity_search.xml
+│   │   ├── activity_settings_for_push.xml
+│   │   ├── activity_settings.xml
+│   │   ├── activity_splash.xml
+│   │   ├── activity_subcategory.xml
+│   │   ├── activity_user_center.xml
+│   │   ├── activity_user_info.xml
+│   │   ├── activity_verify_phone.xml
+│   │   ├── activity_web.xml
+│   │   ├── activity_welcome.xml
+│   │   ├── activity_write_comment.xml
+│   │   ├── choose_avatar.xml
+│   │   ├── date_pick_head.xml
+│   │   ├── detail_merchandise_comment.xml
+│   │   ├── detail_merchandise_header.xml
+│   │   ├── detail_merchandise_info.xml
+│   │   ├── detail_merchandise_related.xml
+│   │   ├── detail_recommend_reason.xml
+│   │   ├── dialog_loading_circle_with_title.xml
+│   │   ├── dialog_loading_circle.xml
+│   │   ├── dialog_ok_cancel.xml
+│   │   ├── dialog_update_tips.xml
+│   │   ├── dropdown_item_category.xml
+│   │   ├── dropdown_item_subcategory.xml
+│   │   ├── footer_order_detail_vochers.xml
+│   │   ├── footer_search_history.xml
+│   │   ├── fragment_orders.xml
+│   │   ├── header_hot_city.xml
+│   │   ├── header.xml
+│   │   ├── item_album.xml
+│   │   ├── item_association.xml
+│   │   ├── item_chosen_photo_common.xml
+│   │   ├── item_chosen_photo_tail.xml
+│   │   ├── item_city.xml
+│   │   ├── item_combo.xml
+│   │   ├── item_comment_image.xml
+│   │   ├── item_comment.xml
+│   │   ├── item_coupon.xml
+│   │   ├── item_detail_tag.xml
+│   │   ├── item_favorite.xml
+│   │   ├── item_filter.xml
+│   │   ├── item_find.xml
+│   │   ├── item_home_categories.xml
+│   │   ├── item_hot_city.xml
+│   │   ├── item_merchandise.xml
+│   │   ├── item_my_comment.xml
+│   │   ├── item_order.xml
+│   │   ├── item_photoitem.xml
+│   │   ├── item_related.xml
+│   │   ├── item_score.xml
+│   │   ├── item_search_auto_complete.xml
+│   │   ├── item_search_history.xml
+│   │   ├── item_setting_checkbox.xml
+│   │   ├── item_setting.xml
+│   │   ├── item_voucher.xml
+│   │   ├── layout_home_top_part.xml
+│   │   ├── layout_message_box.xml
+│   │   ├── layout_search_empty.xml
+│   │   ├── merchandise_item_tag.xml
+│   │   ├── notification_view.xml
+│   │   ├── play_view_item.xml
+│   │   ├── popwindow_subcategory.xml
+│   │   ├── refresh_footer.xml
+│   │   ├── refresh_header.xml
+│   │   ├── search_hot_keyword.xml
+│   │   ├── skyblue_editpage_at_layout.xml
+│   │   ├── skyblue_editpage_inc_image_layout.xml
+│   │   ├── skyblue_editpage.xml
+│   │   ├── skyblue_share_actionbar.xml
+│   │   ├── skyblue_share_platform_list_item.xml
+│   │   ├── skyblue_share_platform_list.xml
+│   │   ├── sub_item_find.xml
+│   │   ├── topbar_common.xml
+│   │   ├── topbar_home.xml
+│   │   ├── topbar_search.xml
+│   │   ├── topbar_with_dropdown.xml
+│   │   ├── topbar_with_text.xml
+│   │   ├── view_empty_data.xml
+│   │   ├── view_loading.xml
+│   │   ├── view_network_error.xml
+│   │   ├── view_photopreview.xml
+│   │   ├── view_tag.xml
+│   │   └── widget_rotate_textview.xml
+│   ├── raw
+│   │   └── umeng_push_notification_default_sound.mp3
+│   ├── values-nodpi
+│   │   ├── arrays.xml
+│   │   ├── attrs.xml
+│   │   ├── colors.xml
+│   │   ├── dimens.xml
+│   │   ├── __do_not_modify_dimens.xml
+│   │   ├── ids.xml
+│   │   ├── instapaper_strings.xml
+│   │   ├── oks_strings.xml
+│   │   ├── ssdk_strings.xml
+│   │   ├── strings.xml
+│   │   ├── styles.xml
+│   │   └── themes.xml
+│   ├── values-nodpi-1024x575
+│   │   ├── __do_not_modify_dimens.xml
+│   │   └── __do_not_modify_strings.xml
+├── settings.gradle
+├── src
+│   ├── cn
+│   │   └── sharesdk
+│   │       └── onekeyshare
+│   │           ├── CustomerLogo.java
+│   │           ├── EditPageFakeActivity.java
+│   │           ├── FollowerListFakeActivity.java
+│   │           ├── OnekeyShare.java
+│   │           ├── OnekeyShareTheme.java
+│   │           ├── PicViewer.java
+│   │           ├── PlatformListFakeActivity.java
+│   │           ├── Shake2Share.java
+│   │           ├── ShareContentCustomizeCallback.java
+│   │           ├── ShareCore.java
+│   │           ├── theme
+│   │           │   ├── classic
+│   │           │   │   ├── EditPage.java
+│   │           │   │   ├── FollowListPage.java
+│   │           │   │   ├── PlatformGridView.java
+│   │           │   │   └── PlatformListPage.java
+│   │           │   └── skyblue
+│   │           │       ├── EditPage.java
+│   │           │       ├── FollowListPage.java
+│   │           │       ├── PlatformGridViewAdapter.java
+│   │           │       └── PlatformListPage.java
+│   │           └── ThemeShareCallback.java
+│   └── com
+│       └── onehundredcentury
+│           └── liuhaizi
+│               ├── activity
+│               │   ├── AboutUsActivity.java
+│               │   ├── ApplyRefundActivity.java
+│               │   ├── BaseActivity.java
+│               │   ├── BasePhotoPreviewActivity.java
+│               │   ├── ChooseDateActivity.java
+__│               │   ├──__ [[+CityListActivity|CityListActivity]]__.java 城市列表__
+│               │   ├── CommitOrderActivity.java
+│               │   ├── ConfirmOrderActivity.java
+│               │   ├── CooperationActivity.java
+__│               │   ├── DetailActivity.java __[[+详情|详情]]
+│               │   ├── FeedbackActivity.java
+│               │   ├── FindActivity.java
+__│               │   ├── HomeActivity.java  __[[+首页|首页]]
+__│               │   ├── LoginActivity.java__   [[+登录|登录]]
+│               │   ├── MainActivity.java	[[+主界面|主界面]]
+│               │   ├── MyCouponActivity.java 
+│               │   ├── MyFavoriteActivity.java 
+│               │   ├── MyReviewActivity.java 
+│               │   ├── MyScoreActivity.java 
+│               │   ├── MyWalletActivity.java 
+│               │   ├── OrderDetailActivity.java
+│               │   ├── __OrdersActivity.java__ 订单
+│               │   ├── __PhotoPreviewActivity.java __[[+查看图片|查看图片]]
+│               │   ├── PhotoSelectorActivity.java
+│               │   ├── PurchaseSuccessActivity.java
+│               │   ├── RenameActivity.java
+│               │   ├── ReviewActivity.java
+│               │   ├── ReviewSuccessActivity.java
+│               │   ├── SearchActivity.java
+│               │   ├── SettingsActivity.java
+│               │   ├── SettingsForPushActivity.java
+│               │   ├── SplashActivity.java
+│               │   ├── __SubCategoryActivity.java__ [[+子分类|子分类]]
+│               │   ├── TestWebActivity.java
+│               │   ├── UserCenterActivity.java
+│               │   ├── UserInfoActivity.java
+│               │   ├── __VerifyPhoneActivity.java __[[+验证手机|验证手机]]  __VerifyNewPhoneActivity.java__
+│               │   ├── WebActivity.java
+│               │   ├── WelcomeActivity.java
+│               │   └── WriteCommentActivity.java
+│               ├── adapter
+│               │   ├── AbViewPagerAdapter.java
+│               │   ├── AlbumAdapter.java
+│               │   ├── CategoriesAdapter.java
+│               │   ├── CheckboxAdapter.java
+│               │   ├── CheckedChangedCallback.java
+│               │   ├── ChoosenPhotoAdapter.java
+│               │   ├── CityAdapter.java
+│               │   ├── ComboAdapter.java
+│               │   ├── CommentAdapter.java
+│               │   ├── ContactListAdapter.java
+│               │   ├── CouponAdapter.java
+│               │   ├── FindAdapter.java
+│               │   ├── HomeCategoryAdapter.java
+│               │   ├── HotCitysAdapter.java
+│               │   ├── MBaseAdapter.java
+│               │   ├── MerchandiseAdapter.java
+│               │   ├── MyCommentAdapter.java
+│               │   ├── order
+│               │   │   ├── OrderAdapter.java
+│               │   │   ├── OrderConsumedAdapter.java
+│               │   │   ├── OrderNoConsumedAdapter.java
+│               │   │   ├── OrderNoPayAdapter.java
+│               │   │   ├── OrderRefundOrderAdapter.java
+│               │   │   └── OrderVouchersAdapter.java
+│               │   ├── PhotoSelectorAdapter.java
+│               │   ├── PhotoViewTypeConfig.java
+│               │   ├── RelatedAdapter.java
+│               │   ├── ScoresAdapter.java
+│               │   └── SubCategoriesAdapter.java
+│               ├── callback
+│               │   ├── NetworkErrorCallback.java
+│               │   ├── QRcodeCallback.java
+│               │   └── WebDataCallback.java
+│               ├── Constants.java
+│               ├── fragment
+│               │   ├── BaseFragment.java
+│               │   └── OrderFragment.java
+│               ├── http
+│               │   └── RequestCallBackForJson.java
+│               ├── JSInterFace.java
+│               ├── LiuhaiziApp.java
+│               ├── model
+│               │   ├── AlbumModel.java
+│               │   ├── Calendars.java
+│               │   ├── CategoryDataResult.java
+│               │   ├── Category.java
+│               │   ├── CityData.java
+│               │   ├── CityD.java
+│               │   ├── CityItem.java
+│               │   ├── CityResult.java
+│               │   ├── Combo.java
+│               │   ├── Comment.java
+│               │   ├── CommentResult.java
+│               │   ├── CommonHttpResult.java
+│               │   ├── Coupon.java
+│               │   ├── CouponResult.java
+│               │   ├── DatepickerParam.java
+│               │   ├── DetailResult.java
+│               │   ├── FavorateData.java
+│               │   ├── FavorateResult.java
+│               │   ├── GpsData.java
+│               │   ├── GpsResponse.java
+│               │   ├── GuessResult.java
+│               │   ├── HomeData.java
+│               │   ├── HomeResult.java
+│               │   ├── Menus.java
+│               │   ├── Merchandise.java
+│               │   ├── NearBy.java
+│               │   ├── order
+│               │   │   └── OrderDeleteResult.java
+│               │   ├── OrderDetailResult.java
+│               │   ├── Order.java
+│               │   ├── OrderResult.java
+│               │   ├── Orders.java
+│               │   ├── OrdersResult.java
+│               │   ├── PayResult.java
+│               │   ├── PhotoModel.java
+│               │   ├── Position.java
+│               │   ├── Purpose.java
+│               │   ├── Related.java
+│               │   ├── RelatedResult.java
+│               │   ├── Score.java
+│               │   ├── ScoreResult.java
+│               │   ├── SearchAssociationKeywordResult.java
+│               │   ├── SearchHistory.java
+│               │   ├── SearchHotKeyResult.java
+│               │   ├── SearchKeyword.java
+│               │   ├── SearchResult.java
+│               │   ├── SubItem.java
+│               │   ├── Update.java
+│               │   ├── UpdateResult.java
+│               │   ├── UploadAvatarResult.java
+│               │   ├── UserCanBuyResult.java
+│               │   ├── UserInfo.java
+│               │   ├── User.java
+│               │   └── WxPrepayResult.java
+│               ├── update
+│               │   ├── DownloadTask.java
+│               │   ├── UpdateInfo.java
+│               │   ├── UpdateManager.java
+│               │   ├── UpdateService.java
+│               │   ├── UpdateState.java
+│               │   └── UpdateUtil.java
+│               ├── UrlContainer.java
+│               ├── utils
+│               │   ├── AbToastUtil.java
+│               │   ├── AlbumController.java
+│               │   ├── AliPayUtil.java
+│               │   ├── AnimationUtil.java
+│               │   ├── Base64.java
+│               │   ├── CommonUtils.java
+│               │   ├── DateTimeUtils.java
+│               │   ├── DebugUtils.java
+│               │   ├── DeleteFileUtil.java
+│               │   ├── DeviceUtils.java
+│               │   ├── DialogUtil.java
+│               │   ├── FastBlurUtils.java
+│               │   ├── FileSizeUtil.java
+│               │   ├── GpsUtils.java
+│               │   ├── JsonUtils.java
+│               │   ├── MD5.java
+│               │   ├── MD5Util.java
+│               │   ├── NetType.java
+│               │   ├── NetworkUtils.java
+│               │   ├── NotificationUtils.java
+│               │   ├── PayResult.java
+│               │   ├── PhotoSelectorDomain.java
+│               │   ├── ResultChecker.java
+│               │   ├── SearchHistoryManger.java
+│               │   ├── ShareePrefUtil.java
+│               │   ├── SignUtils.java
+│               │   ├── UserDataManager.java
+│               │   └── WxPayTask.java
+│               ├── widget
+│               │   ├── AbInnerViewPager.java
+│               │   ├── AbSlidingPlayView.java
+│               │   ├── citylist
+│               │   │   ├── __ContactItemComparator__.java
+│               │   │   ├── __ContactItemException__.java
+│               │   │   ├── ContactItemInterface.java
+│               │   │   ├── ContactListView.java
+│               │   │   ├── ContactsSectionIndexer.java
+__│               │   │   ├── __[[+ContactListView|ContactListView]]__.java 通讯录列表__
+__│               │   │   ├── __[[+ContactsSectionIndexer|ContactsSectionIndexer]]__.java__
+│               │   │   ├── [[+HanziToPinyin3|HanziToPinyin3]].java
+│               │   │   ├── IndexScroller.java
+│               │   │   └── PinYin.java
+│               │   ├── CustomScrollView.java
+│               │   ├── CustomWebview.java
+│               │   ├── LoadingView.java
+│               │   ├── MessageBox.java
+│               │   ├── MyGridView.java
+│               │   ├── MyListView.java
+│               │   ├── MyRatingBar.java
+│               │   ├── photoselector
+│               │   │   ├── AlbumItem.java
+│               │   │   ├── common
+│               │   │   │   ├── Animation.java
+│               │   │   │   ├── Animator.java
+│               │   │   │   ├── FlingAnimation.java
+│               │   │   │   ├── FlingAnimationListener.java
+│               │   │   │   ├── FlingListener.java
+│               │   │   │   ├── GestureImageViewListener.java
+│               │   │   │   ├── GestureImageViewTouchListener.java
+│               │   │   │   ├── MathUtils.java
+│               │   │   │   ├── MoveAnimation.java
+│               │   │   │   ├── MoveAnimationListener.java
+│               │   │   │   ├── VectorF.java
+│               │   │   │   ├── ZoomAnimation.java
+│               │   │   │   └── ZoomAnimationListener.java
+│               │   │   ├── GestureImageView.java
+│               │   │   ├── PhotoItem.java
+│               │   │   └── PhotoPreview.java
+│               │   ├── PullToRefreshView.java
+│               │   ├── PullToRefreshViewWindMill.java
+│               │   ├── RoundedDrawable.java
+│               │   ├── RoundedImageView.java
+│               │   ├── TagGroup.java
+│               │   ├── TextViewRorateable.java
+│               │   └── UpdateDialog.java
+│               └── wxapi
+│                   ├── WXEntryActivity.java
+│                   └── WXPayEntryActivity.java
+├── test
+│   └── com
+│       └── onehundredcentury
+│           └── liuhaizi
+│               └── TestSearchHistory.java
+└── xutils
+	├── build.gradle
+	├── src
+	│   └── main
+	│       ├── AndroidManifest.xml
+	│       └── java
+	│           └── com
+	│               └── lidroid
+	│                   └── xutils
+	│                       ├── bitmap
+	│                       │   ├── BitmapCacheListener.java
+	│                       │   ├── BitmapCommonUtils.java
+	│                       │   ├── BitmapDisplayConfig.java
+	│                       │   ├── BitmapGlobalConfig.java
+	│                       │   ├── callback
+	│                       │   │   ├── BitmapLoadCallBack.java
+	│                       │   │   ├── BitmapLoadFrom.java
+	│                       │   │   ├── BitmapSetter.java
+	│                       │   │   └── DefaultBitmapLoadCallBack.java
+	│                       │   ├── core
+	│                       │   │   ├── AsyncDrawable.java
+	│                       │   │   ├── BitmapCache.java
+	│                       │   │   ├── BitmapDecoder.java
+	│                       │   │   └── BitmapSize.java
+	│                       │   ├── download
+	│                       │   │   ├── DefaultDownloader.java
+	│                       │   │   └── Downloader.java
+	│                       │   ├── factory
+	│                       │   │   └── BitmapFactory.java
+	│                       │   └── PauseOnScrollListener.java
+	│                       ├── BitmapUtils.java
+	│                       ├── cache
+	│                       │   ├── FileNameGenerator.java
+	│                       │   ├── KeyExpiryMap.java
+	│                       │   ├── LruDiskCache.java
+	│                       │   ├── LruMemoryCache.java
+	│                       │   └── MD5FileNameGenerator.java
+	│                       ├── db
+	│                       │   ├── annotation
+	│                       │   │   ├── Check.java
+	│                       │   │   ├── Column.java
+	│                       │   │   ├── Finder.java
+	│                       │   │   ├── Foreign.java
+	│                       │   │   ├── Id.java
+	│                       │   │   ├── NoAutoIncrement.java
+	│                       │   │   ├── NotNull.java
+	│                       │   │   ├── Table.java
+	│                       │   │   ├── Transient.java
+	│                       │   │   └── Unique.java
+	│                       │   ├── converter
+	│                       │   │   ├── BooleanColumnConverter.java
+	│                       │   │   ├── ByteArrayColumnConverter.java
+	│                       │   │   ├── ByteColumnConverter.java
+	│                       │   │   ├── CharColumnConverter.java
+	│                       │   │   ├── ColumnConverterFactory.java
+	│                       │   │   ├── ColumnConverter.java
+	│                       │   │   ├── DateColumnConverter.java
+	│                       │   │   ├── DoubleColumnConverter.java
+	│                       │   │   ├── FloatColumnConverter.java
+	│                       │   │   ├── IntegerColumnConverter.java
+	│                       │   │   ├── LongColumnConverter.java
+	│                       │   │   ├── ShortColumnConverter.java
+	│                       │   │   ├── SqlDateColumnConverter.java
+	│                       │   │   └── StringColumnConverter.java
+	│                       │   ├── sqlite
+	│                       │   │   ├── ColumnDbType.java
+	│                       │   │   ├── CursorUtils.java
+	│                       │   │   ├── DbModelSelector.java
+	│                       │   │   ├── FinderLazyLoader.java
+	│                       │   │   ├── ForeignLazyLoader.java
+	│                       │   │   ├── Selector.java
+	│                       │   │   ├── SqlInfoBuilder.java
+	│                       │   │   ├── SqlInfo.java
+	│                       │   │   └── WhereBuilder.java
+	│                       │   └── table
+	│                       │       ├── Column.java
+	│                       │       ├── ColumnUtils.java
+	│                       │       ├── DbModel.java
+	│                       │       ├── Finder.java
+	│                       │       ├── Foreign.java
+	│                       │       ├── Id.java
+	│                       │       ├── KeyValue.java
+	│                       │       ├── Table.java
+	│                       │       └── TableUtils.java
+	│                       ├── DbUtils.java
+	│                       ├── exception
+	│                       │   ├── BaseException.java
+	│                       │   ├── DbException.java
+	│                       │   └── HttpException.java
+	│                       ├── http
+	│                       │   ├── callback
+	│                       │   │   ├── DefaultHttpRedirectHandler.java
+	│                       │   │   ├── FileDownloadHandler.java
+	│                       │   │   ├── HttpRedirectHandler.java
+	│                       │   │   ├── RequestCallBackHandler.java
+	│                       │   │   ├── RequestCallBack.java
+	│                       │   │   └── StringDownloadHandler.java
+	│                       │   ├── client
+	│                       │   │   ├── DefaultSSLSocketFactory.java
+	│                       │   │   ├── entity
+	│                       │   │   │   ├── BodyParamsEntity.java
+	│                       │   │   │   ├── DecompressingEntity.java
+	│                       │   │   │   ├── FileUploadEntity.java
+	│                       │   │   │   ├── GZipDecompressingEntity.java
+	│                       │   │   │   ├── InputStreamUploadEntity.java
+	│                       │   │   │   └── UploadEntity.java
+	│                       │   │   ├── HttpRequest.java
+	│                       │   │   ├── multipart
+	│                       │   │   │   ├── content
+	│                       │   │   │   │   ├── AbstractContentBody.java
+	│                       │   │   │   │   ├── ByteArrayBody.java
+	│                       │   │   │   │   ├── ContentBody.java
+	│                       │   │   │   │   ├── ContentDescriptor.java
+	│                       │   │   │   │   ├── FileBody.java
+	│                       │   │   │   │   ├── InputStreamBody.java
+	│                       │   │   │   │   └── StringBody.java
+	│                       │   │   │   ├── FormBodyPart.java
+	│                       │   │   │   ├── HttpMultipart.java
+	│                       │   │   │   ├── HttpMultipartMode.java
+	│                       │   │   │   ├── MIME.java
+	│                       │   │   │   ├── MinimalFieldHeader.java
+	│                       │   │   │   ├── MinimalField.java
+	│                       │   │   │   └── MultipartEntity.java
+	│                       │   │   ├── RetryHandler.java
+	│                       │   │   └── util
+	│                       │   │       ├── MD5Util.java
+	│                       │   │       ├── URIBuilder.java
+	│                       │   │       └── URLEncodedUtils.java
+	│                       │   ├── HttpCache.java
+	│                       │   ├── HttpHandler.java
+	│                       │   ├── RequestParams.java
+	│                       │   ├── ResponseInfo.java
+	│                       │   ├── ResponseStream.java
+	│                       │   └── SyncHttpHandler.java
+	│                       ├── HttpUtils.java
+	│                       ├── task
+	│                       │   ├── PriorityAsyncTask.java
+	│                       │   ├── PriorityExecutor.java
+	│                       │   ├── Priority.java
+	│                       │   ├── PriorityObjectBlockingQueue.java
+	│                       │   ├── PriorityObject.java
+	│                       │   ├── PriorityRunnable.java
+	│                       │   └── TaskHandler.java
+	│                       ├── util
+	│                       │   ├── CharsetUtils.java
+	│                       │   ├── DoubleKeyValueMap.java
+	│                       │   ├── IOUtils.java
+	│                       │   ├── LogUtils.java
+	│                       │   ├── MimeTypeUtils.java
+	│                       │   ├── OtherUtils.java
+	│                       │   └── PreferencesCookieStore.java
+	│                       ├── view
+	│                       │   ├── annotation
+	│                       │   │   ├── ContentView.java
+	│                       │   │   ├── event
+	│                       │   │   │   ├── EventBase.java
+	│                       │   │   │   ├── OnChildClick.java
+	│                       │   │   │   ├── OnClick.java
+	│                       │   │   │   ├── OnCompoundButtonCheckedChange.java
+	│                       │   │   │   ├── OnFocusChange.java
+	│                       │   │   │   ├── OnGroupClick.java
+	│                       │   │   │   ├── OnGroupCollapse.java
+	│                       │   │   │   ├── OnGroupExpand.java
+	│                       │   │   │   ├── OnItemClick.java
+	│                       │   │   │   ├── OnItemLongClick.java
+	│                       │   │   │   ├── OnItemSelected.java
+	│                       │   │   │   ├── OnKey.java
+	│                       │   │   │   ├── OnLongClick.java
+	│                       │   │   │   ├── OnNothingSelected.java
+	│                       │   │   │   ├── OnPreferenceChange.java
+	│                       │   │   │   ├── OnPreferenceClick.java
+	│                       │   │   │   ├── OnProgressChanged.java
+	│                       │   │   │   ├── OnRadioGroupCheckedChange.java
+	│                       │   │   │   ├── OnScroll.java
+	│                       │   │   │   ├── OnScrollStateChanged.java
+	│                       │   │   │   ├── OnStartTrackingTouch.java
+	│                       │   │   │   ├── OnStopTrackingTouch.java
+	│                       │   │   │   ├── OnTabChange.java
+	│                       │   │   │   └── OnTouch.java
+	│                       │   │   ├── PreferenceInject.java
+	│                       │   │   ├── ResInject.java
+	│                       │   │   └── ViewInject.java
+	│                       │   ├── EventListenerManager.java
+	│                       │   ├── ResLoader.java
+	│                       │   ├── ResType.java
+	│                       │   ├── ViewFinder.java
+	│                       │   └── ViewInjectInfo.java
+	│                       └── ViewUtils.java
+	└── xutils.iml
+
+120 directories, 984 files
+

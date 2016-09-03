@@ -1,0 +1,9 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-28T15:03:17+08:00
+
+====== ContactListView ======
+Created Tuesday 28 July 2015
+
+1. 继承ListView
+2. 添加了一个scroller, 就是右侧的字母条

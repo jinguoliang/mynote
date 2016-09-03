@@ -1,0 +1,80 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-10-16T20:45:53+08:00
+
+====== tools ======
+Created Wednesday 16 October 2013
+
+android 
+	create project --target 1 --package com.example.foo --name helloworld --activity HelloActivity --path ./Hello
+	
+hierarchyviewer
+	帮助分析view的层叠
+
+adb -e install -r bin/MyAndroid.apk  	-e 表示在安装到模拟器 -d 表示安装到设备 -r表示重新安装保存数据，比如桌面上的快捷方式不会去掉
+adb root  以root权限重启adb服务
+adb remount 以读写权限重新挂载根目录
+
+==== 内存分析工具 ====
+1. mat
+2. LeakCanary 可以用更加直白的方式将内存泄露展现在我们的面前。
+	以下是我找到的学习资料，写的非常棒： 
+		1、LeakCanary: [[http://www.liaohuqiu.net/cn/posts/leak-canary/|让内存泄露无所遁形]] 
+		2、LeakCanary [[http://www.liaohuqiu.net/cn/posts/leak-canary-read-me/|中文使用说明]]
+	AndroidStudio 上使用LeakCanary 请移步： 
+	https://github.com/square/leakcanary
+
+
+
+[[+MonkeyRunner|MonkeyRunner]]
+
+==== Logcat ====
+adb logcat -c      clear log
+adb logcat *:W     
+Log.e(tag,Log.getStackTraceString(new Throwable()));   
+控制日志格式
+日志消息在标记和优先级之外还有很多元数据字段，这些字段可以通过修改输出格式来控制输出结果， -v 选项加上下面列出的内容可以控制输出字段：
+brief — 显示优先级/标记和原始进程的PID (默认格式)
+process — 仅显示进程PID
+tag — 仅显示优先级/标记
+thread — 仅显示进程：线程和优先级/标记
+raw — 显示原始的日志信息，没有其他的元数据字段
+time — 显示日期，调用时间，优先级/标记，PID
+long —显示所有的元数据字段并且用空行分隔消息内容
+
+在打开虚拟机时，可以存储快照，从而提高打开速度
+
+
+adb shell am 可以用来发送intent打开activity，service，关闭等等
+adb shell pm package manager 查看package信息
+adb shell procmem
+adb shell procrank
+
+模拟器的电话号码默认为1555521+端口号
+
+[[+aapt|aapt]]即Android Asset Packaging Tool , 在SDK的build-tools目录下. 该工具可以查看, 创建, 更新ZIP格式的文档附件(zip, jar, apk). 也可将资源文件编译成二进制文件
+
+
+mount -o remount,rw rootfs /   
+adb remount                  - remounts the /system partition on the device read-write
+
+[[+android studio|android studio]]
+
+Genymotion  Android虚拟机 快
+
+==== signapk.jar ====
+export kk_path=/home/CORPUSERS/xp010717/Falcon/ref_project/kk-falcon-int_git
+export cert_kk=${kk_path}/build/target/product/security
+export cert_type=shared 或 testkey
+export keystore=${cert_kk}/${cert_type}
+java -jar ${kk_path}/prebuilts/sdk/tools/lib/signapk.jar ${keystore}.x509.pem ${keystore}.pk8 SemcContactsProvider.apk shared_signed_SemcContactsProvider.apk
+
+
+Android Studio
+
+alt+insert     generate code    （getter or setter ...)
+ctrl+insert    选中一行
+
+[[+ivy|ivy]]
+[[+gradle|gradle]]
+mvn  		mvnrepository.com

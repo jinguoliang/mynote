@@ -1,0 +1,32 @@
+#!/bin/bash
+
+#filename:kjj	copyToDisk.sh
+#author: 	Jinux
+#create:	Mon 28 Oct 2013 04:48:00 PM
+#提示:		脚本是是我们工作便利的工具，短小的脚本，减少重复，让一切自动化
+
+file=planning
+dir1=/media/disk
+dir2=~
+subDir=/jinux
+
+curDir=`pwd`
+selectDir=${curDir%$subDir}
+
+if [ "$selectDir" == "$dir1" ] ;then
+	destDir=$dir2
+elif [ "$selectDir" == "$dir2" ] ;then
+	destDir=$dir1
+else 
+	echo not a sync dir
+	exit -1
+fi
+
+destDir=$destDir$subDir
+
+tmpfile=/tmp/mytransdata
+diff $destDir/$file ./$file |grep "^>" >$tmpfile
+tr -d "\> " <$tmpfile >> $destDir/$file
+echo  "$destDir/$file >>./$file "
+bash backup_to $destDir
+echo ok

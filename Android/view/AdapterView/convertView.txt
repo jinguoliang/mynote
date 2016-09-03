@@ -1,0 +1,226 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-03T11:20:34+08:00
+
+====== convertView ======
+Created Sunday 03 November 2013
+
+开源项目，最大的好处就是源码可以看到，这样你就可以知道它是怎么工作的，对于解决问题是十分有帮助的。
+
+最近用到AdapterView：ListView,GridView
+
+发现了一个棘手的问题：Android为了提高AdapterView的性能，为getView（）方法添传入一个convertView来重复利用，但是确来了一些奇怪的问题。
+
+于是我就想弄明白它是怎么工作的，怎么重复利用的，于是就有了这篇文章。
+
+源码：Android 4.2.2
+
+1.找到问题源头
+
+首先我得先知道getView是谁调用的convertView是怎么来的，（有没有什么工具可以显示函数的调用栈，如果有哪个小伙伴知道，告诉一声），我想到用抛出异常的形式来显示函数调用栈，在getView里抛出一个异常：
+
+[java] view plaincopy
+
+    public View getView(int position, View convertView, ViewGroup parent) {  
+            if (convertView==null) {  
+                  
+                throw new RuntimeException("getView");  
+            }  
+            return convertView;  
+        }  
+
+显示函数调用栈如下：
+11-02 14:07:34.606: E/AndroidRuntime(2347): java.lang.RuntimeException: getView
+11-02 14:07:34.606: E/AndroidRuntime(2347):     at com.example.testadapterview.MyAdapter.getView(MainActivity.java:64)
+11-02 14:07:34.606: E/AndroidRuntime(2347):     at android.widget.AbsListView.obtainView(AbsListView.java:2159)
+11-02 14:07:34.606: E/AndroidRuntime(2347):     at android.widget.ListView.makeAndAddView(ListView.java:1831)
+11-02 14:07:34.606: E/AndroidRuntime(2347):     at android.widget.ListView.fillDown(ListView.java:674)
+11-02 14:07:34.606: E/AndroidRuntime(2347):     at android.widget.ListView.fillFromTop(ListView.java:735)
+11-02 14:07:34.606: E/AndroidRuntime(2347):     at android.widget.ListView.layoutChildren(ListView.java:1652)
+11-02 14:07:34.606: E/AndroidRuntime(2347):     at android.widget.AbsListView.onLayout(AbsListView.java:1994)
+。。。
+
+。。。
+
+11-02 14:07:34.606: E/AndroidRuntime(2347):     at dalvik.system.NativeStart.main(Native Method)
+发现是在AbsListView.obtainView（）中调用了getView（）
+
+好，那我们就去看看AbsListView。
+
+2.解决问题
+
+有源码，我们可以直接到源码中找，但是我们要充分利用Eclipse的强大功能，随便找个地方（类外不行），定一个变量名随便：
+
+AbsListView abs;
+
+按住ctrl点击AbsListView，如果你在Eclispe中绑定了源码的话就会跳到AbsListView的源码中（否则，跳到了类文件里，字节码看不懂，你可以点击attach,可以选择对应的源码，如果没有源码要去。。。）.
+
+来到AbsListView，查找到obtainView（），发现这个函数代码函数不多，太幸福了
+
+找到调用getView的地方（直接查getView不也行吗？，是啊，呵呵）
+
+发现传入的是一个scrapView
+
+往前找发现
+
+scrapView = mRecycler.getScrapView(position);
+
+mRecycler这名一看就很高兴，回收器，convertView就是重复利用的(我承认，convert意思是改变什么的形式或用途，但是就是感觉和回收有关系，请参考文档说明）。
+
+我们去看看getScrapView（） （本来，ctrl左键可以直接点击函数名进入的，为什么这里不行呢，有人知道吗？？因为不能进入，就不知道哪个类在哪了，查看import发现没有mRecycler的类RecycleBin，有可能是引入的所在包，有可能是静态导入，有可能它就在这，就在本文件中，于是直接搜getScrapView，发现果然在这）
+
+这个函数更小，而且还牵扯到View类型的问题（比如ListView条目可能有不同的布局，这时要设置类型，以便在复用时分类分类复用，否则，你懂得）我们这里就不研究了。这样问题转到了
+
+[java] view plaincopy
+
+    if (mViewTypeCount == 1) {  
+                    return retrieveFromScrap(mCurrentScrap, position);  
+
+
+再来看retrieveFromScrap,搜索：（。
+
+[html] view plaincopy
+
+    int size = scrapViews.size();  
+           if (size > 0) {  
+               // See if we still have a view for this position.  
+               for (int i=0; i<size; i++) {  
+                   View view = scrapViews.get(i);  
+                   if (((AbsListView.LayoutParams)view.getLayoutParams())  
+                           .scrappedFromPosition == position) {  
+                       scrapViews.remove(i);  
+                       return view;  
+                   }  
+               }  
+               return scrapViews.remove(size - 1);  
+           } else {  
+               return null;  
+           }  
+
+这里有点意思了,遍历所有scrapViews，找到传入的position指定位置的View，如果有就返回它并从数组（请容忍我教他数组）移除，否则取最后一个并移除。
+
+我们好像找到最根源了，复用的convertView是从mCurrentScrap中拿的。
+
+但是还有问题：
+
+怎么放里边的呢？
+
+mCurrentScrap是ArrayList，它有get方法，也有put方法，所以接下来我们搜索mCurrentScrap.add。
+
+此时我发现我们该回去了（sorry，当我们调用了一个函数，研究完了就该返回了）。我们先留着这个问题，继续研究我们的obtainView（）
+
+
+如果scrapView是null，就只是调用
+
+child = mAdapter.getView(position, null, this);
+
+否则
+
+child = mAdapter.getView(position, scrapView, this);
+
+然后看是不是使用了scrapView， 如果使用了scrapView，就把它添加为ScrapView（这是addScrapView（）函数名告诉我的）
+[html] view plaincopy
+
+    if (child != scrapView) {  
+                    mRecycler.addScrapView(scrapView, position);  
+                    if (mCacheColorHint != 0) {  
+                        child.setDrawingCacheBackgroundColor(mCacheColorHint);  
+                    }  
+                    if (ViewDebug.TRACE_RECYCLER) {  
+                        ViewDebug.trace(scrapView, ViewDebug.RecyclerTraceType.MOVE_TO_SCRAP_HEAP,  
+                                position, -1);  
+                    }  
+                } else {  
+                    isScrap[0] = true;  
+                    child.dispatchFinishTemporaryDetach();  
+                }  
+
+接下来当然是看如何添加ScrapView，这和之前我们留下的那个问题肯定是一个。既然是一个那就又有疑问了，现在是这样的，getScrapView（）取得scraptview并将其从数组删掉，然后在这里将如果换了一个新的就把新的添加进去。也就是说，刚开始mCurrentScrap是空的，在obtainView（）中是不会向里添加。那么肯定还有其他地方添加了。
+
+搜索addScrapView，找到了它的定义，同是发现也的确有其他地方调用了它：trackMotionScroll（），我们先来看addScrapView（）
+
+[java] view plaincopy
+
+    AbsListView.LayoutParams lp = (AbsListView.LayoutParams) scrap.getLayoutParams();  
+
+[html] view plaincopy
+
+    int viewType = lp.viewType;  
+
+[html] view plaincopy
+
+    if (!shouldRecycleViewType(viewType)) {  
+              if (viewType != ITEM_VIEW_TYPE_HEADER_OR_FOOTER) {  
+                     removeDetachedView(scrap, false);  
+              }  
+              return;  
+      }  
+     lp.scrappedFromPosition = position;  
+
+[java] view plaincopy
+
+    if (mViewTypeCount == 1) {  
+                    scrap.dispatchStartTemporaryDetach();  
+                    mCurrentScrap.add(scrap);  
+                } else {  
+                    scrap.dispatchStartTemporaryDetach();  
+                    mScrapViews[viewType].add(scrap);  
+                }  
+
+
+判断viewType如果应该回收就将其添加到mCurrentScrap否则不添加
+
+最后让我们来研究trackMotionScroll（），是最复杂的了（为什么最后是复杂的，黎明之前最黑暗？）
+
+不过我们不能跑了题（这是看源码的大忌），我们有目标，围绕目标来研究。
+
+trackMotionScroll（）中用到了两个addScrapView（），分别在下滚和上滚中，
+
+if（down）
+
+....
+
+else
+
+....
+
+也就是说上滚和下滚的策略是不一样的，研究代码后发现，这是方向不同，策略是一样的这样我们只分析其中一半就行了，以下是下滑是的代码片段：
+
+[java] view plaincopy
+
+    for (int i = 0; i < childCount; i++) {  
+        final View child = getChildAt(i);  
+        if (child.getBottom() >= top) {  
+            break;  
+        } else {  
+            count++;  
+            int position = firstPosition + i;  
+            if (position >= headerViewsCount && position < footerViewsStart) {  
+                mRecycler.addScrapView(child, position);  
+      
+                if (ViewDebug.TRACE_RECYCLER) {  
+                    ViewDebug.trace(child,  
+                            ViewDebug.RecyclerTraceType.MOVE_TO_SCRAP_HEAP,  
+                            firstPosition + i, -1);  
+                }  
+            }  
+        }  
+    }  
+
+从上到下遍历Adapterview中的每一个孩子，如果孩子的bootom大于AdapterView的top，即显示出屏幕了，就终止，否则再判断如果不是header或是footer就把它添加到回收队列。
+
+
+
+总结
+
+      1.convertView是用来重用的。
+
+        2.但是，我们需要对其做必要的初始化，尤其是在异步加载时，如果不初始化会显示一些错误信息，严重影响用户体验
+
+        3.一个listview，如果条目没有超过一屏或（超过一屏没有滑动），就没有convertView。
+
+        4.当向上滑时，从屏幕滚出的view会被添加到回收队列，从而，下部出现的view就可以使用convertview了（trackMotionScroll（）分析的不够清楚）
+
+       
+
+在这写解决问题的文章，感觉解决问题的过程很顺畅，实际上不是这样的，就像拍一部电影，有些镜头要不知拍多少遍一样。哇，真的好花时间呀！！！

@@ -1,0 +1,46 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-04-25T23:12:12+08:00
+
+====== 乔布斯名言 ======
+Created 星期五 25 四月 2014
+
+励志的乔布斯办公室名言
+他是个天才和疯子
+{{./pasted_image.png}}
+Mr Jobs will come to our department see every day yesterday achievement, can hear him call names, we are not angry, because we know that he didn’t allow product launch, No sale for after.
+乔布斯先生每天必来到我们部门看昨天的成果，能听到他骂人，我们并不生气，因为我们知道他不允许产品上市后没有销路。
+1. do not according to user bad habits to design, also do not according to programmers thinking design!
+不要按照用户的坏习惯去设计，也不要按照程序员的思维去设计！
+2, have good ideas are going to insist, don’t be others’ opinion noise drown out your own inner voice. When your ideas stand, immediately magnanimous discard it is, and it is also a kind of persistence.
+好的想法要坚持，不要被其他人的观点的噪声掩盖你真正的内心的声音。当你的想法站不住时，立即大度的丢弃，这其实是更是一种坚持。
+3, any product are not should bring a BUG to meet users, that is afraid to betray media postpone the release of time.
+任何一款产品都不应该带着BUG去见用户，那怕失信于媒体推迟发布时间。
+4, products must be feeling letting a person, but resolute don’t do new mice to try an unprecedented new product.
+产品一定是让人感觉最新，但坚决不做小白鼠去尝试前无古人的新产品。
+5, the sign painting so big? Apple products will at any time those who make a person recognized apple’s products rather than is the apple logo.
+把标志画那么大干嘛？苹果的产品要在任何时候都让人一眼认出是苹果的产品而非是苹果的标志。
+6, less than others with a line acquire lower process cost more than others, and provide a kind of value identification and obtain more profits, this is an apple.
+比别人少用一条线获得更低的工艺成本，比别人提供多一种价值认同并获得更高的利润，这就是苹果。
+7, all products will leave apple store but cannot leave apple system,we have to help customers continued use of apple products, until died.
+所有的产品一定会离开苹果商店但不能离开苹果系统，我们要帮助客户持续使用苹果产品，直到寿终正寝。
+8, IBM Thinkpad if not a little red dot, it isn’t Thinkpad. MACBook if added little red dots, that it is not IBM Thinkpad nor apple MACBook.
+IBM Thinkpad如果没了小红点，那它就不是Thinkpad。MACBook如果加了小红点，那它即不是IBM Thinkpad也不是苹果MACBook了。
+9, let team for those who say“impossible” people feel not achieve them is shameful.
+让团队中那些说“不可能”的人感到实现不了是可耻的。
+10, brand is not playing apple logo is an apple quality， hit the apple logo also need confidence and commitment to customers.
+品牌不是打上苹果的标志就是苹果的品质，打上苹果的标志也需要信心和对客户的承诺。
+11, don’t lived for others, also don’t live for today’s themselves, to do good work today， tomorrow natural belong to you, high salary nature than others.
+不要为别人而活，也不要为今天的自己而活，把今天的工作做好了，明天自然属于你，薪水自然比别人高。
+12, product design all the functions are a whole, should not have any reason to cut function, destroy unity.
+产品设计时的所有功能都是一个整体，不应该有任何理由去砍功能，破坏整体性。
+13, a leader and a follower innovation distinguishes between,your time is limited, so don’t like asians that,wasted in imitate others this kind of things.
+领袖和跟风者的区别就在于创新，你的时间有限，所以不要像亚洲人那样，浪费在模仿别人这种事上。
+14, team of people who want to use Keynote to prove themselves only shows that you can, please take out the solution.
+团队中那些想用Keynote（苹果的PPT）来证明自己的人只能说明你不行，请拿出解决方案。
+15, become the pronoun of not because of his remarkable how clever, but that he is how diligent.
+成为卓越的代名词并不是因为他有多么聪明，而在于他有多么勤劳。
+16,East: “there’s a phrase in Buddhism,‘beginner’s never keep Have a beginner’s mind is a wonderful thing.
+东方佛学中有一句话：永远保持初学者的心态；拥有初学者的心态是件了不起的事情。
+17, don’t look down upon a single button on the ipod, it and others are different is that we did 21 scheme, 84,000 times test, 57 times improvement, the satisfaction of customers from unnecessary insists
+不要小看ipod上的一颗按钮，它和别人不一样的是我们做了21个方案、84000次测试、57次改进，用户的满意源于不必要的坚持。

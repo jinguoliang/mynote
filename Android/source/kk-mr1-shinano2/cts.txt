@@ -1,0 +1,123 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-07-04T13:50:00+08:00
+
+====== cts ======
+Created Friday 04 July 2014
+
+Android自动化测试——CTS测试
+
+一、为什么需要兼容性测试（以下称CTS）？
+
+1.1、让APP提供更好的用户体验。用户可以选择更多的适合自己设备的APP。让APP更稳定。
+
+1.2、让开发者设计更高质量的APP。
+
+1.3、通过CTS的设备可以运行Android market。
+
+另外，CTS是免费的，而且很简单。
+
+二.CTS是开源的测试框架，使用它来测试你的设备是否具备兼容性。CTS主要包含两个组件：
+
+运行在PC上的测试框架组件。主要用来管理测试用例（test case）的执行。
+
+运行在设备或模拟器上的测试用例。这些用例用JAVA写成的APK文件。
+
+三、工作流程
+
+1、可以从源码编译CTS，也可以从网站下载编译好的CTS
+
+2、安装配置CTS。
+
+3、把设备连接到PC上。
+
+4、运行CTS。CTS会把相应的测试用例（也就是一个APK文件）传送到设备上并通过instrumentation运行，然后记录运行结果，最后删除测试用例。
+
+所有的测试用例执行完毕后，可以参照测试结果重新调整或优化系统。然后继续运行CTS测试。
+
+5、测试通过以后，你可以把CTS生成的结果（就是result下面那个以测试时间命名的.zip文件）提交给cts@android.com。
+
+四、目前的测试覆盖面
+
+目前，为了确保兼容，测试用例覆盖了下面的这些范围
+
+1、Signature
+
+对每个Android产品，都有一些XML文件来描述所有的公开API。CTS包含了一个工具来检测这些API签名中包含的API是否都在系统中被支持。
+
+2、Platform
+
+测试SDK文档中描述的平台API，比如core libraries,Android Application Framework等。要求这些API可以提供：
+
+正确的类、属性、方法签名、方法行为、错误参数处理方式
+
+3、Dalvik VM
+
+专门针对Dalvik Vm的测试。
+
+4、Platform Data Model
+
+平台通过ContentProvider提供给开发者使用的数据，比如：Contacts,Browser,Settings等。
+
+5、Platform Intents
+
+平台提供的用于核心功能的Intent。
+
+6、Platform permission
+
+平台提供的一些重要APP权限
+
+7、Platform Resources
+
+simple values,drawables,nine-patch,animations,layouts,styles and themes，loading alternate resources等
+
+五、CTS搭建（Unbutu/Linux平台）
+
+1.   下载CTS包http://source.android.com/compatibility/downloads.html
+
+2.   在手机或者模拟器上安装CtsDelegatingAccessibilityService.apk非必需
+
+（1）$sudo ./adb install -r /home/tester/cts/android-cts/repository/testcases
+
+/CtsDelegatingAccessibil
+
+ityService.apk
+
+（2）手机或模拟器设置Settings > Accessibility > Accessibility > Delegating Accessibility Service
+
+3.   进入android/out/host/linux-x86/cts /android-cts/repository/tools目录下，修改startcts脚本文件。将脚本中的SDK_ROOT该成自己的android SDK路径.
+
+$cd home/tester /cts/android-cts/repository/tools $vim startcts修改脚本中出现的第一个SDK_ROOT,如"SDK_ROOT=/home/tester/cts/android-sdk-linux_86"。
+
+4.   执行startcts脚本。在执行CTS测试计划时（执行一段时间后，大于5分钟）会出现没有足够权限启动devices，使用$sudo ./startcts可解决该问题。
+
+（Windows下配置好sdk和android开发环境后，可以直接通过java命令来执行cts测试：java -Xmx512M -cp D:\android-cts\tools\cts.jar;D:\android-cts\tools\hosttestlib.jar;D:\android-cts\tools\junit.jar;C:\Android\android-sdk\tools\lib\ddmlib.jar com.android.cts.TestHost D:\android-cts\repository\host_config.xml
+
+如果使用的是android-cts-2.2_r4-x86.zip，-cp选项中需要多一个D:\android-cts\tools\lib\CtsTestAnnotationsHostLib.jar，可参考startcts脚本。）
+
+5.   出现如下提示符表示启动cts并连接设备成功。（红色部分未deviceID，视设备号而定）
+
+Android CTS version 2.3_r4
+
+Device(emulator-5544) connected
+
+cts_host > cts_host >
+
+6.   在“cts_host >”提示符下输入命令,以下为几个常用的命令
+
+help查看所有
+
+exit退出
+
+ls -p列出所有的测试包
+
+ls --plan列出所有的测试方案
+
+start --plan plan_name运行一个测试方案，如：start --plan CTS
+
+start --plan plan_name --package package_name运行一个特定的测试包，如：start --plan CTS --package android.bluetooth
+
+
+六、查看测试报告
+
+运行测试时，在CTS运行界面能看到测试报告与运行状况。测试完成后可在android-cts/repository/results/下生成详细的测试报告和一些附加信息，其中用日期和时间命名的文件夹下为所有的测试结果，同时文件夹也会被打成一个对应的.zip包方便提交。用浏览器打开.xml文件（默认就是，直接双击）就可以查看所用的测试报告了。

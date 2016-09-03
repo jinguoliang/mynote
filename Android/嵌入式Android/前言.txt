@@ -1,0 +1,46 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-03T11:27:24+08:00
+
+====== 前言 ======
+Created Sunday 03 November 2013
+
+	Android的成长是惊人的。它跻身高级移动终端没用多长时间。很明显，独一无二的开源许可的组合（the unique combination of
+open source licensing），高度的市场竞争力，时髦的界面是Goole Android团队成功的表现。甚至，手持设备制造商，手机网络运营商，硅制造商和开发者注意到，Adnroid已产生了大量的用户理解（user uptake）。专门为Android打造的产品，兼容Adnroid的软件，基于Adnroid的设备都如雨后春笋一样席卷而来。
+	然而，除了手机的成功，android也吸引了另一个没有群体：嵌入式系统开发者。虽然有大量的嵌入设备有很少甚至没有用户界面，但也有很多是需要用户界面的。开发人员除了关注纯技术功能外，开发有界面的设备时也会关注人机交互因素。所以，设计师们必须要么给用户一个他们熟悉的界面体验，要么就冒险让他们来学习一种不太熟悉或全新的界面体验。在Android之前，可选择的用户界面对于这种设备的程序员来说是相当有限的。
+	很明显，嵌入式开发者更喜欢提供给用户一个他们已熟悉的界面。因为以前的界面都是基于窗口的，所以一直以来很多嵌入式设备都是以窗口为中心，桌面化的界面。然而Apple的iOS和Google的Android已经使得基于触摸的界面--像Iphone图形界面--被广泛接受。随着用户习惯的改变，加之Adndroid的开源协议，Android在开源世界已经引起广泛的兴趣。
+	然而，与Android应用开发者不同的是，嵌入式开发者想对Android做各种平台级的修改比如移植。他们很快发现严重缺少这方面的文档。而Google为应用开发者提供了大量的文档，应用开发方面的书也有很多如OReilly的Learning Android。嵌入式开发者这能研究Google在http://source.android.com提供的少量的文档。总之，嵌入式开发者因此减少了很多。
+        本书的目的是补救这种形势，是你能够用Android做嵌入式。所以，你将会学到Android的体系结构，怎样去浏览他的源码，怎样修改它的各种部件，怎样去创建你自己设备上的Adnroid版本。另外，你还会学到Android是怎样集成到Linux内核的，理解它和Linux roots的commonalities和不同。作为例子，我们将会讨论Android如何里利用Linux的驱动模型去创建它自己的硬件层，以及怎样将“legacy” LInux的glibc，Busybox等组件包装为Android的一部分来利用的。你还会顺便学到一些小技巧，如使用Adnroid的repo工具，集成和修改Android构建系统的方法。
+
+学习怎样嵌入Android
+	我从九十年代中期就参与开源软件的开发。我很庆幸我在它被认可为当今强有力的软件开发运动之前就加入了它并且目睹了它在21世纪初期的发展。我也给开源事业出了一份力，参加了各个地方的轰轰烈烈的战中，呵呵。与此同时，我也写了OReilly的构建嵌入式linux系统的第一版
+	所以当Adnroid--我知道它是基于linux的--开始被广泛知道时，根据我对Linux的历史和嵌入式Linux的深刻的了解，我知道对它深入的研究是值得的。于是，我想：“我对Linux想到了解，而Android是基于LInux的，它有多难呢？”直到我真正仔细深入去看Android时，我才意识到Android是非常不同的。我所知道的在嵌入式系统中常用的关于Linux和包的只是在Android中并没有。不仅如此，android内建的抽象机制甚至更是奇怪。
+	所以，一连串的问题困扰着我。Android如何工作？它与普通的LInux有什么不同？我怎样定制它？我如何把它用在嵌入式系统中？我如何构建它？如何把它的应用开发api翻译到我知道的Linux用户空间，等等。随着我对Android钻研的越来越深，越发觉得它的另类而且问题更多了。
+	我做的第一件事是去http://developer.android.com 和 http://source.android.com 网站，打印所有我能的得到的东西，并保存开发者API参考。我总共打印了8到10英尺的纸。我通读了他们，画出了许多我发现的关键文章，并在边缘添加了大量的笔记，列出了所有我没能找到答案的问题。同事，我开始研究Google提供的Android Open Source Project（AOSP）的源码。说实话，我是在6到12个月之后才真正刚觉到有足够的自信来深入进AOSP的。
+	现在你拿的这本书是我探索Android的成果，也包括各种我参与的项目，比如帮助不同团队自定义Android来适配他们的嵌入式设计。我已经学习了足够多的Android相关的知识敢说：无论如何这本书都不能是全面的。Android还有很多东西和内部原理在这本书里没有涉及到，也不能涉及到。然而，这本书应该可以使你通过努力将Andriod为你所用。
+
+====== 本书的面向的读者 ======
+	这本书是那些想创建基于Android的嵌入式系统或是想自定义Android来作为其他用处的读者的必备。它假设你了解嵌入式系统开发，并且至少了解一个版本的Linux的工作原理和如何与它命令行交互。
+	我不假设你熟悉java，（and you can get away without knowing
+Java for quite a few of the tasks required to customize Android
+）。然而，当你使用进程时，你会发现对java有一定的了解是必须的。事实上，Android的很多关键部分是用java写的，因此你为了（properly integrate most additions to
+specific parts of the stack
+）你需要学习java
+	然而，这本书不会涉及到应用开发和java编程。如果你对这些话题感兴趣，我推荐你查看其他资料。有很多的资料是讨论这些话题的。这本书也不会讲嵌入式系统，这方面的资料也很多。最后，这本书也讲嵌入式Linux的，这方面又有不少书。不过，熟悉Linux的使用对于我们自定义Android是有好出的。事实上，虽然Android很多东西都背离传统的嵌入式Linux，但是很多经典创建嵌入式Linux系统的技术都对我们创建嵌入式Android系统有帮助。
+	如果你想研究Adnrid内部，这本书也是有帮助的。自定义Android实际上需要知道一些基本原理的。所以，这部分的讨论尽管不会完全的探索Android的源码，但是对Android内部各部分是如何交互的也会讲的较详细。
+
+====== 内容组织 ======
+	这本书先讲一些基本内容，为后边的复杂论题打好基础。如果你是一个只想看看基本原理的管理者，又或者你想知道哪些章节必须读，那些可以选读，那么我推荐你至少读完前三章。这并不以为这以后的章节就不相联系了，只是或便的章节更模块化。
+	第一章，介绍，包括了将Android用于嵌入式系统需要知道的基本知识。如它从哪来，它的开发模型和执照与传统的开源项目有什么不同，和Android要求的硬件类型有哪些
+	第二章，内部原理，深入挖掘Android的内部机理，让你了解它的主要的抽象机制。我们先讲开发者熟悉的应用开发模型。然后深入挖掘Android对内核的更改，Android是如何支持硬件的，本地用户空间，Dalvik虚拟机，系统服务和系统的整个启动过程。
+	第三章，开始进入AOSP的世界，介绍了怎样从Google的到Android源码，如何把它们编译成模拟器能加载的image文件，怎样运行这个iamge，怎样用shell进入这个系统。模拟器是代替真机去研究android的很方便的工具。
+	第四章，构建系统，详细介绍了Adnroid的构建系统。事实上，Android不想其他开源项目，Android的构建系统是非递归的。这章介绍Android构建系统的体系结构，它通常是如何为AOSP所用的，怎样去修改AOSP
+	第五章，硬件入门，介绍了Android适用的硬件种类。涉及使用Adnroid的典型片上系统，典型Andorid的内存层，典型的用于Android的构建工具，还有几个很容易嵌入Android的开发板。
+	第六章，本地用户空间，	涉及文件系统层，adb工具，Android的命令行，和自定义init
+	第七章，Android 框架，	讨论了Android框架的启动，用来和它交互的工具命令，还有保证正确操作的后台服务。
+	附录A	Legacy 用户空间，介绍了如何使得其他嵌入式linux软件和Android用户空间一同存在
+	附录B	为新硬件添加支持，向你展示了如何扩展Android来支持新硬件。包括想你展示如何添加系统服务，如何扩展硬件抽象层。
+	附录C	自定义默认安装包，几个帮助你自定义AOSP生成的Image的默认安装包的建议
+	附录D	默认init.rc文件，contains a commented set of the default init.rc files
+used in version 2.3/Gingerbread and version 4.2/Jelly Bean.
+	附录E	资源，列出了一些可能对你有用的资源，有网站，邮件列表，书，事件

@@ -1,0 +1,98 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-06-05T10:26:14+08:00
+
+====== Android 测试 ======
+Created Friday 05 June 2015
+
+===== 测试基础 =====
+Android的测试框架是开发环境的一部分, 提供了一个框架和一些强大的工具,可以帮助你去测试应用从单元测试到框架测试的每个方面.
+测试框架有以下特性:
+1. Android测试套件是基于JUnit.你可以只使用JUnit去测试一个类而不调用Android API, 或者使用Android的JUnit扩展去测试Android的组件.如果你初识Android测试,你可以从通用目的的测试用例开始,比如AndroidTestCase,然后你可以使用更复杂的类
+2. Android Junit扩展提供特定组件的测试用例类.使用他们可以创建mock 对象和方法来控制组件的生命周期.
+3. 测试套件被包含与应用包相似的测试包中,这样你就不必学习新的工具或技术来设计和构建测试了.
+4. 构建和测试的SDK工具既支持ADT,也支持命令行.这些工具从测试应用项目获取信息,进而自动创建构建文件,manifest文件和测试包的目录结构.
+5. SDK也提供了monkeyrunner(一个测试设备的python Api)和UI/Application Exerciser Monkey(一个命令行工具,通过向设备发送虚拟随机事件来进行对UI的压力测试)
+
+这个文档描述了Android 测试框架的功能,包括测试框架, 编写测试的api,运行和查看结果的工具. 文档假设你有android应用开发和单元测试的基础知识.
+下图是测试框架的概览:
+{{./pasted_image.png}}
+
+===== 测试框架 =====
+1. Android构建和测试工具都假定测试项目是以标准结构来组织测试,测试案例的类,测试包,测试项目.
+2. JUnit测试是一个方法,它声明去测试应用的一部分.测试方法被组织到类里,叫做测试case或者测试 suilts.
+
+===== 测试项目 =====
+你应该总是使用Adnroid tools去创建测试项目
+
+===== 测试Api =====
+android测试Api是基于JUnit API,添加了instrumentation框架和android特定的测试类
+
+=== JUnit ===
+1. 没事用android api的类可以通过TestCase类来测试
+2. AndroidTestCase基于TestCase,用来测试依赖android的类.它除了提供了JUnit框架,还提供了Android专用的setup,teardown,和helper方法
+3. Junit提供了Assert类来显示测试结果.它会比较期望值和实际值.如果失败则抛异常.Android也提供了对它的扩展,类型更多.
+
+=== Instrumentation ===
+1. Android instrumentation是一系列的控制方法或叫android系统的钩子.这些钩子会单独控制某个组件而不依赖组件的生命周期.它也能控制系统加载应用.
+2. 允许你一步一步的运行组件的某个生命周期.
+
+=== Test case classes ===
+1. [[AndroidTestCase]] Android通用的类,刚开始就用它吧.它继承了TestCase和Assert.提供了测试权限的方法,还有一个通过清除特定类引用来防止内存溢出的方法.
+2. 特定组件的测试类
+	a. Activity Testing
+	b. Content Provider Testing
+	c. Service Testing
+3. [[ApplicationTestCase]]
+	a. 可以帮你检验<application>元素是否正确安装
+4. [[InstrumentationTestCase]]
+	a. 提供了[[Instrumentation相关方法]]
+
+=== Assertion classes ===
+1. Junit的Assert
+2. MoreAssert类包含更多强大的断言.如assertContainsRegex(String, String),它检测是否匹配正则
+3. ViewAssert类包含关于View的断言.如assertHasScreenCoordinates(View, View, int, int),测试一个View是否有特定的X和Y坐标
+
+=== Mock object classes ===
+1. 为了便于依赖注入测试,Android提供了一些模仿系统对象的类(如Context,ContentProvider,ContentResolver,Service).一些test case也会提供模仿Intent的对象.通过使用这些模仿的对象来隔离测试与系统的其他部分并且便于依赖注入测试.这些类保存在android.test 和 android.test.mock
+2. 模拟对象通过方法留空或者覆写操作来将测试与运行时环境分离.比如,MockContentResolver用自己的本地框架替代正常的resolver框架,这就可以隔离系统其他部分了.MockContentResolver会留空notifyChange(Uri, ContentObserver, boolean)从而使测试环境以外的观察对象不被触发
+3. 模拟对象通过子类覆写正常对象的方法实现依赖注入.比如,MockResources提供了一个Resources的子类.它所有的方法只是抛出异常,使用的时候,你只要覆写那些必须提供信息的方法就可以了
+4. 简单的模拟对象,MockApplication, MockContext, MockContentProvider, MockCursor, MockDialogInterface, MockPackageManager, and MockResources提供简单有效的模拟机制.所有方法抛出异常,使用时只需要覆写用到的方法
+5. Resolver模拟对象,通过屏蔽系统的resolver框架来实现隔离测试.MockContentResolver 用自己内部的表而不是从系统查找contentprovider
+	a. 你可以把一个模拟的content provider和authority关联起来.
+	b. 你可以创建一个真实provider但是使用测试数据
+	c. 你甚至可以设置某个authority对应的provider为null
+	d. 效果上,MockContentResolver 将测试与包含真实数据的provider分离
+	e. 你可以控制provider的功能,防止影响真实数据
+
+=== 测试的上下文 ===
+Android提供了两个上下文
+
+===== 运行测试 =====
+1. 测试用例通过测试runner类来加载测试用例,set ups,runs, tears down.
+2. Android测试runner必须是可以instrumented, 以便于系统去打开应用,控制组件的运行
+3. 在manifest的<instrumentation>声明InstrumentationTestRunner或其子类.InstrumentationTestRunner的代码在共享库android.test.runner中,需要通过<uses-library>来引入.这些工作实际adt或者命令行工具都会自动给你做
+4. 系统加载并启动测试包,杀死被测试的应用的进程,加载一个新的应用实例.然后把控制权交给InstrumentationTestRunner去运行测试用例.你也可以配置来运行特定的测试用例.
+5. 系统和InstrumentationTestRunner都不会运行被测试的应用,那是测试用例的事.此时应用完全在测试用例的控制之下
+Working With Package names ?????
+
+===== 测试结果 =====
+
+===== monkey 和 monkeyrunner =====
+1. 两个工具进行功能级应用测试
+2. UI/Application Exerciser Monkey,也叫monkey, 是一个命令行工具,它向设备发送伪随机的事件流如按键,点击,手势.用adb运行它.通过他来进行压力测试.可以通过使用相同的随机种子来生成可再现的事件流
+3. monkeyrunner是测试应用的api和执行环境.使用python.api功能包括连接设备,安装卸载应用,截图,比较两个图片,运行某个应用的测试包.可以通过命令行工具monkeyrunner使用api
+
+=== 测试什么 ===
+像开发应用一样,知道测试什么和知道怎么测试一样重要.
+1. 测试的理念
+	a. 横竖屏切换
+		1. 当设备方向改变时,默认行为是销毁并重建前台的Activity.
+		2. 要考虑测试: 重新绘制是否正确.自定义的UI是否处理了横屏变化
+		3. 应用是否保存了他的状态,用户的输入,UI的状态都要保留
+	b. 配置改变
+		1. 也会触发前台Activity的销毁和重建
+		2. 除了测试状态是否保存也要测试状态是否响应配置变化
+	c. 电量改变??
+	d. 依赖外部资源
+		1. 如果应用依赖网络访问,SMS,蓝牙,或者gps,应该测试资源不存在时的情况

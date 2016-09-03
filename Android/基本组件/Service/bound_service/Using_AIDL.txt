@@ -1,0 +1,42 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-12-29T04:10:46+08:00
+
+====== Using AIDL ======
+Created Sunday 29 December 2013
+
+ It allows you to define the programming interface that both the client and service agree upon in order to communicate with each other using interprocess communication (IPC)
+
+1.AIDL (__Android Interface Definition Language__) performs all the work to __decompose__ objects into primitives that the __operating__ system can __understand__ 
+2. __using__ a __Messenger__, is actually __based__ on AIDL as its __underlying structure__
+3.To use AIDL directly, you must __create__ an __.aidl file__ that defines the programming interface. 
+	The Android SDK __tools__ use this file to generate an __abstract class__ that implements the interface and handles IPC, which you can then __extend within__ your service.
+
+
+==== Defining an AIDL Interface ====
+
+==         Create the .aidl file ==
+			1.By default, AIDL __supports__ the following data __types__:
+				All primitive types in the Java programming language (such as int, long, char, boolean, and so on)
+				String
+				CharSequence
+				List	
+					1.A List __may__ optionally be used as a "generic" class (for example, List<String>)
+				   2.The actual __concrete__ class that the other side receives is __always__ an __ArrayList__, although the method is generated to use the List interface
+				Map
+					1.Generic maps, (such as those of the form Map<String,Integer> are __not__ supported
+					2.The __actual__ concrete class that the other side receives is __always__ a __HashMap__, although the method is generated to use the Map interface
+			2.You must include an import statement for each additional type not listed above, even if they are defined in the same package as your interface.
+			3.All non-primitive parameters require a directional tag indicating which way the data goes. Either in, out, or inout (see the example below).
+
+				Primitives are in by default, and cannot be otherwise.
+			4.All code __comments__ included in the .aidl file are included in the generated IBinder interface (__except__ for comments __before__ the __import__ and package __statements__).
+			5.__Only__ __methods__ are supported; you __cannot__ expose __static fields__ in AIDL.
+
+==         Implement the interface ==
+
+==         Expose the interface to clients ==
+
+==== Passing Objects over IPC ====
+
+==== Calling an IPC Method ====

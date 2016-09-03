@@ -1,0 +1,8 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-10-15T20:43:23+08:00
+
+====== event ======
+Created Tuesday 15 October 2013
+
+处理按键事件时，如果处理则返回true，如果不处理调用父类处理

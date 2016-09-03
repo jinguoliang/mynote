@@ -1,0 +1,19 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-12-21T12:39:34+08:00
+
+====== 第二步JNI ======
+Created Saturday 21 December 2013
+
+静态注册jni函数：
+	1.编写hello.java   static 加载动态库
+	2.javac hello.java
+	3.javah hello   生成hello.h
+	4.编写hello.c 	实现hello.h
+	5.编译hello.c     gcc -shared -fPIC hello.c -o libhello.so
+		找不到jni.h   需要用-I指明所在目录/usr/lib/jvm/java-7-openjdk-amd64/include/
+	6运行java hello	会提示找不到no hello in java.library.path
+		java -Djava.library.path=. hello   	
+				-D set a system property 或者export LD_LIBRARY_PATH=.
+ 
+

@@ -1,0 +1,29 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-22T23:25:39+08:00
+
+====== 基础 ======
+Created Friday 22 November 2013
+
+1.scheme是若类型的，运行时才确定变量类型
+scheme提供的数据类型：
+基本类型：characters, strings, numbers and **procedures**
+组合类型：lists, pairs, vectors and multi-dimensional arrays
+2.定义变量和给变量赋值   --__(;commont)__
+(define variable-name value)
+(set! variable-name new-value)
+3.定义和使用Procedure  ，他也是值，一种类型
+One consequence of the “procedures as values” idea is that, if you don’t happen to like the standard name for a Scheme procedure, you can change it.
+(procedure [arg1 [arg2 ...]])
+Each of the parameters in a procedure invocation can itself be any Scheme expression.
+Since a procedure invocation is itself a type of expression, we can put these two examples
+together to get
+(string-length (string-append "/home" "/" "andrew"))
+定义procedure
+(lambda (name address) expression ...) 连个参数，执行体可以有多个，但是他的最后一个的值作为调用该函数的返回值
+(define make-combined-string
+(lambda (name address)
+(string-append "Name=" name ":Address=" address)))
+简化版
+(define (name [arg1 [arg2 ...]])
+expression ...)

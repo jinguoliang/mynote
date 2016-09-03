@@ -1,0 +1,12 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-03T10:46:38+08:00
+
+====== 编程陷阱 ======
+Created Sunday 03 November 2013
+
+1.初始化！！！！别忘初始化
+
+2.异常处理
+如果出现异常但不显示的情况考虑是不是哪里捕捉了异常但没正确处理，没打印
+

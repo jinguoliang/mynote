@@ -1,0 +1,130 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-12-12T09:19:09+08:00
+
+====== Service ======
+Created Wednesday 11 December 2013
+
+A service can essentially take two forms:
+	Started
+		 startService()
+		Usually, a started service performs __a single operation__ and does __not return a result__ to the caller
+		When the operation is done, the service should __stop itself__.
+	Bound
+		bindService()
+		 A bound service __offers a client-server interface__ that allows components to__ interact with the service,__ send requests, get results, and even do so across processes with interprocess communication (__IPC__)
+		__Multiple components__ can bind to the service __at once__, but when __all of__ them unbind, the service is __destroyed__
+	
+	your service can work both ways—it can be __started__ (to run indefinitely) and also allow __binding__
+	A service runs in the main thread of its hosting process—the service __does not create its own thread__ and does not run in a separate process (__unless you specify otherwise__)
+	
+
+==== The Basics ====
+	 The most important callback methods you should override are:
+		onStartCommand()
+			when another component, such as an activity, requests that the service be started, by calling __startService__()
+		onBind()
+			when another component wants to bind with the service (such as to perform RPC), by calling __bindService__()
+			 In your implementation of this method, you __must__ provide an __interface__ that __clients use to communicate with the service__, by returning an __IBinder__
+			If a component calls bindService() to create the service (and__ onStartCommand() is not called__), then the service runs only __as long as__ the component is __bound__ to it. Once the service is __unbound from all clients,__ the system __destroys__ it.
+		onCreate()
+			If the service is already running, this method is not called.
+		onDestroy()
+	 If the service is bound to an activity that has user focus, then it's less likely to be killed, and if the service is declared to run in the foreground (discussed later), then it will almost never be killed.
+	 if the service was started and is long-running, then the system will lower its position in the list of background tasks over time and the service will become highly susceptible to killing—if your service is started, then you must design it to gracefully handle restarts by the system
+
+
+==== Declaring a service in the manifest ====
+	<service android:enabled=["true" | "false"]
+	         android:__exported__=["true" | "false"]
+	         android:icon="drawable resource"
+	         android:__isolatedProcess__=["true" | "false"]
+	         android:label="string resource"
+	         android:name="string"
+	         android:__permission__="string"
+			A feature can be protected by at most one permission.
+			The <permission-tree> element declares a namespace for a group of permissions that will be defined in code.
+			And <permission-group> defines a label for a set of permissions (both those declared in the manifest with <permission> elements and those declared elsewhere). It affects only how the permissions are grouped when presented to the user. 
+			 A permission is placed in the group by assigning the group name to the <permission> element's permissionGroup attribute
+	         android:__process__="string" >       
+			 If the name assigned to this attribute begins with a colon (':'), a new process, private to the application, is created when it's needed and the service runs in that process.
+			
+	    . . .
+	</service>
+	
+
+=== Creating a Started Service ===
+	Traditionally, there are two classes you can extend to create a started service:
+		Service
+		[[IntentService]]
+			1.This is a subclass of Service that uses a worker thread to handle all start requests, one at a time. This is the best option if you don't require that your service handle multiple requests simultaneously
+			2.All you need to do is implement onHandleIntent()
+
+
+=== Extending the IntentService class ===
+	Because most started services don't need to handle multiple requests simultaneously (which can actually be a dangerous multi-threading scenario), it's probably best if you implement your service using the IntentService class.
+	
+	The IntentService does the following:
+
+		1.__Creates a default worker thread__ that executes all intents delivered to onStartCommand() separate from your application's main thread.
+		2.__Creates a work queue__ that passes one intent at a time to your __onHandleIntent__() implementation, so you never have to worry about multi-threading.
+		3.__Stops the service__ after all start requests have been handled, __so you never have to call stopSelf().__
+		4.Provides default implementation of __onBind__() that returns __null__.
+		5.Provides a default implementation of __onStartCommand__() that sends the intent to the work queue and then to your onHandleIntent() implementation.
+	
+	That's all you need: a constructor and an implementation of onHandleIntent().
+
+
+=== Extending the Service class ===
+	__If__, however, you require your service to perform __multi-threading__ (instead of processing start requests through a work queue), __then__ you can __extend__ the __Service__ class to handle each intent.
+	
+	public __int__ __onStartCommand__(Intent __intent__, int flags, int __startId__)
+		The return is a value that describes __how__ the __system__ should __continue__ the service in the event that the system __kills__ it.The return value from onStartCommand() must be one of the following constants:
+			1.START_NOT_STICKY	
+				__do not recreate__ the service, __unless__ there are __pending__ intents to deliver.
+			2.START_STICKY
+				1.__recreate__ the service and __call__ onStartCommand(), but __do not redeliver the last intent__. Instead, the system calls onStartCommand() with a __null__ intent.
+				2.This is suitable for media players,running indefinitely and waiting for a job
+				3.没干完的事不干了
+			3.START_REDELIVER_INTENT
+				1.__recreate__ the service and __call__ onStartCommand() with __the last intent that was delivered to the service__
+				2.This is suitable for services that are actively performing a job that should be immediately __resumed__, such as downloading a file
+				3.没干完的是继续干
+
+
+==== Starting a Service ====
+
+	Intent intent = new Intent(this, HelloService.class);
+	startService(intent);
+	
+	1.The startService() method __returns__ __immediately__ and the Android __system__ __calls__ the service's __onStartCommand__() method. If the service is __not__ already __running__, the system __first__ calls __onCreate__(), __then__ calls __onStartCommand__().
+	2. __if__ you __want__ the __service__ to __send__ a __result__ back, then the client that starts the service can create a __PendingIntent__ for a broadcast (with getBroadcast()) and __deliver__ it to the service in the Intent that starts the service. The __service__ can then __use__ the __broadcast__ to deliver a __result__.
+		这样也可以用来通信，但是太重了！！！
+
+
+==== Stopping a service ====
+
+====== ？？ ======
+	__However, if your service handles multiple requests to onStartCommand() concurrently, then you shouldn't stop the service when you're done processing a start request, because you might have since received a new start request (stopping at the end of the first request would terminate the second one). To avoid this problem, you can use stopSelf(int) to ensure that your request to stop the service is always based on the most recent start request. That is, when you call stopSelf(int), you pass the ID of the start request (the startId delivered to onStartCommand()) to which your stop request corresponds. Then if the service received a new start request before you were able to call stopSelf(int), then the ID will not match and the service will not stop.__
+
+
+===== Creating a Bound Service =====
+	[[+bound service]]
+
+
+==== Running a Service in the Foreground ====
+	1.__must__ provide a notification for the status bar
+	2. public final void __startForeground__ (int id, Notification notification) 
+	3.  public final void __stopForeground__ (boolean removeNotification) 
+		This method __does not__ stop the service.
+	4.if you __stop__ the service while it's still running in the foreground, then the notification is also __removed__.
+
+
+==== Managing the Lifecycle of a Service ====
+	1.the service can't started and binded in the same time.
+	2.In cases like this, stopService() or stopSelf() does not actually stop the service __until__ all clients unbind. 
+
+
+==== Implementing the lifecycle callbacks ====
+	1.__Unlike__ the __activity__ lifecycle callback methods,**you** are __not required__ to call the __superclass__ implementation of these callback methods.
+	{{./pasted_image.png}}

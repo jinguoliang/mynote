@@ -1,0 +1,80 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-03-04T10:06:26+08:00
+
+====== liteide ======
+Created 星期三 04 三月 2015
+
+快捷键
+LiteIDE Key Shortcuts
+
+== Standard ==
+New	Ctrl+N
+Open	Ctrl+O
+Save	Ctrl+S
+Close	Ctrl+W
+Next Tab	Ctrl+Tab
+Prev Tab	Ctrl+Shift+Tab
+Full Screen	Ctrl+Shift+F11
+Hide Bottom Windows	ESC
+
+== Editor ==
+Cut	Ctrl+X
+Copy	Ctrl+C
+Paste	Ctrl+V
+Undo	Ctrl+Z
+Redo	Ctrl+Shift+Z,Ctrl+Y
+Paste	Ctrl+V
+Select All	Ctrl+A
+Select Block	Ctrl+U
+Goto Match Brace	Ctrl+E
+Goto Previous Block	Ctrl+[
+Goto Next Block	Ctrl+]
+Goto Line	Ctrl+G
+Fold Block	Ctrl+&lt;
+Unfold Block	Ctrl+&gt;
+
+== Find ==
+Find	Ctrl+F
+Find Next	F3
+Find Previous	Shift+F3
+Replace	Ctrl+H
+Find in File	Ctrl+Shift+F
+
+== Build ==
+Build	Ctrl+B, F7
+Install	Ctrl+F8
+Test	Ctrl+T
+Run	Ctrl+F5
+Build and Run	Ctrl+R
+Run in Term	Ctrl+Shift+F5
+File Run	Alt+F6
+
+== Debug ==
+Debug	F5
+Continue	F5
+Insert/Remove BreakPoint	F9
+Stop Debug	Shift+F5
+Step Info	F11
+Step Over	F10
+Step Out	Shift+F11
+Run to Line	Shift+F10
+
+== Golang Utils ==
+Code expression info	F1 ; Ctrl+?(MacOS X)
+Jump to declaration	F2
+Gofmt	Shift+F7
+Execute	Ctrl+,
+Comment/Uncomment	Ctrl+/
+
+== Markdown Utils ==
+Bold	Ctrl+B
+Italic	Ctrl+I
+H1-H6	Ctrl+1,...,Ctrl+6
+Inline Code	Ctrl+K
+Link	Ctrl+Shift+L
+Image	Ctrl+Shift+I
+Unordered List	Ctrl+Shift+U
+Ordered List	Ctrl+Shift+O
+Blockquote	Ctrl+Shift+Q
+Horizontal Rule	Ctrl+Shift+H

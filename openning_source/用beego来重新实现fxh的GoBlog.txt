@@ -1,0 +1,25 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-23T21:46:55+08:00
+
+====== 用beego来重新实现fxh的GoBlog ======
+Created Thursday 23 July 2015
+
+架构：
+用户		
+表现层		主要是抄袭这一层
+业务层		也要抄袭
+数据层		也要抄袭
+
+以下，beego都给实现了：
+view			
+controller		
+model
+database
+
+<link rel="shortcut icon" href="static/img/site.png">   设置label里的icon
+首页
+Navigator
+1. 通过插入过滤器处理静态文件
+2. 导航排序
+

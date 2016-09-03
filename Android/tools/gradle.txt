@@ -1,0 +1,874 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-09-23T20:43:41+08:00
+
+====== gradle ======
+Created 星期二 23 九月 2014
+
+和Maven一样，Gradle只是提供了构建项目的一个框架，真正起作用的是Plugin。Gradle在默认情况下为我们提供了许多常用的Plugin，其中包括有构建Java项目的Plugin，还有War，Ear等。与Maven不同的是，Gradle不提供内建的项目生命周期管理，只是java Plugin向Project中添加了许多Task，这些Task依次执行，为我们营造了一种如同Maven般项目构建周期
+现在我们都在谈领域驱动设计，Gradle本身的领域对象主要有Project和Task。Project为Task提供了执行上下文，所有的Plugin要么向Project中添加用于配置的Property，要么向Project中添加不同的Task。一个Task表示一个逻辑上较为独立的执行过程，比如编译Java源代码，拷贝文件，打包Jar文件，甚至可以是执行一个系统命令或者调用Ant。另外，一个Task可以读取和设置Project的Property以完成特定的操作。
+
+
+简单的build.gradle示例：
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.6.+'
+    }
+}
+apply plugin: 'android'
+android {
+    compileSdkVersion 17
+}
+
+配置Task
+一个Task除了执行操作之外，还可以包含多个Property，其中有Gradle为每个Task默认定义的Property，比如description，logger等。另外，每一个特定的Task类型还可以含有特定的Property，比如Copy的from和to等。当然，我们还可以动态地向Task中加入额外的Property。在执行一个Task之前，我们通常都需要先设定Property的值，Gradle提供了多种方法设置Task的Property值。
+事实上，对于每一个Task，Gradle都会在Project中创建一个同名的Property，所以我们可以将该Task当作Property来访问，showDescription2便是这种情况。另外，Gradle还会创建一个同名的方法，该方法接受一个闭包，我们可以使用该方法来配置Task，showDescription3便是这种情况。
+Gradle将对依赖进行分组，比如编译Java时使用的是这组依赖，运行Java时又可以使用另一组依赖。每一组依赖称为一个Configuration，在声明依赖时，我们实际上是在设置不同的Configuration。
+configurations {
+   myDependency
+}
+dependencies {
+   myDependency 'org.apache.commons:commons-lang3:3.0'
+}
+dependencies {
+   compile 'org.slf4j:slf4j-log4j12:1.7.2'
+   testCompile 'junit:junit:4.8.2'
+}
+
+==== gradle太好用了 ====
+
+一、寻找gradle的历程
+
+一开始的时候，我们只有一个工程，所有要用到的jar包都放到工程目录下面，时间长了，工程越来越大，使用到的jar包也越来越多，难以理解jar之间的依赖关系。再后来我们把旧的工程拆分到不同的工程里，靠ide来管理工程之间的依赖关系，各工程下的jar包依赖是杂乱的。一段时间后，我们发现用ide来管理项程很不方便，比如不方便脱离ide自动构建，于是我们写自己的ant脚本。再后来，维护ant脚本变得痛苦，管理jar包更加痛苦。svn能管理源码的版本，却不能管理构建出的部署部件的版本。于是我们决定用maven，然而pom.xml的配置实在太繁了！最后，我找到了神器，gradle!
+二、为什么是gradle?
+1. groovy 比 xml好用
+
+Gradle用groovy来做为build脚本，比xml要易读易用得多。用过ant的人都知道，要在ant里面表达一个if分支功能有多么的麻烦，不直观。由于gradle的build脚本就是groovy程序，所以做分支循环等非常方便自然。
+2. Convention over Configuration 比写大量ant基础脚本方便
+
+用ant的时候，要得定义哪里放源码，哪里放jar包，哪里放编译出的class文件等等，每个项目都要这样做，非常麻烦。gradle和maven一样，都定义了一个默认的目录结构，只要按要这个默认的规则来做，就不需要多写一行代码。而且gradle的目录的结构规范和maven是一样的。
+3. 支付定义task，比maven灵活
+
+maven可以帮助管理依赖关系，但是要在maven里实现一个简单的自定义功能，就很麻烦，要得写maven插件，而在gradle里，task是一等公民，可以轻易的添加自己的功能。
+4. 灵活的依赖管理
+
+ant没有依赖管理的功能，都要自己手动做，maven的依赖管理很死板，只能依赖于标准的maven artifact，不能依赖本地的某个jar文件或者其它的源码。而gradle则可以混合地同时支持这些依赖方法，这样可以让旧项目的迁移容易得多。
+5. 默认就具有丰富的功能
+
+只要安装好gradle，默认就支持java项目,war项目，ear项目，做单元测试，生成jar包，上传jar包到maven服务器，等等功能。一般的项目都已经够用了。
+三、简单举例
+
+安装完gradle之后，在一个目录里时建一个叫build.gradle的文件，一个工程就配好了。要支持生成jar包的jar工程，只要在build.gradle里面添加一行：
+1
+	
+apply plugin: 'java'
+
+现在在这个目录的命令行里运行gradle jar就可以自动完成把/src/main/java下的java文件编译，自动单元测试/src/test/java下的类，自动生成jar的功能了，太方便了。
+
+让它依赖于spring，也很简单：
+
+apply plugin: 'java'
+dependencies {
+    compile 'org.springframework:spring-context:3.0.4.RELEASE'
+}
+
+gradle便会自动地到maven服务器下载spring-context-3.0.4.RELEASE.jar，以及它所依赖的jar包。
+
+还可以直接依赖本地jar包，如：
+
+apply plugin: 'java'
+dependencies {
+    compile fileTree(dir: 'libs', include: '*.jar')
+}
+
+这样就可以直接依赖/libs/目录下所有的jar文件了。
+
+再比如自定义一个task:
+apply plugin: 'java'
+task myTask << {
+    if (System.properties['love']) {
+        println "I love you! Gradle!"
+    }
+}
+
+在命令行执行gradle myTask就会运行这个myTask任务了。
+
+
+
+
+==== 使用gradle打包jar包 ====
+
+最近用android studio来做android开发的IDE，它是使用gradle来构建的，于是开始学习gradle.
+
+现在有一个项目，里面有一个android-library的模块。我想在做release的时候，把这个模块中我写的代码编译并打包成jar包，并且和依赖的jar包拷贝出来，但android studio对android-library的管理是把其与依赖包打包成一个aar的包的，显示这不是我要的，于是便想用gradle来实现。
+
+首先我找到的第一种方法是在模块中的build.gradle增加一个编译jar包的task.代码如下：
+[html] view plaincopy在CODE上查看代码片派生到我的代码片
+
+    task releaseJar(type:Jar) {  
+        from sourceSet.main.java  
+        destinationDir = file('build/libs')  
+    }  
+
+
+但是执行的时候，却提示里面的Log类找不到。显示用这种方法只能编译一般的java文件，无法编译用到了android库的源文件。可能是还要在哪里添加依赖吧。
+
+
+第二种方法是在stackoverflow中找到的，它也确实能打包成jar包。代码如下：
+
+[html] view plaincopy在CODE上查看代码片派生到我的代码片
+
+    android.libraryVariants.all { variant ->  
+        def name = variant.buildType.name  
+        if (name.equals(com.android.builder.BuilderConstants.DEBUG)) {  
+            return; // skip debug builds  
+        }  
+        def task = project.tasks.create "jar${name.capitalize()}, Jar  
+        task.from variant.javaCompile.destinationDir  
+        artifacts.add('archives', task)  
+    }  
+
+
+然后执行gradle jarRelease就可以了。
+
+但是它会把我的R.java也编译进去，而且这个文件又很大。我原来的代码编译之后打包才不到13K，加上编译这个文件的话，要28K。
+
+
+第三种方法就比较取巧了。这是因为gradle在构建的时候，会对这个模块的class文件先打包成classes.jar并放在build/bundles/release。于是我只需要把它拷出来，并重命名就可以了。
+
+于是代码如下：
+
+[html] view plaincopy在CODE上查看代码片派生到我的代码片
+
+    task releaseJar(type: Copy) {  
+        from( 'build/bundles/release')  
+        into( 'build/libs')  
+        include('classes.jar')  
+        rename('calsses.jar', 'superlog' + VERSION_NAME + '.jar')  
+    }  
+      
+    task releaseLib(type: Copy, dependsOn: releaseJar) {  
+        into "../../release"  
+        from 'libs'  
+        from 'build/libs'  
+    }  
+
+
+其中VERSION_NAME是我定义的一个变量，在gradle.properties文件中。该文件与gradle.build在同级目录
+
+== ============================== ==
+6.1
+
+每个构建包含一个或多个 "Project"
+
+每个project包含一个或多个 "Task",每个 task 都是一个原子操作,或是编译一些文件,或是打jar包 ,或是生成javadoc
+
+6.2
+
+你可以用gradle命令来调用当前目录下的build.gradle文件,build.gradle通常称之为构建脚本;构建脚本中定义了一个项目和包含的任务
+
+hello world:第一个构建脚本
+
+在D盘根目录建立build.gradle的文件,内容如下:
+
+task hello {
+
+doLast {
+
+println 'Hello world!'
+
+}
+
+}
+
+在cmd下输入
+
+d:
+
+gradle -q hello
+
+上面的实例定义了一个叫hello的task;当执行gradle hello时便会返回所提供的方法的结果
+
+6.3	任务依赖
+
+如下脚本
+
+task hello << {
+
+println 'Hello world'
+
+}
+
+task intro(dependsOn: hello)<<{
+
+println 'Depends'
+
+}
+
+--------------------
+
+执行
+
+>gradle -q intro
+
+Hello world!
+
+I'm Gradle
+
+6.6 动态任务
+
+4.times { counter ->
+
+    task "task$counter" << {
+
+        println "I'm task number $counter"
+
+    }
+
+}
+
+-----------------------------------
+
+Output of gradle -q task1
+
+ 
+
+> gradle -q task1
+
+I'm task number 1
+
+6.7 处理当前任务
+
+4.times { counter ->
+
+    task "task$counter" << {
+
+        println "I'm task number $counter"
+
+}
+
+}
+
+task0.dependsOn task2, task3
+
+----------------------------
+
+Output of gradle -q task0
+
+ 
+
+> gradle -q task0
+
+I'm task number 2
+
+I'm task number 3
+
+I'm task number 0
+
+ 
+
+ 
+
+task hello << {
+
+    println 'Hello Earth'
+
+}
+
+hello.doFirst {
+
+    println 'Hello Venus'
+
+}
+
+hello.doLast {
+
+    println 'Hello Mars'
+
+}
+
+hello << {
+
+    println 'Hello Jupiter'
+
+}
+
+ 
+
+do.first和do.last可被执行多次,执行顺序按first..last
+
+<< 操作符相当于 doLast的别名
+
+ 
+
+6.8	获取任务名称
+
+可以用$task.name来获取任务名称
+
+task hello << {
+
+    println 'Hello world!'
+
+}
+
+hello.doLast {
+
+println "Greetings from the $hello.name task."
+
+}
+
+6.9
+
+扩展参数
+
+task myTask {
+
+ext.myProperty = "myValue"
+
+}
+
+ 
+
+task printTaskProperties << {
+
+println myTask.myProperty
+
+}
+
+Output of gradle -q printTaskProperties
+
+ 
+
+> gradle -q printTaskProperties
+
+myValue
+
+ 
+
+6.12	
+
+默认任务
+
+defaultTasks 'clean', 'run'
+
+ 
+
+task clean << {
+
+println 'Default Cleaning!'
+
+}
+
+ 
+
+task run << {
+
+println 'Default Running!'
+
+}
+
+ 
+
+task other << {
+
+println "I'm not a default task!"
+
+}
+
+Output of gradle -q
+
+ 
+
+> gradle -q
+
+Default Cleaning!
+
+Default Running!
+
+ 
+
+-------------------------
+
+task distribution << {
+
+    println "We build the zip with version=$version"
+
+}
+
+ 
+
+task release(dependsOn: 'distribution') << {
+
+    println 'We release now'
+
+}
+
+ 
+
+gradle.taskGraph.whenReady {taskGraph ->
+
+    if (taskGraph.hasTask(release)) {
+
+        version = '1.0'
+
+    } else {
+
+        version = '1.0-SNAPSHOT'
+
+    }
+
+}
+
+ 
+
+7:JAVA quickStart
+
+7.2 使用JAVA plugin
+
+apply plugin :'java'
+
+可参考示例
+
+samples/java/quickstart
+
+该插件将会依据如下目录结构来检索你的项目
+
+src/main/java
+
+src/main/resources
+
+src/test/java
+
+src/test/resources
+
+build/libs
+
+build:你可以执行其中的build任务来对你的源码进行编译,单元测试以及打包
+
+ gradle build
+
+clean:执行清除任务,删除build目录,移除所有构建文件
+
+assemble:编译并且打jar包,但不会执行单元测试,很多其它插件都可以增强该任务功能,比如如果添加了war plugin,该任将会打出war包
+
+check:编译并且测试代码,如果添加了Code-quality插件,该任务同时会对代码风格进行检查
+
+ 
+
+7.2.2	额外依赖
+
+可以使用MAVEN中央仓库来获取依赖jar包
+
+---定义仓库
+
+repositories {
+
+mavenCentral()
+
+}
+
+---增加依赖
+
+dependencies {
+
+compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+
+testCompile group: 'junit', name: 'junit', version: '4.+'
+
+}
+
+7.2.3 自定义项目
+
+7.2.4	发布jar包
+
+uploadArchives{
+
+repositories{
+
+flatDir{
+
+dirs 'repos'
+
+}
+
+}
+
+}
+
+执行gradle uploadArchives便可将jar包发布到respos文件夹下
+
+7.3	创建eclipse项目
+
+apply plugin: 'eclipse'
+
+ 
+
+apply plugin: 'java'
+
+apply plugin: 'eclipse'
+
+ 
+
+//自定义属性
+
+sourceCompatibility = 1.5
+
+version = '1.0'
+
+jar {
+
+manifest {
+
+attributes 'Implementation-Title': 'Gradle Quickstart', 'Implementation-Version': version
+
+}
+
+}
+
+//中央仓库
+
+repositories {
+
+mavenCentral()
+
+}
+
+//依赖JAR包
+
+dependencies {
+
+compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+
+testCompile group: 'junit', name: 'junit', version: '4.+'
+
+}
+
+//给test任务传递参数
+
+test {
+
+systemProperties 'property': 'value'
+
+}
+
+//Jar包位置
+
+uploadArchives {
+
+repositories {
+
+  flatDir {
+
+  dirs 'repos'
+
+  }
+
+}
+
+}
+
+7.3.1	多项目管理
+
+创建多项目脚本必须建立setting.gradle配置文件如下
+
+include "shared", "api", "services:webservice", "services:shared"
+
+7.3.2	公共配置
+
+ 
+
+8.	基础依赖管理
+
+8.3	配置依赖
+
+8.4	外部依赖
+
+定义
+
+dependencies {
+
+compile group: 'org.hibernate', name: 'hibernate-core', version: '3.6.7.Final'
+
+}
+
+简要写法"group:name:version". 
+
+dependencies {
+
+compile 'org.hibernate:hibernate-core:3.6.7.Final'
+
+}
+
+8.5	gralde如何为外部依赖下载jar包?只需要定义一个仓库即可
+
+至少需要定义一个仓库,也可以直接使用maven中央仓库或本地maven仓库
+
+如下
+
+使用中央仓库:
+
+repositories {
+
+mavenCentral()
+
+}
+
+使用自定义仓库
+
+repositories {
+
+maven {
+
+url "http://repo.mycompany.com/maven2"
+
+}
+
+}
+
+使用远程ivy仓库
+
+repositories {
+
+ivy {
+
+url "http://repo.mycompany.com/repo"
+
+}
+
+}
+
+使用本地ivy仓库
+
+repositories {
+
+ivy {
+
+// URL can refer to a local directory
+
+url "../local-repo"
+
+}
+
+}
+
+一个项目可以包含多个仓库,Gradle将会在每个仓库中搜寻所需的依赖,当搜索到所需依赖时停止搜索
+
+ 
+
+8.6	手工发布
+
+依赖于各种好用的插件,通常无需对发布操作进行特殊处理;但需要通知gradle进行发布的位置
+
+可以用uploadArchives task来完成此项工作;以下是一个发布到远程IVY仓库的示例
+
+uploadArchives {
+
+repositories {
+
+ivy {
+
+credentials {
+
+username "username"
+
+password "pw"
+
+}
+
+url "http://repo.mycompany.com"
+
+}
+
+}
+
+}
+
+现在,运行gradle uploadArchives,gradle将会构建并上传生成的jar包,同时生成并上传ivy.xml文件
+
+---发布到maven仓库
+
+apply plugin: 'maven'
+
+ 
+
+uploadArchives {
+
+repositories {
+
+mavenDeployer {
+
+repository(url: "file://localhost/tmp/myRepo/")
+
+}
+
+}
+
+}
+
+10.WEB application quickStart
+
+本章介绍如何让gradle来为web应用提供支持,gradle为web应用开发提供了两个插件War plugin和jetty plugin
+
+war plugin继承了java plugin为项目构建war包
+
+jetty plugin继承了war plugin可以将你的web应用部署到jetty 容器中
+
+当执行build命令时,gradle会寻找src/main/webapp下的源文件,并获取编译后的class和他们运行时的依赖打入war包中
+
+10.2部署到容器中运行
+
+使用插件apply plugin : 'jetty'
+
+应用该插件时同时会应用war plugin,执行gradle jettyRun将会把你的项目部署到容器中
+
+运行gradle jettyRunWar将会构建war包并部署到容器中
+
+url,端口号等可以通过编辑脚本文件来进行加载
+
+11.1	使用gradle命令行
+
+你可以使用命令行一次执行多个任务,如
+
+gradle compile test将分别执行compile和test任务,gradle会按命令中的顺序来依次执行每个任务,并且也会执行每个任务中的依赖,每个任务只会被执行一次;
+
+如下示例
+
+task compile << {
+
+    println 'compiling source'
+
+}
+
+ 
+
+task compileTest(dependsOn: compile) << {
+
+println 'compiling unit tests'
+
+}
+
+ 
+
+task test(dependsOn: [compile, compileTest]) << {
+
+println 'running unit tests'
+
+}
+
+ 
+
+task dist(dependsOn: [compile, test]) << {
+
+println 'building the distribution'
+
+}
+
+dist和test都依赖于complie,但compile只会被执行一次 执行结果如下
+
+> gradle dist test
+
+:compile
+
+compiling source
+
+:compileTest
+
+compiling unit tests
+
+:test
+
+running unit tests
+
+:dist
+
+building the distribution
+
+ 
+
+BUILD SUCCESSFUL
+
+ 
+
+Total time: 1 secs
+
+ 
+
+11.2	排除任务
+
+你可以使用 -x参数来排除不需要执行的任务,让我们用上一个示例中的脚本来体验一下
+
+> gradle dist -x test
+
+:compile
+
+compiling source
+
+:dist
+
+building the distribution
+
+ 
+
+BUILD SUCCESSFUL
+
+ 
+
+Total time: 1 secs
+
+可以看到,test任务并没有被执行,即使它被dist任务所依赖,同时test任务所依赖的compileTest也同样没有被执行,
+
+而像complie所依赖的除了test之外的任务仍然正常执行
+
+11.3	持续构建-即使发生错误
+
+默认情况下,Gradle在执行时如果发生错误会立即中止执行任务,这能使构建更快完成但无法查看更多其它的失败信息,
+
+此时可以使用
+
+-continue
+
+参数,在一个构建中尽可能捕获更多的失败信息;
+
+当增加此参数是,gradle会在其所依赖的任务成功执行的前提下独立的执行每个任务;例如,如果你使用了
+
+'java'和'checkStyle'插件,即使你的代码规范检查和单元测试失败,gradle仍然可以运行checkStyle,执行单元测试并且构建javadoc;所有的错误都会在
+
+P.S:只有其所依赖的任务成功执行之后任务才会被执行,所以如果当java代码编译失败时,单元测试任务即不会被执行,因为
+
+test任务直接依赖于compileJava任务
+
+ 
+
+11.4	任务名称简写
+
+在执行任务时,只要键入的字符足以唯一区分出一个任务即可省去其它字符.如11.1示例
+
+执行dist任务 输入gradle di即可
+
+驼峰命名式简写.如11.1示例
+
+要执行compileTest任务只需输入 gradle cT即可 当然输入 gradle cmopTest同样可以执行构建
+
+11.5	执行gradle构建时,会默认执行当前目录下的构建文件;也可以用"-b"参数来指定其它构建文件;
+
+如下示例
+
+subdir/myproject.gradle
+
+task hello << {
+
+println "using build file '$buildFile.name' in '$buildFile.parentFile.name'."
+
+}
+
+Output of gradle -q -b subdir/myproject.gradle hello
+
+> gradle -q -b subdir/myproject.gradle hello
+
+using build file 'myproject.gradle' in 'subdir'.
+
+你也可以使用-q参数,仅仅指明project路径即可,在"多项目构建"中需要用-p参数来替代-b参数

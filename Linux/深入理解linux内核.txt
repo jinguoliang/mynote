@@ -1,0 +1,10 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-06-12T10:08:20+08:00
+
+====== 深入理解linux内核 ======
+Created Thursday 12 June 2014
+
+Once a pipe is created, a process uses
+the read( ) and write( ) __VFS system calls__ to access it. Therefore, for each pipe, the kernel creates
+an inode object plus two file objectsone for reading and the other for writing.

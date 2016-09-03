@@ -1,0 +1,38 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-10T18:28:26+08:00
+
+====== 搭建Hunchentoot服务器 ======
+Created Sunday 10 November 2013
+
+1.安装sbcl  clisp 的标准实现
+2.下载quicklisp，用它来下载安装[[+hunchentoot]]
+quicklisp.lisp文件可以通过以下链接下载：
+
+http://beta.quicklisp.org/quicklisp.lisp
+3.启动sbcl，载入quicklisp
+	（load “quicklisp.lisp”）
+4.安装
+(quicklisp-quickstart:install)  
+(ql:add-to-init-file)  
+(ql:quickload "swank")  
+(ql:quickload "hunchentoot")  
+(ql:quickload "cl-who")
+
+5.编辑一个测试文件
+    (defun myserver ()        
+      (define-easy-handler (greet :uri "/hello") ()  
+                    (format nil "<html><body><h1>Hello world!</h1></body></html>"))
+		(start (make-instance 'easy-acceptor :port 8080))  ) 
+6.启动服务
+重新进入sbcl
+加载hunchentoot
+(ql:quickload "hunchentoot")
+(use-package :hunchentoot)	相当于导入包名
+加载刚才的测试文件
+(load "~/workspace/lisp/hunchentoot.lisp")
+
+7.(myserver) 运行服务器
+8.此时在浏览器输入localhost：8080
+
+ 

@@ -1,0 +1,16 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-24T16:17:44+08:00
+
+====== Application ======
+Created Friday 24 July 2015
+
+[[ApplicationInfo]]  继承自[[PackageItemInfo]]
+1. 应用的各种信息, AndroidManifest.xml <Application> 声明的
+2. 源码目录, 数据目录, 库目录, 共享库文件等等
+
+[[PackageItemInfo]]
+1. 是package manager持有item的基础类
+2. 一些通用的操作label, icon, metadata
+3. 它的存在只是因为item有好多相同的操作
+4. 没有实现Parcelable,但是提供了相关方法

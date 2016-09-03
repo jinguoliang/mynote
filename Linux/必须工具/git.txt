@@ -1,0 +1,156 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-10-16T13:51:38+08:00
+
+====== git ======
+Created 星期四 16 十月 2014
+
+=== 我的git 约定 ===
+
+1. commit 分类 标题开头用一下标出 如 "[Fixbug] 搜索框图片压扁" 
+	a. android项目
+		1. Fixbug
+		2. Function
+		3. UI 既有UI又有功能的算作Function
+		4. Format
+		5. Clean
+		6. Refactor
+		7. [[BuildConfig]]
+		8. Git
+	b. 博客：
+		1. Post
+		2. Book
+		3. Format 格式问题
+		4. Config 
+		5. Revise 校正，错别字，等其他错误
+		6. UI 显示效果 显示模板内容
+		7. Git
+	c. zim 笔记
+		1. w27.2-[home-gujiazhuang]-liuhaizi
+2. 配置
+	a. 全设置成system 
+	user.email=jinguol999@163.com
+	user.name=jinux
+	core.editor=vim
+	core.quotepath=false  #保证显示中文，而不是被编码的文字
+	push.default=simple
+	merge.tool=meld
+
+
+=== 提取前一周的commit ===
+git log --oneline --committer=jinguoliang --since="one week"
+
+=== 显示一个分支里有,另一个分支没有的commit ===
+git log one-branch..another-branch
+
+=== GUI 工具 ===
+git-cola 非常灵活的提交部分改动
+
+=== 传输协议 ===
+ssh
+https
+git协议
+	git daemon --reuseaddr --base-path=/home/git   
+	建个空文件touch  git-daemon-export-ok标识可以使用git协议	
+
+
+===== Git can do =====
+:
+* Examine the state of your project at earlier points in time
+* Show the differences among various states of the project
+* Split the project development into multiple independent
+lines, called “branches,” which can evolve separately
+* Periodically recombine branches in a process called “merg‐
+ing,” reconciling the changes made in two or more branches
+* Allow many people to work on a project simultaneously,
+sharing and combining their work as needed
+and much more
+
+===== Some particular strengths of Git are: =====
+1.Git is a member of the newer generation of distributed
+version control systems,Network access is only needed occasionally, to
+share sets of changes among people working on the same
+project
+2.In some systems, notably CVS and Subversion, branches
+are slow and difficult to use in practice, which discourages
+their use. Branches in Git, on the other hand, are very fast
+and easy to use. Effective branching and merging allows
+more people to work on a project in parallel, relying on Git
+to combine their separate contributions
+3.Applying changes to a repository is a two-step process: you
+add the changes to a staging area called the “index,” then
+commit those changes to the repository. The extra step al‐
+lows you to easily apply just some of the changes in your
+current working files (including a subset of changes to a
+single file), rather than being forced to apply them all at
+once, or undoing some of those changes yourself before
+committing and then redoing them by hand. This encour‐
+ages splitting changes up into better organized, more co‐
+herent and reusable sets.
+4.Git’s distributed nature and flexibility allow for many dif‐
+ferent styles of use, or “workflows.” Individuals can share
+work directly between their personal repositories. Groups
+can coordinate their work through a single central 
+repository. Hybrid schemes permit several people to orga‐
+nize the contributions of others to different areas of a
+project, and then collaborate among themselves to main‐
+tain the overall project state.
+
+
+
+git server 搭建
+1.cd empt/path.git
+2. git init --bare
+3. 去到另一个目录 git clone username@127.0.0.1:/empt/path.git
+4. 进入刚clone的目录
+5. 添加README文件提交的一个commit
+6. 否则不能进行git status等操作
+7. 之后正常
+
+彻底删除文件
+git filter-branch --index-filter 'git rm -r --cached --ignore-unmatch path/to/your/file' HEAD
+git push origin master --force
+rm -rf .git/refs/original/
+git reflog expire --expire=now --all
+git gc --prune=now
+git gc --aggressive --prune=now
+
+用push, 删除远程tag
+git push origin :refs/tags/Remote_Systems_Operation
+
+=== CRLF ===
+一、AutoCRLF
+#提交时转换为LF，检出时转换为CRLF，适合windows
+git config --global core.autocrlf true   
+
+#提交时转换为LF，检出时不转换 适合linux
+git config --global core.autocrlf input   
+
+#提交检出均不转换
+git config --global core.autocrlf false
+二、SafeCRLF
+
+#拒绝提交包含混合换行符的文件
+git config --global core.safecrlf true   
+
+#允许提交包含混合换行符的文件
+git config --global core.safecrlf false   
+
+#提交包含混合换行符的文件时给出警告
+git config --global core.safecrlf warn
+
+#git文件路径中文乱码
+git config --system core.quotepath false
+
+git config --global core.editor vi              set  the default commit editor
+git log -p    -2    -p means show the diff and -2 means show the last 2 
+
+git config --global alias.co checkout    alias a cmd
+git config --global alias.unstage 'reset HEAD --'   create a new cmd
+
+git reset --hard   sha1no
+git reflog   show the commit id which not display in git log
+
+[[+gitignore|.gitignore]]
+
+[[+tag 操作|tag 操作]]

@@ -1,0 +1,18 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-08T04:40:05+08:00
+
+====== 硬件 ======
+Created Friday 08 November 2013
+
+[[+电源]]
+
+
+[[+电话]]
+
+
+[[闹钟]]
+
+
+
+	

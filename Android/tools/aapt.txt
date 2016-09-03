@@ -1,0 +1,98 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-06-23T14:13:07+08:00
+
+====== aapt ======
+Created Monday 23 June 2014
+
+1. 列出apk包的内容
+
+ aapt l[ist] [-v] [-a] file.{zip,jar,apk}
+
+-v 以table形式列出来
+
+-a 详细列出内容
+
+ 例如：aapt l <你的apk文件>，这个命令就是查看apk内容
+2. 查看apk一些信息
+
+aapt d[ump] [--values] WHAT file.{apk} [asset [asset ...]]
+
+badging          Print the label and icon for the app declared in APK
+permissions      Print the permissions from the APK.
+resources        Print the resource table from the APK.
+configurations   Print the configurations in the APK.
+xmltree          Print the compiled xmls in the given assets.
+xmlstrings       Print the strings of the given compiled xml assets.
+
+例如：aapt d permissions <apk文件>, 这个就是显示这个apk所具有的权限
+
+3. 编译android资源
+
+ aapt p[ackage] [-d][-f][-m][-u][-v][-x][-z][-M AndroidManifest.xml] /
+        [-0 extension [-0 extension ...]] [-g tolerance] [-j jarfile] /
+        [--debug-mode] [--min-sdk-version VAL] [--target-sdk-version VAL] /
+        [--app-version VAL] [--app-version-name TEXT] [--custom-package VAL] /
+        [--rename-manifest-package PACKAGE] /
+        [--rename-instrumentation-target-package PACKAGE] /
+        [--utf16] [--auto-add-overlay] /
+        [--max-res-version VAL] /
+        [-I base-package [-I base-package ...]] /
+        [-A asset-source-dir]  [-G class-list-file] [-P public-definitions-file] /
+        [-S resource-sources [-S resource-sources ...]]         [-F apk-file] [-J R-file-dir] /
+        [--product product1,product2,...] /
+        [raw-files-dir [raw-files-dir] ...]
+
+这个比较复杂，只解释几个关键参数。
+
+-f 如果编译出来的文件已经存在，强制覆盖。
+
+-m 使生成的包的目录放在-J参数指定的目录。
+
+-J 指定生成的R.java的输出目录
+
+-S res文件夹路径
+
+-A assert文件夹的路径
+
+-M AndroidManifest.xml的路径
+
+-I 某个版本平台的android.jar的路径
+
+-F 具体指定apk文件的输出
+
+例如：
+
+1). 将工程的资源编译R.java文件
+
+aapt package -m -J <R.java目录> -S <res目录> -I <android.jar目录>  -M <AndroidManifest.xml目录>
+
+2). 将工程的资源编译编译到一个包里
+
+aapt package -f  -S <res目录> -I <android.jar目录> -A<assert目录>  -M <AndroidManifest.xml目录> -F <输出的包目录>
+
+4. 打包好的apk中移除文件
+
+aapt r[emove] [-v] file.{zip,jar,apk} file1 [file2 ...]
+
+例如：aapt r <你的apk文件> AndroidManifest.xml， 这个就是将apk中的AndroidManifest移除掉
+
+5. 添加文件到打包好的apk中
+
+ aapt a[dd] [-v] file.{zip,jar,apk} file1 [file2 ...]
+
+例如：aapt a <你的apk文件> <要添加的文件路径>， 这个就是将文件添加到打包好的apk文件中
+
+6. 显示aapt的版本
+
+aapt v[ersion]
+
+例如：aapt v， 就是打印这个结果 Android Asset Packaging Tool, v0.2
+
+
+Android apk 打包
+{{./pasted_image.png}}
+
+
+
+

@@ -1,0 +1,14 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-09-15T10:04:56+08:00
+
+====== 录屏 ======
+Created Tuesday 15 September 2015
+
+w38.2 d258 9月15日 
+1. 总结录屏的知识点
+	a. 音频从录制到输出m4a
+	b. 视频从h264到输出mp4
+	c. 合并音视频，输出mp4
+2. 调研h264转MP4，即mediamux，输出demo
+	a. demo：合并音视频

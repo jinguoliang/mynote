@@ -1,0 +1,40 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-04-20T11:26:53+08:00
+
+====== 内存优化 ======
+Created 星期一 20 四月 2015
+
+
+=== Android context（Application/Activity）与内存泄露  ===
+
+比如我们写了一个应用程序，需要加载一个很大的图片，我们不希望每次旋转屏幕的时候都销毁这个图片重新加载。
+
+实现这个要求的简单想法就是定义一个静态的Drawable，这样Activity 类创建销毁它始终保存在内存中，访问速度会很快。 
+实现类似： 
+
+    public class myactivity extends Activity {   
+        private static Drawable sBackground;   
+        protected void onCreate(Bundle state) {   
+            super.onCreate(state);   
+      
+            TextView label = new TextView(this);   
+            label.setText("Leaks are bad");   
+      
+            if (sBackground == null) {   
+                sBackground = getDrawable(R.drawable.large_bitmap);   
+            }   
+            label.setBackgroundDrawable(sBackground);//drawable attached to a view   
+      
+            setContentView(label);   
+        }   
+    }   
+
+这段程序看起来很简单，但是却问题很大。当屏幕旋转的时候会有leak，即gc没法销毁activity
+我们刚才说过，屏幕旋转的时候系统会销毁当前的activity。但是当drawable和view关联后，drawable保存了view的 reference，即sBackground保存了label的引用，而label保存了activity的引用。既然drawable不能销毁，它所引用和间接引用的都不能销毁，这样系统就没有办法销毁当前的activity，于是造成了内存泄露。gc对这种类型的内存泄露是无能为力的。 
+
+
+避免context相关的内存泄露，记住以下几点： 
+1. 不要让生命周期长的对象引用activity context，即保证引用activity的对象要与activity本身生命周期是一样的 
+2. 对于生命周期长的对象，可以使用application context （继承类：public class GApplication extends Application）
+3. 尽量使用静态类（全局），避免非静态的内部类，避免生命周期问题，注意内部类对外部对象引用导致的生命周期变化

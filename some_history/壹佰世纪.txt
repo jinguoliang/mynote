@@ -1,0 +1,9 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-05-21T10:39:59+08:00
+
+====== 壹佰世纪 ======
+Created Thursday 21 May 2015
+
+规范：
+1. 打包名称：liuhaizi_channelid_日期_sha1.apk  （sha1 每次提交的串号）

@@ -1,0 +1,8 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-03T11:11:24+08:00
+
+====== Layout ======
+Created Sunday 03 November 2013
+
+Layout 设置比重时，加入横向，宽度设为0dip则比重起效果？？？

@@ -1,0 +1,32 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-03T11:24:22+08:00
+
+====== 历史 ======
+Created Sunday 03 November 2013
+
+这个故事要从2002年初说起，Google的Larry Page和Sergey Brin 在斯坦福参加了一个关于Danger公司的then-new SideKick 手机的讨论会。演讲这叫Andy Rubin，是Danger那时的CEO，SideKick是当时第一批多功能，可联网设备。在那次讨论会后，Larry去看这中设备，发现它的默认搜索引擎是Google，很是高兴。从那不久，Larry和Sergey就成了SideKick的用户。
+	尽管SideKick很新颖，吸引了不少用户，然而，它却没有取得商业成功。到2003年，Rubin和Danger的董事会达成协议离开公司。Rubin在尝试了其他一些事后，决定还是搞手机系统。他使用了自己的域名，android.com,打算为手机制造业创建一个开放的系统。After investing most of his savings in the project and having received some additional seed money
+他打算去创建一个公司。很快，在2005年八月，Google acquired Android Inc. with little fanfare
+	Google从获得这个项目到2007年11月向世界公布，几乎没有释放android的任何消息。这是开发团队奋战于幕后，忙着处理各种问题，构建原型。最初宣布Android的是开放手机联盟（OHA），揭去它什么的面纱，实际上是一群公司，他们提出自己的要求什么的，作为手机设备开发的开放标准。Android是他们的第一个产品。一年后，也就是2008年九月，Android的第一个开源版本，1.0,发布。
+	从那以后，Android发布了好几个版本了，他的进展和开发明显更公开了。但是，我们以后看到，Android依然有很多工作是不会开源的。Table1-1 显示了Android各个版本和对应版本最值得注意的特性
+
+	
+Table 1-1. Android versions
+Version Release date 
+Codename
+Most notable feature(s)
+Open source
+1.0 September 2008 Unknown Yes
+1.1 February 2009 Unknowna Yes
+1.5 April 2009 Cupcake 1.6 September 2009 Donut Onscreen soft keyboard Yes
+Battery usage screen and VPN support Yes
+2.0, 2.0.1, 2.1 October 2009 Eclair Exchange support Yes
+2.2 May 2010 Froyo Just-in-Time (JIT) compile Yes
+2.3 December 2010 Gingerbread SIP and NFC support Yes
+3.0 January 2011 Honeycomb Tablet form-factor support No
+3.1 May 2011 Honeycomb USB host support and APIs No
+4.0 November 2011 Ice-Cream Sandwich Merged phone and tablet form-factor support Yes
+4.1 June 2012 Jelly Bean Lots of performance optimizations Yes
+4.2 November 2012 Jelly Bean Multiuser support Yes
+a This version is rumored to have been called “Petit Four.” Have a look at this Google+ post for more information.

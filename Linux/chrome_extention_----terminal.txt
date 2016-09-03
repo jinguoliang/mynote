@@ -1,0 +1,18 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-01-13T10:54:18+08:00
+
+====== chrome extention ----terminal ======
+Created Monday 13 January 2014
+
+Access the power of the Linux OS on your browser with Terminal.
+Terminal is a web-based chrome application that allows you to interact directly with a VM provided by Koding.com. If you have used UNIX before, you’ll feel right at home. Koding VMs comes with hundreds of powerful UNIX applications already included.
+
+Koding VMs provide you with a real Ubuntu OS, with real shell access, and allow you to work on real code. Python, PHP, C++, C, it doesn't matter. Even better, they are online. Accessible from anywhere in the world. Even sharable with teams.
+
+http://guest-900714.kd.io/ruby.rb  can view the file in the vm
+
+https://koding.com					
+Koding is an online development environment with the goal of simplifying worldwide development and providing free computation and development to everyone. It does this by offering Free VMs for development to anyone. The Koding VMs provide you with a real Ubuntu OS, with areal Terminal, and allow you to work on real code. Python,PHP, C++, C, it doesn’t matter. Even better, they are online. Accessible from anywhere in the world. Even sharable with teams.
+
+

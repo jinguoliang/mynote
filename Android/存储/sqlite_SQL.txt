@@ -1,0 +1,23 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-03T10:50:13+08:00
+
+====== sqlite SQL ======
+Created Sunday 03 November 2013
+
+1.create trigger trigger_name after/before insert/delete on table_name begin--------  end;
+			          /update of FieldName on table_name begin-------end;
+new表示新插入的记录
+old表示删除的记录
+
+2.select 'hello';可以直接输出字符串
+
+3.case作子句如 select (case 1 when 1 then 1 when 2 then 2 else 3 end);
+
+4.函数：
+	datetime().......................产生日期和时间
+
+	date()...........................产生日期
+	date(日期时间字符串, 修正符, 修正符, ……)		日期时间字符串--字符串表示的long整数
+	time()...........................产生时间
+	[[+strftime()]].......................对以上三个函数产生的日期和时间进行格式化 	

@@ -1,0 +1,47 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-31T12:35:25+08:00
+
+====== Android UI 布局： 布局容器和ViewGroup类 ======
+Created Friday 31 July 2015
+
+1. 使用xml布局
+	a. 一个控件有属性，可能有儿子，可能有兄弟，可能有父亲
+	b. 根布局必须生命命名空间：<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" >
+		a. [[http://schemas.android.com/apk/res/android|schemas.android.com虚拟的服务器]]
+		b. 在它的目录[[http://schemas.android.com/apk/res/android|/apk/res/android里有XML]] schema
+2. 通过参数来微调和自定义UI
+	a. 属性都以android：开头，这里android：id代表了http://schemas.android.com/apk/res/android：id
+3. ViewGroup：布局容器的超类
+	a. 不直接用
+	b. [[ViewGroup]] → View → Object
+	c. 两个内嵌类：layout parameters and margins
+	d. 一个接口：OnHierarchyChangeListener 监听布局内层次的改变
+	e. 直接子类： LinearLayout， FrameLayout， RelativeLayout， GridLayout， DrawerLayout，ViewPager，PagerTitleStrip和SlidingPaneLayout
+	f. 间接子类： [[ActionBar，Fragment]]
+4. ViewGroup.LayoutParams
+	a. xml
+		a. android:layout_width and [[android:layout_height]]
+		b. FILL_PARENT（API Level 8 -） MATCH_PARENT WRAP_CONTENT
+	b. ViewGroup.LayoutParams(int width, int height)
+	c. resolveLayoutDirection（int）  LAYOUT_DIRECTION_LTR  LAYOUT_DIRECTION_RTL  （Android 4.2 [[JellyBean]] +） 现在好像没有了
+		a. xml   android:layoutDirection="ltr"
+5. ViewGroup.MarginLayoutParams
+	a. 继承ViewGroup.LayoutParams
+	b. xml 各方向的margin和layout_marginStart，layout_marginEnd
+	c. 4个public的属性四个方向
+	d. 6个get方法，setMargins(int left, int top, int right, int bottom)， .isMarginRelative( )是否设置的start/end
+6. Margin和Padding的不同
+	a. 都是添加空间
+	b. 容器既有margin又有padding， view只有padding
+	c. marggin控制控件外部的空间， padding控制控件内部的空间
+7. Animating Your ViewGroup: [[LayoutAnimationController]]
+	a. 每一个child都会执行这个动画
+	b. LayoutAnimationController被用来计算每个动画的开始时间，默认的就是根据itemindex
+	c. 自定义开始时间覆写它：getDelayForView(android.view.View）
+	d. GridLayoutAnimationController覆写了， 它是根据行和列来计算的
+	e. 内嵌类AnimationParameters
+		a. [[android:delay]] 动画时长
+		b. [[android:animation]] 定义动画的xml
+		c. [[android:interpolator]] 
+		d. [[android:animationOrder]] 动画顺序 ORDER_NORMAL, ORDER_RANDOM, and ORDER_REVERSE

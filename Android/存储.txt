@@ -1,0 +1,43 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-03T11:13:44+08:00
+
+====== 存储 ======
+Created Sunday 03 November 2013
+
+shared preference
+getSharedPreferences(name，mode) 获取name指定的的shared preference			preference命名如com.example.myapp.PREFERENCE_FILE_KEY
+getPreferences(mode)  	   获取Activity默认的，一个Activity只有一个
+mode Context.MODE_PRIVATE（私有）	MODE_WORLD_READABLE or MODE_WORLD_WRITEABLE（所有知道名的都可访问）
+Context context = getActivity();
+SharedPreferences sharedPref = context.getSharedPreferences(
+        getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+
+写
+SharedPreferences.Editor editor = sharedPref.edit();
+editor.putInt(getString(R.string.saved_high_score), newHighScore);
+editor.commit();
+读
+sharedPref.getInt(getString(R.string.saved_high_score), defaultValue);
+
+文件
+文件解析
+json
+manifest属性android:installLocation设置应用存储数据位置
+访问外存需要权限
+保存在内部存储空间和通过getExternalFilesDir()获取的外部存储的目录的文件会在卸载程序时一同删掉.
+
+getFilesDir()获取本应用内部空间的跟目录 
+getCacheDir()	获取内部空间的缓存文件目录，如果存储不足是系统会自动删掉缓存目录文件
+File file = new File(context.getFilesDir(), filename);
+FileOutputStream outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
+
+String fileName = Uri.parse(url).getLastPathSegment();
+file = File.createTempFile(fileName, null, context.getCacheDir());//网页缓存
+
+数据库
+[[+orm|orm]]
+sqlite 
+
+[[+sqlite SQL]]

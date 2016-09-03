@@ -1,0 +1,19 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-10-15T23:43:25+08:00
+
+====== Some good site ======
+Created 星期三 15 十月 2014
+
+android source project:
+http://www.javaapk.com/
+
+github.com
+bitbucket.org
+
+csdn.cn
+chrome 插件
+http://www.codeceo.com/article/15-chrome-extension.html
+
+解释一些词的意思,历史
+http://www.behindthename.com/

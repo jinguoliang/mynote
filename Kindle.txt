@@ -1,0 +1,17 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-01-02T22:57:51+08:00
+
+====== Kindle ======
+Created 星期五 02 一月 2015
+
+kindle 越狱		
+5.6.x.x 是个坑呀，网上的方法都不行，因为拷进去的bin都被删了
+
+所以必须要降级
+
+哭了，根本玩不了 		2015年 01月 02日 星期五 23:45:25 CST
+
+kindle paper white 送人了 好,感觉好悲壮
+
+不过又买了一个kindle 3, 全键盘, 老古董, 不过可以越狱呀, 哈哈

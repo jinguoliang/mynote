@@ -1,0 +1,26 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-03T11:06:04+08:00
+
+====== Loader ======
+Created Sunday 03 November 2013
+
+1.使用LoaderManager
+
+getLoaderManager().initLoader(0, null, callback);   //初始化一个Loader，并传如回调函数
+callback{
+ @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {//加载完新数据后调用
+		//在这里使用新数据
+		CursorAdapter.swapCursor(data);
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {//第一次创建loader时调用
+    }
+}
+getLoaderManager().restartLoader(0, null, this); //重新加载数据

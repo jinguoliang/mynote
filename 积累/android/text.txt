@@ -1,0 +1,28 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-12-04T10:00:28+08:00
+
+====== text ======
+Created 星期四 04 十二月 2014
+
+//获取行首的标点
+	private String getPunctuationHead(String line) {
+		StringBuffer tmp = new StringBuffer();
+		for (int i = 0; i < line.length(); i++) {
+			String c = line.substring(i, i + 1);
+			if (isPunctuation(c)) {
+				tmp.append(c);
+			} else {
+				break;
+			}
+		}
+		return tmp.toString();
+	}
+	//判断是否是标点符号
+	private boolean isPunctuation(String c) {
+		String punctuation = ",.;:!?”，。；！？》……";
+		if (punctuation.contains(c)) {
+			return true;
+		}
+		return false;
+	}

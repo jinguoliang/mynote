@@ -1,0 +1,13 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-10-16T13:52:48+08:00
+
+====== Android 环境搭建 ======
+Created 星期四 16 十月 2014
+
+=== eclipse 环境搭建 ===
+1. adb等工具需要运行在32为环境下
+sudo apt-get install lib32ncurses5
+sudo apt-get install ia32-libs ia32-libs-gtk linux32 lib32asound2
+
+

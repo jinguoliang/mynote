@@ -1,0 +1,9 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-12-01T00:43:27+08:00
+
+====== lua ======
+Created Sunday 01 December 2013
+
+Lua的目标是成为一个很容易嵌入其它语言中使用的语言。大多数程序员也认为它的确做到了这一点。
+[[~/Nutstore/resource/Beginning Lua Programming.pdf|Beginning Lua Programming]]

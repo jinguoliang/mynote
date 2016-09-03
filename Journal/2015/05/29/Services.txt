@@ -1,0 +1,41 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-05-30T20:48:11+08:00
+
+====== Services ======
+Created Saturday 30 May 2015
+
+在后台提供长时间的操作，没有用户界面
+应用模块可以绑定到服务，与之交互，甚至可以跨进程交互（IPC）
+Services可以做这些事：网络传输，播放音乐，读写文件，与Content Provider交互
+
+两种启动方式：
+	1. started	startService（） 一般不返回结果，独自运行，即使启动它的组件destroed
+		a. 其他组件调用stopSevice（）
+		b. stopSelf（）
+		c. [[IntentService]]	onHandleIntent()  有一个worker theed 来顺序处理所有请求。 仅需覆写一个方法轻松搞定
+		d. 实际在这种模式下要想让服务传回结果也是可以的。就是把一个PendingIntnet.getBroadcast()通过Intent传给Service，然后Service通过Broadcast传递结果
+	2. bound	bindService（） 可以交互，进行IPC。可以多个组件同时bind一个服务，当所有的都unbind的时候，服务才被destroyed
+		a. bindService会返回一个IBinder，是这个服务的接口
+		b. 保持一个长期的连接通常不允许再被start
+		c. 即使bind service，如果start过，当都unbind后仍需stopSelf或者stopService
+
+服务可以同时以上面两种方式运行。这仅仅取决于你是否实现了它的两个方法onStartCommand（）和onBind（）
+
+两种方式都是通过Intent来启动
+
+服务并没有开独立的线程或者进程，是在主线程，所以我们在使用的时候还是要建立新线程或者在Manifest里声明它在独立的进程 
+
+当系统内存太少时，服务会被强制停止，除非绑定它的activity拥有用户焦点，或者服务被声明成了run in the foreground
+随着服务的运行，服务优先级会越来越低，越来越容易被kill掉
+a forground service被认为用户持续关注的服务，不会因为低内存被杀掉
+	1. 必须在通知栏提供一个通知
+	2. 最典型的例子就是播放器了
+	3. startForeground（）  传一个通知Id，和一个Notification对象	stopForeground   退出前台模式，但服务不会立即停止
+
+android:exported=“true” 来设置是否能被其他应用访问
+
+onStartCommand（）的返回值：描述了当系统杀掉你的服务后是否会重启它
+	1. START_NOT_STICKY 表示但服务被杀了，不重新启动，除非有没处理的Intent。
+	2. START_NOT_STICKY  表示被杀了会重启动，如果有没处理的Intent会传递它，否则传递null，适合播放器，一直保持后台运行等待任务
+	3. START_REDELIVER_INTENT 表示被杀了后会重启，并且会立即把前一个intent传递个它，适合下载文件，之前的事没做完继续做。

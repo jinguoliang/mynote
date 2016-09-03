@@ -1,0 +1,93 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-05-05T00:31:22+08:00
+
+====== stop touchpad ======
+Created Tuesday 05 May 2015
+
+Ubuntu 触摸板关闭开启命令
+(2014-06-18 18:02:49)
+转载▼
+标签：
+linux
+xinput
+	分类： LINUX
+因为我的lenovo联想笔记本的触摸板没有一个专用的硬件开关去控制触摸板的使用，每次都要使用Fn+F8来禁用触摸板，每次使用机器都会自己又启用触摸板了，而且触摸板也确实敏感，还是禁用了好，有需要的时候在打开。
+发现通过xinput可以来启用和禁用输入设备，以此来达到我需要的功能。
+查看设备列表
+通过xinput先查看一些都有哪些设备
+xinput     #或者 xinput list
+显示结果如下
+ddd@ddd:~$ xinput list
+  Virtual core pointer                     id=2 [master pointer  (3)]
+    ↳ Virtual core XTEST pointer               id=4 [slave  pointer  (2)]
+    ↳ MLK rapoo 1800                           id=11 [slave  pointer  (2)]
+    ↳ ETPS/2 Elantech Touchpad                 id=14 [slave  pointer  (2)]
+  Virtual core keyboard                   id=3 [master keyboard (2)]
+    ↳ Virtual core XTEST keyboard             id=5 [slave  keyboard (3)]
+    ↳ Power Button                             id=6 [slave  keyboard (3)]
+    ↳ Video Bus                               id=7 [slave  keyboard (3)]
+    ↳ Video Bus                               id=8 [slave  keyboard (3)]
+    ↳ Sleep Button                             id=9 [slave  keyboard (3)]
+    ↳ MLK rapoo 1800                           id=10 [slave  keyboard (3)]
+    ↳ Lenovo EasyCamera                       id=12 [slave  keyboard (3)]
+    ↳ AT Translated Set 2 keyboard             id=13 [slave  keyboard (3)]
+    ↳ Ideapad extra buttons                   id=15 [slave  keyboard (3)]
+其中ETPS/2 Elantech Touchpad就是我笔记本的触摸板，其中id=14为设备的编号。这两者是等价的。
+查看设备属性
+xinput list-props 14
+xinput list-props 'ETPS/2 Elantech Touchpad'
+显示部分结果如下:(不全，只是为了显示一下大概有什么内容)
+ddd@ddd:~$ xinput list-props 'ETPS/2 Elantech Touchpad'
+Device 'ETPS/2 Elantech Touchpad':
+Device Enabled (132): 1
+Device Accel Profile (259): 1
+Device Accel Velocity Scaling (262): 12.500000
+Synaptics Edges (282): 56, 1352, 34, 606
+Synaptics Finger (283): 1, 1, 256
+Synaptics Tap Time (284): 180
+Synaptics Tap Move (285): 68
+Device Product ID (249): 2, 14
+Device Node (250): "/dev/input/event7"
+其中有个属性Device Enabled表示设备的是禁用还是启用，1表示启用，0表示禁用。另外括号中的132也是表示Device Enabled，这两者是等价的。上面提到的设备名称和设备id也是等价的。
+禁用、启用触摸板
+用过set-porp来设置设备的属性。
+#禁用触摸板
+xinput set-prop 14 'Device Enabled' 0  #通过设备编号+属性名禁用触摸板
+xinput set-prop 'ETPS/2 Elantech Touchpad' 'Device Enabled' 0 #通过设备名+属性名禁用触摸板
+#启用触摸板
+xinput set-prop 14 132 1 #通过设备编号+属性编号来设置
+xinput set-prop 'ETPS/2 Elantech Touchpad' 132 1 #通过设备名+属性编号启用
+刚才说了在我的电脑ETPS/2 Elantech Touchpad和14是等价的，Device Enabled和132是等价的，所以两者可以替代，于是敲命令的时候可以偷懒下。不过像这样看着比较直观这个命令到底是干什么。
+xinput set-prop 'ETPS/2 Elantech Touchpad' 'Device Enabled' 0
+通过脚本快速启用和禁用触摸板
+每次如果都敲命令也是比较麻烦的，通过脚本就很快的切换了。
+#!/bin/bash
+if [ $1 == 'on' ]
+then
+    set-prop 'ETPS/2 Elantech Touchpad' 'Device Enabled' 1
+    echo "触摸板开启成功！"
+elif [ $1 == 'off' ]
+then
+    set-prop 'ETPS/2 Elantech Touchpad' 'Device Enabled' 0
+    echo "触摸板关闭成功！"
+else
+    echo "请输入参数：on/off"
+    echo "开启触摸板：touchpadEnable on"
+    echo "禁用触摸板：touchpadEnable off"
+fi
+通过禁用触摸板，确实给我解决了不少的麻烦。
+开机自动禁用触摸板
+但是这样在开机重启后又恢复了，对有些同学喜欢关机而不是休眠的同学确实还要改进，就是让开机的时候自动运行禁用触摸板的命令。
+在~/.config/autostart/下创建一个启动器xinput.desktop文件，内容如下
+[Desktop Entry]
+Type=Application
+Exec=xinput set-prop 'ETPS/2 Elantech Touchpad' 'Device Enabled' 0
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[zh_CN]=touchpad enable
+Name=touchpad enable
+Comment[zh_CN]=禁用触摸板
+Comment=禁用触摸板
+这样在开机的时候就能自动禁用触摸板了。

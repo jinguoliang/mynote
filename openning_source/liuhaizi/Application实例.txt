@@ -1,0 +1,34 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-27T11:13:40+08:00
+
+====== Application实例 ======
+Created Monday 27 July 2015
+
+1. 继承了Application,作为全局的
+2. 就当他一个全局变量的容器了, 用户, 版本,城市,push,update
+3. init
+	a. sharedSDK
+	b. 根据构建的是release还是debug设置服务器为正式的还是测试的
+	c. 初始化用户信息, 从preference读取
+	d. 获取应用版本名
+	e. 初始化PushAgent
+		a. mPushAgent.setMessageHandler
+			1. 通过覆写getNotification自定义NotationUI
+		b. mPushAgent.setNotificationClickHandler
+			1. 一些提示
+	f. 初识化httpUtils
+		a. 设置自定义的全局的UserAgent
+		b. 设置缓存
+		c. 设置对方法的缓存
+	g. 从preference获取当前城市code
+4. getUserAgent 从xUtils摘出来的
+	a. 本地化信息,语言,国家
+	b. 系统版本
+5. 初始化ImageLoader
+	a. 通过DisplayImageOptions设置加载的图片,失败的图片,是否使用内存缓存,是否使用disk缓存,是否在加载前reset view
+	b. ImageLoaderConfiguration设置默认的DisplayImageOptions, 设置线程池, 缓存,image下载器,image编码器
+	c. 最后ImageLoader.getInstance().init(config);
+6. 设置一件分享
+	a. [[OnekeyShare]]
+	b. 做一系列设置然后show

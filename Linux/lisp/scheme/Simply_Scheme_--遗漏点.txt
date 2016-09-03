@@ -1,0 +1,11 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-22T23:24:20+08:00
+
+====== Simply Scheme --遗漏点 ======
+Created Friday 22 November 2013
+
+18.tree
+19.higher-order functions
+
+

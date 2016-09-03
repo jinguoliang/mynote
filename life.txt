@@ -1,0 +1,34 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-10-12T22:19:22+08:00
+
+====== life ======
+Created 星期六 12 十月 2013
+
+思考：
+	编程，生活，与拼图，不是很相似吗？
+
+编程:
+	函数式编程
+	面向过程编程
+	面向对象编程
+
+
+====== 我 ======
+[[+的状态|的状态]]
+
+[[life:一些感动]]
+一些感悟
+
+
+
+[[:thinking:寻找理想的工作]]
+
+
+====== tomato alarm ======
+{{./tomato_alarm.bmp}}
+
+
+{{./pasted_image.png}}
+
+===== You haven't viewed the world. Where does your world view come from? =====

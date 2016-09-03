@@ -1,0 +1,217 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-03T11:36:44+08:00
+
+====== Action mode 实现的上下文操作模式 ======
+Created Sunday 03 November 2013
+
+创建上下文菜单
+
+上下文菜单提供了影响指定项目或UI中内容结构的动作。你能够给任何View对象提供一个内容菜单，但是它们最常用于ListView、GridView或集合类型的View对象的项目中，用户能够执行每个项目上的动作。
+
+有两个方法来提供上下文动作：
+
+1.  在一个浮动的内容菜单中提供上下文动作。当用户在一个声明支持上下文菜单的View对象上长按（long-click）时，会显示一个浮动的菜单项目列表（类似一个对话框）。每次用户能够在一个项目上执行的上下文动作。
+
+2.  在上下文动作模式中提供上下文操作。这种模式是ActionMode类的一个系统实现，它在屏幕的顶部显示一个带有操作项目的上下文操作栏，这些操作能够影响被选择的项目。当这种模式被激活，每次用于能够在多个项目上执行一个操作（如果你的应用程序允许）。
+
+注意：上下文操作模式在Android3.0（API 级别 11）和以上版本中才是有效的，并且是显示上下文操作的首选技术。如果你的应用程序支持的平台版本比3.0低，那么就要在这些设备上使用浮动菜单。
+
+{{./pasted_image.png}}
+
+浮动上下文菜单（左）和上下文操作栏（右）的截图
+
+创建浮动的上下文菜单
+
+以下是创建浮动的上下文菜单的步骤：
+
+1.  通过调用registerForContextMenu()方法把View对象注册给被关联的内容菜单，这个方法接受View对象参数。如果你的Activity使用一个ListView或GridView对象，并你想给对象中的每个项目都提供相同的内容菜单，可以通过把ListView或GridView对象传递给registerForContextMenu()方法来注册一个内容菜单的所有菜单项。
+
+2.  实现Activity或Fragment中的onCreateContextMenu()方法。
+
+当被注册的View对象接受到一个长按（long-click）事件时，系统会调用你的onCreateContextMenu()方法。这是你定义菜单项的地方，通常通过装载一个菜单资源的方法来完成，例如：
+
+@Override
+public void onCreateContextMenu(ContextMenu menu, View v,
+                                ContextMenuInfo menuInfo) {
+    super.onCreateContextMenu(menu, v, menuInfo);
+    MenuInflater inflater = getMenuInflater();
+    inflater.inflate(R.menu.context_menu, menu);
+}
+
+MenuInflater对象允许你从一个菜单资源中加载内容菜单。回调方法中参数包含了用户选择的那个View对象和一个ContextMenu.ContextMenuInfo对象，这个对象提供有关选择项目的额外信息。如果你的Activity有几个View对象，并且每个View都提供了一个不同的内容菜单，你可以使用这些参数来判断哪个内容菜单被装载了。
+
+3.  实现onContextItemSelected()回调方法。
+
+当用户选择一个菜单项时，系统会调用这个方法，因此你能在此执行相关的操作。如：
+
+@Override
+public boolean onContextItemSelected(MenuItem item) {
+    AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+    switch (item.getItemId()) {
+        case R.id.edit:
+            editNote(info.id);
+            return true;
+        case R.id.delete:
+            deleteNote(info.id);
+            return true;
+        default:
+            return super.onContextItemSelected(item);
+    }
+}
+
+getItemId()方法查询被选择的菜单项的ID，你应该使用android:id属性给XML文件中的每个菜单项分配一个ID值。
+
+当你成功的处理一个菜单项时，会返回true。如果你没有处理这个菜单项，你应该把这个菜单项传递给父类的实现。如果你的Activity包含了Fragment对象，Activity会首先接受这个回调。当未处理时，通过调用父类的回调方法，系统会把这个事件传递每个Fragment对象中的回调方法。一次一个（按照每个Fragment对象被添加的顺序），直到返回true或false。（Activity和android.app.Fragment的默认实现都返回false，因此当未处理时，你应该始终调用父类的实现。）
+
+使用上下文操作模式
+
+上下文操作模式是ActionMode类的一个系统实现，它关注用户跟执行上下文操作的交互。当用户通过选择一个项目使这种模式成为可能的时候，一个上下文操作栏就会显示在屏幕的顶部，并展现出用户在当前被选择的项目上能够执行的操作。当这种模式成为可能时，用户能够选择多个项目（如果应用程序允许），或取消选择项目，并且可继续在Activity内浏览。当用户取消了所有选择的项目、按下BACK按钮、或选择操作栏左边的“执行”操作时，这种操作模式就会被禁止，并且上下文操作栏也会被隐藏。
+
+注意：上下文操作栏不必跟操作栏关联。它们独立的操作，上下文操作栏甚至可以显示在操作栏位置之上。
+
+如果你依赖Android3.0（API级别 11）或更高的版本，你通常应该使用上下文操作模式来表现上下文操作，而不是浮动内容菜单。
+
+对于那些提供上下文操作的View对象，你通常应该在以下两种事件之上调用上下文操作模式：
+
+1.  用户在View对象上执行一个长按（long-click）操作。
+
+2.  用户选择了一个复选框或View对象中类似复选框的UI组件。
+
+你的应用程序如何调用上下文操作模式，并给每个操作定义行为，依赖于你的设计。有以下两种基本的设计：
+
+1.  针对个别的、任意的View对象的上下文操作。
+
+2.  针对ListView或GridView对象中项目组的批处理上下文操作（允许用户选择多个项目，并这些选择的项目上执行一个操作）。
+
+针对个别View对象的上下文操作模式
+
+如果你只想在用户选择特定的View对象时，调用上下文操作模式，应该按以下方法来做：
+
+1.  实现ActionMode.Callback接口。在它的回调方法中，你能够针对上下文操作栏指定动作，在操作项目上响应点击事件和处理针对这个操作模式的其他生命周期事件。
+
+2.  在显示这个操作栏时，调用startActionMode()方法（如用户长按（long-click）对应的view对象时）。
+
+如：
+
+1.   实现ActionMode.Callback接口：
+
+private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
+
+    // Called when the action mode is created; startActionMode() was called
+    @Override
+    public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+        // Inflate a menu resource providing context menu items
+        MenuInflater inflater = mode.getMenuInflater();
+        inflater.inflate(R.menu.context_menu, menu);
+        return true;
+    }
+
+    // Called each time the action mode is shown. Always called after onCreateActionMode, but
+    // may be called multiple times if the mode is invalidated.
+    @Override
+    public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+        return false; // Return false if nothing is done
+    }
+
+    // Called when the user selects a contextual menu item
+    @Override
+    public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_share:
+                shareCurrentItem();
+                mode.finish(); // Action picked, so close the CAB
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    // Called when the user exits the action mode
+    @Override
+    public void onDestroyActionMode(ActionMode mode) {
+        mActionMode = null;
+    }
+};
+
+我们注意到，这些回调方法处理把ActionMode对象传递给关联的事件之外，几乎完全跟选项菜单的回调方法相同。你能够使用ActionMode的API对CAB（Context Action Bar）进行各种改变，如用setTitle()和setSubtitle()方法修改标题和子标题（有益于指示有多少项目被选择了）。
+
+我还看到，上例中，当操作模式被销毁时，把mActionMode变量设置为null，接下来，你能看到它是如何被初始化的，以及如何把成员变量保存在你的Activity或Fragment中。
+
+2.  在适当的时机调用startActionMode()方法启用上下文操作模式，如在响应一个View对象的长按事件时：
+
+someView.setOnLongClickListener(new View.OnLongClickListener() {
+    // Called when the user long-clicks on someView
+    public boolean onLongClick(View view) {
+        if (mActionMode != null) {
+            return false;
+        }
+
+        // Start the CAB using the ActionMode.Callback defined above
+        mActionMode = getActivity().startActionMode(mActionModeCallback);
+        view.setSelected(true);
+        return true;
+    }
+});
+
+当你调用startActionMode()方法时，系统返回被创建的ActionMode对象。通过把这个对象保存在一个成员变量中，你能够在对其他事件的响应中对上下文菜单进行改变。在上例中，在启动这种操作模式之前，通过检查ActionMode对象的实例是否为null，来确保这个对象实例不被重复创建。
+
+在ListView或GridView对象中的批处理上下文操作
+
+如果在ListView或GridView对象（或是另外的AbsListView类的扩展）中有一个项目的集合，并且你想要允许用户对其执行批处理操作，那么你应该按如下的方法做：
+
+1.  实现AbsListView.MultiChoiceModeListener接口，并且要用setMultiChoiceModeListener()方法把它设置给ViewGroup对象。在这个监听器的回调方法中，你能够给这个上下文操作栏指定动作，响应在操作项目上的点击事件，并且处理从ActionMode.Callback接口中继承来的其他回调方法。
+
+2.  调用带有CHOICE_MODE_MULTIPLE_MODAL参数的setChoiceMode()方法。
+
+例如：
+
+ListView listView = getListView();
+listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+listView.setMultiChoiceModeListener(new MultiChoiceModeListener() {
+
+    @Override
+    public void onItemCheckedStateChanged(ActionMode mode, int position,
+                                          long id, boolean checked) {
+        // Here you can do something when items are selected/de-selected,
+        // such as update the title in the CAB
+    }
+
+    @Override
+    public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+        // Respond to clicks on the actions in the CAB
+        switch (item.getItemId()) {
+            case R.id.menu_delete:
+                deleteSelectedItems();
+                mode.finish(); // Action picked, so close the CAB
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    @Override
+    public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+        // Inflate the menu for the CAB
+        MenuInflater inflater = mode.getMenuInflater();
+        inflater.inflate(R.menu.context, menu);
+        return true;
+    }
+
+    @Override
+    public void onDestroyActionMode(ActionMode mode) {
+        // Here you can make any necessary updates to the activity when
+        // the CAB is removed. By default, selected items are deselected/unchecked.
+    }
+
+    @Override
+    public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+        // Here you can perform updates to the CAB due to
+        // an invalidate() request
+        return false;
+    }
+});
+
+现在，当用户用长按事件选择一个项目时，系统会调用onCreateActionMode()方法，并显示带有特定操作的上下文操作栏。同时在上下文操作栏显示时，用户还能继续选择其他的项目。
+
+在某些场景中，上下文操作会给一些项目提供共通的操作，因此你可能想要添加复选框或类似的允许用户选择项目的UI元素，因为它们可能没有长按事件行为，所以在用户选择复选框时，你能够通过设置各自列表项的复选状态的setItemChecked()方法来调用上下文操作模式

@@ -1,0 +1,14 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-01-29T12:53:19+08:00
+
+====== some history ======
+Created Wednesday 29 January 2014
+
+[[+java|java]]
+
+[[+c++|c++]]
+
+[[+mine|mine]]
+
+[[+壹佰世纪|壹佰世纪]]

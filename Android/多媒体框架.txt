@@ -1,0 +1,17 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-01-28T17:00:23+08:00
+
+====== 多媒体框架 ======
+Created Tuesday 28 January 2014
+
+There is a new playback engine implemented by Google comes with Android 2.0 (i.e, Stagefright), which seems to be quite simple and straightforward compared with the OpenCORE solution.
+
+MediaExtractor is responsible for retrieving track data and the corresponding meta data from the underlying file system or http stream;
+Leveraging OMX for decoding: there are two OMX plugins currently, adapting to PV's software codec and vendor's hardware implementation respectively. And there is a local implementation of software codecs which encapsulates PV's decoder APIs directly;
+AudioPlayer is responsible for rendering audio, it also provides the timebase for timing and A/V synchronization whenever audio track is present;
+Depending on which codec is picked, a local or remote render will be created for video rendering; and system clock is used as the timebase for video only playback;
+AwesomePlayer works as the engine to coordinate the above modules, and is finally connected into android media framework through the adapter of StagefrightPlayer.
+
+
+{{./pasted_image.bmp}}

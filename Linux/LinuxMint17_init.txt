@@ -1,0 +1,38 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-05-01T17:27:10+08:00
+
+====== LinuxMint17 init ======
+Created Friday 01 May 2015
+
+1. yuan    
+2. [[+sougou|sougou]] 快捷键
+3. zim
+4. git
+5. java sdk
+6. virtualbox
+7. genymotion
+8. android studio	 快捷方式   disable.android.first.run=true
+9. zsh oh-my-zsh 换成zsh
+10. 配置vpn
+11. chromium-browser  登录同步
+12. [[+使用compiz|使用compiz]]
+sudo apt-get install axel curl vim virtualbox gitk git meld tree zim 
+cp .oh-my-zsh/templates/zshrc.zsh-template .zshrc
+cp .oh-my-zsh/templates/zshrc.zsh-template .zshrc
+echo 'export GOPATH=~/go' >> .zshrc
+echo 'export PATH=$PATH:$GOPATH/bin/' >> .zshrc
+echo 'xinput set-prop 12 "Device Enabled" 0' >> .zshrc
+在passwd修改zsh （修改的脚本）
+
+
+//备份
+1. Project
+2. Program
+3. .gradle
+4. [[~/.Genymobile/]]
+5. [[./.config/VirtualBox]]
+6. ./VirtualBox VMs
+7. .zsh
+8. [[/etc/gitconfig]]
+9. .jenkins

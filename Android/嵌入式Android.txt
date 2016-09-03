@@ -1,0 +1,163 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-10-17T19:55:49+08:00
+
+====== 嵌入式Android ======
+Created Thursday 17 October 2013
+
+[[~/Nutstore/resource/embedded_android.pdf|Android嵌入式开发]]（翻译）
+版权：
+	作者：Karim Yaghmour
+Printed in the United States of America.
+Published by O’Reilly Media, Inc., 1005 Gravenstein Highway North, Sebastopol, CA 95472.
+O’Reilly books may be purchased for educational, business, or sales promotional use. Online editions are
+also available for most titles (http://my.safaribooksonline.com). For more information, contact our corporate/
+institutional sales department: 800-998-9938 or corporate@oreilly.com.
+
+Editors: Andy Oram and Mike Hendrickson
+Production Editor: Kara Ebrahim
+Copyeditor: Rebecca Freed
+Proofreader: Julie Van Keuren
+March 2013:
+Indexer: Bob Pfahler
+Cover Designer: Randy Comer
+Interior Designer: David Futato
+Illustrator: Rebecca Demarest
+First Edition
+Revision History for the First Edition:
+2013-03-11:
+First release
+See http://oreilly.com/catalog/errata.csp?isbn=9781449308292 for release details.
+Nutshell Handbook, the Nutshell Handbook logo, and the O’Reilly logo are registered trademarks of O’Reilly
+Media, Inc. Embedded Android, the image of a Moorish wall gecko, and related trade dress are trademarks
+of O’Reilly Media, Inc.
+Many of the designations used by manufacturers and sellers to distinguish their products are claimed as
+trademarks. Where those designations appear in this book, and O’Reilly Media, Inc., was aware of a trade‐
+mark claim, the designations have been printed in caps or initial caps.
+While every precaution has been taken in the preparation of this book, the publisher and author assume no
+responsibility for errors or omissions, or for damages resulting from the use of the information contained
+herein.
+
+		To Anaïs, Thomas, and Vincent.
+May your journeys be filled with the joys of sharing and discovery.
+愿你们的旅行因分享和发现而快乐
+
+目录：
+
+[[+前言]]
+1.[[+概述]]	
+	[[+概述:历史|历史]]
+	[[+概述:特色和特性]]
+	开发模式
+		不同于“经典”开源项目
+		特性的包含，路线图和新的发布版本
+	生态系统
+		开放手持设备联盟的世界
+	获取“Android”
+	法律的框架
+		代码许可证
+		商标使用
+		Google自己的应用
+		其他的app商店
+		Oracle vs Google
+		手机专利权之争
+	固件和顺应需求
+		Compliance 定义文档
+		Compliance 测试套件
+	开发环境配置和工具
+		
+2.基本原理
+	应用开发者的视角
+		Android 基本概念
+		关于框架
+		应用开发工具
+		本地开发
+	总览体系结构
+	Linux内核
+		Wakelocks
+		Low-Memory Killer
+		Binder
+		Anonymous Shared Memory (ashmem)
+		Alarm
+		Logger
+		Other Notable Androidisms 其他值得注意的android思想
+	硬件支持
+		Linux方案
+		Android通用方案
+		加载和接口化方法
+		设备支持细节
+	本地用户空间
+		文件系统
+		各种库
+		Init
+		工具箱
+		守护进程
+		命令行工具
+	Dalvik和Android的java
+		java本地接口（JNI）
+	系统服务
+		服务管理器和Binder的合作
+		Calling on Services
+		一个服务实例：Activity 管理器
+	stock AOSP 包
+	系统启动	
+、
+3.AOSP 如何开始
+	开发环境搭建
+	获取AOSP
+	看看AOSP都有什么
+	构建基础
+		构建系统安装
+		构建andorid
+	运行android
+	使用adb
+	精通虚拟机
+	
+4.构建系统
+	与其他构建系统的比较
+	体系结构
+		配置
+		envsetup.sh
+		functions定义
+		一些常用的make指令
+		清理
+		模块构建模板
+		输出
+	构建的指令
+		默认的droid构建
+		构建的指令
+		在Linux或MAC 上构建SDK
+		在Windows上构建SDK
+		构建CTS
+		构建NDK
+		更新API
+		构建单一模块
+		在目录树外构建
+		在目录树内递归构建
+	基本的AOSP hacks
+		添加一个设备
+		添加一个应用
+		添加一个应用overlay
+		添加一个本地工具或守护进程
+		添加一个本地库		
+	
+5.硬件基础
+	典型的系统体系结构
+		基带处理器
+		核心部件
+		real—world 合作
+		链接
+		扩展，开发和调试
+	SoC 是什么
+	内存层和映射
+	开发构建
+	评测板子
+	
+6.本地用户空间
+7.Android 框架
+A.Legacy 用户空间
+B.支持新硬件
+C.自定义默认软件包
+D.默认init.rc文件
+E.资源
+索引

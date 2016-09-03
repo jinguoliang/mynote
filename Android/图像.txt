@@ -1,0 +1,163 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-08T07:30:17+08:00
+
+====== 图像 ======
+Created Friday 08 November 2013
+
+[[+3D]]
+[[动画]]
+[[+模糊技术|模糊技术]]
+[[+布局单位|布局单位]]
+高效的显示bitmap
+	加载大图片
+可以用BitmapFactory来只解析图片的大小
+BitmapFactory.Options options = new BitmapFactory.Options();
+options.inJustDecodeBounds = true;
+BitmapFactory.decodeResource(getResources(), R.id.myimage, options);
+int imageHeight = options.outHeight;
+int imageWidth = options.outWidth;
+String imageType = options.outMimeType;
+计算合适图片的缩略图的inSampleSize
+public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+    // Raw height and width of image
+    final int height = options.outHeight;
+    final int width = options.outWidth;
+    int inSampleSize = 1;
+
+    if (height > reqHeight || width > reqWidth) {
+
+        // Calculate ratios of height and width to requested height and width
+        final int heightRatio = Math.round((float) height / (float) reqHeight);
+        final int widthRatio = Math.round((float) width / (float) reqWidth);
+
+        // Choose the smallest ratio as inSampleSize value, this will guarantee
+        // a final image with both dimensions larger than or equal to the
+        // requested height and width.
+        inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+    }
+
+    return inSampleSize;
+}
+注意：inSampleSize如果是2的倍数解析速度会更快，但是如果考虑内存的话还是以合适大小吧
+
+使用AsyncTask异步加载图片
+class BitmapWorkerTask extends AsyncTask<Integer, Void, Bitmap> {
+    private final WeakReference<ImageView> imageViewReference;
+    private int data = 0;
+
+    public BitmapWorkerTask(ImageView imageView) {
+        // Use a WeakReference to ensure the ImageView can be garbage collected
+        imageViewReference = new WeakReference<ImageView>(imageView);
+    }
+
+    // Decode image in background.
+    @Override
+    protected Bitmap doInBackground(Integer... params) {
+        data = params[0];
+        return decodeSampledBitmapFromResource(getResources(), data, 100, 100));
+    }
+
+    // Once complete, see if ImageView is still around and set bitmap.
+    @Override
+    protected void onPostExecute(Bitmap bitmap) {
+        if (imageViewReference != null && bitmap != null) {
+            final ImageView imageView = imageViewReference.get();
+            if (imageView != null) {
+                imageView.setImageBitmap(bitmap);
+            }
+        }
+    }
+}
+public void loadBitmap(int resId, ImageView imageView) {
+    BitmapWorkerTask task = new BitmapWorkerTask(imageView);
+    task.execute(resId);
+}
+简单介绍AsyncTask
+四个方法
+onPreExecute() UI线程执行，初始化UI
+doInBackground(Params...) 后台线程执行任务在onPreExecute后执行
+onProgressUpdate(Progress...) UI线程执行，更新UI进度，在调用 publishProgress(Progress...)后执行
+onPostExecute(Result)	UI线程执行，更新结果，在后台任务完成后调用。
+三个参数
+param 是调用execute是传的参数类型
+preocess是onProgressUpdate(Progress...)的参数类型
+result是onPostExecute(Result)的参数类型
+
+缓存图片
+LruCache 关键不再它怎么实现的，关键是它的功能，它会限制占用内存的空间，是精确控制，通过覆盖sizeOf方法，计算出总的占用内存数，当达到限时会扔掉最早访问过得对象，释放内存，所以只要设置一个合理的内存限制，就不会出现outofMemary的错误。并且还可以通过覆盖entryRemoved方法，实现在扔掉某个对象时执行某个动作。
+private LruCache<String, Bitmap> mMemoryCache;
+
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    ...
+    // Get max available VM memory, exceeding this amount will throw an
+    // OutOfMemory exception. Stored in kilobytes as LruCache takes an
+    // int in its constructor.
+    final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+
+    // Use 1/8th of the available memory for this memory cache.
+    final int cacheSize = maxMemory / 8;
+
+    mMemoryCache = new LruCache<String, Bitmap>(cacheSize) {
+        @Override
+        protected int sizeOf(String key, Bitmap bitmap) {
+            // The cache size will be measured in kilobytes rather than
+            // number of items.
+            return bitmap.getByteCount() / 1024;
+        }
+    };
+    ...
+}
+
+public void addBitmapToMemoryCache(String key, Bitmap bitmap) {
+    if (getBitmapFromMemCache(key) == null) {
+        mMemoryCache.put(key, bitmap);
+    }
+}
+
+磁盘缓存：有个DiskLruCache，但是是Android源码里的
+下面代码可以实现在更改配置（如横屏竖屏）是重启Activity但保持图片缓存
+利用了保持Fragment
+private LruCache<String, Bitmap> mMemoryCache;
+
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    ...
+    RetainFragment mRetainFragment =
+            RetainFragment.findOrCreateRetainFragment(getFragmentManager());
+    mMemoryCache = RetainFragment.mRetainedCache;
+    if (mMemoryCache == null) {
+        mMemoryCache = new LruCache<String, Bitmap>(cacheSize) {
+            ... // Initialize cache here as usual
+        }
+        mRetainFragment.mRetainedCache = mMemoryCache;
+    }
+    ...
+}
+
+class RetainFragment extends Fragment {
+    private static final String TAG = "RetainFragment";
+    public LruCache<String, Bitmap> mRetainedCache;
+
+    public RetainFragment() {}
+
+    public static RetainFragment findOrCreateRetainFragment(FragmentManager fm) {
+        RetainFragment fragment = (RetainFragment) fm.findFragmentByTag(TAG);
+        if (fragment == null) {
+            fragment = new RetainFragment();
+        }
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+}
+
+public Bitmap getBitmapFromMemCache(String key) {
+    return mMemoryCache.get(key);
+}

@@ -1,0 +1,17 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-12-25T05:40:11+08:00
+
+====== Command Pattern ======
+Created Wednesday 25 December 2013
+
+Structure:
+{{./pasted_image.png}}
+An example:
+	Consider a "simple" __switch__. In this example we configure the Switch with __two commands__: to turn the light on and to turn the light off.
+	A __benefit__ of this particular implementation of the command pattern is that the switch can be used __with any device__, not just a light - the Switch in the following example turns a light on and off, but the Switch's constructor is able to accept any subclasses of Command for its two parameters. For example, you could configure the Switch to start an engine.
+	{{./pasted_image001.png}}
+	{{./pasted_image002.png}}
+	
+It's In Android:
+

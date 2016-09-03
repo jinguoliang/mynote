@@ -1,0 +1,46 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-24T14:41:23+08:00
+
+====== 主界面 ======
+Created Friday 24 July 2015
+
+1. 继承了TabActivity
+	a. xml
+		1. 有个叫@android:id/tabhost的TabHost
+		2. 隐藏TabWidget
+		3. RadioGroup
+2. 如何使用这个Tab框架的?
+	a. onCreate里
+		1. mth = this.getTabHost();
+		2. TabSpec tsHome = mth.newTabSpec(TAB_HOME).setIndicator(TAB_HOME); 
+				tsHome.setContent(new Intent(MainActivity.this, HomeActivity.class));
+				mth.addTab(tsHome);
+
+3. 不使用TabActivity怎么实现的?
+4. 新的方式如何? Fragment
+
+
+=== onCreate ===
+1. 初始化UI Tab, [[RadioGroup]]
+2. updateDialog
+3. 检查更新
+	a. 使用了UpdateDialog
+	b. 通过请求服务器获得版本信息通过parseUpdate()判断是否需要升级
+4. 刷新用户信息
+	a. 如果登录了则通过本地存的token来获取用户信息并更新本地数据
+5. 初始化推送
+	a. [[PushAgent]]  友盟的 实际在LiuahziApp里初始化
+	b. 根据peference配置决定开启还是关闭
+	c. http://dev.umeng.com/push/android/integration
+
+两次返回键退出
+1. 定义一个变量canExit
+2. 点击返回键
+	a. 如果can 退出应用
+	b. else canExit = true; 提示再次点击; 设置定时器30秒后 canExit=false; 
+
+退出应用
+CommonUtils.exitApp(MainActivity.this);
+	android.os.Process.killProcess(android.os.Process.myPid());
+

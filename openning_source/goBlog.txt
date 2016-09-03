@@ -1,0 +1,56 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2015-07-14T22:23:36+08:00
+
+====== goBlog ======
+Created Tuesday 14 July 2015
+
+1. 还是来看入口 main
+	a. 调用了app的Cmd(), Init(), Run()
+	b. 下面让我们各个击破
+2. Cmd() 本来想从Run（）开始的，以为它就是运行起server，但事实不是，那就让我们顺序进行吧
+	a. 它分析参数，如果多于一个也就是有参数，会根据参数执行命令
+	b. 如果没参数，则会去检测是否安装，如果没安装就安装，如果安装了就检测更新，如果需要更新则给提示，否则设置好自动备份
+	c. 这里需要首先着重解释这个安装，反正这次让我很迷惑，通过看checkInstalled（）的实现我才明白，安装就是运行server，而检查，则是通过检查一个文件来判断server是否运行，我就先这么草率的理解了
+	d. 当我看到install的命令时，我深深的不理解，为什么要把二进制文件的zip文件存到go文件里？我不能理解，它从哪来的？这个zip内容是什么，我通过看tmp.zip内容知道就是网站的静态内容...
+	e. doBackUp. 备份到zip文件里，也没写到go文件里呀！
+	f. 当我看到update里的第二个函数时我就明白原来是它DoUpdateZipBytes（）又把刚才写到zip里的文件写到了zip.go里，可是有这个必要吗？这样唯一的效果就是只有go文件
+	g. upgrade： 它会检查版本，比较的两个版本是app里的一个VERSION和model里的version，我疑惑，app里的这个肯定是作为配置了，为什么不放到配置里。然后从一个map里通过key与两个版本的比较来获取到更新要执行的函数，依次调用，最后设置当前的版本。这是如此的巧妙，但是那个map是在哪添加元素的呢？是在...废了半天劲终于弄明白了，在cmd.go中import _ app/upgrade.这样会去调用upgrade包(里面有一个以日期命名的.go文件）里的init，是每个文件里的init（），在他们的init里调用了	SetUpgradeScript（）往map里添加了一个函数，而这个函数做的什么操作呢，读取Settings文件并配置后保存，还会做其他操作，最后解压出静态文件，但是这不就是配置吗，为什么不就是解析呢？
+3. Init()
+	a. 初始化model
+		1. 设置版本号
+		2. 创建jsonStorage目录，没用数据库？就用的json存储？流弊！ 数据目录为data 和 tmp/data
+	b. 加载model
+		1. 加载每一个json文件？流弊！
+			a. 版本信息，配置，导航目录（排序），用户（最大uid），Token
+			b. 遍历data/content目录，读取content，建立索引，全都读到内存里呀
+			c. 读取消息，读者信息，评论信息，上传的文件信息
+	c. 初始化插件
+		1. 从data读取plugin.json,根据注册的json插件对配置做一些改动？！！？？？
+	d. 更新插件
+	e. 在View的FuncMap添加一些函数，如Now，Md2html，Settings。。。
+4. 发现了init（）这个是运行时自动调用的
+	a. GoInk.New()
+	b. 读取配置，staticdir，logdir，上传文件大小，上传文件的后缀，上传目录
+	c. 设置静态文件处理器，首先读取静态目录，然后对请求路径去掉/，如果是favicon.ico.ico,则接上静态文件路径，如果路径不是在静态文件目录下则不处理，如果请求的不是允许的静态文件类型则不处理，查看文件是否存在，如果存在并且是目录就返回错误码403，最后使用http.ServeFile（）返回请求的文件
+	d. 设置recover处理器，开启goroutine打印log，并将错误信息输出到client，如果又模板使用模板
+	e. 设置NotFount处理器，如果有模板，使用模板
+	f. 最后使用了一个牛逼闪闪的功能，捕获退出，当应用接受到终止信号时，做相应的保存数据处理
+		1. 	syscall.Signal 信号，一个数字
+		2. signal.Notify（）设置一个chan，和对应的信号...
+		3. 循环，通过switch，如果来到一个信号做相应处理
+5. Run()
+	a. 比较简单，就是设置各种handler，AdminHandler，CmdHandler，HomeHandler
+	b. 最后启动服务。
+
+
+admin的“页面”也显示：
+1. registerAdminHandler  里找到/admin/pages/的handler发现注册两个，一个检验登录，另一个是页面处理器去看看
+2. AdminPage里，从model里取数据，在context里设置layout为admin/admin，然后调用Context的render渲染
+3. GetPageList从model取数据，从缓存里拿出page的index，创建一个pager，来代表一个分页，最后根据pager的begin和end从缓存取出page
+
+admin的编辑“页面” 页面:
+1. App.Route("GET,POST,DELETE", "/admin/page/:id/", handler.Auth, handler.PageEdit) 三种方法全都有相同的处理器处理
+
+===== finish =====
+使用beego来重构它。

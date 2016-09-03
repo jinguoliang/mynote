@@ -1,0 +1,45 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-12-01T22:51:31+08:00
+
+====== 我要这样开始我的Android深入之路 ======
+Created Sunday 01 December 2013
+
+[[~/Nutstore/resource/html/Android工程师不得不看的建议 - uBar_Multimedia Dev. and Data mining （CodeCore） - 博客频道 - CSDN.NET.html|Android工程师不得不看的建议]]
+[[file:///usr/local/adt-bundle-linux-x86_64-20130219/sdk/docs/guide/components/index.html|Android开发文档]]
+android OSAP [[~/android_source/working_directory|源码目录]]  [[~/Nutstore/resource/html/最全的Android源码目录结构详解 - - ITeye技术网站.html|结构]]
+
+=== Android review ===
+https://android-review.googlesource.com/#/c/19337/
+
+OSAP [[~/android_source/working_directory/docs/source.android.com/out/index.html|主页]] （要想看好看的，去所在目录看README） 或者执行如下命令来启动一个mini 服务器
+python ~/android_source/working_directory/docs/source.android.com/scripts/micro-httpd.py
+[[~/shared_with_windows/我的坚果云/resource/AndroidÊÖ»úÎÄ¼þÄ¿Â¼ËµÃ÷.txt|Android System Dirteris Struct]]
+
+[[~/shared_with_windows/我的坚果云/resource/html/Using Eclipse   Android Developers.html|Using Eclipse]] ----Android platform develop
+第一步从构建开始
+
+===== Binder =====
+[[+Binder]]
+
+===== USB =====
+[[/system/etc/vold.fstab]]				device mount point
+[[~/shared_with_windows/我的坚果云/resource/html/android usb流程（转载加整理） - 操作系统.html|usb structure]]
+
+[[+VOLD]]  volume daemon
+
+===== VIEW =====
+[[+Skia]]
+2.Android视图绘制流程完全解析
+每一个视图的绘制过程都必须经历三个最主要的阶段，即onMeasure()、onLayout()和onDraw()
+
+===== Stagefright =====
+[[~/shared_with_windows/我的坚果云/resource/html/stagefright与opencore对比(转) - 刘品 - 博客园.html|uml]]
+[[~/shared_with_windows/我的坚果云/resource/html/StageFright框架流程解读 - uBar_Multimedia Dev. and Data mining （CodeCore） - 博客频道 - CSDN.NET.html|stagefirght]]
+[[~/shared_with_windows/我的坚果云/resource/html/stagefright框架.html|stagefright 2]]
+
+=== Android resource framework overlay ===
+[[+static overlay]]
+[[+dynamic overly]]
+
+

@@ -1,0 +1,16 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-10-17T20:39:09+08:00
+
+====== C语言 ======
+Created Thursday 17 October 2013
+
+赋值一个文件描述符
+int dup(oldfd)	//选一个最小未用的描述符
+int dup2（oldfd，newfd) //关掉newfd，赋值oldfd到newfd
+返回新的文件描述符	
+
+
+tools
+ar 打包.o文件 成.a
+[[~/Downloads/html/C语言面向对象编程 - C语言编程 - ITeye知识库频道.html|C语言实现面向对象]]

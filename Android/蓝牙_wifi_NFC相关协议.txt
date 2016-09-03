@@ -1,0 +1,13 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-12-05T23:15:48+08:00
+
+====== 蓝牙 wifi NFC相关协议 ======
+Created Thursday 05 December 2013
+
+[[~/Nutstore/resource/html/Android 蓝牙开发浅析 - OPEN 开发经验库.html|蓝牙]]
+
+[[~/Nutstore/resource/html/Android WIFI 架构和控制流程 - 开源中国社区.html|wifi 1]]
+[[~/Nutstore/resource/html/Android WIFI模块分析-hunaiquan-ChinaUnix博客.html|wifi 2]]
+
+[[~/Nutstore/resource/html/Android NFC 开发实例 - 移动平台应用软件开发技术 - 博客频道 - CSDN.NET.html|nfc]]

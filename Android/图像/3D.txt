@@ -1,0 +1,154 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-08T07:32:57+08:00
+
+====== 3D ======
+Created Friday 08 November 2013
+
+OpenGL ES 2.0
+OpenGL ES 2.0 requires Android 2.2 (API Level 8)
+
+Building an OpenGL ES Environment
+	GLSurfaceView 容器  GLSurfaceView is just one way to incorporate OpenGL ES graphics into your application，应用于全屏或接近全屏的情况
+				而对于在屏幕一部分显示时则最好用TextureView，省点代码
+	GLSurfaceView.Renderer 控制画什么
+
+	1.manifest.xml  
+		声明使用openGL es 2.0
+		<uses-feature android:glEsVersion="0x00020000" android:required="true"/>
+		声明材质压缩格式
+		<supports-gl-texture android:name="GL_OES_compressed_ETC1_RGB8_texture" />
+   		<supports-gl-texture android:name="GL_OES_compressed_paletted_texture" />
+	2.java
+	public class OpenGLES20 extends Activity {
+
+	    private GLSurfaceView mGLView;
+
+	    @Override
+	    public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		// Create a GLSurfaceView instance and set it
+		// as the ContentView for this Activity.
+		mGLView = new MyGLSurfaceView(this);
+		setContentView(mGLView);
+	    }
+
+	    class MyGLSurfaceView extends GLSurfaceView{
+
+		public MyGLSurfaceView(Context context) {
+		    super(context);
+		    setEGLContextClientVersion(2);//2.0 需要设置版本
+		    setRenderer(new MyRender());		//调用它需要要求顺序，就是说，有些设置需要在它之前配置，有些必须在他之后
+		    setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);		//设置合适刷新，有一直刷新和当dirty是刷新
+		}
+		
+	    }
+	}
+
+	public class MyRender implements Renderer {
+
+	    private static final String TAG = "MyRender";
+
+
+	    @Override
+	    public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+		Log.e(TAG,"onSurfaceCreated");
+		GLES20.glClearColor(1f, 1f, 0f, 1.0f);
+	    }
+
+	    @Override
+	    public void onSurfaceChanged(GL10 gl, int width, int height) {
+		Log.e(TAG,"onSurfaceChanged");
+		// TODO Auto-generated method stub
+		GLES20.glViewport(0, 0, width, height);
+
+	    }
+
+	    @Override
+	    public void onDrawFrame(GL10 gl) {
+		Log.e(TAG,"onDrawFrame");
+		GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+
+	    }
+
+	}
+
+错误：
+11-04 02:02:13.331: E/AndroidRuntime(2143): java.lang.IllegalArgumentException: No configs match configSpec		添加setEGLContextClientVersion(2);后导致，why？？
+
+绘制
+	1.定义图形
+	定义三角形
+	co-ordinate 坐标  vertex 顶点 dimension 维度 shader着色器？？？
+	class Triangle {
+
+	    private FloatBuffer vertexBuffer;
+
+	    // number of coordinates per vertex in this array
+	    static final int COORDS_PER_VERTEX = 3;
+	    static float triangleCoords[] = { // in counterclockwise order:
+		 0.0f,  0.622008459f, 0.0f,   // top
+		-0.5f, -0.311004243f, 0.0f,   // bottom left
+		 0.5f, -0.311004243f, 0.0f    // bottom right
+	    };
+
+	    // Set color with red, green, blue and alpha (opacity) values
+	    float color[] = { 0.63671875f, 0.76953125f, 0.22265625f, 1.0f };
+
+	    public Triangle() {
+		// initialize vertex byte buffer for shape coordinates
+		ByteBuffer bb = ByteBuffer.allocateDirect(
+		        // (number of coordinate values * 4 bytes per float)
+		        triangleCoords.length * 4);
+		// use the device hardware's native byte order
+		bb.order(ByteOrder.nativeOrder());
+
+		// create a floating point buffer from the ByteBuffer
+		vertexBuffer = bb.asFloatBuffer();
+		// add the coordinates to the FloatBuffer
+		vertexBuffer.put(triangleCoords);
+		// set the buffer to read the first coordinate
+		vertexBuffer.position(0);
+	    }
+	}
+	在定义一个三角形时，先定义定点坐标数组，然后放入buffer，分配buffer时不是直接分配floatbuffer，而是先分配bytebuffer然后再转成floatbuffer，估计是只能通过bytebuffer设置大端还是小端。
+	定点的顺序会影响图形的面的朝向
+
+	定义一个矩形
+	class Square {
+
+	    private FloatBuffer vertexBuffer;
+	    private ShortBuffer drawListBuffer;
+
+	    // number of coordinates per vertex in this array
+	    static final int COORDS_PER_VERTEX = 3;
+	    static float squareCoords[] = { -0.5f,  0.5f, 0.0f,   // top left
+		                            -0.5f, -0.5f, 0.0f,   // bottom left
+		                             0.5f, -0.5f, 0.0f,   // bottom right
+		                             0.5f,  0.5f, 0.0f }; // top right
+
+	    private short drawOrder[] = { 0, 1, 2, 0, 2, 3 }; // order to draw vertices
+
+	    public Square() {
+		// initialize vertex byte buffer for shape coordinates
+		ByteBuffer bb = ByteBuffer.allocateDirect(
+		// (# of coordinate values * 4 bytes per float)
+		        squareCoords.length * 4);
+		bb.order(ByteOrder.nativeOrder());
+		vertexBuffer = bb.asFloatBuffer();
+		vertexBuffer.put(squareCoords);
+		vertexBuffer.position(0);
+
+		// initialize byte buffer for the draw list
+		ByteBuffer dlb = ByteBuffer.allocateDirect(
+		// (# of coordinate values * 2 bytes per short)
+		        drawOrder.length * 2);
+		dlb.order(ByteOrder.nativeOrder());
+		drawListBuffer = dlb.asShortBuffer();
+		drawListBuffer.put(drawOrder);
+		drawListBuffer.position(0);
+	    }
+	}
+	画一个矩形不是直接画，而是画两个三角形，画法多了。
+	同样先定义顶点坐标数组，然后定义画的定点顺序，定义顺序特别注意每个三角形的画得顺序，顺时针还是逆时针
