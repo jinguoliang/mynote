@@ -39,23 +39,23 @@ go的代码都放在src/golib下，编译使用make.bash编译脚本，看下这
 |-- main.go_tmpl # 一个模板文件，先不用管它
 |-- make.bash # 编译脚本，用来生成.so和Java代码
 `-- src
-    |-- golib
-    |   |-- hi
-    |   |   |-- go_hi֞֞֞ # 自动生成的代码
-    |   |   |   `-- go_hi.go
-    |   |   `-- hi.go # 需要编写的代码
-    |   `-- main.go
-    `-- main
-        |-- AndroidManifest.xml
-        |-- java
-        |   |-- go # 自动生成的代码
-        |   |   |-- Go.java
-        |   |   |-- Seq.java
-        |   |   `-- hi
-        |   |       `-- Hi.java
-        |   `-- me/shengxiang/gohello # 主要的逻辑代码
-        |                      `-- MainActivity.java֞֞֞
-        `-- res
+	|-- golib
+	|   |-- hi
+	|   |   |-- go_hi֞֞֞ # 自动生成的代码
+	|   |   |   `-- go_hi.go
+	|   |   `-- hi.go # 需要编写的代码
+	|   `-- main.go
+	`-- main
+		|-- AndroidManifest.xml
+		|-- java
+		|   |-- go # 自动生成的代码
+		|   |   |-- Go.java
+		|   |   |-- Seq.java
+		|   |   `-- hi
+		|   |       `-- Hi.java
+		|   `-- me/shengxiang/gohello # 主要的逻辑代码
+		|                      `-- MainActivity.java֞֞֞
+		`-- res
 我已经写了一个例子，先直接搞下来
 
 git clone https://github.com/codeskyblue/GoHello.git
@@ -80,25 +80,25 @@ package hi
 import "fmt"
 
 func Hello(name string) {
-    fmt.Printf("Hello, %s!\n", name)
-    return "(Go)World"
+	fmt.Printf("Hello, %s!\n", name)
+	return "(Go)World"
 }
 文件末尾添加下面这行代码
 
 func Welcome(name string) string {
-    return fmt.Sprintf("Welcome %s to the go world", name)
+	return fmt.Sprintf("Welcome %s to the go world", name)
 }
 使用./make.bash重新编译下
 
 打开MainActivity.java 修改下OnClickListener事件
 
   button.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            String message = Hi.Welcome("yourname");
-            Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
-        }
-    });
+		@Override
+		public void onClick(View v) {
+			String message = Hi.Welcome("yourname");
+			Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
+		}
+	});
 编译运行下，把生成的apk安装到手机上试试。
 
 原理解读（有兴趣的接着看）
@@ -111,17 +111,17 @@ go_hi/go_hi.go这个文件时通过gobind这个工具生成的，用来配合一
 package go_hi
 
 import (
-    "golang.org/x/mobile/bind/seq"
-    "example/hi"
+	"golang.org/x/mobile/bind/seq"
+	"example/hi"
 )
 
 func proxy_Hello(out, in *seq.Buffer) {
-    param_name := in.ReadUTF16()
-    hi.Hello(param_name)
+	param_name := in.ReadUTF16()
+	hi.Hello(param_name)
 }
 
 func init() {
-    seq.Register("hi", 1, proxy_Hello)
+	seq.Register("hi", 1, proxy_Hello)
 }
 这个简单的程序内容是这样的
 
@@ -129,14 +129,14 @@ func init() {
 package main
 
 import (
-    "golang.org/x/mobile/app"
+	"golang.org/x/mobile/app"
 
-    _ "golang.org/x/mobile/bind/java"
-    _ "example/hi/go_hi"
+	_ "golang.org/x/mobile/bind/java"
+	_ "example/hi/go_hi"
 )
 
 func main() {
-    app.Run(app.Callbacks{})
+	app.Run(app.Callbacks{})
 }
 src/MyActivity.java文件内容是这样的
 
@@ -145,39 +145,39 @@ import go.Go; // 引入Go这个包
 import go.hi.Hi; // gobind生成的代码
 
 public class MainActivity extends Activity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Go.init(getApplicationContext()); // 初始化两个线程
-        Hi.Hello("world");
-    }
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		Go.init(getApplicationContext()); // 初始化两个线程
+		Hi.Hello("world");
+	}
 }
 其中有一句Go.init(...)这里再看go.Go这个包是什么样子的
 
 public final class Go {
-    // init loads libgojni.so and starts the runtime.
-    public static void init(Context context) {
-        ... 判断该函数是否该执行的代码 -- 省略 --
-        System.loadLibrary("gojni"); // gojni需要这句
+	// init loads libgojni.so and starts the runtime.
+	public static void init(Context context) {
+		... 判断该函数是否该执行的代码 -- 省略 --
+		System.loadLibrary("gojni"); // gojni需要这句
 
-        new Thread("GoMain") {
-            public void run() {
-                Go.run(); // run()是一个native方法
-            }
-        }.start();
+		new Thread("GoMain") {
+			public void run() {
+				Go.run(); // run()是一个native方法
+			}
+		}.start();
 
-        Go.waitForRun(); // 这个也是一个native方法
+		Go.waitForRun(); // 这个也是一个native方法
 
-        // 这部分可以理解为，启动了一个后台线程不断的接收结果到缓存中。
-        new Thread("GoReceive") {
-            public void run() { Seq.receive(); } 
-        }.start();
-    }
+		// 这部分可以理解为，启动了一个后台线程不断的接收结果到缓存中。
+		new Thread("GoReceive") {
+			public void run() { Seq.receive(); } 
+		}.start();
+	}
 
-    private static boolean running = false;
+	private static boolean running = false;
 
-    private static native void run();
-    private static native void waitForRun();
+	private static native void run();
+	private static native void waitForRun();
 }
 MyActivity.java中还有段代码是 Hi.Hello("world");，打开Hi.java路径在 src/go/hi/Hi.java，这个文件也是gobind生成的，是用来给java方便的调用.so文件
 
@@ -188,27 +188,27 @@ package go.hi;
 import go.Seq;
 
 public abstract class Hi {
-    private Hi() {} // uninstantiable
+	private Hi() {} // uninstantiable
 
-    public static void Hello(String name) {
-        go.Seq _in = new go.Seq();
-        go.Seq _out = new go.Seq();
-        _in.writeUTF16(name);
-        Seq.send(DESCRIPTOR, CALL_Hello, _in, _out); // 下面接着说
-    }
+	public static void Hello(String name) {
+		go.Seq _in = new go.Seq();
+		go.Seq _out = new go.Seq();
+		_in.writeUTF16(name);
+		Seq.send(DESCRIPTOR, CALL_Hello, _in, _out); // 下面接着说
+	}
 
-    private static final int CALL_Hello = 1;
-    private static final String DESCRIPTOR = "hi";
+	private static final int CALL_Hello = 1;
+	private static final String DESCRIPTOR = "hi";
 }
 Seq.send这部分实际上最终调用的是一段go代码
 
 func Send(descriptor string, code int, req *C.uint8_t, reqlen C.size_t, res **C.uint8_t, reslen *C.size_t) {
-    fn := seq.Registry[descriptor][code]
-    in := new(seq.Buffer)
-    if reqlen > 0 {
-        in.Data = (*[maxSliceLen]byte)(unsafe.Pointer(req))[:reqlen]
-    }
-    out := new(seq.Buffer)
-    fn(out, in)
-    seqToBuf(res, reslen, out)
+	fn := seq.Registry[descriptor][code]
+	in := new(seq.Buffer)
+	if reqlen > 0 {
+		in.Data = (*[maxSliceLen]byte)(unsafe.Pointer(req))[:reqlen]
+	}
+	out := new(seq.Buffer)
+	fn(out, in)
+	seqToBuf(res, reslen, out)
 }

@@ -42,10 +42,10 @@ Stage 4: the normal Debian system
 Stage 5: Xwindow
 	1.Display manager
 
-		    1.Starting and managing local __instances of the X server__.
-		    2.Authenticating users.
+			1.Starting and managing local __instances of the X server__.
+			2.Authenticating users.
 
-		    3.Starting and managing user __sessions__. 
+			3.Starting and managing user __sessions__. 
 		***Load sessions from /usr/share/xsessions 
 		***Store session configuration in ~/.dmrc 
 		

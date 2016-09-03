@@ -20,7 +20,7 @@ emacs 运行geiser ：M-x run-geise
 	首先启动一个guile --listen=（port）指定端口号
 	然后在emacs中运行mode ：M-x geiser-connect 或 M-x connect-to-guil
 命令 c-c m-p|m-n  上一条的表达式和下一条
-    m-p|m-n       根据当前输入匹配前一条下一条表达式
+	m-p|m-n       根据当前输入匹配前一条下一条表达式
 	c-c c-q		退出
 	c-c c-z 	恢复
 	C-c C-d d	查看符号是什么，是函数还是宏，等等

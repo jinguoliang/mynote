@@ -14,7 +14,7 @@ conky 桌面显示cpu内存等信息，很漂亮
 zim		 desktop wiki
 freemind 
 virtual box
-[[vi]]
+[[:Linux:vi]]
 [[+git|git]]
 zsh
 
@@ -29,7 +29,7 @@ pip3 install cssselect
 pip3 install bcloud
 
 [[+Tomcat7|Tomcat7]]
-[[Jenkins]] → go → Travis CI 新的持续构建的工具，使用yaml配置，简单
+[[:Linux:Jenkins]] → go → Travis CI 新的持续构建的工具，使用yaml配置，简单
 
 === Sync tools ===
 rsync -av --delete dir1 dir2    带--delete会同步删除 不带只添加

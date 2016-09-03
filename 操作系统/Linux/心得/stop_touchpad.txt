@@ -20,19 +20,19 @@ xinput     #或者 xinput list
 显示结果如下
 ddd@ddd:~$ xinput list
   Virtual core pointer                     id=2 [master pointer  (3)]
-    ↳ Virtual core XTEST pointer               id=4 [slave  pointer  (2)]
-    ↳ MLK rapoo 1800                           id=11 [slave  pointer  (2)]
-    ↳ ETPS/2 Elantech Touchpad                 id=14 [slave  pointer  (2)]
+	↳ Virtual core XTEST pointer               id=4 [slave  pointer  (2)]
+	↳ MLK rapoo 1800                           id=11 [slave  pointer  (2)]
+	↳ ETPS/2 Elantech Touchpad                 id=14 [slave  pointer  (2)]
   Virtual core keyboard                   id=3 [master keyboard (2)]
-    ↳ Virtual core XTEST keyboard             id=5 [slave  keyboard (3)]
-    ↳ Power Button                             id=6 [slave  keyboard (3)]
-    ↳ Video Bus                               id=7 [slave  keyboard (3)]
-    ↳ Video Bus                               id=8 [slave  keyboard (3)]
-    ↳ Sleep Button                             id=9 [slave  keyboard (3)]
-    ↳ MLK rapoo 1800                           id=10 [slave  keyboard (3)]
-    ↳ Lenovo EasyCamera                       id=12 [slave  keyboard (3)]
-    ↳ AT Translated Set 2 keyboard             id=13 [slave  keyboard (3)]
-    ↳ Ideapad extra buttons                   id=15 [slave  keyboard (3)]
+	↳ Virtual core XTEST keyboard             id=5 [slave  keyboard (3)]
+	↳ Power Button                             id=6 [slave  keyboard (3)]
+	↳ Video Bus                               id=7 [slave  keyboard (3)]
+	↳ Video Bus                               id=8 [slave  keyboard (3)]
+	↳ Sleep Button                             id=9 [slave  keyboard (3)]
+	↳ MLK rapoo 1800                           id=10 [slave  keyboard (3)]
+	↳ Lenovo EasyCamera                       id=12 [slave  keyboard (3)]
+	↳ AT Translated Set 2 keyboard             id=13 [slave  keyboard (3)]
+	↳ Ideapad extra buttons                   id=15 [slave  keyboard (3)]
 其中ETPS/2 Elantech Touchpad就是我笔记本的触摸板，其中id=14为设备的编号。这两者是等价的。
 查看设备属性
 xinput list-props 14
@@ -65,16 +65,16 @@ xinput set-prop 'ETPS/2 Elantech Touchpad' 'Device Enabled' 0
 #!/bin/bash
 if [ $1 == 'on' ]
 then
-    set-prop 'ETPS/2 Elantech Touchpad' 'Device Enabled' 1
-    echo "触摸板开启成功！"
+	set-prop 'ETPS/2 Elantech Touchpad' 'Device Enabled' 1
+	echo "触摸板开启成功！"
 elif [ $1 == 'off' ]
 then
-    set-prop 'ETPS/2 Elantech Touchpad' 'Device Enabled' 0
-    echo "触摸板关闭成功！"
+	set-prop 'ETPS/2 Elantech Touchpad' 'Device Enabled' 0
+	echo "触摸板关闭成功！"
 else
-    echo "请输入参数：on/off"
-    echo "开启触摸板：touchpadEnable on"
-    echo "禁用触摸板：touchpadEnable off"
+	echo "请输入参数：on/off"
+	echo "开启触摸板：touchpadEnable on"
+	echo "禁用触摸板：touchpadEnable off"
 fi
 通过禁用触摸板，确实给我解决了不少的麻烦。
 开机自动禁用触摸板

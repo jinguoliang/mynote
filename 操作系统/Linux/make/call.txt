@@ -9,7 +9,7 @@ The call function is unique in that it can be used to create new parameterized f
 
 The syntax of the call function is:
 
-     $(call variable,param,param,...)
+	 $(call variable,param,param,...)
 When make expands this function, it assigns each param to temporary variables $(1), $(2), etc. The variable $(0) will contain variable. There is no maximum number of parameter arguments. There is no minimum, either, but it doesn't make sense to use call with no parameters.
 
 Then variable is expanded as a make variable in the context of these temporary assignments. Thus, any reference to $(1) in the value of variable will resolve to the first param in the invocation of call.
@@ -31,17 +31,17 @@ Here foo will contain ‘b a’.
 
 This one is slightly more interesting: it defines a macro to search for the first instance of a program in PATH:
 
-     pathsearch = $(firstword $(wildcard $(addsuffix /$(1),$(subst :, ,$(PATH)))))
+	 pathsearch = $(firstword $(wildcard $(addsuffix /$(1),$(subst :, ,$(PATH)))))
      
-     LS := $(call pathsearch,ls)
+	 LS := $(call pathsearch,ls)
 Now the variable LS contains /bin/ls or similar.
 
 The call function can be nested. Each recursive invocation gets its own local values for $(1), etc. that mask the values of higher-level call. For example, here is an implementation of a map function:
 
-     map = $(foreach a,$(2),$(call $(1),$(a)))
+	 map = $(foreach a,$(2),$(call $(1),$(a)))
 Now you can map a function that normally takes only one argument, such as origin, to multiple values in one step:
 
-     o = $(call map,origin,o map MAKE)
+	 o = $(call map,origin,o map MAKE)
 and end up with o containing something like ‘file file default’.
 
 A final caution: be careful when adding whitespace to the arguments to call. As with other functions, any whitespace contained in the second and subsequent arguments is kept; this can cause strange effects. It's generally safest to remove all extraneous whitespace when providing parameters to call.
