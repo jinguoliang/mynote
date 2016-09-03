@@ -558,7 +558,7 @@ Samba
 	$ xterm -geometry 80x24+30+200 -fn 6x10 -display hostname:0 &
 				-geometry 大小和位置	-fn 字体   
 				-display   指定xserver 
-					[[hostname:D.S]]	hostname 的主机的显示器 D 上显示的屏幕 S,工作于该显示器的 X 服务器监听 TCP 端口 6000+D
+					hostname:D.S	hostname 的主机的显示器 D 上显示的屏幕 S,工作于该显示器的 X 服务器监听 TCP 端口 6000+D
 					host/unix:D.S 表示在 host 主机的显示器 D 上显示的屏幕 S,工作于该显示器的 X 服务器监听 UNIX domain socket [[/tmp/.X11-unix/XD(故只能从主机访问它)]]
 					:D.S 等价于 host/unix:D.S,其中 host 代表本地主机名
 					__默认__的 __X 客户端程序__(应用端)的 displayname 可通过 __DISPLAY__ __环境变量__来设置。
