@@ -2,7 +2,7 @@ Content-Type: text/x-zim-wiki
 Wiki-Format: zim 0.4
 Creation-Date: 2013-12-25T05:37:54+08:00
 
-====== Design Pattern ======
+====== 基础 ======
 Created Wednesday 25 December 2013
 
 [[+Command Pattern]]
