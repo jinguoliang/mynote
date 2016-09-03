@@ -32,3 +32,41 @@ in vim:
 
 
 [[./vim入门,进阶与折腾 - godorz….html]] 
+
+==== 粘贴缩进混乱 ====
+使用命令
+set paste 设置粘贴模式
+set nopaste 退出粘贴模式
+
+==== add a addition ====
+.vim/plugin
+.vim/autoload
+.vim/doc				:helptags [[~/.vim/doc]]   add tags or can't find the tags
+
+
+==== Additions::q ====
+
+|acp.txt|       Automatically opens popup menu for completions.
+|l9.txt|        Vim-script library 
+
+==== 跳跃指令 (jumps) ====
+跳跃指令类似于游览器中的<前进><后退>按钮
+CTRL-] -> 跟着link/tag转入 (follow link/tag)
+CTRL-o -> 回到上一次的jump (go back)
+CTRL-i -> 跳回下一个 (go forward)
+:ju -> 显示所有的可以跳跃的地方 (print jump list)
+
+==== vi 查找忽略大小写 ====
+第一种方法：
+/abc\c
+第二种方法：
+set ignorecase （或者简写 set ic）
+
+==== ctags ====
+ctags -R –c-kinds=+p –fields=+iaS –extra=+q .	generate a file ctags containing the tags in current dir
+in vim:
+:set tags+=./tags				so the vim can find the tags.
+
+
+[[./vim入门,进阶与折腾 - godorz….html]] 
+
