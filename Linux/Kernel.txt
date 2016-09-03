@@ -15,3 +15,5 @@ Created Monday 06 January 2014
 [[./UNIX»·¾³¸ß¼¶±à³Ì.pdf]] 
 [[~/linux_program/unix_enviroment_advanced_programming]]
 [[./Advanced Programming in the UNIX Environment by W. Richard Stevens, Stephen A. Rago II Edition.pdf]] pre
+
+[[+物理内存很快占满|物理内存很快占满]]，且不释放
