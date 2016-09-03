@@ -33,15 +33,15 @@ __-rwsr-xr-x__ 1 root root   341694 2010-05-11 05:46 adb
 
 TODO:
 1. ContentValues contentValues = new ContentValues(2);
-                contentValues.put(MediaStore.Images.Media.DISPLAY_NAME,titleEditText.getText().toString());
-                contentValues.put(MediaStore.Images.Media.DESCRIPTION,descriptionEditText.getText().toString());
-                try {
-                    getContentResolver().update(imageFileUri, contentValues, null, null);
-                }catch (Throwable e){
-                    System.out.print(e.toString());
-                }
+				contentValues.put(MediaStore.Images.Media.DISPLAY_NAME,titleEditText.getText().toString());
+				contentValues.put(MediaStore.Images.Media.DESCRIPTION,descriptionEditText.getText().toString());
+				try {
+					getContentResolver().update(imageFileUri, contentValues, null, null);
+				}catch (Throwable e){
+					System.out.print(e.toString());
+				}
 2. ei = new ExifInterface(filePath);
-                        loge("description =" + ei.getAttribute("ImageDescription")); 写图片信息也不行
+						loge("description =" + ei.getAttribute("ImageDescription")); 写图片信息也不行
 
 === 当从全屏页面跳到非全屏页面时，布局会有下降的问题？ ===
 可以设置状态栏覆盖activity
@@ -64,7 +64,7 @@ getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 RadioButton设置drawabletop的图片大小
 getCompoundDrawables() 获取四个drawable, 没有设置的为null,通过setBounds()设置图片大小,最后通过setCompoundDrawables()重新设置图片
 
-[[ListView]] 当设置divider为@null 同时设置dividerHeight很大时会导致计算整个list的高度出错
+ListView 当设置divider为@null 同时设置dividerHeight很大时会导致计算整个list的高度出错
 给divider设成图片或者颜色,猜测:设为null时没计算
 
 [[AdapterView]] 设置adapter, item设置确定高度不起作用
