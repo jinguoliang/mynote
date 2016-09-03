@@ -12,7 +12,7 @@ Created 星期六 12 十月 2013
 Ubuntu:ubuntu 探索
 Ubuntu:ubuntu 环境
 cmd
-[[+语言|语言]]
+语言
 工具
 [[基础:HTTP|HTTP]]
 +Linux OS structur[[+Linux OS structure|e]]
