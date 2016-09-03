@@ -46,7 +46,7 @@ android测试Api是基于JUnit API,添加了instrumentation框架和android特�
 3. ApplicationTestCase
 	a. 可以帮你检验<application>元素是否正确安装
 4. InstrumentationTestCase
-	a. 提供了[[Instrumentation相关方法]]
+	a. 提供了Instrumentation相关方法
 
 === Assertion classes ===
 1. Junit的Assert

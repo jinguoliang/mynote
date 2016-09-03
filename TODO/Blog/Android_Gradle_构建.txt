@@ -59,7 +59,7 @@ app/build/outputs/apk/<appname>-<flavor>-<buildtype>.apk
 	b. 依赖.本地和远程
 	c. Manifest 配置.能声明某些元素值,覆盖AndroidManifest
 	d. 签名配置
-	e. 混淆规则 [[ProGuard]]
+	e. 混淆规则 ProGuard
 	f. 测试
 
 === 项目和模块的构建配置 ===
