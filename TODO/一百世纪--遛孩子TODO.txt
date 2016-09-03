@@ -9,7 +9,7 @@ Created 星期二 24 三月 2015
 详情页的评论
 所有评论页面
 我的评论页面
------------------------
+--------------------
 我的评论使用的listitem与其他两个不同所以adapter也不同
 其他两个使用相同的item和adapter
 
@@ -55,8 +55,8 @@ Created 星期二 24 三月 2015
 17. 首次欢迎界面  ok
 18. 重构代码
 19. 子分类数据
-	a. [[MerchaseAdapter]]
-	b. [[ListView]]
+	a. MerchaseAdapter
+	b. ListView
 	c. 上拉下滑
 	d. 子列表Item点击事件触发
 20. 首次欢迎界面  ok

@@ -12,7 +12,7 @@ TODO:
 	[ ] git add -i @Blog
 	[ ] [[+Android Gradle 构建|Android Gradle 构建 @Blog]]
 	[ ] [[+Android 测试|Android 测试 @Blog]]
-	[ ] [[ScaleDrawable @Blog]]
+	[ ] ScaleDrawable @Blog
 	[ ] [[+完全了解Android Touch Mode和Focus|完全了解Android Touch Mode和Focus @Blog]]
 
 	[ ] ApplicationInfo

@@ -38,14 +38,14 @@ android测试Api是基于JUnit API,添加了instrumentation框架和android特�
 2. 允许你一步一步的运行组件的某个生命周期.
 
 === Test case classes ===
-1. [[AndroidTestCase]] Android通用的类,刚开始就用它吧.它继承了TestCase和Assert.提供了测试权限的方法,还有一个通过清除特定类引用来防止内存溢出的方法.
+1. AndroidTestCase Android通用的类,刚开始就用它吧.它继承了TestCase和Assert.提供了测试权限的方法,还有一个通过清除特定类引用来防止内存溢出的方法.
 2. 特定组件的测试类
 	a. Activity Testing
 	b. Content Provider Testing
 	c. Service Testing
-3. [[ApplicationTestCase]]
+3. ApplicationTestCase
 	a. 可以帮你检验<application>元素是否正确安装
-4. [[InstrumentationTestCase]]
+4. InstrumentationTestCase
 	a. 提供了[[Instrumentation相关方法]]
 
 === Assertion classes ===

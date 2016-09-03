@@ -43,5 +43,5 @@ Created Thursday 02 July 2015
 		[*] 评价分数
 		[ ] 总结内容
 [ ] 重构底层逻辑层
-	[ ] [[PlanItem]]
+	[ ] PlanItem
 		[ ] 添加计划总天数，去掉结束日期
