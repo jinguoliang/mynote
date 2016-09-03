@@ -12,7 +12,7 @@ Created Saturday 01 August 2015
 来几个核心问题：
 1. 翻页效果如何实现的？
 	a. PageWidgetFactory.createPageWidget() 创建一个翻页效果
-	b. [[openning source:RealPageWidget]]
+	b. openning source:RealPageWidget
 		1. 先画
 2. 订阅逻辑
 	a. ReadBook.loadChapter(textid, preload,callback)

@@ -20,7 +20,7 @@ Created 星期六 12 十月 2013
 [[+github|github]]
 
 Linux OS    :
-[[SteamOS]]
+SteamOS
 
 有点意思:
 [[+怎样将zip文件保存在图片中|怎样将zip文件保存在图片中]]

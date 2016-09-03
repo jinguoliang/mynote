@@ -120,7 +120,7 @@ run()里做了什么呢? 它从schedule里拿出一个请求准备提交,然后�
 
 1. scheduler
 2. resourceManager
-3. [[openning source:PageProcesser]]
+3. openning source:PageProcesser
 4. downloader
 5. pipline
 6. page
