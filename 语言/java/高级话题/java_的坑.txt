@@ -53,13 +53,13 @@ System.out.println(Arrays.asList(arr).contains(1));
 Java代码  收藏代码
 public static void main(String[] args) {  
   
-       int[] arr = new int[]{1, 2, 3 };  
-       test1(arr);  
+	   int[] arr = new int[]{1, 2, 3 };  
+	   test1(arr);  
   
    }  
   
    private static void test1(Object... values) {  
-       System.out.println(values.length);  
+	   System.out.println(values.length);  
    }  
  
  
@@ -96,8 +96,8 @@ double price = 0.1;
 double remaining = total;  
 int count = 0;  
 while (remaining >= price) {  
-    count++;  
-    remaining -= price;  
+	count++;  
+	remaining -= price;  
 }  
 System.out.println(count);  
 System.out.println(remaining);  
@@ -151,15 +151,15 @@ System.out.println(sb.toString());
  
 Java代码  收藏代码
 public class Test implements Seraziable{  
-    private static Test  instance = null;  
-    private Test (){  
-    }  
+	private static Test  instance = null;  
+	private Test (){  
+	}  
   
-    public static Test getInstance() {  
-        if(instance == null) {   
-            instance = new Test();  
-        }  
-    }  
+	public static Test getInstance() {  
+		if(instance == null) {   
+			instance = new Test();  
+		}  
+	}  
 }  
  
  
@@ -169,37 +169,37 @@ public class Test implements Seraziable{
  
 Java代码  收藏代码
 public class TestSerializable implements Serializable {  
-    private static final TestSerializable instance = new TestSerializable();  
-    private String name = "t1";  
-    private TestSerializable() {  
-        System.out.println("**********TestSerializable************");  
-    }  
-    public static TestSerializable getInstance() {  
-        return instance;  
-    }  
-    public String getName() {  
-        return name;  
-    }  
-    public void setName(String name) {  
-        this.name = name;  
-    }  
-    public static void main(String[] args) throws Exception {  
-        TestSerializable singleton = TestSerializable.getInstance();  
+	private static final TestSerializable instance = new TestSerializable();  
+	private String name = "t1";  
+	private TestSerializable() {  
+		System.out.println("**********TestSerializable************");  
+	}  
+	public static TestSerializable getInstance() {  
+		return instance;  
+	}  
+	public String getName() {  
+		return name;  
+	}  
+	public void setName(String name) {  
+		this.name = name;  
+	}  
+	public static void main(String[] args) throws Exception {  
+		TestSerializable singleton = TestSerializable.getInstance();  
            
-        FileOutputStream fos = new FileOutputStream("E:\\test.txt");  
-        ObjectOutputStream oos = new ObjectOutputStream(fos);  
-        oos.writeObject(TestSerializable.getInstance());  
-        oos.flush();  
-        oos.close();  
+		FileOutputStream fos = new FileOutputStream("E:\\test.txt");  
+		ObjectOutputStream oos = new ObjectOutputStream(fos);  
+		oos.writeObject(TestSerializable.getInstance());  
+		oos.flush();  
+		oos.close();  
           
-        FileInputStream fis = new FileInputStream("E:\\test.txt");  
-        ObjectInputStream ois = new ObjectInputStream(fis);  
+		FileInputStream fis = new FileInputStream("E:\\test.txt");  
+		ObjectInputStream ois = new ObjectInputStream(fis);  
           
-        TestSerializable singleton2 = (TestSerializable)ois.readObject();  
-        singleton.setName("111");  
-        System.out.println(singleton.getName());  
-        System.out.println(singleton2.getName());  
-    }  
+		TestSerializable singleton2 = (TestSerializable)ois.readObject();  
+		singleton.setName("111");  
+		System.out.println(singleton.getName());  
+		System.out.println(singleton2.getName());  
+	}  
 }  
  
 输出：
@@ -214,8 +214,8 @@ jdk有个默认的反序列化方式，会从序列化文件读取信息，并�
 在类中增加方法：
 Java代码  收藏代码
 private Object readResolve(){  
-        return instance;  
-    }  
+		return instance;  
+	}  
  
  
 输出：
@@ -230,10 +230,10 @@ private Object readResolve(){
 Java代码  收藏代码
 public class Test001 {  
   
-    public void test(List<String> lst) {  
-    }  
-    public void test(List<Object> lst) {  
-    }  
+	public void test(List<String> lst) {  
+	}  
+	public void test(List<Object> lst) {  
+	}  
   
 }  
  
@@ -245,14 +245,14 @@ public class Test001 {
  
 Java代码  收藏代码
 public class Test001 {  
-    public static void test(List<Object> lst) {  
-        System.out.println("test(List<Object> lst)");  
-    }  
+	public static void test(List<Object> lst) {  
+		System.out.println("test(List<Object> lst)");  
+	}  
   
-    public static String test(List<String> lst) {  
-        System.out.println("test(List<String> lst)");  
-        return "ttttt";  
-    }  
+	public static String test(List<String> lst) {  
+		System.out.println("test(List<String> lst)");  
+		return "ttttt";  
+	}  
 }  
  
  
@@ -261,20 +261,20 @@ public class Test001 {
  
 Java代码  收藏代码
 public class Test001 {  
-    public static void main(String[] args) {  
-        List<String> aaa = new ArrayList<String>();  
-        aaa.add("1");  
-        test(aaa);// 如果List不指定<String>，则编译报错  
-    }  
+	public static void main(String[] args) {  
+		List<String> aaa = new ArrayList<String>();  
+		aaa.add("1");  
+		test(aaa);// 如果List不指定<String>，则编译报错  
+	}  
   
-    public static void test(List<Object> lst) {  
-        System.out.println("test(List<Object> lst)");  
-    }  
+	public static void test(List<Object> lst) {  
+		System.out.println("test(List<Object> lst)");  
+	}  
   
-    public static String test(List<String> lst) {  
-        System.out.println("test(List<String> lst)");  
-        return "ttttt";  
-    }  
+	public static String test(List<String> lst) {  
+		System.out.println("test(List<String> lst)");  
+		return "ttttt";  
+	}  
 }  
  
 正如注释缩写，如果调用的时候不用泛型，java也无法找到该调用哪个。
@@ -443,15 +443,15 @@ LocalVariableTypeTable: length = 0xC
 10.靠，出错了？
 Java代码  收藏代码
 public static void main(String[] args) {  
-       List<String> aaa = new ArrayList<String>();  
-       aaa.add("1");  
-       test(aaa);  
+	   List<String> aaa = new ArrayList<String>();  
+	   aaa.add("1");  
+	   test(aaa);  
    }  
    public static void test(List<Object> lst) {  
-       System.out.println("List<Object> lst");  
+	   System.out.println("List<Object> lst");  
    }  
    public static void test(Object obj) {  
-       System.out.println("Object obj");  
+	   System.out.println("Object obj");  
    }  
  
 当你想当然的认为输出List<Object> lst的时候，却输出了Object obj,难道List<String>不是List<Object>的子类？
@@ -460,14 +460,14 @@ public static void main(String[] args) {
 11.骗子！
 Java代码  收藏代码
 public static void main(String[] args) {  
-    List<Object> strList = new ArrayList<Object>();  
-    strList.add("1");  
-    strList.add("2");  
-    String[] arrA1 = strList.toArray(new String[0]);  
-    System.out.println(arrA1.length);  
+	List<Object> strList = new ArrayList<Object>();  
+	strList.add("1");  
+	strList.add("2");  
+	String[] arrA1 = strList.toArray(new String[0]);  
+	System.out.println(arrA1.length);  
   
-    String[] arrA2 = (String[]) strList.toArray(new Object[0]);  
-    System.out.println(arrA2.length);  
+	String[] arrA2 = (String[]) strList.toArray(new Object[0]);  
+	System.out.println(arrA2.length);  
   
 }  
  

@@ -7,9 +7,9 @@ Created Thursday 07 May 2015
 
 反射
 
-[[+模板|模板]]
+[[Android:java:高级话题:模板|模板]]
 
 虚拟机
 
 
-[[+java 的坑|java 的坑]]
+[[Android:java:高级话题:java 的坑|java 的坑]]

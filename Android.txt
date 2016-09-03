@@ -35,8 +35,8 @@ Created 星期六 12 十月 2013
 [[+我要这样开始我的Android深入之路]]  
 
 
-[[+C++]]
-[[+JAVA|JAVA]]
+[[语言:C++]]
+[[语言:java|JAVA]]
 [[+Android 编译]]
 
 [[file:///usr/local/adt-bundle-linux-x86_64-20130219/sdk/docs/guide/topics/ui/dialogs.html|Android Google Officail Document]]
@@ -57,7 +57,7 @@ Created 星期六 12 十月 2013
 
 [[+MultiMedia]]
 
-[[+java]]
+[[语言:java]]
 
 [[+test|test]]
 
