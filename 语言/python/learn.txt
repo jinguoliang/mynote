@@ -5,6 +5,8 @@ Creation-Date: 2016-08-17T00:48:57+08:00
 ====== learn ======
 Created 星期三 17 八月 2016
  
+
+===== 语法 =====
 1. 导入库 import
 2. sys.version_info python版本信息 (major, minor)   version <= (2, 6)
 3. try：exception： 

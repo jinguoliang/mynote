@@ -241,7 +241,7 @@ __│   └── Writing_plugins.txt__
 ├── MANIFEST.in
 ├── msgfmt.py
 ├── README.txt
-├── setup.py
+├── setup.py 
 ├── test.py
 ├── tests
 │   ├── actions.py
@@ -520,7 +520,7 @@ __│   └── Writing_plugins.txt__
 │   ├── __init__.pyc
 │   ├── ipc.py
 │   ├── ipc.pyc
-│   ├── main.py
+│   ├── main.py __0__
 │   ├── main.pyc
 │   ├── notebook.py
 │   ├── notebook.pyc
@@ -599,4 +599,4 @@ __│   └── Writing_plugins.txt__
 │   ├── utils.py
 │   ├── utils.pyc
 │   └── www.py
-└── zim.py
+└── zim.py __ok__
