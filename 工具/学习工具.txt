@@ -1,0 +1,9 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-09-09T22:43:12+08:00
+
+====== 学习工具 ======
+Created 星期五 09 九月 2016
+
+zim 基于PyGTK的桌面wiki
+gjots2　　gjots2是一个基于PyGTK的桌面工具,用于收集整理桌面信息
