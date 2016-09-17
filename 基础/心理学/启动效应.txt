@@ -1,0 +1,7 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-09-16T18:41:43+08:00
+
+====== 启动效应 ======
+Created 星期五 16 九月 2016
+

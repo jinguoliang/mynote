@@ -1,0 +1,32 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-09-17T14:16:52+08:00
+
+====== React 组件之间如何交流 ======
+Created 星期六 17 九月 2016
+
+==== 父组件向子组件传值 ====
+通过this.props.name 传递, 减少嵌套层次
+
+==== 子组件向父组件传值 ====
+同样是使用this.props.name, 不过这次传给子组件一个函数,通过回调实现
+
+==== 没有嵌套关系的组件之间传值 ====
+1. 三中模式
+	a. Event Emitter/Target/Dispatcher
+		1. otherObject.addEventListener(‘click’, function() { alert(‘click!’); });
+		2. this.dispatchEvent(‘click’);
+	b. Publish / Subscribe
+		1. globalBroadcaster.subscribe(‘click’, function() { alert(‘click!’); });
+		2. globalBroadcaster.publish(‘click’);
+	c. Signals
+		1. otherObject.clicked.add(function() { alert(‘click’); });
+		2. this.clicked.dispatch();
+
+2. react 
+	a. componentDidMount 订阅
+	b. componentWillUnmount 取消订阅
+	c. this.__pubsub_token__ = PubSub.subscribe('__products__', function (topic, __product__){}__.bind(this)__)
+	d. PubSub.unsubscribe(this.__pubsub_token__);
+	e. PubSub.publish('__products__', this.props.__name__);
+

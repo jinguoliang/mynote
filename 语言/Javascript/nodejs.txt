@@ -1,0 +1,23 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-09-12T01:10:01+08:00
+
+====== nodejs ======
+Created 星期一 12 九月 2016
+
+[[+npm|npm]]
+
+
+node执行时当前路径默认为 npm start的路径
+而require的路径则是相对源文件的
+
+swig 模板引擎库
+
+
+=== 模块写法 ===
+var react = requiret('react')  模块的引用
+定义:
+module.exports = funName 
+module.exports.name = funcName
+
+=== 读写文件 ===

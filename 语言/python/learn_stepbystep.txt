@@ -154,10 +154,17 @@ python如此简单, 它让你__关注问题__而不是__语法和结构__
 ==== 标准库 ====
 1. sys 包含解释器相关的方法类
 2. os 系统的api
+3. [[+re|re]] 　　[[:基础:正则表达式|正则表达式]]匹配
+
+==== 文档 ====
+pydoc  help() pydoc
+epydoc 
 
 ==== 测试 ====
 1. [[+unittest|unittest]]
-2. coverage
+2. coverage  
+	a. 代码覆盖率　用它运行测试会生成一个.coverage报告文件，但不可读，使用coverage report显式可读报告
+	b. coverage html -d covhtml 生成html报告
 
 ==== 更多Python内容 ====
 1. 特殊的方法
@@ -173,6 +180,9 @@ python如此简单, 它让你__关注问题__而不是__语法和结构__
 6. assert　断言
 7. repr()  会返回一个对象规范的字符串代表它，很多类型的返回的字符串可以通过eval()来的到原来的对象
 
+
+python2 和　python3 都安装了pip
+使用python2 -m pip install
 
 
 

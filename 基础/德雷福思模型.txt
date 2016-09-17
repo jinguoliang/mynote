@@ -1,0 +1,12 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-09-16T16:13:47+08:00
+
+====== 德雷福思模型 ======
+Created 星期五 16 九月 2016
+
+阶段1：新手
+阶段2 高级新手
+阶段3 胜任者
+阶段4 精通者
+阶段5 专家

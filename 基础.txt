@@ -5,4 +5,11 @@ Creation-Date: 2013-12-25T05:37:54+08:00
 ====== 基础 ======
 Created Wednesday 25 December 2013
 
+[[+德雷福思模型|德雷福思模型]]
+
 [[+Command Pattern]]
+
+[[+思维工具|思维工具]]
+
+[[+认知|认知]]
+

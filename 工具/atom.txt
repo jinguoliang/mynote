@@ -1,0 +1,12 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-09-15T00:24:48+08:00
+
+====== atom ======
+Created 星期四 15 九月 2016
+
+初始文件
+[[~/.atom/init.coffee]]
+
+
+[[+插件|插件]]

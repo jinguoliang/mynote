@@ -1,0 +1,11 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-09-16T15:37:18+08:00
+
+====== 思维导图 ======
+Created 星期五 16 九月 2016
+
+xmind
+
+freemind
+

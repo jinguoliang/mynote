@@ -1,0 +1,9 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-09-15T00:26:41+08:00
+
+====== 插件 ======
+Created 星期四 15 九月 2016
+
+1. wallaby  js实时检测覆盖率
+	a. 需要在atom init file 里设置 nodejs路径:process.env.WALLABY_NODE = 'your/nodejs/path' 实际上是,设置了个环境变量

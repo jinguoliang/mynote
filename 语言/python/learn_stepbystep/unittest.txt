@@ -189,3 +189,7 @@ if __name__ == "__main__":
 
 python unittestgui.py main_runner
 
+
+=== 测试是否跑出了异常 ===
+TestCase.assertRaises(self, Exception, callable, args, k=v)
+callable 是可以被调用的东西，　一定注意，不能直接调用函数，而是把函数名穿进去，参数，再后面传入

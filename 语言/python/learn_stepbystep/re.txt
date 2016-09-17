@@ -1,0 +1,18 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-09-11T20:07:10+08:00
+
+====== re ======
+Created 星期日 11 九月 2016
+
+1. re.compile(strPattern[, flag]): 
+	a. 第二个参数为匹配模式可以位或, 如re.M | re.I
+	b. 也可以在regex字符传中指定模式，如"(?im)pattern"
+	c. 模式可选值:
+		1. re.I 忽略大小写
+		2. re.M 多行模式
+		3. re.S(DotAll) 点任意匹配模式
+		4. re.L(local) 使\w \W \b \B \s \S取决于当前区域设定
+		5. re.U(unicode) 使\w \W \b \B \s \S \d \D取决于Unicode定义的字符集
+		6. re.X(verbose) 详细模式，可以多行，忽略空白和注释
+2. escape(string)　对元字符（*/+/?）进行转义 这样避免我们手动转义

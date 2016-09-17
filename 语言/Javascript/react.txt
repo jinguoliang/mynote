@@ -1,0 +1,32 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-09-15T12:47:03+08:00
+
+====== react ======
+Created 星期四 15 九月 2016
+
+一个前端框架
+
+[[+React 组件之间如何交流|React 组件之间如何交流]]
+js 库:
+1. react.js
+2. react-dom.js
+3. browser.min.js   引入它的作用是使浏览器支持babel
+	a. react 使用jsx语法, html元素跟js嵌套使用, 需要将<script type="text/babel"></script>
+	b. 转换是耗时的,所以尽量放在服务器做, babel src/ --out-dir  build 会进行语法转换
+
+类:
+1. React
+	a. createClasss({json})
+		1. getInitialState: function() {return {}}   返回一个json, 包含初始化状态
+		2. this.setState({}) 设置状态, 导致界面刷新, render被调用
+		3. componentDidMount: function() {}
+		4. render:function() {return (元素)}
+		5. 通过this.props.<name> 类获取自定义的属性的值
+		6. 元素有一个onCahnge,可以传入一个函数{function} 这个函数接受一个参数event
+			a. event会有target属性, target会有value属性
+2. ReactDom
+	a. ReactDom.render(元素,  container)
+
+JSX语法
+ JSX 的基本语法规则：遇到 HTML 标签（以 < 开头），就用 HTML 规则解析；遇到代码块（以 { 开头），就用 JavaScript 规则解析
