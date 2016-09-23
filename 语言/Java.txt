@@ -5,54 +5,46 @@ Creation-Date: 2016-09-04T18:53:47+08:00
 ====== Java ======
 Created 星期日 04 九月 2016
 
+==== 包 ====
+1. 内部类的全名表示	包名.类名$内部类名
+
+==== 数据类型 ====
+基本数据类型
+[[+类|类]]
+接口
+枚举
+
+==== 流程控制 ====
+顺序
+判断
+case
+循环
+
+==== 输入输出IO ====
+
+==== 多线程并发 ====
+
+==== 异常 ====
+
+==== 泛型 ====
+
+==== 注解 ====
+
+==== 字符串 ====
+
+==== 数组 ====
+
+==== 容器 ====
+
+
+
 ant 的java 类 doc  http://javadoc.haefelinger.it/org.apache.ant/1.7.1/org/apache/tools/ant/package-summary.html
 
-高级话题
+
+==== 时间 ====
+[[+时间格式化|时间格式化]]
 
 
-时间
-android.text.format.DateFormat.format(formatstr,long);
-DateUtils.formatDateTime(this.getContext(), date, flag)  
-
-DateFormat.is24HourFormat(context)		判断系统设置是否是24小时制
-
-new DateFormatSymbols().getAmPmStrings();	获取下午上午的字符串，其他函数还有获取年月日的名
-
-
-DateUtils.formatDateTime(this, long,
-	DateUtils.FORMAT_SHOW_DATE| DateUtils.FORMAT_NUMERIC_DATE
-	| DateUtils.FORMAT_SHOW_TIME| DateUtils.FORMAT_SHOW_YEAR)
-
-DateUtils.getRelativeTimeSpanString(time,nowtime,DateUtils.MINUTE_IN_MILLIS)
-
-flag指定显示什么 DateUtils.FORMAT_SHOW_YEAR
-| DateUtils.FORMAT_SHOW_DATE
-| DateUtils.FORMAT_SHOW_TIME
-
-	日期时间处理：
-	DateFormat.getDateInstance()
-	DateFormat.getDateTimeInstance()
-	DateFormat.getTimeInstance()	
-	使用SimpleDateFormat：SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);
-	sdf.format(Date)
-					 yyyy-MM-dd 1969-12-31
-					 yyyy-MM-dd 1970-01-01
-			   yyyy-MM-dd HH:mm 1969-12-31 16:00
-			   yyyy-MM-dd HH:mm 1970-01-01 00:00
-			  yyyy-MM-dd HH:mmZ 1969-12-31 16:00-0800
-			  yyyy-MM-dd HH:mmZ 1970-01-01 00:00+0000
-	   yyyy-MM-dd HH:mm:ss.SSSZ 1969-12-31 16:00:00.000-0800
-	   yyyy-MM-dd HH:mm:ss.SSSZ 1970-01-01 00:00:00.000+0000
-	 yyyy-MM-dd'T'HH:mm:ss.SSSZ 1969-12-31T16:00:00.000-0800
-	 yyyy-MM-dd'T'HH:mm:ss.SSSZ 1970-01-01T00:00:00.000+0000
-
-		/** 输出格式: 2006-01-01 00:00:00 */
-		java.text.DateFormat format1 = new java.text.SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		s = format1.format(new Date());
-		System.out.println(s);
-
-内部类的全名表示	
-		包名.类名$内部类名
 		
 		
 

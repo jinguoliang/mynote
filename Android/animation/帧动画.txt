@@ -1,0 +1,17 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-09-21T14:44:15+08:00
+
+====== 帧动画 ======
+Created 星期三 21 九月 2016
+
+AnimationDrawable
+
+xml res/drawabe/
+
+<animation-list>
+	<item>
+
+setBackgroundResource()
+AnimationDrawable frameAnimation = (AnimationDrawable) img.getBackground();
+frameAnimation.start();
