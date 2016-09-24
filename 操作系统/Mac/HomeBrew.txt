@@ -1,0 +1,75 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-09-20T17:38:43+08:00
+
+====== HomeBrew ======
+Created 星期二 20 九月 2016
+
+卸载Macports，安装Homebrew
+字数858 阅读5412 评论0 喜欢9
+@[Mac|Homebrew|Macports]
+
+概述
+MacPorts和Homebrew都是Mac OS X上的软件包管理工具,同时它们之间是不兼容的，通过这两个软件包管理工具都可以很方便的管理Mac OS X上软件及应用库的安装。但是据说MacPorts有个缺点就是会重复安装一些系统本省自带的库或软件，而Homebrew则会优先采用系统自带的库或软件不做重复安装，比如安装Python，对于系统已经有的依赖库，Homebrew不做安装。
+
+如果你已经安装了Macports，需要先对其进行卸载，在安装Homebrew
+删除Macports
+使用MacPorts安装过的软件在/opt/local目录下,删除之前最好查看下,自己心里有个数
+运行以下Shell命令：
+
+sudo port -f uninstall installed
+sudo port clean all
+sudo rm -rf \
+/opt/local \
+/Applications/DarwinPorts \
+/Applications/MacPorts \
+/Library/LaunchDaemons/org.macports.* \
+/Library/Receipts/DarwinPorts*.pkg \
+/Library/Receipts/MacPorts*.pkg \
+/Library/StartupItems/DarwinPortsStartup \
+/Library/Tcl/darwinports1.0 \
+/Library/Tcl/macports1.0 \
+~/.macports
+可以通过以下命令，避免老是需要sudo授权:
+sudo chown -R whoami /usr/local
+安装Homebrew
+Homebrew是基于Ruby安装，Mac默认自带Ruby
+运行以下命令进行安装：
+
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+注意：安装过程中会先检测系统中是否已经安装了Homebrew，如果已经安装，会有提示命令行让你先删除已安装的Homebrew。同时安装过程中需要按回车键授权同意安装，安装结束之后，最好运行以下命令，用于检测是否有冲突，同时它会提示一些已失效的库链接：brew doctor
+Homebrew安装在/user/local目录下，同时它会创建/user/local/Cellar目录用于存放通过Homebrew安装的程序，运行brew -v查看安装版本
+
+Homebrew常用命令
+brew search * --搜索程序，例：brew search python
+brew install * --安装程序，例：brew install python
+brew uninstall * --卸载程序，例：brew uninstall python
+brew list --列举通过Homebrew安装的程序
+brew update --更新Homebrew
+brew upgrade [*] --更新某个具体程序，或者更新所有程序
+brew cleanup [*] --删除某个具体程序，或者删除所有老版程序
+brew outdated --查看哪些程序需要更新
+
+其他命令
+brew home * --用浏览器打开
+brew info * --显示软件内容信息
+brew deps * --显示包依赖
+brew server * --启动web服务器，可以通过浏览器访问http://localhost:4567/ 来同网页来管理包
+brew -h --查看帮助
+
+删除Homebrew
+cd `brew –prefix`
+rm -rf Cellar
+brew prune
+rm -rf Library .git .gitignore bin/brew README.md share/man/man1/brew
+rm -rf ~/Library/Caches/Homebrew
+PS:如果目前仍在用Macports，提供以下链接用于解决和Yosemite不兼容的问题：
+https://www.macports.org/install.php 提供Yosemite版Macports下载
+https://trac.macports.org/wiki/Migration 卸载旧版Macports的一些步骤
+MacPorts常用命令：
+更新ports tree和MacPorts版本，强烈推荐第一次运行的时候使用-v参数，显示详细的更新过程：sudo port -v selfupdate
+搜索索引中的软件：port search name
+安装新软件：sudo port install name
+卸载软件：sudo port uninstall name
+查看有更新的软件以及版本：port outdated
+升级可以更新的软件：sudo port upgrade outdated

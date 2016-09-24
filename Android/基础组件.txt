@@ -1,0 +1,13 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-09-23T11:25:22+08:00
+
+====== 基础组件 ======
+Created 星期五 23 九月 2016
+
+1. Activity
+2. Service
+	a. 进程生命周期
+		1. 服务在执行 onCreate，onStartCommand，onDestroy 时，进程将被认为是前台的，保证不被杀死
+3. BroadcastReceiver
+4. ContentProvider
