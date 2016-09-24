@@ -1,0 +1,11 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-09-17T18:03:51+08:00
+
+====== 快捷键 ======
+Created 星期六 17 九月 2016
+
+全局快捷键 
+模块 globalShortcut
+使用
+globalShortcut.register('ctrl+shift+2',function(){})

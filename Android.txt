@@ -29,6 +29,17 @@ Created 星期六 12 十月 2013
 
 [[+面试技术|面试技术]]
 
+	Deep knowledge of Android SDK internals   深入理解Android SDK
+	Strong grasp of UI design patterns including layouts, animations and transitions  掌握UI设计模式:布局,动画,转换
+	Battle scars from working with Android device and OS fragmentation 有经验,有领悟
+	Experience integrating with remote services (REST, JSON, HTTP) 有远程通讯的经验(REST, JSON, HTTP)
+	Published one or more applications to the Google Play store 在google play发布过应用
+	Solid understanding of development life cycle and Git workflows 对开发生命周期和Git工作流有深刻理解
+	On top of best practices, architectures and emerging technologies 总能找到最佳实践,架构和技术
+	Comfortable with automated testing (unit tests/integration tests/etc)  有自动化测试的习惯
+	Portfolio (Github, Stack Overflow, Gitlab, Bitbucket, etc)  有这些资源
+
+
 {{./pasted_image003.png}}
 
 ===== 我应该如何开始我的Android深入学习？？？ =====

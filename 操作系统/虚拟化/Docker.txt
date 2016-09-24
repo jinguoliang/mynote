@@ -1,0 +1,30 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-09-21T01:05:18+08:00
+
+====== Docker ======
+Created 星期三 21 九月 2016
+
+Docker 是一个开源项目，诞生于 2013 年初，最初是 dotCloud 公司内部的一个业余项目。它基于 Google 公司推出的 Go 语言实现。 项目后来加入了 Linux 基金会，遵从了 Apache 2.0 协议，项目代码在 GitHub 上进行维护。
+
+Docker 项目的目标是实现轻量级的操作系统虚拟化解决方案。 Docker 的基础是 Linux 容器（LXC）等技术。
+
+由下图可见容器是在操作系统层面上实现虚拟化，直接复用本地主机的操作系统，而传统方式则是在硬件层面实现。
+
+{{./pasted_image.png}}
+{{./pasted_image001.png}}
+
+{{./pasted_image002.png}}
+
+===== 基本概念 =====
+1. 镜像（Image）
+	a. 镜像是一个只读的模板, 类比为ISO文件?
+	b. 镜像可以用来创建 Docker 容器。
+2. 容器（Container）
+	a. Docker 利用容器（Container）来运行应用。
+	b. 是镜像的实例,类比为虚拟机加载iso运行起来的系统
+3. 仓库（Repository)
+	a. 仓库（Repository）是集中存放镜像文件的场所
+	b. 仓库注册服务器上往往存放着多个仓库，每个仓库中又包含了多个镜像，每个镜像有不同的标签（tag）。
+	c. 最大的公开仓库是 Docker Hub
+	d. 国内的公开仓库包括 时速云 、网易云 等
