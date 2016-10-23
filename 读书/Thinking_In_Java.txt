@@ -1,0 +1,14 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-10-11T19:12:54+08:00
+
+====== Thinking In Java ======
+Created 星期二 11 十月 2016
+
+
+[[+访问控制|访问控制]]
+
+[[+重用类|重用类]]
+
+[[+多态|多态]]
+

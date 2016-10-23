@@ -11,15 +11,15 @@ Created Tuesday 02 June 2015
 		tracker.computeCurrentVelocity(1000);  计算  参数为单位1时是p/ms  1000时是pixel/s 
 		tracker.getXVelocity();
 		tracker.recycle();
-2. [[OnScrollListener]] [[ListView]] 
+2. OnScrollListener ListView 
 	a. onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
 	b. listView.getLastVisiblePosition()
-3. [[PopupWindow]]
+3. PopupWindow
 4. notifyDataSetChanged 和 notifyDataSetInvalidated区别
 	a. 一个通知listview数据改变了,一个是通知listview无效了
 	b. 具体表现是数据改变了当前的滚动位置不变,适用于添加了数据.无效了就要重新刷新整个listview,滚动到开始位置
 5. 使用系统的一些配置,如ViewConfiguration.get(context).getScaledTouchSlop()可以用于区分点击和滑动行为
-	a. [[ViewConfiguration]] 包含了一些在UI中使用的标准常量,如timeouts, sizes, and distances.
+	a. ViewConfiguration 包含了一些在UI中使用的标准常量,如timeouts, sizes, and distances.
 6. Scroller  帮助收集信息来做一个滚动动画
 	scroller.smoothScrollTo(startx,starty,deltaX,deltaY, duration)
 	scroller.computeScrollOffset()

@@ -6,23 +6,23 @@ Creation-Date: 2013-10-12T22:18:25+08:00
 Created 星期六 12 十月 2013
 
 TODO:
-[ ] Rework @Book
+[*] Rework @Book
 [ ] 如何阅读一本书 @Book
-[ ] The Way To Go @Book
+[*] The Way To Go @Book
 [ ] 思考,快与慢 @Book
 [ ] 理解专业程序员 @Book
-[ ] 卓有成效的程序员 @Book
-[ ] 情人 @Book
-[ ] 你的灯亮着吗 @Book
+[*] 卓有成效的程序员 @Book
+[*] 情人 @Book
+[*] 你的灯亮着吗 @Book
 [ ] 35岁前要上的33堂理财课 @Book
 [ ] 三体 @Book
 [ ] 迷男方法 @Book
 [ ] 青铜时代 @Book
 [ ] 1988 @Book
 [ ] 心理学与生活
-[ ] 思考的艺术
+[*] 思考的艺术
 [ ] 学会提问
-[ ] 一万小时天才理论
+[*] 一万小时天才理论
 [ ] 大脑使用手册
 [ ] 怎样解题 How to Solve It
 [ ] 解题·成长·快乐——陶哲轩教你学数学

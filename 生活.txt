@@ -30,5 +30,6 @@ Created 星期六 12 十月 2013
 
 
 {{./pasted_image.png}}
+{{./pasted_image.tiff}}
 
 ===== You haven't viewed the world. Where does your world view come from? =====

@@ -5,6 +5,11 @@ Creation-Date: 2013-12-12T09:19:09+08:00
 ====== Service ======
 Created Wednesday 11 December 2013
 
+深入理解
+1. 后台工作可以在一个线程里执行，但是如果没有可见的 Activity，此时应用很容易被系统杀死回收，而使用服务，系统会尽量保留应用
+2. 为其他应用提供功能
+
+
 A service can essentially take two forms:
 	Started
 		 startService()
@@ -36,20 +41,20 @@ A service can essentially take two forms:
 
 ==== Declaring a service in the manifest ====
 	<service android:enabled=["true" | "false"]
-	         android:__exported__=["true" | "false"]
-	         android:icon="drawable resource"
-	         android:__isolatedProcess__=["true" | "false"]
-	         android:label="string resource"
-	         android:name="string"
-	         android:__permission__="string"
+			 android:__exported__=["true" | "false"]
+			 android:icon="drawable resource"
+			 android:__isolatedProcess__=["true" | "false"]
+			 android:label="string resource"
+			 android:name="string"
+			 android:__permission__="string"
 			A feature can be protected by at most one permission.
 			The <permission-tree> element declares a namespace for a group of permissions that will be defined in code.
 			And <permission-group> defines a label for a set of permissions (both those declared in the manifest with <permission> elements and those declared elsewhere). It affects only how the permissions are grouped when presented to the user. 
 			 A permission is placed in the group by assigning the group name to the <permission> element's permissionGroup attribute
-	         android:__process__="string" >       
+			 android:__process__="string" >       
 			 If the name assigned to this attribute begins with a colon (':'), a new process, private to the application, is created when it's needed and the service runs in that process.
 			
-	    . . .
+		. . .
 	</service>
 	
 
@@ -115,7 +120,7 @@ A service can essentially take two forms:
 ==== Running a Service in the Foreground ====
 	1.__must__ provide a notification for the status bar
 	2. public final void __startForeground__ (int id, Notification notification) 
-	3.  public final void __stopForeground__ (boolean removeNotification) 
+	3. public final void __stopForeground__ (boolean removeNotification) 
 		This method __does not__ stop the service.
 	4.if you __stop__ the service while it's still running in the foreground, then the notification is also __removed__.
 
