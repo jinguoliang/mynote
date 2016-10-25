@@ -61,7 +61,7 @@ Cupcake	1.5	API level 3, NDK 1
 [[+我要这样开始我的Android深入之路]]  
 
 
-[[语言:C++]]
+语言:C++
 JAVA
 [[+Android 编译]]
 
