@@ -1,0 +1,98 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-10-27T15:37:42+08:00
+
+====== SAF ======
+Created 星期四 27 十月 2016
+
+Android 4.4 引入 SAF
+SAF 允许用户选择自己喜欢的数据源，方便的浏览或打开文档，图片或者其他文件。
+云存储和本地存储都可以通过实现 DocumentProvider 封装他们的服务来加入这个生态系统
+客户端 app 只需要几行代码就可以继承 SAF 来访问 provider 提供的文档
+
+SAF 包括：
+1. Document provider 通过继承实现 DocumentsProvider 允许存储服务暴露它管理的文件，如：Download是， Images， Videos
+2. Client app 通过调用ACTION_OPEN_DOCUMENT and/or ACTION_CREATE_DOCUMENT来从读写 provider 里的文件
+3. Picker 系统 UI，作为中间人，让用户可以从所有 provider 中选择满足搜索条件的文档
+
+其他的特性：
+1. 允许用户浏览来自所有提供者的文档
+2. 可以长期持久的访问一个文档提供者的文档，不需要每次都去请求
+3. 支持多用户账户，允许临时的提供者，如 Usb 存储提供者，插入的时候会显示，不插入不显示
+
+概览
+
+在文档提供者中，数据是以普通文件层级结构组织的
+{{./pasted_image.tiff}}
+1. 每一个提供者向外暴露一个或多个root， 每一个 root 有唯一的COLUMN_ROOT_ID，
+2. 它会指向一个文档（目录），它会指向多个文档
+3. 每一个文档有唯一的 COLUMN_DOCUMENT_ID.是不能改变的，因为它可能被给客户端持久访问
+4. 文档可能是可打开的文件，这是它的 MIME 是特定的，也可能是目录，此时的 MIME 是 MIME_TYPE_DIR 
+5. 每个文档允许不同的操作，被 COLUMN_FLAGS描述，如FLAG_SUPPORTS_WRITE, FLAG_SUPPORTS_DELETE, and FLAG_SUPPORTS_THUMBNAIL
+
+控制流
+
+之前提到，文档提供者数据模型是基于普通的文件层级，但是你可以以任意方式存储数据，只要可以使用DocumentsProvider API访问就可以
+
+下面是一个 photo 应用使用 SAF 访问数据的流程：
+{{./pasted_image001.tiff}}
+1. 在 SAF 中，客户需要先请求权限才能访问数据
+2. 这个访问开始于发送 Intent ACTION_OPEN_DOCUMENT or CTION_CREATE_DOCUMENT， 用户可以定义更详细的条件
+3. 一旦发送了 Intnet，系统回去收集匹配的 provider，并显示 root
+4. picker 会提供统一的访问文档的接口，而不管底层的 provider 有多不同
+
+自己写一个 Client 使用 SAF 访问文件
+
+在4.3之前， 如果想从其他应用获取文件，必须使用 Intent，如ACTION_PICK or ACTION_GET_CONTENT.。用户必须选择一个去取得文件，而这个应用必须提供相应的接口
+在4.4以后， 你可以有其他选择，ACTION_OPEN_DOCUMENT intent， 它会打开一个系统控制的 UI，从所有支持的应用选择文件
+
+ACTION_OPEN_DOCUMENT 并没有被设计去替代 ACTION_GET_CONTENT，应该根据需求选择：
+1. 如果你简单的读取导入数据，可以使用 ACTION_GET_CONTENT，应用会导入一份数据 copy
+2. 如果你想长期持久访问一个文档提供者的数据，可以使用ACTION_OPEN_DOCUMENT
+
+查找文档
+1. Intent.ACTION_OPEN_DOCUMENT
+2. Intent.CATEGORY_OPENABLE
+3. setType("image/*")
+4. onActivityResult   uri = resultData.getData();
+5. metadata
+	a. getContentResolver().query(uri, null, null, null, null, null)
+	b. OpenableColumns.DISPLAY_NAME
+	c. OpenableColumns.SIZE
+打开文档
+1. Bitmap
+	a. getContentResolver().openFileDescriptor(uri, "r");
+	b. parcelFileDescriptor.getFileDescriptor();
+	c. BitmapFactory.decodeFileDescriptor(fileDescriptor);
+	d. parcelFileDescriptor.close();
+2. 读取流
+	a. getContentResolver().openInputStream(uri);
+3. 创建新文档
+	a. new Intent(Intent.ACTION_CREATE_DOCUMENT)
+	b. intent.addCategory(Intent.CATEGORY_OPENABLE);
+	c. intent.setType(mimeType);
+	d. intent.putExtra(Intent.EXTRA_TITLE, fileName);
+	e. 创建后在onActivityResult() 可以得到新创建的文档 uri
+4. 删除文档
+	a. DocumentsContract.deleteDocument(getContentResolver(), uri);
+5. 修改文档
+	a. 同读取getContentResolver().openFileDescriptor(uri, "w");
+	b. new FileOutputStream(pfd.getFileDescriptor());
+6. 持久化权限
+	a. 当你读写一个文档时，系统通过 uri 给你权限，但是这个权限在手机重启后就没了
+	b. 但是你的用户并不想重启后在重新给权限，太麻烦了，为了解决这个问题，有了持久化权限，时机就是告诉系统重启别把权限弄丢了
+	c. final int takeFlags = intent.getFlags() & (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+	d. getContentResolver().takePersistableUriPermission(uri, takeFlags);
+	e. 你存储的 uri 可能被其他应用修改或者删除了，这时，通过以上语句来检查刷新文件
+
+==== android.support.v4.provider.DocumentFile ====
+1. Document 的文件名称和 MIME 类型分别标识，而不是向普通文件一样有扩展名
+2. 一个文档可能与多个父目录，你能从上往下遍历，却不能从下网上遍历
+3. 每个文档在它所在的文档提供器内都有唯一的标识符，
+
+在使用之前先考虑你是否需要访问整个子树，根据最少特权原理，你应该只是请求你需要的权限。所以尽量使用之前的 api
+真的需要的话
+	1. ACTION_OPEN_DOCUMENT_TREE intent
+	2. getData() into fromTreeUri(Context, Uri)  获取到顶层文档对象
+	3. 为了统一 KITKIT 之前的代码，你可以使用 fromFile(File)， 它虚拟了DocumentsProvider的行为
+

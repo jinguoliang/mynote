@@ -1,0 +1,12 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-10-25T12:33:21+08:00
+
+====== 请求运行时属性 ======
+Created 星期二 25 十月 2016
+
+1. Gdx.app.getType()  获取应用平台，是 Android 还是 Desktop
+2. Gdx.app.getVersion() 获取 Android 版本 sdk level
+3. 获取内存消耗信息
+	a. Gdx.app.getJavaHeap(); 
+	b. Gdx.app.getNativeHeap();

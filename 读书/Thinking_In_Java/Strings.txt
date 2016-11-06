@@ -1,0 +1,42 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-11-04T15:40:32+08:00
+
+====== Strings ======
+Created 星期五 04 十一月 2016
+
+==== 不可改变的字符串 ====
+
+==== 重载『+』好还是 StringBuilder ====
+
+==== Unintented recursion ====
+
+==== 操作字符串 ====
+
+==== 格式化输出 ====
+1. printf（）
+2. System.out.format()
+3. Formatter类
+4. 格式
+5. Formatter 转换符
+6. 16禁止输出工具
+
+==== 正则表达式 ====
+1. 基础
+2. 创建
+3. 量词
+4. 字串
+5. Pattern 和 Matcher
+6. find（）
+7. 组
+8. start（）和 end（）
+9. Patter 标签
+10. split（）
+11. 替换操作
+12. reset（）
+13. 正则表达式和 Java I/O
+
+==== 扫描输入 ====
+1. Scanner 分隔符
+2. 带有正则表达式的扫描
+3. StringTokenizer

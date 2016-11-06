@@ -14,7 +14,7 @@ c.getString(c.getColumnIndex(Media.DATA_ADDED)) 获取到图片添加时间。
 ArrayList<ContentProviderOperation> operationList = new ArrayList<ContentProviderOperation>();
 ContentProviderOperation.Builder builder = null;
 builder = ContentProviderOperation.newUpdate(ContentUris.withAppendedId(
-                            Notes.CONTENT_DATA_URI, mCallDataId));//指明了uri
+							Notes.CONTENT_DATA_URI, mCallDataId));//指明了uri
 builder.withValues(ContentValue);	//指明数据
 mCallDataValues.clear();		//添加一个
 还可以添加多个
@@ -23,5 +23,7 @@ ContentProviderResult[] results = context.getContentResolver().applyBatch(Notes.
 
 3. 数据改变通知Cursor？？？？
 getContext().getContentResolver().notifyChange(
-                    ContentUris.withAppendedId(Notes.CONTENT_NOTE_URI, noteId), null);
+					ContentUris.withAppendedId(Notes.CONTENT_NOTE_URI, noteId), null);
 
+
+[[+SAF|SAF Storage Access Framework]]

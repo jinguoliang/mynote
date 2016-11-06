@@ -1,0 +1,16 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-10-25T10:45:10+08:00
+
+====== 生命周期 ======
+Created 星期二 25 十月 2016
+
+一个 libgdx 应用定义了生命周期来反应应用的状态，比如creating， pausing，resuming，rendering，disposing
+
+{{./pasted_image.tiff}}
+也可以继承 ApplicationAdapter 实现部分方法
+
+{{./pasted_image001.tiff}}
+
+主循环
+render（）

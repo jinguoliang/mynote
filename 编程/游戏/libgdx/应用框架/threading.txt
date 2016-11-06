@@ -1,0 +1,13 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-10-25T12:40:48+08:00
+
+====== threading ======
+Created 星期二 25 十月 2016
+
+ApplicationListener所有的方法都在同一个线程，这个线程叫渲染线程，OpenGl 操作可以在上面执行。
+大部分游戏的逻辑更新和渲染都可以在 render 方法内，渲染线程上执行
+
+OpenGl 的操作都应该在渲染线程上，否则会产生无法预期的行为。
+
+可以通过Gdx.app.postRunnable（）保证在渲染线程上执行 Runnalbe
