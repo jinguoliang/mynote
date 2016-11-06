@@ -1,0 +1,58 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-08T05:03:06+08:00
+
+====== dialog ======
+Created Friday 08 November 2013
+
+使用AlertDialog.Builder
+		AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+		dialog.setTitle(R.string.app_name);
+		dialog.setMessage(mSnippet);
+		dialog.setPositiveButton(R.string.notealert_ok, this);
+		if (isScreenOn()) {
+			dialog.setNegativeButton(R.string.notealert_enter, this);
+		}
+		 
+		
+		==== 或 ====
+		 dialogBuilder.setItems(menuItemArray,
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							String selectType = "*/*";
+							switch (which) {
+							case 0:
+								selectType = "text/plain";
+								break;
+							case 1:
+								selectType = "audio/*";
+								break;
+							case 2:
+								selectType = "video/*";
+								break;
+							case 3:
+								selectType = "image/*";
+								break;
+							}
+							Intent intent = new Intent();
+							intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+							intent.setAction(android.content.Intent.ACTION_VIEW);
+							intent.setDataAndType(Uri.fromFile(new File(filePath)), selectType);
+							context.startActivity(intent);
+						}
+					});
+		dialog.show().setOnDismissListener(this);//添加关闭是执行事件
+DateTimePicker
+mDateTimePicker = new DateTimePicker(context);
+mDateTimePicker.setOnDateTimeChangedListener(new OnDateTimeChangedListener() {
+public void onDateTimeChanged(DateTimePicker view,
+	int year, int month, int dayOfMonth,int hourOfDay, int minute) {//这样使用picker
+		mDate.set(Calendar.YEAR, year);
+		mDate.set(Calendar.MONTH, month);
+		mDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+		mDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
+		mDate.set(Calendar.MINUTE, minute);	//这样使用Calendar
+		
+	}
+});

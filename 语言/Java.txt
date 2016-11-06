@@ -5,6 +5,14 @@ Creation-Date: 2016-09-04T18:53:47+08:00
 ====== Java ======
 Created 星期日 04 九月 2016
 
+==== 编译 ====
+1. 目录结构为包结构
+2. package 包名 → 一定要对应好目录结构
+3. javac -g -verbose `find access -name "*.java"` -d gen 编译access 包里的所有 java文件 将 class 文件放到 gen 目录里
+4. cd gen 进入 gen
+5. java 包名.类名 → 要包含 main
+
+
 ==== 包 ====
 1. 内部类的全名表示	包名.类名$内部类名
 
@@ -36,7 +44,24 @@ case
 
 ==== 容器 ====
 
+==== 同步 ====
 
+1. java 提供了两种基本的同步原语
+	a. 同步方法
+		1. 在__同一个对象__上的同步方法的两次调用不可能交错执行
+		2. 当同步方法结束后，自动构建和接下来的同步方法的 [[:基础:WIKI:Happens-Before|Happens-Before关系]] 这保证改动对所有线程可见
+		3. 构造函数不可以同步，无意义 → 这样如果构造函数没执行完，其他线程就使用 eg. 构造函数 里sInstances.add(this)
+		4. 如果一个对象被多线程使用，就用它吧
+	b. 同步语句块
+		1. 先来了解内部机制：内部锁与同步
+			a. 同步是通过一个叫做内部锁或叫监督锁的内部实体来实现的。
+			b. 内部锁有两个功能：强制互斥访问和构建 [[:基础:WIKI:Happens-Before|Happens-Before关系]] 
+			c. 每一个对象都关联一个内部锁。线程需要先请求锁，然后访问对象（拥有这个对象），然后释放锁。
+		2. 同步方法的锁
+			a. 对象的同步方法的锁就是这个对象的锁
+			b. 类的静态同步方法的锁是 Class object 的锁 与 对象的同步方法是不同的
+		3. 同步语句
+			a. 同步语句可以使用任意对象作为锁对象，是的原子更小
 
 ant 的java 类 doc  http://javadoc.haefelinger.it/org.apache.ant/1.7.1/org/apache/tools/ant/package-summary.html
 

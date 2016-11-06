@@ -1,0 +1,76 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-10-09T16:02:58+08:00
+
+====== view ======
+Created 星期日 09 十月 2016
+
+==== ViewCompat 一个帮助类，用来兼容 api 4以后加入的特性 ====
+
+1. 使用静态初始化，根据 api 来实例化不同的实现类，从而做到兼容
+2. 都是些静态方法
+
+==== ViewConfiguration UI 方面的超时，大小，距离常量和方法 ====
+1. SCROLL_BAR_SIZE  滚动条大小 
+2. DEFAULT_LONG_PRESS_TIMEOUT 长按超时
+3. TOUCH_SLOP 触摸移动多远算是滚动
+4. 。。。
+
+==== View 的 scrollX scrollY ====
+1. 视图坐标 View 的 canvas 是无边无际的，不是所有都显示出来的
+2. 布局坐标 View 显示出来的部分   
+3. 初始，坐标原点是统一的，都在 view的左上角
+4. 既然 canvas 的只有部分内容显示出来，那么要想显示其他内容就需要移动 canvas，此时需要使用canvas.translate
+5. 但是更简单的方法, view 给我们提供了 scrollTo（） scrollBy（）,调用两者都会导致view刷新，并且调用onScrollChanged（）
+
+
+==== VelocityTracker   帮助跟踪触摸事件的速度, 以便实现 fling（抛的效果） ====
+
+用法：
+1. VelocityTracker tracker = VelocityTracker.obtain();
+2. tracker.addMovement(event);  添加对事件的跟踪
+3. tracker.computeCurrentVelocity(1000);  计算  参数为单位1时是p/ms  1000时是pixel/s 
+4. tracker.getXVelocity();
+5. tracker.recycle();
+
+==== Scroller 封装了滚动功能，但是并不是直接让 View 滚动，而是手机一些信息，帮助你实现滚动     → ScrollerCompat ====
+
+ 用法：
+1. 如何施加滚动效果，View.computeScroll（）每次重绘都会调用computeScroll（），在里面根据 scroller 状态对 view 进行 scrollTo（），scrollBy（）
+2. Scroller mScroller = new Scroller(context)
+3. 启动滚动 mScroller.startScroll(0, 0, 100, 0);  不要忘记invalidate(); 通知 view 重绘，
+4. mScroller.computeScrollOffset() 会根据开始的时间计算应该滚动了多少，并且返回是否完成，如果没完成的话就可以继续使用mScroller.getCurrX()获取在 X 轴滚动了多少了
+
+
+==== ViewDragHelper 工具类，帮助写自定义 ViewGroup，方便实现拖拽功能 ====
+
+用法：
+1. ViewDragHelper.create（）创建 ViewDragHelper，并传入 ViewGroup， Callback（这里的回调比较复杂，最后说）
+2. 在ViewGroup.onInterceptTouchEvent 返回mViewDragHelper.shouldInterceptTouchEvent(ev);
+3. 在ViewGroup.onTouchEvent调用mViewDragHelper.processTouchEvent(event);并返回 true
+4. 实现 Callback，最少实现3个方法，才能够拖动
+	a. tryCaptureView(View child, int pointerId) 返回值决定了 child 是否能被拖动
+	b. clampViewPositionHorizontal(View child, int left, int dx) 返回值决定了 child 的 left 位置
+	c. clampViewPositionVertical(View child, int top, int dy) 返回值决定了 child 的 top 位置
+这样就实现了拖拽功能----------
+如果要添加 fling 功能则需要进行以下步骤
+1. onViewReleased 里 调用mViewDragHelper.flingCapturedView(minLeft, minTop, maxLeft, maxTop) 拖动结束让 view 继续滑动到某个区域
+2. onViewReleased 里调用 postInvalidate() 刷新界面
+3. onDraw() 里要mViewDragHelper.continueSettling(true)移动 captured 的 view，并根据其返回值判断是否需要刷新界面
+
+ViewOverlay 在 View 顶部的一个额外的层
+1. Android4.3 api 18 添加
+2. 两种类型
+	a. ViewOverlay (for Views) 
+	b. ViewGroupOverlay (for ViewGroups)
+3. 两种发法获取
+	a. View.getViewOverlay
+	b. ViewGroup.getViewGroupOverlay
+4. 可以向上添加 drawable
+	a. 位置自己控制，设置 drawable 的 bounds
+5. 可以向ViewGroupOverlay添加 view
+	a. 可以做 view 删除动画，将 host 上的 View 添加到 overlay 上位置不变
+
+
+==== ViewGroup ====
+1. 在不实现onLayout 时，是一个绝对布局
