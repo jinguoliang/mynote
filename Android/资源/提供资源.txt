@@ -1,0 +1,57 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-11-11T13:35:06+08:00
+
+====== 提供资源 ======
+Created 星期五 11 十一月 2016
+
+每种资源在 resouce 目录下有相应的目录
+{{./pasted_image.tiff}}
+
+
+==== 提供可选择的资源 ====
+
+1. 可选择的资源是根据语言配置，很竖屏的，系统动态选择响应配置的资源
+2. 可选择资源的目录是默认目录的名-config
+3. 而 config 可以是多个，使用短线相连， 但是 这些配置修饰符是有顺序的，如果顺序错了，系统会忽略
+4. 一下是所有的配置修饰符：
+{{./pasted_image001.tiff}}
+
+有些资源描述符是在某个平台加的，之前平台事不支持的，所以，在使用该描述符时，隐含最后加了 vN 描述符，从而使其不匹配之前的 api
+
+==== 修饰符规则 ====
+
+1. 你可以声明多个修饰符，用短线链接，比如 drawable-en-rUs-land
+2. 必须按上表的顺序
+3. 可选资源目录不能够嵌套
+4. 不区分大小写， 资源编译器都会转成小写，大写只为了可读性
+5. 每种修饰符只能有一个，如希望两个配置需要同一种资源，则需要两个可选目录，但不必重复资源，可以使用资源别名，参考下面
+
+==== 创建别名资源 ====
+
+1. 但你有一个资源在多种配置中使用，却不想要提供默认资源时，你不必将相同的资源放入两个资源目录，而是应该创建别名资源
+2. 但并不是所有的资源都提供了该机制,没提供的 animation，menu， raw， xml/
+3. Drawable
+<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+	android:src="@drawable/icon_ca" [[/>]]
+4. Layout
+<merge>
+	<include layout="@layout/main_ltr"/>
+</merge>
+5. String 和其他简单资源
+<resources>
+	<string name="hello">Hello</string>
+	<string name="hi">@string/hello</string>
+	<color name="red">#f00</color>
+	<color name="highlight">@color/red</color>
+</resources>
+
+==== 提供最有兼容的资源 ====
+
+1. 为了提供最好的设备兼容性，总是提供默认资源，然后为特定的配置创建特定的资源， 如果没有默认资源，在某些不匹配的配置，就会 crash
+2. 有一个例外，就是 drawable，没有默认资源，它会找到最佳的匹配，作必要的缩放
+3. 寻找最佳匹配
+{{./pasted_image002.tiff}}
+
+当基于屏幕大小修饰符选择资源时，如果没有更好的匹配，系统会选择比当前屏幕小的配置的资源，但是如果只有比当前屏幕大的配置的资源，就会找不到资源，crash   __？？？？__
+

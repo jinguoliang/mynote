@@ -11,4 +11,4 @@ android:elevation  __不起作用__
 android:filterTouchesWhenObscured  被遮掩时是否过滤事件   __不好使?__
 android:fitsSystemWindows 根据window的变化做调整,如状态栏隐藏
 android:hapticFeedbackEnabled 触觉反馈
-[[android:isScrollContainer]]			Set this if the view will serve as a scrolling container, meaing that it can be resized to shrink its overall window so that there will be space for an input method. 
+android:isScrollContainer			Set this if the view will serve as a scrolling container, meaing that it can be resized to shrink its overall window so that there will be space for an input method. 

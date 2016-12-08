@@ -48,7 +48,7 @@ MonkeyImage: Represents a screen capture image. This class provides methods for 
 ==== hierarchyviewer ====
 为了通过控件ID操作手机，我们需要在代码开头import这两个类：
 from com.android.monkeyrunner.easy import By
-from com.android.chimpchat.hierarchyviewer import [[HierarchyViewer]]
+from com.android.chimpchat.hierarchyviewer import HierarchyViewer
 
 hierarchyViewer = device.getHierarchyViewer()
 viewNodeButton = hierarchyViewer.findViewById("id/button")

@@ -63,7 +63,7 @@ Cupcake	1.5	API level 3, NDK 1
 
 语言:C++
 JAVA
-[[+Android 编译]]
+[[+构建:Android 编译]]
 
 [[file:///usr/local/adt-bundle-linux-x86_64-20130219/sdk/docs/guide/topics/ui/dialogs.html|Android Google Officail Document]]
 
@@ -111,7 +111,7 @@ JAVA
 
 [[+android性能优化|android性能优化]]
 
-[[+辅助权限|辅助权限]]
+[[+用户接口:辅助权限|辅助权限]]
 
 [[+问题|问题]]
 

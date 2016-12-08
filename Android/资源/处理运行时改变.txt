@@ -1,0 +1,50 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-11-28T16:32:54+08:00
+
+====== 处理运行时改变 ======
+Created 星期一 28 十一月 2016
+
+一些设备配置会在运行时改变，此时，Android 会重启 Activity
+
+重启除了会走正常的生命周期外，在 destroy 之前会调用onSaveInstanceState()，保存状态，在 onCreate() or onRestoreInstanceState() 恢复状态
+
+但是，有时后这个重启的过程可能是耗时的，此时，你可以：
+1. 在重启时保留某些对象
+2. 自己处理配置改变，不会重启 Activity， 但会收到一个配置改变的回掉
+
+==== 在改变时保留某些对象 ====
+
+如果重启Activity 是需要恢复大量数据，重建网络连接，或其他密集操作，因为配置改变而进行完全重启可能是耗时的。而且，Bundle 也并不是被设计用来存储大量数据的，会占用大量内存。
+这时可以使用 Fragment 来保持不变的数据
+
+原理：在 android 系统销毁一个 Activity 时，被标为 retain 的 Fragment 会被保留
+
+example：
+
+{{./pasted_image.tiff}}
+注意：保持的对象不应该绑定到 Activity 了，比如 Drawable， Adapter， View， 或其他与 Context 关联的对象。否则会导致 Activity 内存泄露
+
+{{./pasted_image001.tiff}}
+
+==== 自己处理配置改变 ====
+
+如果在配置改变时不需要更新资源， 并且有性能限制，可以避免 activity 重启
+
+这样配置
+<activity android:name=".MyActivity"
+		  android:configChanges="orientation|keyboardHidden" __标识 activity 在转屏和键盘隐藏时不会重启，而是自己处理__
+		  android:label="@string/app_name">
+
+这样，在这些配置改变时，Activity 不会重启，而是调用onConfigurationChanged()，并且传入新的 Configuration ，此时，Activity 的 Resource 对象被更新为匹配新配置了，所以很容易重置 UI 元素
+
+注意：从 Android3.2（API level 13）开始，在横竖屏切换时，screen size 也会改变，因此当你为 API leve 13或更高版本开发，如果想阻止转屏配置时重启，必须这样
+android:configChanges="orientation|screenSize".
+
+而 针对 API level 12及更低版本开发时，Activity 则总会自己处理（不会重启 Activity， 即使运行在Android3.2及以上）
+
+
+
+
+
+

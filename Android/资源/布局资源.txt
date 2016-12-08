@@ -1,0 +1,52 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-11-09T16:48:14+08:00
+
+====== 布局资源 ======
+Created 星期三 09 十一月 2016
+
+res/layout/filename.xml
+
+==== 语法 ====
+
+<ViewGroup
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@[+][package:]id/resource_name"
+	android:layout_height=["dimension" | "match_parent" | "wrap_content"]
+	android:layout_width=["dimension" | "match_parent" | "wrap_content"]
+	[ViewGroup-specific attributes] >
+	<View
+		android:id="@[+][package:]id/resource_name"
+		android:layout_height=["dimension" | "match_parent" | "wrap_content"]
+		android:layout_width=["dimension" | "match_parent" | "wrap_content"]
+		[View-specific attributes] >
+		<__requestFocus__/>  使所在 view 获得初始焦点， 每个文件只能有一个
+	</View>
+	<ViewGroup >
+		<View />
+	</ViewGroup>
+	<__include__ layout="@layout/layout_resource" id=""/> 这里的 id 会覆盖所引入的布局的根 view 的 id
+</ViewGroup>
+
+==== note 你可以覆盖引入的布局的根 View 的属性，这时必须覆盖 layout_height和 layout_width，其他属性才有效 ====
+
+另一种包含其他布局的方法是使用 ViewStub
+它是个轻量级的 View，知道显式实例充气它的时候才会占用布局空间
+<ViewStub
+	android:id="@+id/stub_import"
+	android:inflatedId="@+id/panel_import"
+	android:layout="@layout/progress_overlay"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:layout_gravity="bottom" />
+当想要加载布局时：
+((ViewStub) findViewById(R.id.stub_import)).setVisibility(View.VISIBLE);
+// or
+View importPanel = ((ViewStub) findViewById(R.id.stub_import)).inflate();  返回的是 layout 的指定的布局的跟 View
+
+一但 visible/inflated, ViewStub 将被移除，被它所指定的布局替换，它的 id 也失效，而它的inflatedId是它指定的布局的跟 View 的 id
+ViewStub 的一个缺陷是：它所指定的布局不支持<merge>标签
+
+==== android：id 的值 ====
+@+id/name + 指示是一个新的资源 id， 如果 R.java 里没有,aapt 会创建一个
+如果已经定义了一个资源 id，则可以不带+来引用

@@ -1,0 +1,40 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-11-07T15:20:20+08:00
+
+====== 字符串资源 ======
+Created 星期一 07 十一月 2016
+
+三中字符串资源：
+1. String  单一的字符串
+	a. res/values/filename.xml
+	b. <string name="string_name">text_string</string>
+2. String Array 数组
+	a. res/values/filename.xml
+3. 数量字符串（复数）
+	a. res/values/filename.xml
+	b. R.plurals.plural_name
+	c. <plurals
+			name="plural_name">
+			<item
+				quantity=["zero" | "one" | "two" | "few" | "many" | "other"]
+				>text_string</item>
+		</plurals>
+4. 格式化 和 风格化
+	a. 转义撇号（'）和引号(")
+		1. 撇号可以通过反斜杠转义，或者通过双引号
+		2. 双引号只能通过反斜杠转义
+	b. 格式化字符串
+		1. String.format()
+		2. %1$s  字符串
+		3. %2$d 十进制数字
+	c. 使用 html 标记风格化
+		1. <b> 粗体
+		2. <i> 斜体
+		3. <u> 下划线
+		4. 对风格化的字符串格式化，不能直接使用 format，因为它会除去风格信息，所以需要对标签转义，然后格式化，最后再 HTML.fromHtml（）得到 html
+		5. fromHtml要求字符串是转义的 html，格式化时参数也要转义使用 TextUtils.htmlEncode()
+	d. 使用 Spnnables 风格化
+		1. SpannableStringBuilder
+		2. setSpan()
+

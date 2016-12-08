@@ -36,8 +36,8 @@ U	unmerged	conflict between HEAD and index; resolution required
 
 === Package Manifest ===
 <project name="platform/mediatek/build" path="mediatek/build" revision="kk-amur-jasmine-arima-somc">
-     <__copyfile__ dest="mediatek/platform/Android.mk" src="addon/mediatek/platform/Android.mk"/>
-    <copyfile dest="makeMtk" src="makeMtk"/>
+	 <__copyfile__ dest="mediatek/platform/Android.mk" src="addon/mediatek/platform/Android.mk"/>
+	<copyfile dest="makeMtk" src="makeMtk"/>
    __ <copyfile dest="mk" src="mk"/>   复制当前项目的mk文件到codebase根目录的mk   即：dest的默认根目录是codebase根目录， src根目录为项目根目录__
-    <copyfile dest="bl_envsetup.sh" src="addon/bl_envsetup.sh"/>
+	<copyfile dest="bl_envsetup.sh" src="addon/bl_envsetup.sh"/>
 </project>
