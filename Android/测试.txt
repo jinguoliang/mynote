@@ -2,10 +2,10 @@ Content-Type: text/x-zim-wiki
 Wiki-Format: zim 0.4
 Creation-Date: 2014-01-28T15:28:02+08:00
 
-====== test ======
+====== 测试 ======
 Created Tuesday 28 January 2014
 
-====  android Instrumentation ====
+==== android Instrumentation ====
 [[./android Instrumentation 转载 - carbs - 博客园.html]] 
 
 Android提供了一系列强大的测试工具，它针对Android的环境，扩展了业内标准的JUnit测试框架。尽管你可以使用JUnit测试Android工程，但Android工具允许你为应用程序的各个方面进行更为复杂的测试，包括单元层面及框架层面。

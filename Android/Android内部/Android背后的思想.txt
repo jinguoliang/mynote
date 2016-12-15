@@ -307,30 +307,30 @@ Java语言天生是用于提升跨平台能力的，于是在设计与优化时�
 
 [java] view plaincopy
 
-    public int test01( int i1, int i2 ) {  
-    int i3 = i1 + i2;  
-    return i3 * 2;  
-    }  
+	public int test01( int i1, int i2 ) {  
+	int i3 = i1 + i2;  
+	return i3 * 2;  
+	}  
 
 这样的代码，使用Java编译器生成的.class文件里，最后就会有这样的伪代码（虚拟机解析执行的代码）：
 
 [plain] view plaincopy
 
-    0000: iload_1 // 01  
+	0000: iload_1 // 01  
       
-    0001: iload_2 // 02  
+	0001: iload_2 // 02  
       
-    0002: iadd  
+	0002: iadd  
       
-    0003: istore_3 // 03  
+	0003: istore_3 // 03  
       
-    0004: iload_3 // 03  
+	0004: iload_3 // 03  
       
-    0005: iconst_2 // #+02  
+	0005: iconst_2 // #+02  
       
-    0006: imul  
+	0006: imul  
       
-    0007: ireturn  
+	0007: ireturn  
 
 出于栈式虚拟机的特点，这样的伪指令追成的结果会操作到栈。比如iload_1, iload_2，iadd，istore_3，这四行，就是分别将参数1，2读取到栈里，再调用伪指令add将栈进行加操作，然后将结果写入栈顶，也就是操作数3。这种操作模式，会使我们的虚拟机在伪指令解析器上实现起来简单，因为简单而可以实现得高效，因为伪指令必然很少（事实上，通用指令用8位的opcode就可以表达完）。可以再在这种设计基础上，针对不同平台进行具体的优化，由于是纯软件的算法，通用性非常好，无论是32位还是64位机器，都可以很灵活地针对处理器特点进行针对性的实现与优化。而且这种虚拟机实现，相当于所有操作都会在栈上有记录，对每个伪指令（opcode）都相当于一次函数调用，这样实现JIT就更加容易。
 
@@ -345,11 +345,11 @@ Java语言天生是用于提升跨平台能力的，于是在设计与优化时�
 代码编译伪指令
 [plain] view plaincopy
 
-    9000 0203 0000 add-int v0, v2, v3  
+	9000 0203 0000 add-int v0, v2, v3  
       
-    da00 0002 0002 mul-int/lit8 v0, v0, #int 2 // #02  
+	da00 0002 0002 mul-int/lit8 v0, v0, #int 2 // #02  
       
-    0f00 0004 return v0  
+	0f00 0004 return v0  
 
 对着代码，我们可以看到（或者可以猜测），在Dalvik的伪指令体系里，指令长度变成了16bit，同时，根本去除了栈操作，而通过使用00, 02, 03这样的虚拟寄存器来进行立即数操作，操作完则直接将结果返回。大家如果对Dalvik的伪指令体系感兴趣，可以参考Dalvik的指令说明：http://source.android.com/tech/dalvik/dalvik-bytecode.html
 
@@ -468,19 +468,19 @@ Zygote，英文愿意是“孵化器”的意思，既然是这种名字，我�
 不光Android会有这样的问题的，Linux也会有。我们一直都说Linux内核强劲安全，但这也是相对的，如果我们系统里有了一些流氓程序，也有可能通过耗尽资源的方式影响系统运行。大家可以写一些简单的例子做到这点，比如：
 [cpp] view plaincopy
 
-    while(1)  
+	while(1)  
       
-    {  
+	{  
       
-    char * buf = malloc (30 * 1000);  
+	char * buf = malloc (30 * 1000);  
       
-    memset (buf, ‘a’, 30*1000);  
+	memset (buf, ‘a’, 30*1000);  
       
-    if (!fork() )  
+	if (!fork() )  
       
-    fork();  
+	fork();  
       
-    }  
+	}  
 
 这时会发现系统还是会受到影响，但Linux的健壮性表现在，虽然系统会暂时因为资源不足而变得响应迟缓，但还是可以保证系统不会崩溃。为了进程数过多而影响系统运行，Linux内核里有一种OOM Killer（Out Of Memory Killer）机制，系统里通过一种叫notifier的机制（顾名思义，跟我们的Listener设计模式类似的实现）监听目前系统里内存使用率，当内存使用达到比率时，就开始杀掉一些进程，回收内存，这里系统就可以回到正常执行。当然，在真正发生Out Of Memory错误也会提前触发这种杀死进程的操作。
 
@@ -512,31 +512,31 @@ Pre-runtime运算
 但这种技术有种致命缺陷，需要一台Linux机器，运行交叉编译环境，才能使用prelink。而Android源代码本就设计成至少在MacOS与Linux环境里执行的，它使用的交叉编译工具使用到Gnu编译的部分只完成编译，链接还是通过它自己实现的工具来完成的。有了需求，但受限于Linux环境，于是Android开发者又继续创新。在Android世界里使用的prelink，是固定段位的，在链接时会根据固定配置好地址信息来处理动态链接，比如libc.so，对于所有进程，libc.so都是固定的位置。在Android一直到2.3版本时，都会使用build/core/prelink-linux-arm.map这个文件来进行prelink操作，而这个文件也可以看到prelink处理是何其简单：
 [plain] view plaincopy
 
-    # core system libraries  
+	# core system libraries  
       
-    libdl.so 0xAFF00000 # [<64K]  
+	libdl.so 0xAFF00000 # [<64K]  
       
-    libc.so 0xAFD00000 # [~2M]  
+	libc.so 0xAFD00000 # [~2M]  
       
-    libstdc++.so 0xAFC00000 # [<64K]  
+	libstdc++.so 0xAFC00000 # [<64K]  
       
-    libm.so 0xAFB00000 # [~1M]  
+	libm.so 0xAFB00000 # [~1M]  
       
-    liblog.so 0xAFA00000 # [<64K]  
+	liblog.so 0xAFA00000 # [<64K]  
       
-    libcutils.so 0xAF900000 # [~1M]  
+	libcutils.so 0xAF900000 # [~1M]  
       
-    libthread_db.so 0xAF800000 # [<64K]  
+	libthread_db.so 0xAF800000 # [<64K]  
       
-    libz.so 0xAF700000 # [~1M]  
+	libz.so 0xAF700000 # [~1M]  
       
-    libevent.so 0xAF600000 # [???]  
+	libevent.so 0xAF600000 # [???]  
       
-    libssl.so 0xAF400000 # [~2M]  
+	libssl.so 0xAF400000 # [~2M]  
       
-    libcrypto.so 0xAF000000 # [~4M]  
+	libcrypto.so 0xAF000000 # [~4M]  
       
-    libsysutils.so 0xAEF00000 # [~1M]  
+	libsysutils.so 0xAEF00000 # [~1M]  
 
 就像我们看到的，libdl.so，对于任何进程，都会是在0xAFD00001(libc.so结束)到0xAFF00000之间这个区域之间，而
 

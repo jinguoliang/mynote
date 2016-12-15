@@ -37,14 +37,14 @@ logcat -s MytagTest
 /* If you are writing a driver, please use dev_dbg instead */
 #if defined(DEBUG)
 #define pr_debug(fmt, ...) \
-    printk(KERN_DEBUG pr_fmt(fmt), ##__VA_ARGS__)
+	printk(KERN_DEBUG pr_fmt(fmt), ##__VA_ARGS__)
 #elif defined(CONFIG_DYNAMIC_DEBUG)
 /* dynamic_pr_debug() uses pr_fmt() internally so we don't need it here */
 #define pr_debug(fmt, ...) \
-    dynamic_pr_debug(fmt, ##__VA_ARGS__)
+	dynamic_pr_debug(fmt, ##__VA_ARGS__)
 #else
 #define pr_debug(fmt, ...) \
-    no_printk(KERN_DEBUG pr_fmt(fmt), ##__VA_ARGS__)
+	no_printk(KERN_DEBUG pr_fmt(fmt), ##__VA_ARGS__)
 #endif
 
 for example : --------------------------->      pr_debug("kobject: '%s' (%p): %s\n",    kobject_name(kobj), kobj, __func__);
@@ -52,7 +52,7 @@ for example : --------------------------->      pr_debug("kobject: '%s' (%p): %s
 
 
 3. NDK开发__ jni C代码__
-    #include<android/log.h>
+	#include<android/log.h>
 
    static const char *TAG="libgpio"
    #define LOGI(fmt,args...) ((void) __android_log_print(ANDROID_LOG_INFO,TAG,fmt,##args)

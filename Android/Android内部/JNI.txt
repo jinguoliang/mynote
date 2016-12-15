@@ -2,7 +2,7 @@ Content-Type: text/x-zim-wiki
 Wiki-Format: zim 0.4
 Creation-Date: 2013-12-21T12:39:34+08:00
 
-====== 第二步JNI ======
+====== JNI ======
 Created Saturday 21 December 2013
 
 静态注册jni函数：

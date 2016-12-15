@@ -7,14 +7,14 @@ Created Sunday 24 November 2013
 
 1.
 					new Thread(){
-        		@Override
-        		public void run() {
-        			// TODO Auto-generated method stub
-        			super.run();
-        		}
-        	}
-2.		
-		       	 Runnable runnable =new Runnable() {
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					super.run();
+				}
+			}
+2. 
+			   	 Runnable runnable =new Runnable() {
 			
 			@Override
 			public void run() {
