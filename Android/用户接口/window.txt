@@ -1,0 +1,41 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-08T04:45:05+08:00
+
+====== window ======
+Created Friday 08 November 2013
+
+设置当前window在锁屏界面仍显示
+		final Window win = getWindow();
+		win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+
+设置软件盘的模式，显示还是隐藏
+getWindow().setSoftInputMode(
+WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+| WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
+全屏
+requestWindowFeature(Window.FEATURE_NO_TITLE);
+this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);//去掉信息栏
+
+获得屏幕的大小：
+Display display=getWindowManager().getDefaultDisplay()；
+getMetrics(dm)  详细信息，密度，宽高等等
+getHeight（）
+
+
+android activity设置背景色为透明
+method 1:
+android:theme="@android:style/Theme.Translucent" 
+
+method 2:
+再在res/values/下建styles.xml,设置程序的风格
+　　<?xmlversion="1.0"encoding="utf-8"?>
+　　<resources>
+　　<stylename="Transparent">
+　　<itemname="android:windowBackground">@color/transparent</item>
+　　<itemname="android:windowIsTranslucent">true</item>
+　　<itemname="android:windowAnimationStyle">@+android:style/Animation.Translucent</item>
+　　</style>
+　　</resources>
+　　

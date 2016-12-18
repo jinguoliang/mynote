@@ -1,0 +1,27 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-24T11:24:28+08:00
+
+====== Thread ======
+Created Sunday 24 November 2013
+
+1.
+					new Thread(){
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					super.run();
+				}
+			}
+2. 
+			   	 Runnable runnable =new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				
+			}
+		};
+				   new Thread(runnable);
+				
+3.

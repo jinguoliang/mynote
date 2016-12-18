@@ -1,0 +1,38 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-11-10T14:54:59+08:00
+
+====== 访问资源 ======
+Created 星期四 10 十一月 2016
+
+所有的资源 Id 都在 R 类里定义，它是由 aapt 自动生成的
+
+对每一类资源，都会在 R 类里有一个对应的静态内部类，然后每个资源在所属类里有一个静态整数代表那个资源
+
+在代码中：
+R.string.hello
+
+在 xml 中：
+@string/hello
+
+==== 在代码中访问资源 ====
+
+语法：
+[<package_name>.]R.<resource_type>.<resource_name>
+
+==== 在 XML 中访问资源 ====
+
+语法：
+@[<package_name>:]<resource_type>/<resource_name>
+
+==== 引用 Style 属性 ====
+
+语法：
+?[<package_name>:][<resource_type>/]<resource_name>
+
+==== 访问平台资源 ====
+
+android 包含了一些标准的资源，比如 style，theme，布局
+
+例子：
+android.R.layout.simple_list_item_1

@@ -1,0 +1,148 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-12-01T00:45:27+08:00
+
+====== Groovy ======
+Created Sunday 01 December 2013
+
+Groovy是一种动态语言
+Groovy是在 java平台上的、 具有像Python， Ruby 和 Smalltalk 语言特性的灵活动态语言， Groovy保证了这些特性像 Java语法一样被 Java开发者使用。
+
+==== 基础 ====
+
+Groovy注释标记和Java一样，支持//或者/**/
+
+Groovy语句可以不用分号结尾
+
+Groovy中支持动态类型，即定义变量的时候可以不指定其类型，Groovy中，变量定义可以使用关键字def。注意，虽然def不是必须的，但是为了代码清晰，建议还是使用def关键字
+	   def variable1 = 1   //可以不使用分号结尾
+	   def varable2 = "I am a person"
+	   def  int x = 1   //变量定义时，也可以直接指定类型
+ 
+函数定义时，参数的类型也可以不指定。比如
+	String testFunction(arg1,arg2){//无需指定参数类型
+	  ...
+	}
+	
+除了变量定义可以不指定类型外，Groovy中函数的返回值也可以是无类型的。比如：
+	/无类型的函数定义，必须使用def关键字
+	def  nonReturnTypeFunc(){
+		 last_line   //最后一行代码的执行结果就是本函数的返回值
+	}
+	
+	//如果指定了函数返回类型，则可不必加def关键字来定义函数
+	String  getString(){
+	   return "I am a string"
+	}
+
+函数调用时，括号可以省略：
+println("test") → println "test"
+
+字符串支持：
+1. 单引号''中的内容严格对应Java中的String，不对$符号进行转义
+   def singleQuote='I am $ dolloar'  //输出就是I am $ dolloar
+ 2. 双引号""的内容则和脚本语言的处理有点像，如果字符中有$号的话，则它会$表达式先求值。
+   def doubleQuoteWithoutDollar = "I am one dollar" //输出 I am one dollar
+   def x = 1
+   def doubleQuoteWithDollar = "I am $x dolloar" //输出I am 1 dolloar
+3. 三个引号'''xxx'''中的字符串支持随意换行 比如
+
+   def multieLines = ''' begin
+	 line  1 
+	 line  2
+	 end '''
+
+
+==== 数据类型 ====
+1. 基本数据类型也是对象
+2. 容器类
+def aList = [5,'string',true] //List由[]定义，其元素可以是任何对象
+def aMap = ['key1':'value1','key2':true] 
+Range是Groovy对List的一种拓展，变量定义和大体的使用方法如下：
+	def aRange = 1..5  <==Range类型的变量 由begin值+两个点+end值表示 左边这个aRange包含1,2,3,4,5这5个值
+	def aRangeWithoutEnd = 1..<5  <==包含1,2,3,4这4个元素
+	println aRange.from
+	println aRange.to
+文档中并没有说明Range有from和to这两个属性，但是却有getFrom和getTo这两个函数。What happened？原来：
+根据Groovy的原则，如果一个类中有名为xxyyzz这样的属性（其实就是成员变量），Groovy会自动为它添加getXxyyzz和setXxyyzz两个函数，用于获取和设置xxyyzz属性值。
+4. 闭包
+闭包，__是一种数据类型__，它__代表了一段可执行的代码__。其外形如下：
+def aClosure = {//闭包是一段代码，所以需要用花括号括起来..  
+	Stringparam1, int param2 ->  //这个箭头很关键。箭头前面是参数定义，箭头后面是代码  
+	println"this is code" //这是代码，最后一句是返回值，  
+   //也可以使用return，和Groovy中普通函数一样  
+}  
+
+简而言之，Closure的定义格式是：
+def xxx = {paramters -> code}  //或者  
+def xxx = {无参数，纯code}  这种case不需要->符号
+
+调用：
+aClosure.call("this is string",100)  或者  
+aClosure("this is string", 100)  
+
+如果闭包没定义参数的话，则隐含有一个参数，这个参数名字叫it，和this的作用类似。it代表闭包的参数。
+比如：
+def greeting = { "Hello, $it!" }
+
+但是，如果在闭包定义时，采用下面这种写法，则表示闭包没有参数！
+def noParamClosure = { -> true }
+
+注意 groovy 闭包的使用，这个奇葩：
+def iamList = [1,2,3,4,5]  //定义一个List
+iamList.each{  //调用它的each，这段代码的格式看不懂了吧？each是个函数，圆括号去哪了？
+	  println it
+}
+而 each 是 List 的方法，声明为public static <T> List<T> each(List<T> self, Closure closure)， 为什么会那样使用呢？
+这里有两个知识点：
+1. each函数调用的圆括号不见了！原来，Groovy中，当函数的最后一个参数是闭包的话，可以省略圆括号，于是有了这种写法：
+{{./pasted_image.tiff}}
+3. closure 的参数问题，只能看文档了，看文档也不一定能知道
+
+=== 脚本类 ===
+1. Groovy 也可以向 Java 一样写 package， import packaga， Groovy 中类及其变量默认都是 public 的
+2. 在执行一个Groovy 脚本时，系统会自动加载当前目录/子目录下的xxx.groovy文件
+3. 我们可以通过groovyc -d classes test.groovy来编译出 class 文件，然后反编译成 java 文件，从而可以知道 Groovy 是如何实现的
+	a. test.groovy被转换成了一个test类，它从script派生
+	b. 每一个脚本都会生成一个static main函数。这样，当我们groovy test.groovy的时候，其实就是用java去执行这个main函数
+	c. 要执行的语句都在 run 函数
+	d. 如果脚本中定义了函数，则函数会被定义在test类中
+4. 脚本的变量和作用域
+	a. def 时，会定义为局部变量
+	b. 不用 def 时，会在运行时在 run 中添加到对象的 property 中
+	c. 如何定义为对象的属性呢
+	import groovy.transform.Field;   //必须要先import
+	@Field x = 1  <==在x前面加上@Field标注，这样，x就彻彻底底是test的成员变量了。
+	
+==== 文件I/O操作 ====
+读文件
+def targetFile = new File(文件名)  <==File对象还是要创建的。
+targetFile.eachLine{
+	print it
+}
+
+targetFile.getBytes()  <==文件内容一次性读出，返回类型为byte[]  
+
+def ism =  targetFile.newInputStream()  
+//操作ism，最后记得关掉  
+ism.close  
+
+targetFile.withInputStream{ ism ->
+   操作ism. 不用close。Groovy会自动替你close
+}
+
+写文件
+
+def srcFile = new File(源文件名)  
+def targetFile = new File(目标文件名)  
+targetFile.withOutputStream{ os->  
+  srcFile.withInputStream{ ins->  
+	  os << ins   //利用OutputStream的<<操作符重载，完成从inputstream到OutputStream  
+	   //的输出  
+   }  
+}  
+
+xml操作
+
+{{./pasted_image001.tiff}}
+[[~/Nutstore/resource/Groovy in Action[文字版][中文].pdf|Groovy in action]]

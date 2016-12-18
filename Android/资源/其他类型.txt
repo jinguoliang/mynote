@@ -1,0 +1,61 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-11-07T14:20:56+08:00
+
+====== 其他类型 ======
+Created 星期一 07 十一月 2016
+
+==== Bool ====
+
+{{./pasted_image.tiff}}
+
+
+==== Color ====
+
+值：
+1. #RGB
+2. #ARGB
+3. #RRGGBB
+4. #AARRGGBB
+
+res/values/colorsOrother.xml
+<color name="color_name">hex_color</color>
+
+==== Dimension ====
+
+单位：
+1. dp 密度无关的像素，是基于物理设备的密度的抽象的单位。在160dpi（dots/inch）的屏上，1dp 约等于1px，在更高密度的屏幕上，1dp 所占的像素会变多，而在密度低的屏幕上则会变小，dp 转 pixel 的比率会随屏幕密度改变。使用dp 是 兼容不同设备的简单方式
+2. sp 缩放无关的像素，同 dp，但是也会随用户对字体大小的配置缩放，在设置字体大小时推荐使用，它会随屏幕密度和用户配置改变
+3. pt 点，一英尺的1/72，__基于屏幕的物理大小__？
+4. px 像素 对应于物理设备的实际像素，不推荐使用
+5. mm 毫米 基于屏幕的大小
+6. in 英尺 基于屏幕的大小
+位置
+res/values/filename.xml
+<dimen name="dimension_name" >dimension</dimen>
+
+==== ID ====
+
+在 xml 里定义的唯一的资源 id，可以用它来作为view 的 id，从而避免每个布局里都定义资源 id，或者定义唯一的整数值，如 resultCode
+res/values/filename.xml
+<item type="id" name="id_name" [[/>]]
+
+==== Integer ====
+res/values/filename.xml
+<integer name="integer_name">integer</integer>
+
+==== Integer Array ====
+res/values/filename.xml
+<integer-array name="integer_array_name">
+		<item >integer</item>
+</integer-array>
+
+==== Typed Array ====
+创建一个资源数组，元素不用是同种类的。
+res/values/filename.xml
+<array name="integer_array_name">
+		<item>resource</item>
+</array>
+
+TypedArray icons = res.obtainTypedArray(R.array.icons);
+Drawable drawable = icons.getDrawable(0);

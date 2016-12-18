@@ -70,6 +70,3 @@ ListView 当设置divider为@null 同时设置dividerHeight很大时会导致计
 
 AdapterView 设置adapter, item设置确定高度不起作用
 item是layout包含一个textView,直接限制外面layout的高度不起作用,设置内部的textView高度起作用
-
-==== 总结 ====
-1. checkbox,点击事件和change事件不同,一些行为只能发生在点击事件中

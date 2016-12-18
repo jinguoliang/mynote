@@ -1,0 +1,20 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-10-25T12:16:41+08:00
+
+====== 模块概览 ======
+Created 星期二 25 十月 2016
+
+{{./pasted_image.tiff}}
+
+==== Input ====
+1. 轮询不同的输入状态
+2. 也提供了注册输入处理器的方式来接受事件
+
+==== Graphics ====
+1. 抽象了与 的GPU 通信，提供方法获取 OpenGL ES 功能
+2. 提供方法生成 Pixmaps 和 Textures
+
+Files 提供统一的方式访问文件
+
+Audio 提供播放功能，访问音频硬件，还能创建录制音频？

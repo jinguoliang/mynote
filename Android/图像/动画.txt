@@ -1,0 +1,220 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-11-08T07:36:17+08:00
+
+====== 动画 ======
+Created Friday 08 November 2013
+
+
+
+
+	渐变模糊
+	private void crossfade() {
+
+		// Set the content view to 0% opacity but visible, so that it is visible
+		// (but fully transparent) during the animation.
+		mContentView.setAlpha(0f);
+		mContentView.setVisibility(View.VISIBLE);
+
+		// Animate the content view to 100% opacity, and clear any animation
+		// listener set on the view.
+		mContentView.animate()
+			.alpha(1f)
+			.setDuration(mShortAnimationDuration)
+			.setListener(null);
+
+		// Animate the loading view to 0% opacity. After the animation ends,
+		// set its visibility to GONE as an optimization step (it won't
+		// participate in layout passes, etc.)
+		mHideView.animate()
+			.alpha(0f)
+			.setDuration(mShortAnimationDuration)
+			.setListener(new AnimatorListenerAdapter() {
+				@Override
+				public void onAnimationEnd(Animator animation) {
+					mHideView.setVisibility(View.GONE);
+				}
+			});
+	}
+
+ViewPager 使用：
+	android.support.v4.view.ViewPager
+	在xml布局中不能找到它，所以当它是自定义View如下使用
+	<android.support.v4.view.ViewPager
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width = "match_parent"
+		android:layout_height="match_parent"
+		android:id="@+id/viewpager"></android.support.v4.view.ViewPager>
+
+	通过adapter为ViewPager提供数据，这里使用了Fragment来提供子界面，使用了FragmentStatePagerAdapter
+	vp.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+            
+			@Override
+			public int getCount() {
+				// TODO Auto-generated method stub
+				return 5;
+			}
+            
+			@Override
+			public Fragment getItem(int arg0) {
+				// TODO Auto-generated method stub
+				return new SlideView();
+			}
+		});
+
+	修改返回键来切换界面
+	@Override
+	public void onBackPressed() {
+		if (vp.getCurrentItem()==0) {
+			super.onBackPressed();
+		}else{
+			vp.setCurrentItem(vp.getCurrentItem()-1);
+		}
+	}	
+	通过pager.setPageTransformer(true, ViewPager.PageTransformer );来添加一个页面之间转换的动画
+	需要实现ViewPager.PageTransformer的transformPage(View view, float position)方法。
+	它的两个参数分别是ViewPager的某个子View，和它的位置，这位置很有意思，当你刚开始滑动时，左边的为-1，右边的为正1，中间的正显示的为0，然后随着你的滑动，他们的值改变。假设你向右画，他们的值都会增大，当画到左边的在中间的开始位置时，他们的三个的维护变成了0，1，2，这就完成了一次切换。
+public class ZoomOutPageTransformer implements ViewPager.PageTransformer {
+	private static float MIN_SCALE = 0.85f;
+	private static float MIN_ALPHA = 0.5f;
+
+	public void transformPage(View view, float position) {
+		int pageWidth = view.getWidth();
+		int pageHeight = view.getHeight();
+
+		if (position < -1) { // [-Infinity,-1)
+			// This page is way off-screen to the left.
+			view.setAlpha(0);
+
+		} else if (position <= 1) { // [-1,1]
+			// Modify the default slide transition to shrink the page as well
+			float scaleFactor = Math.max(MIN_SCALE, 1 - Math.abs(position));
+			float vertMargin = pageHeight * (1 - scaleFactor) / 2;
+			float horzMargin = pageWidth * (1 - scaleFactor) / 2;
+			if (position < 0) {
+				view.setTranslationX(horzMargin - vertMargin / 2);
+			} else {
+				view.setTranslationX(-horzMargin + vertMargin / 2);
+			}
+
+			// Scale the page down (between MIN_SCALE and 1)
+			view.setScaleX(scaleFactor);
+			view.setScaleY(scaleFactor);
+
+			// Fade the page relative to its size.
+			view.setAlpha(MIN_ALPHA +
+					(scaleFactor - MIN_SCALE) /
+					(1 - MIN_SCALE) * (1 - MIN_ALPHA));
+
+		} else { // (1,+Infinity]
+			// This page is way off-screen to the right.
+			view.setAlpha(0);
+		}
+	}
+}
+
+实现View滑动时位置不动：view.setTranslationX(-1 * view.getWidth() * position);
+下面演示了位置不动，有纵深感的效果
+public class DepthPageTransformer implements ViewPager.PageTransformer {
+	private static float MIN_SCALE = 0.75f;
+
+	public void transformPage(View view, float position) {
+		int pageWidth = view.getWidth();
+
+		if (position < -1) { // [-Infinity,-1)
+			// This page is way off-screen to the left.
+			view.setAlpha(0);
+
+		} else if (position <= 0) { // [-1,0]
+			// Use the default slide transition when moving to the left page
+			view.setAlpha(1);
+			view.setTranslationX(0);
+			view.setScaleX(1);
+			view.setScaleY(1);
+
+		} else if (position <= 1) { // (0,1]
+			// Fade the page out.
+			view.setAlpha(1 - position);
+
+			// Counteract the default slide transition
+			view.setTranslationX(pageWidth * -position);
+
+			// Scale the page down (between MIN_SCALE and 1)
+			float scaleFactor = MIN_SCALE
+					+ (1 - MIN_SCALE) * (1 - Math.abs(position));
+			view.setScaleX(scaleFactor);
+			view.setScaleY(scaleFactor);
+
+		} else { // (1,+Infinity]
+			// This page is way off-screen to the right.
+			view.setAlpha(0);
+		}
+	}
+}
+
+Animator，
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+	<!-- Rotate. -->
+	<objectAnimator
+		android:valueFrom="0"
+		android:valueTo="-180"
+		android:propertyName="rotationY"
+		android:interpolator="@android:interpolator/accelerate_decelerate"
+		android:duration="@integer/card_flip_time_full" />
+
+	<!-- Half-way through the rotation (see startOffset), set the alpha to 0. -->
+	<objectAnimator
+		android:valueFrom="1.0"
+		android:valueTo="0.0"
+		android:propertyName="alpha"
+		android:startOffset="@integer/card_flip_time_half"
+		android:duration="1" />
+</set>
+直接在fragment切换时使用，由FragmentManager设置					有做一些漂亮的效果开源分享给别人的冲动！！！！！！！！
+	// Create and commit a new fragment transaction that adds the fragment for the back of
+	// the card, uses custom animations, and is part of the fragment manager's back stack.
+
+	getFragmentManager()
+			.beginTransaction()
+
+			// Replace the default fragment animations with animator resources representing
+			// rotations when switching to the back of the card, as well as animator
+			// resources representing rotations when flipping back to the front (e.g. when
+			// the system Back button is pressed).
+			.setCustomAnimations(
+					R.animator.card_flip_right_in, R.animator.card_flip_right_out,
+					R.animator.card_flip_left_in, R.animator.card_flip_left_out)
+
+			// Replace any fragments currently in the container view with a fragment
+			// representing the next page (indicated by the just-incremented currentPage
+			// variable).
+			.replace(R.id.container, new CardBackFragment())
+
+			// Add this transaction to the back stack, allowing users to press Back
+			// to get to the front of the card.
+			.addToBackStack(null)
+
+			// Commit the transaction.
+			.commit();
+AnimatorSet 的代码使用：
+AnimatorSet set = new AnimatorSet();
+		set
+				.play(ObjectAnimator.ofFloat(expandedImageView, View.X,
+						startBounds.left, finalBounds.left))
+				.with(ObjectAnimator.ofFloat(expandedImageView, View.Y,
+						startBounds.top, finalBounds.top))
+				.with(ObjectAnimator.ofFloat(expandedImageView, View.SCALE_X,
+				startScale, 1f)).with(ObjectAnimator.ofFloat(expandedImageView,
+						View.SCALE_Y, startScale, 1f));
+		set.setDuration(mShortAnimationDuration);
+		set.setInterpolator(new DecelerateInterpolator());
+		set.addListener(new AnimatorListenerAdapter() 
+
+获取View的bound
+findViewById(R.id.container)
+			.getGlobalVisibleRect(finalBounds, globalOffset);  //获取到bound和offset
+finalBounds.offset(-globalOffset.x, -globalOffset.y);		//然后把系统坐标转为本地坐标
+
+布局动画太简单了，只要在布局xml里添加一个属性就可以：    android:animateLayoutChanges="true"
+不过是系统默认的动画
+我们可以添加自己的动画使用 setLayoutTransition() 

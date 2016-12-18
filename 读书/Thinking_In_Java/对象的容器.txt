@@ -1,0 +1,97 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-10-25T16:54:24+08:00
+
+====== 对象的容器 ======
+Created 星期二 25 十月 2016
+
+==== 数组 ====
+1. 数组与其他类型的容器有两方面的区别： 效率
+	a. 线性序列，访问非常快， 然而它的大小是固定的
+
+==== 泛型和类型安全的容器 ====
+
+1. 容器有了泛型就可以添加特定的类型的元素，不正确的类型会在编译时就检查出来
+2. 获取的元素时候，也不用显示转型
+
+==== 基本概念 ====
+容器分两大类
+1. 集合 Collection 单一元素的序列，并且有一些操作存储规则
+2. Map 字典，映射 一组键值对
+
+==== 添加一组元素 ====
+1. Arrays.asList() 将一个数组，或一系列参数转化为一个 List   注意，当参数为一些子类时，需要使用泛型，来提示返回List 的元素类型
+2. Collection.addAll() 是将一系列元素添加到已存在的一个集合
+3. Map 只提供了用另一个 Map 来出事化，没有提供其他自动初始化的
+
+==== 打印容器 ====
+Arrays.toString(arr) 打印一个数组
+
+==== List ====
+列表保证元素以特定的顺序
+两周类型：
+	1. ArrayList 擅长随机访问，但是从中间插入和移除元素就慢了
+	2. LinkedList 从中间插入删除更快，但是随机访问慢，比 ArrayList 有更多的特性
+
+==== 迭代器 ====
+1. 实现遍历一个结构，而不管它底层实际的结构，这样就可以重用遍历操作去处理不同的结构了， 所以叫它__容器的统一访问器__
+2. 操作
+	a. hasNext（） 判断是否还有下一个
+	b. next（）返回下一个
+	c. remove（）__删除最后一个返回的对象 这意味着你在删除一个对象时必须先 next（）它__
+
+==== 列表迭代器 ====
+1. ListIterator 继承自 Iterator，比它更强大,双向遍历
+2. nextIndex（） previous（） previousIndex（）set（） list.listIterator(3) 从第三个开始
+
+==== LinkedList ====
+1. 链表，更有效的插入和删除中间元素，但随机访问效率要慢
+2. 添加方法允许来作为 stack，queue，双端队列, 所以有很多相同实现的方法，只是名称不同
+
+==== Stack ====
+1. LIFO
+2. 使用 LinkedList 很容易实现， push 、peek、pop、empty
+
+==== Set ====
+1. 不允许存储相同的对象
+2. 常用来判断关系，如判断一个对象是否在某个集合
+3. 查询快很重要，所以一般都是用 HashSet
+4. TreeSet 打印出的是排序好的 String.CASE_INSENSITIVE_ORDER 可以使排序忽略大小写
+5. LinkedHastSet 按插入顺序排列
+6. 常用操作 contain
+
+==== Map ====
+1. 将一个对象映射到另一个对象
+2. 基本类型不能用于容器，在用时会被自动装箱
+3. containsKey（） containsValue（） keySet（）
+
+==== Queue ====
+1. FIFO
+2. 是一种将对象从一个地方传到另一个地方的好方法，因为他保证一个接一个的传递
+3. offer（） peek（） and element（） poll（）and remove（）
+4. 优先级队列
+	a. 普通队列是 FIFO，意味着等待越长，越应该被执行
+	b. 优先级队列，选择下一个的标准则多样化了。
+	c. 通过自定义 Comparator 来规定配需规则
+
+==== Collection 还是 迭代器 ====
+1. 实现 Collection 也意味这要实现 Iterable
+
+==== Foreach 和 迭代器 ====
+1. foreach 可用于 arrays ，Java SE5后引入 Iterable，所有实现该接口的都可以使用 foreach 遍历
+2. array 并没有实现 Iterable， 也不会自动装箱
+
+==== 适配器方法 ====
+1. 我们需要某个功能如反向遍历，而 Arraylist 就提供了正向遍历，所以扩展它，用一个方法来提供我们的功能，这就叫适配器方法
+2. Arrays.asList(array)会使用底层的 array，对 list 的修改会反应到 array 上，而 new ArrayList（list）就不会了
+
+==== 总结 ====
+1. array 关联数字下标和对象， 元素是特定类型的，所以取出不用转型，可以是多维，元素可以是基本类型，不能改变大小
+2. Collection的元素是单一的，而 Map 的元素则是一个键值对。通过 java 的泛型，可以声明元素的类型。在添加元素时会自动改变大小，元素不能是基本类型，添加时会自动装箱
+3. List 跟 Array 都是顺序的容器
+4. 随机访问用 ArrayList  插入删除操作频繁则使用 LinkedList 
+5. LinkedList 提供 Queue 和 stack 的行为
+6. map 关联两个对象。HashMap 被设计的可以快速访问，TreeMap 会对元素排序，但速度不如 HashMap，LinkedHashMap 会保持元素插入顺序，也提供快速访问
+7. Set 只接受一个同类型的对象，不允许重复。HashSets 提供最大的查询速度，TreeSet排序，LinkedHashSet 保持插入顺序
+8. 在新代码中没必要再使用遗留下来的类：Vector，Hashtable， Stack
+{{./pasted_image.tiff}}

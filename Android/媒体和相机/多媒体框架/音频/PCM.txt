@@ -1,0 +1,21 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-11-04T20:32:28+08:00
+
+====== PCM ======
+Created 星期五 04 十一月 2016
+
+PCM(Pulse Code Modulation)也被称为 脉码编码调制。PCM中的声音数据没有被压缩，如果是单声道的文件，采样数据按时间的先后顺序依次存入。(它的基本组织单位是BYTE(8bit)或WORD(16bit))
+ 
+	一般情况下，一帧PCM是由2048次采样组成的( 参 http://discussion.forum.nokia.com/forum/showthread.php?129458-%E8%AF%B7%E9%97%AEPCM%E6%A0%BC%E5%BC%8F%E7%9A%84%E9%9F%B3%E9%A2%91%E6%B5%81%EF%BC%8C%E6%AF%8F%E6%AC%A1%E8%AF%BB%E5%85%A5%E6%88%96%E8%BE%93%E5%87%BA%E7%9A%84%E5%9D%97%E7%9A%84%E5%A4%A7%E5%B0%8F%E6%98%AF%E5%BF%85%E9%A1%BB%E5%9B%BA%E5%AE%9A%E4%B8%BA4096B%E4%B9%88&s=e79e9dd1707157281e3725a163844c49 )。
+ 
+	如果是双声道的文件，采样数据按时间先后顺序交叉地存入。如图所示:
+  
+ {{./pasted_image.tiff}}
+
+   PCM的每个样本值包含在一个整数i中，i的长度为容纳指定样本长度所需的最小字节数。
+首先存储低有效字节，表示样本幅度的位放在i的高有效位上，剩下的位置为0，这样8位和16位的PCM波形样本的数据格式如下所示。
+ 
+	样本大小      数据格式            最小值    最大值
+	8位PCM       unsigned int         0       225
+	16位PCM      int                -32767    32767

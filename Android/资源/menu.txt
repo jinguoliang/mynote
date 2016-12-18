@@ -1,0 +1,46 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-11-09T16:35:07+08:00
+
+====== menu ======
+Created 星期三 09 十一月 2016
+
+Menu 包括 options menu， context menu， submenu 
+Menu 资源可以使用 MenuInflater 充气实例化
+
+位置：
+res/menu/filename.xml
+
+语法：
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@[+][package:]id/resource_name"
+		  android:title="string"
+		  android:titleCondensed="string"  浓缩的标题，正常标题太长时会显示
+		  android:icon="@[package:]drawable/drawable_resource_name"
+		  android:onClick="method name"
+		  android:showAsAction=["ifRoom" | "never" | "withText" | "always" | "collapseActionView"]
+		  android:__actionLayout__="@[package:]layout/layout_resource_name"
+		  android:__actionViewClass__="class name"
+		  android:__actionProviderClass__="class name"
+		  android:alphabeticShortcut="string"
+		  android:numericShortcut="string"
+		  android:checkable=["true" | "false"]
+		  android:visible=["true" | "false"]
+		  android:enabled=["true" | "false"]
+		  android:__menuCategory__=["container" | "system" | "secondary" | "alternative"]
+		  android:orderInCategory="integer" />
+	<group android:id="@[+][package:]id/resource name"
+		   android:checkableBehavior=["none" | "all" | "single"]  不可选|多选|单选
+		   android:visible=["true" | "false"]
+		   android:enabled=["true" | "false"]
+		   android:menuCategory=["container" | "system" | "secondary" | "alternative"]
+		   android:orderInCategory="integer" >
+		<item />
+	</group>
+	<item >  __menu 的嵌套__
+		<menu>
+		  <item />
+		</menu>
+	</item>
+</menu>

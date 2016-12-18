@@ -1,0 +1,13 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-10-25T12:36:05+08:00
+
+====== Logging ======
+Created 星期二 25 十月 2016
+
+Gdx.app.log("MyTag", "my informative message");
+Gdx.app.error("MyTag", "my error message", exception);
+Gdx.app.debug("MyTag", "my debug message");
+
+控制显示特定的 log 级别
+Gdx.app.setLogLevel(logLevel);

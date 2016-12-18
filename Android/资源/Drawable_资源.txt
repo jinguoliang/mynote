@@ -1,0 +1,88 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-11-11T15:49:45+08:00
+
+====== Drawable 资源 ======
+Created 星期五 11 十一月 2016
+
+1. Bitmap File （.png, .jpg, .gif） BitmapDrawable
+	a. bitmap 在构建过程中，可能会被 aapt 无损压缩，   但是/res/raw/ 目录下的是不会被优化的
+	b. xml bitmap标签， 可以创建别名，还可以定义其他属性
+	{{./pasted_image.tiff}}
+	c. __dither 抖动， 如果bitmap 没有跟 screen 相同的像素，通过抖动可以提升提高显示色彩的数量，提高显示效果__
+	{{./pasted_image001.tiff}}
+	{{./pasted_image002.tiff}}origin
+	{{./pasted_image003.tiff}}nodithering
+	{{./pasted_image004.tiff}}dithering
+	d. __filter   具体干毛的，依然不知道？？？？？？？？__
+	e. __mipMap  通知绘制 bitmap 的渲染器在缩放改 bitmap 时使用 mipmap__
+	f. __tileMode  铺开方式， bitmap 会重复铺开，Gravity 会被忽略__
+		1. disable
+		2. clamp 重复边缘的颜色
+		3. repeat 重复这个 bitmap
+		4. mirror 回忆镜像重复铺开
+h. Nine-Patch File (.9.png)           NinePatchDrawable
+
+点九图是一个Png
+在里面，你可以定义在他所在的 View 比它正常大小大时，它可拉伸的区域
+一般是设置为背景图片，View 设置为 wrapcontent， 为了容纳内容，View 会改变宽高，背景同时会被拉伸
+也有定义 xml
+{{./pasted_image005.tiff}}
+
+
+j. Layer List    管理其他 drawables  按顺序画，最大 index 的元素画在最上面     LayerDrawable
+
+{{./pasted_image006.tiff}}
+
+默认的，所有 item 都会缩放适应容器 View 的大小，如下：
+{{./pasted_image007.tiff}}
+避免缩放：
+{{./pasted_image008.tiff}}
+
+A sample:
+{{./pasted_image009.tiff}}
+
+The Result:
+{{./pasted_image010.tiff}}
+
+l. State List     根据不同状态显示不同的图片（按下状态等）   StateListDrawable
+
+{{./pasted_image011.tiff}}
+
+android:constantSize 是否保持固定大小而不根据不同状态改变大小，默认不会保持
+
+
+n. Level List    管理一系列的可选择的 Drawable， 每一个有一个最大数值      LevelListDrawable, 比如电池，在不同的电量显示不同的 icon
+
+{{./pasted_image012.tiff}}
+
+p. Tansition Drawable  可以在两个 Drawable 之间显示渐隐变换     TransitionDrawable
+
+{{./pasted_image013.tiff}}
+
+{{./pasted_image014.tiff}}
+
+r. Inset Drawable  定义一个嵌入另一个 drawable 的 drawable。当 View 需要一个比它自己小的背景 drawable 时很有用  InsetDrawable
+
+{{./pasted_image015.tiff}}
+
+
+t. Clip Drawable 定义一个从另一个 drawable 裁剪出的 drawable    ClipDrawable， 可用来做进度条
+
+{{./pasted_image016.tiff}}
+{{./pasted_image017.tiff}}
+v. Scale Drawable 基于当前 level 来改变另一个 drawable     ScaleDrawable
+
+{{./pasted_image018.tiff}}
+
+percentage 的格式为 xx%
+
+w. Shape Drawable 定义一个几何形状， 包括颜色和渐变    ShapeDrawable
+
+{{./pasted_image019.tiff}}
+
+ring 的一些属性：
+android:innerRadius 内部半径
+android:innerRadiusRatio 内部半径占比，占整个图形的宽的比例，默认值9， 会被 innerRadius 覆盖
+android:thickness 圆环的粗度
+android:thicknessRatio 同样是占比，默认值3

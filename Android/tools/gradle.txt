@@ -5,6 +5,86 @@ Creation-Date: 2014-09-23T20:43:41+08:00
 ====== gradle ======
 Created 星期二 23 九月 2014
 
+https://docs.gradle.org/current/dsl/
+https://developer.android.com/tools/building/plugin-for-gradle.html
+http://google.github.io/android-gradle-dsl/current/
+
+
+1. 构建工具
+
+make → ant → maven → gradle Gradle是一个框架
+
+2. 基础
+	a. Groovy 基于 java 虚拟机的一个__敏捷开发语言__
+	b. Gralde 作为一个工具，有它的行话，即 DSL
+
+==== 基本组件 ====
+
+1. Gradle中，每一个待编译的工程都叫一个Project
+2. 每一个Project在构建的时候都包含一系列的Task
+3. 一个Project到底包含多少个Task，其实是由编译脚本指定的插件决定。插件是什么呢？插件就是用来定义Task，并具体执行这些Task的东西。
+
+
+
+==== Gradle 命令 ====
+
+
+gradle projects
+{{./pasted_image.tiff}}
+
+gradle tasks
+对于Multi-project，在根目录中，需要指定你想看哪个poject的任务。不过你要是已经cd到某个Project的目录了，则不需指定Project-path。
+{{./pasted_image001.tiff}}
+
+ gradle task-name执行任务
+gradle clean是执行清理任务，和make clean类似
+gradle properites用来查看所有属性信息。
+
+==== Gradle工作流程 ====
+
+{{./pasted_image002.tiff}}
+
+
+Gradle对象：当我们执行gradle xxx或者什么的时候，gradle会从默认的配置脚本中构造出一个Gradle对象。在整个执行过程中，只有这么一个对象。Gradle对象的数据类型就是Gradle。我们一般很少去定制这个默认的配置脚本。
+Project对象：每一个build.gradle会转换成一个Project对象。
+Settings对象：显然，每一个settings.gradle都会转换成一个Settings对象。
+
+==== Project对象 ====
+
+Project包含若干Tasks。另外，由于Project对应具体的工程，所以需要为Project加载所需要的插件，比如为Java工程加载Java插件
+
+所以，在Project中，我们要：
+
+加载插件。
+不同插件有不同的行话，即不同的配置。我们要在Project中配置好，这样插件就知道从哪里读取源文件等
+设置属性。
+
+==== 加载插件 ====
+	加载插件是调用它的apply函数.apply其实是Project实现的PluginAware接口定义的：
+	{{./pasted_image003.tiff}}
+	apply是一个函数，此处调用的是图30中最后一个apply函数。注意，Groovy支持函数调用的时候通过  参数名1:参数值2，参数名2：参数值2 的方式来传递参数
+	apply plugin: 'com.android.library'    <==如果是编译Library，则加载此插件
+	apply plugin: 'com.android.application'  <==如果是编译Android APP，则加载此插件
+	
+	除了加载二进制的插件（上面的插件其实都是下载了对应的jar包，这也是通常意义上我们所理解的插件），还可以加载一个gradle文件。
+	apply from: rootProject.getRootDir().getAbsolutePath() + "/utils.gradle"  
+
+==== 设置属性 ====
+	Gradle提供了一种名为extra property的方法。
+	extra property是额外属性的意思，在第一次定义该属性的时候需要通过ext前缀来标示它是一个额外的属性。
+	定义好之后，后面的存取就不需要ext前缀了。
+	ext属性支持Project和Gradle对象。即Project和Gradle对象都可以设置ext属性
+
+
+==== Task ====
+Task是Gradle中的一种数据类型，它代表了一些要执行或者要干的工作。不同的插件可以添加不同的Task。每一个Task都需要和一个Project关联。
+
+{{./pasted_image004.tiff}}
+
+
+
+
+
 和Maven一样，Gradle只是提供了构建项目的一个框架，真正起作用的是Plugin。Gradle在默认情况下为我们提供了许多常用的Plugin，其中包括有构建Java项目的Plugin，还有War，Ear等。与Maven不同的是，Gradle不提供内建的项目生命周期管理，只是java Plugin向Project中添加了许多Task，这些Task依次执行，为我们营造了一种如同Maven般项目构建周期
 现在我们都在谈领域驱动设计，Gradle本身的领域对象主要有Project和Task。Project为Task提供了执行上下文，所有的Plugin要么向Project中添加用于配置的Property，要么向Project中添加不同的Task。一个Task表示一个逻辑上较为独立的执行过程，比如编译Java源代码，拷贝文件，打包Jar文件，甚至可以是执行一个系统命令或者调用Ant。另外，一个Task可以读取和设置Project的Property以完成特定的操作。
 
@@ -12,16 +92,16 @@ Created 星期二 23 九月 2014
 简单的build.gradle示例：
 
 buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:0.6.+'
-    }
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath 'com.android.tools.build:gradle:0.6.+'
+	}
 }
 apply plugin: 'android'
 android {
-    compileSdkVersion 17
+	compileSdkVersion 17
 }
 
 配置Task
@@ -73,7 +153,7 @@ apply plugin: 'java'
 
 apply plugin: 'java'
 dependencies {
-    compile 'org.springframework:spring-context:3.0.4.RELEASE'
+	compile 'org.springframework:spring-context:3.0.4.RELEASE'
 }
 
 gradle便会自动地到maven服务器下载spring-context-3.0.4.RELEASE.jar，以及它所依赖的jar包。
@@ -82,7 +162,7 @@ gradle便会自动地到maven服务器下载spring-context-3.0.4.RELEASE.jar，�
 
 apply plugin: 'java'
 dependencies {
-    compile fileTree(dir: 'libs', include: '*.jar')
+	compile fileTree(dir: 'libs', include: '*.jar')
 }
 
 这样就可以直接依赖/libs/目录下所有的jar文件了。
@@ -90,9 +170,9 @@ dependencies {
 再比如自定义一个task:
 apply plugin: 'java'
 task myTask << {
-    if (System.properties['love']) {
-        println "I love you! Gradle!"
-    }
+	if (System.properties['love']) {
+		println "I love you! Gradle!"
+	}
 }
 
 在命令行执行gradle myTask就会运行这个myTask任务了。
@@ -109,10 +189,10 @@ task myTask << {
 首先我找到的第一种方法是在模块中的build.gradle增加一个编译jar包的task.代码如下：
 [html] view plaincopy在CODE上查看代码片派生到我的代码片
 
-    task releaseJar(type:Jar) {  
-        from sourceSet.main.java  
-        destinationDir = file('build/libs')  
-    }  
+	task releaseJar(type:Jar) {  
+		from sourceSet.main.java  
+		destinationDir = file('build/libs')  
+	}  
 
 
 但是执行的时候，却提示里面的Log类找不到。显示用这种方法只能编译一般的java文件，无法编译用到了android库的源文件。可能是还要在哪里添加依赖吧。
@@ -122,15 +202,15 @@ task myTask << {
 
 [html] view plaincopy在CODE上查看代码片派生到我的代码片
 
-    android.libraryVariants.all { variant ->  
-        def name = variant.buildType.name  
-        if (name.equals(com.android.builder.BuilderConstants.DEBUG)) {  
-            return; // skip debug builds  
-        }  
-        def task = project.tasks.create "jar${name.capitalize()}, Jar  
-        task.from variant.javaCompile.destinationDir  
-        artifacts.add('archives', task)  
-    }  
+	android.libraryVariants.all { variant ->  
+		def name = variant.buildType.name  
+		if (name.equals(com.android.builder.BuilderConstants.DEBUG)) {  
+			return; // skip debug builds  
+		}  
+		def task = project.tasks.create "jar${name.capitalize()}, Jar  
+		task.from variant.javaCompile.destinationDir  
+		artifacts.add('archives', task)  
+	}  
 
 
 然后执行gradle jarRelease就可以了。
@@ -144,18 +224,18 @@ task myTask << {
 
 [html] view plaincopy在CODE上查看代码片派生到我的代码片
 
-    task releaseJar(type: Copy) {  
-        from( 'build/bundles/release')  
-        into( 'build/libs')  
-        include('classes.jar')  
-        rename('calsses.jar', 'superlog' + VERSION_NAME + '.jar')  
-    }  
+	task releaseJar(type: Copy) {  
+		from( 'build/bundles/release')  
+		into( 'build/libs')  
+		include('classes.jar')  
+		rename('calsses.jar', 'superlog' + VERSION_NAME + '.jar')  
+	}  
       
-    task releaseLib(type: Copy, dependsOn: releaseJar) {  
-        into "../../release"  
-        from 'libs'  
-        from 'build/libs'  
-    }  
+	task releaseLib(type: Copy, dependsOn: releaseJar) {  
+		into "../../release"  
+		from 'libs'  
+		from 'build/libs'  
+	}  
 
 
 其中VERSION_NAME是我定义的一个变量，在gradle.properties文件中。该文件与gradle.build在同级目录
@@ -223,15 +303,15 @@ I'm Gradle
 
 4.times { counter ->
 
-    task "task$counter" << {
+	task "task$counter" << {
 
-        println "I'm task number $counter"
+		println "I'm task number $counter"
 
-    }
+	}
 
 }
 
------------------------------------
+--------------------
 
 Output of gradle -q task1
 
@@ -245,9 +325,9 @@ I'm task number 1
 
 4.times { counter ->
 
-    task "task$counter" << {
+	task "task$counter" << {
 
-        println "I'm task number $counter"
+		println "I'm task number $counter"
 
 }
 
@@ -255,7 +335,7 @@ I'm task number 1
 
 task0.dependsOn task2, task3
 
-----------------------------
+--------------------
 
 Output of gradle -q task0
 
@@ -275,25 +355,25 @@ I'm task number 0
 
 task hello << {
 
-    println 'Hello Earth'
+	println 'Hello Earth'
 
 }
 
 hello.doFirst {
 
-    println 'Hello Venus'
+	println 'Hello Venus'
 
 }
 
 hello.doLast {
 
-    println 'Hello Mars'
+	println 'Hello Mars'
 
 }
 
 hello << {
 
-    println 'Hello Jupiter'
+	println 'Hello Jupiter'
 
 }
 
@@ -311,7 +391,7 @@ do.first和do.last可被执行多次,执行顺序按first..last
 
 task hello << {
 
-    println 'Hello world!'
+	println 'Hello world!'
 
 }
 
@@ -391,11 +471,11 @@ Default Running!
 
  
 
--------------------------
+--------------------
 
 task distribution << {
 
-    println "We build the zip with version=$version"
+	println "We build the zip with version=$version"
 
 }
 
@@ -403,7 +483,7 @@ task distribution << {
 
 task release(dependsOn: 'distribution') << {
 
-    println 'We release now'
+	println 'We release now'
 
 }
 
@@ -411,15 +491,15 @@ task release(dependsOn: 'distribution') << {
 
 gradle.taskGraph.whenReady {taskGraph ->
 
-    if (taskGraph.hasTask(release)) {
+	if (taskGraph.hasTask(release)) {
 
-        version = '1.0'
+		version = '1.0'
 
-    } else {
+	} else {
 
-        version = '1.0-SNAPSHOT'
+		version = '1.0-SNAPSHOT'
 
-    }
+	}
 
 }
 
@@ -581,7 +661,7 @@ include "shared", "api", "services:webservice", "services:shared"
 
  
 
-8.	基础依赖管理
+8. 基础依赖管理
 
 8.3	配置依赖
 
@@ -739,7 +819,7 @@ gradle compile test将分别执行compile和test任务,gradle会按命令中的�
 
 task compile << {
 
-    println 'compiling source'
+	println 'compiling source'
 
 }
 

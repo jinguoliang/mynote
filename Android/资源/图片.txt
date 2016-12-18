@@ -1,0 +1,22 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-11-04T16:47:22+08:00
+
+====== 图片 ======
+Created 星期五 04 十一月 2016
+
+基础
+Resolution 是屏幕中实际的像素数
+density 是屏幕一定区域的像素数
+size 是物理空间大小
+Resolution 变大， density 变大，size 可能就不变
+为了避免 size/density的计算，引入了 dp 单位，在 mdpi 的设备上，1dp = 1px，这种设备可能是320 * 480；一个480 * 800的设备是 hdpi 的， 转成 dp 的因子是1.5所以这个设备用 dp 表示320 * 533
+VGA 标准 640 * 480  QVGA 标准320*240
+
+屏幕大小分区
+Android 在1.6开始支持屏幕大小分3类：
+	1. normal（至少470dp * 320dp）
+	2. small（至少420dp * 320dp）
+	3. large（至少640dp * 480dp）
+Android 2.3开始加了一个分类：
+	1. xlarge（至少960dp * 720dp）

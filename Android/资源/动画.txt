@@ -1,0 +1,61 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-11-29T15:47:58+08:00
+
+====== 动画 ======
+Created 星期二 29 十一月 2016
+
+分类：
+1. 属性动画 通过Animator 修改对象属性产生动画
+2. View 动画
+	a. Tween 动画 使用 Animation 来对单个 Image 做转换形成动画
+	b. 帧动画 使用 AnimationDrawable 逐帧显示一些列图片 
+
+
+==== 属性动画 ====
+
+{{./pasted_image.tiff}}
+
+必须有一个单一的根元素，可以是 set  objectAnimatior animator
+
+默认持续时间为300ms
+
+android:repeatCount -1 会一直重复动画， 默认是0 不重复
+
+android:valueType 如果是颜色，则不声明类型，框架会处理
+
+{{./pasted_image001.tiff}}
+
+
+==== View 动画 ====
+
+=== Tween 动画 ===
+
+与属性动画区别：放在 anim 目录，而属性动画放在 animator
+{{./pasted_image002.tiff}}
+必须单一根元素，可以是alpha scale translate rotate set
+
+使用：
+{{./pasted_image003.tiff}}
+
+==== Interpolators ====
+
+动画修改器， 会影响动画的变化频率，改变加速度， 允许实现加速，减速，反弹等动画
+
+=== 自定义Interplators ===
+对系统定义的Interplator做修改
+{{./pasted_image004.tiff}}
+
+<accelerateInterpolator>   android:factor   加速度 默认1
+
+<anticipateInterpolator> android:tension 弹弓预备拉紧 默认2
+
+
+==== 帧动画 ====
+
+文件位置drawable
+
+{{./pasted_image005.tiff}}
+
+rocketAnimation = (AnimationDrawable) rocketImage.getBackground();
+rocketAnimation.start();

@@ -5,3 +5,5 @@ Creation-Date: 2016-09-03T23:16:19+08:00
 ====== 工具 ======
 Created 星期六 03 九月 2016
 
+https://tinypng.com/ 压缩 png or jpg
+还有 api 接口不过花钱

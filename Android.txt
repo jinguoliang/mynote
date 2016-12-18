@@ -69,16 +69,16 @@ Cupcake	1.5	API level 3, NDK 1
 {{./pasted_image003.png}}
 
 ===== 我应该如何开始我的Android深入学习？？？ =====
-[[+我要这样开始我的Android深入之路]]  
+[[+Android内部:我要这样开始我的Android深入之路]]  
 
 
-[[语言:C++]]
+语言:C++
 JAVA
-[[+Android 编译]]
+[[+构建:Android 编译]]
 
 [[file:///usr/local/adt-bundle-linux-x86_64-20130219/sdk/docs/guide/topics/ui/dialogs.html|Android Google Officail Document]]
 
-[[+嵌入式Android]] 翻译中
++嵌入式Android 翻译中
 
 +view
 
@@ -86,39 +86,39 @@ JAVA
 
 [[+tools]]
 
-[[+resource]]
++resource
 
-[[+Android背后的思想]]
+[[+Android内部:Android背后的思想]]
 
 [[+存储]]
 
-[[+MultiMedia]]
+[[+媒体和相机:MultiMedia]]
 
 语言:java
 
-[[+test|test]]
+[[+测试|test]]
 
 [[+硬件]]
 
 [[+图像]]
 
-[[+网络|网络]]
+[[+连接:网络|网络]]
 
-[[+xml parser]]
+[[+连接:xml parser]]
 
-[[+game]]
++game
 
-[[+source|source]]
+source
 
-[[+Android Log|Android Log]]
+[[+Android内部:Android Log|Android Log]]
 
 [[+Android 环境搭建|Android 环境搭建]]
 
 [[+内存优化|内存优化]]
 
-[[+包信息|包信息]]
+包信息
 
-[[+linux 连接adb|linux 连接adb]]
+[[+连接:linux 连接adb|linux 连接adb]]
 
 [[+android性能优化|android性能优化]]
 

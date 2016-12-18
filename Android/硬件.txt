@@ -11,8 +11,17 @@ Created Friday 08 November 2013
 [[+电话]]
 
 
-[[闹钟]]
+闹钟
 
 
 
 	
+
+==== video/audio interface: ====
+
+__HDMI__ (High-Definition Multimedia Interface) is a compact audio/video interface for transferring uncompressed video data and compressed/uncompressed digital audio data from a HDMI-compliant device ("the source device") to a compatible computer monitor, video projector, digital television, or digital audio device.[1] HDMI is a digital replacement for existing analog video standards.
+高清晰度多媒体接口（英文：High Definition Multimedia Interface，HDMI）是一种__数字化视频/音频接口技术__，是适合影像传输的专用型数字化接口，其__可同时传送音频和影音信号__，最高数据传输速度为5Gbps。同时无需在信号传送前进行数/模或者模/数转换。HDMI可搭配宽带数字内容保护（HDCP），以防止具有著作权的影音内容遭到未经授权的复制。HDMI所具备的额外空间可应用在日后升级的音视频格式中。而因为一个1080p的视频和一个8声道的音频信号需求少于4Gbps，因此HDMI还有很大余量。这允许它可以用一个电缆分别连接DVD播放器，接收器和PRR。
+
+__VGA__（Video Graphics Array）即视频图形阵列，是IBM在1987年随PS/2（PS/2 原是“Personal System 2”的意思，“个人系统2”，是IBM公司在1987年推出的一种个人电脑。PS/2电脑上使用的键盘鼠标接口就是现在的PS/2接口。因为标准不开放，PS/2电脑在市场中失败了。只有PS/2接口一直沿用到今天）一起推出的使用__模拟信号__的一种视频传输标准，在当时具有分辨率高、显示速率快、颜色丰富等优点，在彩色显示器领域得到了广泛的应用。这个标准对于现今的个人电脑市场已经十分过时。即使如此，VGA仍然是最多制造商所共同支持的一个标准，个人电脑在加载自己的独特驱动程序之前，都必须支持VGA的标准。
+
+__DVI__（Digital Visual Interface），即__数字视频接口__。它是1999年由Silicon Image、Intel（英特尔）、Compaq（康柏）、IBM、HP（惠普）、NEC、Fujitsu（富士通）等公司共同组成DDWG（Digital Display Working Group，数字显示工作组）推出的接口标准。

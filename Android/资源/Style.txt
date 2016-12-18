@@ -1,0 +1,51 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-11-07T15:14:48+08:00
+
+====== Style ======
+Created 星期一 07 十一月 2016
+
+Style资源定义了 UI 的格式和显示效果
+1. 可以应用到 View 上（在布局文件里）
+2. 可以应用到整个 Activity 或应用 （manifest 文件里）这时候叫 theme
+
+res/values/filename.xml
+
+==== 定义 Styles ====
+
+<style
+		name="style_name"
+		parent="@[package:]style/style_to_inherit">
+		<item
+			name="[package:]style_property_name"
+			>style_value</item>
+	</style>
+
+
+==== 继承 ====
+
+parent 属性可以设置一个 style，你的 style 会从它继承属性
+如果你想继承你自己定义的 style， 可以使用要继承的 style 名.newname 的格式命名：
+<style name="CodeFont.Red">
+		<item name="android:textColor">#FF0000</item>
+	</style>
+
+	<style name="CodeFont.Red.Big">
+		<item name="android:textSize">30sp</item>
+	</style>
+
+==== Style 属性 ====
+1. 每个 View 支持的属性不同，所以要去该 View 自己的文档去找它所有支持的属性
+2. 不支持的属性，View 会忽略，只使用支持的
+
+==== 应用 Style 和 Theme ====
+1. 当将一个 Style 应用于一个 View 时，这些属性会应用到该 View，当应用到一个 ViewGroup 时，也只对它起作用，不会对子View 起作用
+2. 可以通过 Theme 设置应用属性到所有 View
+3. style
+<TextView
+	style="@style/CodeFont"
+	android:text="@string/hello" [[/>]]
+4. theme
+	a. <application android:theme="@style/CustomTheme">
+	b. <activity android:theme="@android:style/Theme.Dialog">
+5. 根据平台版本选择不同的 theme  values-v11
