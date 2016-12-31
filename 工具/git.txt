@@ -151,6 +151,23 @@ git config --global alias.unstage 'reset HEAD --'   create a new cmd
 git reset --hard   sha1no
 git reflog   show the commit id which not display in git log
 
+修改已提交 commit 的 email
+git filter-branch --env-filter '
+OLD_EMAIL="your-old-email@example.com"
+CORRECT_NAME="Your Correct Name"
+CORRECT_EMAIL="your-correct-email@example.com"
+if [ "$GIT_COMMITTER_EMAIL" = "$OLD_EMAIL" ]
+then
+	export GIT_COMMITTER_NAME="$CORRECT_NAME"
+	export GIT_COMMITTER_EMAIL="$CORRECT_EMAIL"
+fi
+if [ "$GIT_AUTHOR_EMAIL" = "$OLD_EMAIL" ]
+then
+	export GIT_AUTHOR_NAME="$CORRECT_NAME"
+	export GIT_AUTHOR_EMAIL="$CORRECT_EMAIL"
+fi
+' --tag-name-filter cat -- --branches --tags
+
 [[+gitignore|.gitignore]]
 
 [[+tag 操作|tag 操作]]
