@@ -12,3 +12,9 @@ Prototype
 [[+nodejs|nodejs]]
 
 [[+react|react]]
+
+[[+electron|electron]]
+
+
+html的href="javascript:void(0)"
+void是javascript的关键字, 表示计算后面的表达式但是不返回值.?

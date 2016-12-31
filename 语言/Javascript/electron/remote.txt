@@ -1,0 +1,32 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2016-09-18T22:30:40+08:00
+
+====== remote ======
+Created 星期日 18 九月 2016
+
+remote模块是为了简化主进程跟渲染进程间通讯出现的.
+
+GUI相关的模块(比如dialog, menu等等)只能在主进程使用,不能在渲染进程使用.要想在渲染进程使用它们,需要使用ipc模块跟主进程进行进程间通讯.
+然而使用remote模块,你就可以想java里的RMI一样直接调用.
+
+=== Remote Object ===
+
+Remote模块返回的对象叫Remote Object都代表了主进程里的一个对象
+当你调用一个远程对象的方法,调用一个远程方法,创建一个远程对象,实际都是发了一个同步的进程间通讯
+注意: 只有在远程对象第一次被引用是存在的属性,并且是可枚举的属性(enumerable properties)才能通过remote访问
+
+=== 生命周期 ===
+
+只要远程对象活着(没有被释放), 它代表的主进程里的对象也会活着.
+渲染进程中的远程对象如果泄露了,主进程中对应的对象也会泄露.
+基本的数据类型会进行值copy
+
+=== 通过remote在主进程中访问内建模块 ===
+
+remote中对应的getter,你可以像使用electron一样
+const app = require('electron').remote.app
+console.log(app)
+
+=== 方法 ===
+remote.require(module)  返回的都是远程对象
